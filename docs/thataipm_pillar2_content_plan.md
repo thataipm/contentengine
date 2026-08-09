@@ -16,19 +16,26 @@ the same **@thataipm** channel. See `CLAUDE.md` §1 for the original channel bri
   payoff) → "Comment [KEYWORD] and I'll send you the link" close. See
   [[feedback-follow-only-cta-until-followers]] memory — comment-gate CTA is back for this pillar
   specifically, reversing the earlier follow-only rule.
-- **40% — Second pillar: Tool Showdowns.** Head-to-head comparisons of famous, widely-recognized
-  consumer AI products, organized by industry category (voice, video gen, image gen, avatar,
-  coding, chat, music, presentations, search, meetings) — not the dev-tool/GitHub-stars bank
-  above, a deliberately different, broader-recognition angle ("ElevenLabs vs PlayHT" already
-  means something to a viewer before the hook even lands). Locked bank below. **Shares the main
-  pillar's practitioner voice and no-invented-claims discipline, but NOT its production
-  components** — these are real commercial product UIs (a voice studio, a video generator), not
-  GitHub repo pages, so `RepoScreenshot` (built specifically for github.com pages with a stars
-  badge) doesn't fit; needs a more general real-product-screenshot component before the first
-  Showdown episode gets built. **Every matchup needs an actual sourced comparison before
-  scripting** (same voice line run through both tools, same prompt through both generators) —
-  same rule this channel already applies everywhere else (tn1's whole premise change existed
-  specifically to avoid a claim that couldn't be verified), not narrated specs from memory.
+- **40% — Second pillar: Best AI Tools (listicle).** **Reframed 2026-08-10** from head-to-head
+  "Tool Showdowns" (X vs Y) to ranked listicles ("Best AI Tools for Voiceovers," "Best AI Tools
+  for Video Generation") — stronger for discovery (a genuine high-intent search pattern, unlike
+  a narrower "vs" title), and more resilient: if one tool in a 5-item list dies (as just
+  happened with PlayHT), you swap one entry instead of losing the whole video's premise. **List
+  size varies by category** — however many genuinely strong, currently-live tools actually exist
+  for that category, not a fixed count. Famous, widely-recognized consumer AI products, organized
+  by industry category (voice, video gen, image gen, avatar, coding, chat, music, presentations,
+  search, meetings) — not the dev-tool/GitHub-stars bank above, a deliberately different,
+  broader-recognition angle. Locked category list below. **Shares the main pillar's practitioner
+  voice and no-invented-claims discipline, but NOT its production components** — these are real
+  commercial product UIs (a voice studio, a video generator), not GitHub repo pages, so
+  `RepoScreenshot` (built specifically for github.com pages with a stars badge) doesn't fit; use
+  `ProductScreenshot` instead (built 2026-08-10, see below). **Every tool in every list needs one
+  real, verified differentiator before scripting** (a real price, a real feature gate, a real
+  sourced stat) — not generic "great tool, 5 stars" filler, and not a claim from memory. Same
+  discipline this channel already applies everywhere else (tn1's whole premise change existed
+  specifically to avoid an unverifiable claim). **Also verify each tool is still live** before
+  scripting — PlayHT's death mid-research on 2026-08-10 is exactly the failure mode this guards
+  against.
 
 ## Pillar 1 (60%, main pillar) — locked idea bank, 2026-08-09
 
@@ -79,28 +86,31 @@ much time has passed — this ecosystem moves fast and star counts/rankings shif
 the exact tools used to build the ViralRespin pipeline this session. Only topic here with
 first-hand proof behind it rather than research alone. **Shipped as `sk1`, 2026-08-09.**
 
-## Pillar 2 (40%, second pillar) — Tool Showdowns, locked idea bank, 2026-08-10
+## Pillar 2 (40%, second pillar) — Best AI Tools, locked category list, 2026-08-10
 
-Category picks favor name recognition over completeness — the goal is a viewer already knowing
-one side of the matchup before the hook finishes. **Not yet fact-checked against real output**
-(pricing, feature specifics, which tool currently "wins" what) — that verification pass happens
-per-episode, right before scripting, not here. Re-verify stats/rankings before using regardless
-of how much time has passed; this space moves fast.
+Reframed from head-to-head matchups (see git history / `episodes/sd1` deletion 2026-08-10 for
+the discarded ElevenLabs-vs-Murf pilot) to listicles. Categories favor name recognition over
+completeness — a viewer should recognize at least one entry before the hook finishes. **Which
+specific tools populate each list, and how many, is decided per-episode right before scripting**
+— verify each candidate tool is actually still live (not another PlayHT) and has at least one
+real, sourced differentiator worth including, not a fixed pre-picked roster locked in here.
 
-1. **AI Voiceover** — ElevenLabs vs. PlayHT
-2. **AI Voiceover** — ElevenLabs vs. Murf
-3. **AI Video Generation** — Google Veo 3 vs. Higgsfield
-4. **AI Video Generation** — Kling AI vs. Runway Gen-4
-5. **AI Image Generation** — Midjourney vs. Google's Nano Banana
-6. **AI Avatar / Talking-head** — HeyGen vs. Synthesia
-7. **AI Coding Assistants** — Cursor vs. Claude Code
-8. **AI Chat / Reasoning** — ChatGPT vs. Claude vs. Gemini
-9. **AI Music Generation** — Suno vs. Udio
-10. **AI Presentation / Slides** — Gamma vs. Beautiful.ai
-11. **AI Search** — Perplexity vs. ChatGPT Search
-12. **AI Meeting Notes / Transcription** — Otter.ai vs. Fireflies
+1. **Best AI Tools for Voiceovers** — candidates seen so far: ElevenLabs, Murf (PlayHT confirmed
+   dead 2026-08-10, do not include)
+2. **Best AI Tools for Video Generation** — candidates seen so far: Google Veo 3, Higgsfield,
+   Kling AI, Runway Gen-4
+3. **Best AI Tools for Image Generation** — candidates seen so far: Midjourney, Google's Nano
+   Banana
+4. **Best AI Tools for Avatars / Talking-head Video** — candidates seen so far: HeyGen, Synthesia
+5. **Best AI Coding Assistants** — candidates seen so far: Cursor, Claude Code
+6. **Best AI Chatbots / Reasoning Models** — candidates seen so far: ChatGPT, Claude, Gemini
+7. **Best AI Tools for Music Generation** — candidates seen so far: Suno, Udio
+8. **Best AI Tools for Presentations/Slides** — candidates seen so far: Gamma, Beautiful.ai
+9. **Best AI Search Tools** — candidates seen so far: Perplexity, ChatGPT Search
+10. **Best AI Tools for Meeting Notes/Transcription** — candidates seen so far: Otter.ai,
+    Fireflies
 
-## Screenshot sourcing practice for Tool Showdowns, locked 2026-08-10
+## Screenshot sourcing practice for Best AI Tools, locked 2026-08-10
 
 Unlike the main pillar's GitHub repo pages (public, no login, consistent layout), most of these
 products gate their actual interesting UI (a generation in progress, a real result) behind a
@@ -132,4 +142,6 @@ current limitation. Two tiers instead:
 - What actually gets sent when someone comments the keyword (a doc? a direct repo link?
   a compiled list?): not yet decided, needs a real fulfillment plan before the first episode
   posts, not just the CTA mechanic.
-- Which Showdown ships first: not yet decided.
+- **New listicle shot/list component needed**: the old plan assumed a 2-tool head-to-head verdict
+  beat; a ranked list needs its own countdown/list structure instead (not yet designed).
+- Which category ships first: not yet decided.
