@@ -84,12 +84,15 @@ much time has passed — this ecosystem moves fast and star counts/rankings shif
 
 **Bonus (21), kept as a strong early candidate**: video-use / HyperFrames / Remotion skill —
 the exact tools used to build the ViralRespin pipeline this session. Only topic here with
-first-hand proof behind it rather than research alone. **Shipped as `sk1`, 2026-08-09.**
+first-hand proof behind it rather than research alone. **Shipped 2026-08-09 as
+`episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/`** (folder renamed from the
+original short-code `sk1` on 2026-08-10 — see this doc's naming-convention note below).
 
 ## Pillar 2 (40%, second pillar) — Best AI Tools, locked category list, 2026-08-10
 
-Reframed from head-to-head matchups (see git history / `episodes/sd1` deletion 2026-08-10 for
-the discarded ElevenLabs-vs-Murf pilot) to listicles. Categories favor name recognition over
+Reframed from head-to-head matchups (see git history for the discarded ElevenLabs-vs-Murf pilot,
+originally at the short-lived folder `episodes/sd1` before it was deleted 2026-08-10) to
+listicles. Categories favor name recognition over
 completeness — a viewer should recognize at least one entry before the hook finishes. **Which
 specific tools populate each list, and how many, is decided per-episode right before scripting**
 — verify each candidate tool is actually still live (not another PlayHT) and has at least one
@@ -121,8 +124,9 @@ current limitation. Two tiers instead:
   gallery/showcase/examples/pricing page with real, attributable content and no login required
   (Midjourney's showcase, Suno's public feed, HeyGen's examples, ElevenLabs' voice library,
   Runway/Kling's public generation feeds, Perplexity's shared answer pages). Capture via
-  `automation/capture_product_screenshot.py` (Playwright, headless, generalized from sk1's
-  GitHub-specific `capture_screenshot.py`) into `components/ProductScreenshot.tsx` (same
+  `automation/capture_product_screenshot.py` (Playwright, headless, generalized from the Claude
+  Code skills episode's GitHub-specific `capture_screenshot.py`) into
+  `components/ProductScreenshot.tsx` (same
   browser-chrome pan/zoom technique as `RepoScreenshot`, just not GitHub-specific — `highlightBox`
   instead of `starsBox`, zooms into whatever real detail matters for that beat: a price, a
   rating, a result thumbnail).
@@ -130,10 +134,12 @@ current limitation. Two tiers instead:
   a prompt generate inside the tool," that's behind a login and stays a manual capture — actually
   use the tool and hand off the screenshot/recording, same pattern as any other real-asset
   gathering on this channel.
-- Real logos still get downloaded the same way sk1 did (`github.com/<org>.png` where the tool has
-  a GitHub org; otherwise the tool's own press-kit/favicon), into
-  `episodes/{id}/assets/logos/{tool}.png`. Product screenshots go in
-  `episodes/{id}/assets/shots/{tool}_{page}.png` — same convention sk1 established.
+- Real logos still get downloaded the same way as the Claude Code skills episode
+  (`github.com/<org>.png` where the tool has a GitHub org; otherwise the tool's own
+  press-kit/favicon), into `episodes/{episode-slug}/assets/logos/{tool}.png`. Product
+  screenshots go in `episodes/{episode-slug}/assets/shots/{tool}_{page}.png` — same convention,
+  now using the full-title folder slug instead of a short code (locked 2026-08-10, see
+  `CLAUDE.md` for the naming rule).
 
 ## Open items
 

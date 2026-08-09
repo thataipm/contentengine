@@ -3,9 +3,13 @@
 **Rebuilt 2026-08-10** for the 2-pillar system (`thataipm_pillar2_content_plan.md`): the
 educational pillar and the "Personal AI takes" slot are both gone, replaced by 60% Main pillar
 (Trending Claude Code skills/plugins) / 40% Best AI Tools (ranked listicles of famous consumer
-AI products, by industry category). Day 1 (`sk1`) already shipped under the old 3-pillar plan
-but happened to be a Main-pillar topic anyway, so it stays as-is — everything from Day 2 forward
-follows the new split.
+AI products, by industry category). Day 1 (**"3 Claude Code Skills That Turn It Into a Video
+Editor,"** `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/`) already shipped
+under the old 3-pillar plan but happened to be a Main-pillar topic anyway, so it stays as-is —
+everything from Day 2 forward follows the new split. **Folder/file naming, locked 2026-08-10:
+full episode titles, not short codes** — every episode folder and its primary files use the
+descriptive title as a slug (e.g. `best-ai-tools-for-voiceovers/`), not an abbreviation like the
+old `sk1`/`sd1` pattern retired this session.
 
 **Reframed again same day, 2026-08-10**: the second pillar started as head-to-head "Tool
 Showdowns" (X vs Y), then got reframed to ranked listicles ("Best AI Tools for Voiceovers")
@@ -16,7 +20,8 @@ discarded, not converted — that pillar's Day 2 entry starts fresh as a listicl
 Daily posting (one video/day, all 3 platforms). Repeating 5-day block (3 Main + 2 second-pillar)
 for an exact 60/40 split (18 Main-pillar days / 12 second-pillar days over 30 days) —
 interleaved, not run in visible streaks. Main-pillar picks pull from the locked 20-idea bank in
-listed order, continuing right after `sk1` (bonus #21, already used). Second-pillar picks pull
+listed order, continuing right after "3 Claude Code Skills That Turn It Into a Video Editor"
+(bonus #21, already used). Second-pillar picks pull
 from the locked 10-category list in listed order — **which specific tools populate each
 category's list, and how many, is decided per-episode**, not fixed here.
 
@@ -26,7 +31,7 @@ live) → VO → render → SFX → host → schedule on its day.
 
 | Day | Date | Pillar | Topic | Status |
 |---|---|---|---|---|
-| 1 | 2026-08-09 | Main | sk1 — video-use / HyperFrames / Remotion skill | **Shipped** |
+| 1 | 2026-08-09 | Main | 3 Claude Code Skills That Turn It Into a Video Editor (video-use / HyperFrames / Remotion) | **Shipped** |
 | 2 | 2026-08-10 | Second | Best AI Tools for Voiceovers | **Shipped** (drafted in Buffer, awaiting publish) |
 | 3 | 2026-08-11 | Main | The Karpathy skill (forrestchang/andrej-karpathy-skills) | Planned |
 | 4 | 2026-08-12 | Second | Best AI Tools for Video Generation | Planned |

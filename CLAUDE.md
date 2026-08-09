@@ -85,9 +85,10 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
   - `generate_sfx.py` — sound effect generation.
   - `capture_product_screenshot.py` — Playwright (headless Chromium) capture of a product's
     public page (a showcase/gallery/pricing page — never a login-gated dashboard, no credential
-    handling) plus an optional zoomed crop of one real detail. Generalizes sk1's GitHub-specific
-    `episodes/sk1/assets/capture_screenshot.py` for Tool Showdowns, where the subject is any
-    product's own site, not a github.com repo page. See
+    handling) plus an optional zoomed crop of one real detail. Generalizes the Claude Code
+    skills episode's GitHub-specific
+    `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/capture_screenshot.py`
+    for Tool Showdowns, where the subject is any product's own site, not a github.com repo page. See
     `docs/thataipm_pillar2_content_plan.md`'s screenshot-sourcing-practice section for the
     two-tier approach (public pages automatable, hands-on/logged-in use stays a manual capture).
   - **`.env` holds `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`.** The voice ID is still the
@@ -295,7 +296,7 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
    — same underlying facts/stats, different structure: Instagram leads with a fast hook + emoji
    scan + a dense hashtag block (~10-15 tags), LinkedIn is a first-person practitioner narrative
    with real paragraph breaks and only 3-5 tags, YouTube is a searchable title + keyword-dense
-   description with `#Shorts`. See `episodes/sk1/assets/captions.md` for the reference shape.
+   description with `#Shorts`. See `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/captions.md` for the reference shape.
 
 ## 6. Decided 2026-08-06: visual direction, voice, content plan
 
@@ -352,10 +353,22 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
   implementation. **Use `ContentZone` for every future shot's main content area** instead of a
   raw absolutely-positioned div with a fixed `top` — this is now the standing layout convention,
   not a one-off sk1 patch.
-- Episode/folder naming convention is now confirmed by actual use: `episodes/cm{N}/` (assets,
-  build/audio, script) mirroring `remotion/src/episodes/cm{N}/` (shot components, orchestrator),
-  same shape as the old project's `da{N}` convention. `tn{N}`/`wb{N}` for the other two pillars,
-  unconfirmed until one of those actually gets built.
+- Episode/folder naming convention: `episodes/cm{N}/`/`tn{N}` short codes were the original
+  pattern (mirroring `remotion/src/episodes/cm{N}/` for shot components/orchestrator, same shape
+  as the old project's `da{N}` convention) but both pillars using them are retired (see the
+  educational-pillar removal and `sk1`→Best-AI-Tools-listicle reframe below). **Superseded
+  2026-08-10, direct instruction ("use episode titles in folder and file names, no more
+  shortcuts")**: the top-level `episodes/{id}/` folder now uses a full-title slug instead of a
+  short code — e.g. `episodes/best-ai-tools-for-voiceovers/`, not `episodes/sd1/`. Files inside
+  that reference the episode itself (the final video, cover, VO script, LinkedIn carousel PDF)
+  use the same slug as their prefix; sub-asset files that are already self-descriptive (
+  `shot1_vo.wav`, `elevenlabs_full.png`, etc.) don't need the prefix, they were never the
+  "shortcut" problem. **Scoped to the top-level `episodes/` folder only** — the Remotion engine's
+  internal working copies (`remotion/public/{id}/`, `remotion/src/episodes/{id}/`, composition
+  IDs like `Episode-sk1`) still use the original short codes for `sk1`/`sd1` specifically
+  (renaming those would mean touching working code on already-rendered/drafted episodes, ruled
+  out of scope 2026-08-10) — but **new episodes going forward should use the full slug
+  consistently in both places** since there's no "already shipped" constraint blocking it yet.
 
 - **`cm1`, "Tokens: How AI Reads Text" (Core Mechanics, episode 1/30), shipped 2026-08-06:
   `episodes/cm1/build/cm1_tokens.mp4`, ~62s.** The channel's actual first episode (see above).
@@ -406,7 +419,7 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
   cm1.
 
 - **`sk1`, "3 Claude Code Skills That Turn It Into a Video Editor" (Pillar 2, first episode),
-  shipped 2026-08-09 after 4 revisions: `episodes/sk1/build/sk1_video_tools.mp4`, ~46.3s.**
+  shipped 2026-08-09 after 4 revisions: `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/build/3-claude-code-skills-that-turn-it-into-a-video-editor.mp4`, ~46.3s.**
   Features video-use, HyperFrames, and the official Remotion skill — the exact three tools used
   to build the ViralRespin pipeline this same session, chosen because they're verifiable
   first-hand rather than just researched. Real stats cited (20.4k/40.1k GitHub stars, 6M
@@ -450,11 +463,11 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
   current word now pops on a colored pill background with a scale-bounce instead of just plain
   text, addressing "style captions, they are looking so simple." Runtime 46.3s.
 
-  **Revision 4 (current), four more direct fixes, shipped 2026-08-09: `episodes/sk1/build/
-  sk1_video_tools.mp4`, ~46.3s.** (1) **Real screenshots with a zoom into the real star count.**
+  **Revision 4 (current), four more direct fixes, shipped 2026-08-09: `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/build/
+  3-claude-code-skills-that-turn-it-into-a-video-editor.mp4`, ~46.3s.** (1) **Real screenshots with a zoom into the real star count.**
   `mcp__Claude_Browser__computer`'s plain `screenshot` action worked this time (earlier failures
   were transient, not a real limitation) but its `zoom` action still doesn't support a region
-  crop ("full screenshot returned") — worked around by installing Playwright (`episodes/sk1/
+  crop ("full screenshot returned") — worked around by installing Playwright (`episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/
   assets/capture_screenshot.py`, headless Chromium, `device_scale_factor: 2` for a crisp zoom)
   to capture real, croppable screenshots of all three tools' actual GitHub pages. New
   `components/RepoScreenshot.tsx` shows the real page in a browser-chrome frame, then
@@ -482,7 +495,7 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
 
   **Distribution deliverables, shipped 2026-08-09**: `covers/CoverSk1.tsx` (the episode's own
   three real tool logos in glowing accent-bordered tiles + title, `Cover-sk1` composition,
-  rendered to `episodes/sk1/build/sk1_cover.png`) and `episodes/sk1/assets/captions.md` (three
+  rendered to `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/build/3-claude-code-skills-that-turn-it-into-a-video-editor_cover.png`) and `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/captions.md` (three
   genuinely distinct platform captions, not the VO script reused — see `CLAUDE.md` §5 steps 6-7
   for the now-standing format this establishes for every future episode). **Posting automation
   is the next open item, not yet built** — see the "Posting automation" note below.
