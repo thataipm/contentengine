@@ -27,7 +27,7 @@ live) → VO → render → SFX → host → schedule on its day.
 | Day | Date | Pillar | Topic | Status |
 |---|---|---|---|---|
 | 1 | 2026-08-09 | Main | sk1 — video-use / HyperFrames / Remotion skill | **Shipped** |
-| 2 | 2026-08-10 | Second | Best AI Tools for Voiceovers | **In production** |
+| 2 | 2026-08-10 | Second | Best AI Tools for Voiceovers | **Shipped** (drafted in Buffer, awaiting publish) |
 | 3 | 2026-08-11 | Main | The Karpathy skill (forrestchang/andrej-karpathy-skills) | Planned |
 | 4 | 2026-08-12 | Second | Best AI Tools for Video Generation | Planned |
 | 5 | 2026-08-13 | Main | Superpowers (obra/Jesse Vincent) | Planned |
