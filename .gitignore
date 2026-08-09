@@ -3,9 +3,6 @@
 .env.*
 .claude/
 
-# Archive (historical reference only, not backed up here)
-archive_thataipm/
-
 # Node / Remotion
 remotion/node_modules/
 remotion/out/

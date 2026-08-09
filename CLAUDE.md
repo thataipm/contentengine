@@ -1,10 +1,13 @@
 # Video Production Engine
 
 This project was reset on 2026-08-06. Everything from the prior "That AI PM" channel (its
-scripts, episodes, content plan, channel identity, and visual theme) has been moved to
-`archive_thataipm/` for historical reference only — **it is not a starting point for new work**.
-What survived the reset is the underlying render engine: the technical machinery for turning a
-script + VO into a rendered vertical video, independent of any particular topic or look.
+scripts, episodes, content plan, channel identity, and visual theme) was moved to
+`archive_thataipm/` for historical reference — **removed from this project entirely 2026-08-10**
+(backed up to Google Drive's `Content Engine/archive_thataipm/`, not deleted outright) once
+production fully converged on the new system below; it was never a starting point for new work
+even while it was still present locally. What survived the reset is the underlying render
+engine: the technical machinery for turning a script + VO into a rendered vertical video,
+independent of any particular topic or look.
 
 The new project is a **faceless** Instagram page (no on-camera avatar). Its niche, content
 pillars, visual direction, and a 30-episode content plan are all decided now (below and
@@ -112,6 +115,15 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
   channel identity baked in, the caller decides.
 - `components/Chrome.tsx` — `Watermark` (`handle`/`color`/`opacity` props) and `ProgressBar`
   (`color`/`track` props), both fully generic now.
+- `components/ContentZone.tsx` — vertically centers a shot's main content between a `top`/
+  `bottom` bound (defaults 260/560) instead of anchoring at a fixed `top`, fixing the dead-space
+  layout issue (see §6's 2026-08-10 entry). Use this for every shot's main content area going
+  forward, not a raw absolutely-positioned div.
+- `components/Sfx.tsx` — one-shot sound cue (`type: "tick" | "whoosh" | "chime"`, `at: <shot-local
+  frame>`) wrapping `<Sequence>` + `<Audio>` for the channel's "sound-synced beats" rule. `tick`
+  = small UI pop, `whoosh` = sustained camera-push motion, `chime` = payoff/reveal beat. Volume
+  kept to 40-50% per direct instruction — an accent under the VO, not a backing track. Reuses
+  `public/sfx/{tick,whoosh,chime}_raw.mp3`.
 - `three/SceneRig.tsx` — per-shot `<ThreeCanvas>` wrapper for any React Three Fiber content:
   orthographic camera sized so 1 world unit = 1 screen pixel, shared neutral key/fill lighting,
   a local deterministic environment map, bloom post-processing. Wrap any 3D shot content in
@@ -313,6 +325,27 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
   (unchanged for now), 20% personal AI takes drafted from current news. Full plan, locked
   20-idea bank, and sourcing methodology in `docs/thataipm_pillar2_content_plan.md`. This is
   still the same @thataipm channel, not a new one — confirmed 2026-08-09.
+- **Visual system unified, 2026-08-10**: after sk1 shipped at a noticeably higher production bar
+  (real screenshots, synced SFX, GitHub+Buffer hosting pipeline, a LinkedIn carousel companion),
+  the user locked sk1's visual system in as the **one standard for every future video,
+  regardless of pillar** — retiring the original per-pillar-identity plan (`theme.ts`'s pure
+  black/white system was previously meant to stay Pillar 1's separate look; that separation is
+  now retired going forward). `theme_skills.ts`'s dark-grid background, colorful rotating
+  `ACCENTS`, tool-header/real-asset approach is the default for all new production. **`cm1` and
+  `tn1` are NOT being rebuilt or re-rendered** — both are already published under the old black
+  `theme.ts` system and stay exactly as they are; this decision only governs new episodes going
+  forward, not existing ones. `theme.ts` itself is untouched (still needed so cm1/tn1's existing
+  source keeps compiling) — it's just no longer the default for anything new. Same reasoning
+  applies to any already-published episode from this point forward: **once a video is posted,
+  don't re-edit or re-render it**, ship the fix in the next one instead.
+- **Layout fix, 2026-08-10**: shot content divs were anchoring at a fixed `top` offset instead of
+  centering in the real available space, leaving large dead vertical gaps on screen (flagged
+  directly from a real exported frame — "so much blank space available in the middle"). Fixed
+  via a new shared `components/ContentZone.tsx` (vertically centers children between a `top`/
+  `bottom` bound instead of hugging `top`), applied across sk1's Shot1-5 as the reference
+  implementation. **Use `ContentZone` for every future shot's main content area** instead of a
+  raw absolutely-positioned div with a fixed `top` — this is now the standing layout convention,
+  not a one-off sk1 patch.
 - Episode/folder naming convention is now confirmed by actual use: `episodes/cm{N}/` (assets,
   build/audio, script) mirroring `remotion/src/episodes/cm{N}/` (shot components, orchestrator),
   same shape as the old project's `da{N}` convention. `tn{N}`/`wb{N}` for the other two pillars,
