@@ -100,12 +100,34 @@ of how much time has passed; this space moves fast.
 11. **AI Search** — Perplexity vs. ChatGPT Search
 12. **AI Meeting Notes / Transcription** — Otter.ai vs. Fireflies
 
+## Screenshot sourcing practice for Tool Showdowns, locked 2026-08-10
+
+Unlike the main pillar's GitHub repo pages (public, no login, consistent layout), most of these
+products gate their actual interesting UI (a generation in progress, a real result) behind a
+login. **No credential handling or scripted login of any kind** — that's a hard rule, not a
+current limitation. Two tiers instead:
+
+- **Tier A — public showcase pages (automatable, preferred)**: most of these tools have a public
+  gallery/showcase/examples/pricing page with real, attributable content and no login required
+  (Midjourney's showcase, Suno's public feed, HeyGen's examples, ElevenLabs' voice library,
+  Runway/Kling's public generation feeds, Perplexity's shared answer pages). Capture via
+  `automation/capture_product_screenshot.py` (Playwright, headless, generalized from sk1's
+  GitHub-specific `capture_screenshot.py`) into `components/ProductScreenshot.tsx` (same
+  browser-chrome pan/zoom technique as `RepoScreenshot`, just not GitHub-specific — `highlightBox`
+  instead of `starsBox`, zooms into whatever real detail matters for that beat: a price, a
+  rating, a result thumbnail).
+- **Tier B — hands-on product use (stays manual)**: if the compelling shot is genuinely "watching
+  a prompt generate inside the tool," that's behind a login and stays a manual capture — actually
+  use the tool and hand off the screenshot/recording, same pattern as any other real-asset
+  gathering on this channel.
+- Real logos still get downloaded the same way sk1 did (`github.com/<org>.png` where the tool has
+  a GitHub org; otherwise the tool's own press-kit/favicon), into
+  `episodes/{id}/assets/logos/{tool}.png`. Product screenshots go in
+  `episodes/{id}/assets/shots/{tool}_{page}.png` — same convention sk1 established.
+
 ## Open items
 
 - Visual system for Pillar 2 (main pillar): locked, see `CLAUDE.md` §6's 2026-08-10 entry.
-- **New shared component needed for Tool Showdowns**: a general real-product-screenshot
-  component (not `RepoScreenshot`, which assumes a github.com page + stars badge) — build before
-  the first Showdown episode.
 - CTA keyword per episode: pick per-topic, not a single fixed word across all episodes.
 - What actually gets sent when someone comments the keyword (a doc? a direct repo link?
   a compiled list?): not yet decided, needs a real fulfillment plan before the first episode

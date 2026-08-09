@@ -83,15 +83,16 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
   - `align_shot_audio.py` — for **already-cut** shot audio: forced-alignment against its own
     known line (needs the `forced_alignment` scope on the API key).
   - `generate_sfx.py` — sound effect generation.
+  - `capture_product_screenshot.py` — Playwright (headless Chromium) capture of a product's
+    public page (a showcase/gallery/pricing page — never a login-gated dashboard, no credential
+    handling) plus an optional zoomed crop of one real detail. Generalizes sk1's GitHub-specific
+    `episodes/sk1/assets/capture_screenshot.py` for Tool Showdowns, where the subject is any
+    product's own site, not a github.com repo page. See
+    `docs/thataipm_pillar2_content_plan.md`'s screenshot-sourcing-practice section for the
+    two-tier approach (public pages automatable, hands-on/logged-in use stays a manual capture).
   - **`.env` holds `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`.** The voice ID is still the
     old channel's clone — replace it with the new one before generating any real VO.
     `HEYGEN_API_KEY` is also present but unused (this project is faceless); harmless to leave.
-- `archive_thataipm/` — everything retired in the reset: old `docs/`, `episodes/`, the
-  superseded Python/cairosvg `pipeline/`, `generate_avatar.py` (HeyGen, not needed for a
-  faceless project), the old `CLAUDE.md` (renamed `CLAUDE_that_ai_pm.md`), and the archived
-  Remotion theme/content (`remotion_src/`, `remotion_public/`, `remotion_out/`). Read it if you
-  need to see how a past problem was solved in detail; don't copy its content/theme decisions
-  into new work without the user explicitly asking to revive something specific.
 
 ## 3. What survived in `remotion/src/` (the bare engine)
 
@@ -124,6 +125,11 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
   = small UI pop, `whoosh` = sustained camera-push motion, `chime` = payoff/reveal beat. Volume
   kept to 40-50% per direct instruction — an accent under the VO, not a backing track. Reuses
   `public/sfx/{tick,whoosh,chime}_raw.mp3`.
+- `components/ProductScreenshot.tsx` — real browser-chrome-framed product screenshot with a
+  pan/zoom "camera push" into one real detail (`highlightBox`), added 2026-08-10 for Tool
+  Showdowns. Generalizes `RepoScreenshot` (which assumes a github.com repo page + stars badge)
+  for any product's public page — same visual technique, no GitHub-specific assumptions. Pair
+  with `automation/capture_product_screenshot.py` for the actual capture.
 - `three/SceneRig.tsx` — per-shot `<ThreeCanvas>` wrapper for any React Three Fiber content:
   orthographic camera sized so 1 world unit = 1 screen pixel, shared neutral key/fill lighting,
   a local deterministic environment map, bloom post-processing. Wrap any 3D shot content in
