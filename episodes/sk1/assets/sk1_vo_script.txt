@@ -1,0 +1,9 @@
+I automated my entire video pipeline with three tools. Here's exactly how it works.
+
+Step one: video-use edits my raw footage. I just tell it what I want, cut clips, add captions, mix audio, all through conversation. Twenty thousand GitHub stars, built by the browser-use team.
+
+Step two: HyperFrames. I write plain HTML, and it renders real motion graphics, frame by frame, deterministic every time. Forty thousand stars, already running in production at companies like tldraw and TanStack.
+
+Step three: the official Remotion skill. I describe the video I want in plain English, and it writes the actual code behind it. Its own launch demo hit six million views in just forty eight hours.
+
+Comment EDIT and I'll send you my exact pipeline, all three links.

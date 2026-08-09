@@ -1,0 +1,19 @@
+# Secrets
+.env
+.env.*
+.claude/
+
+# Archive (historical reference only, not backed up here)
+archive_thataipm/
+
+# Node / Remotion
+remotion/node_modules/
+remotion/out/
+
+# Python
+__pycache__/
+*.pyc
+
+# Build artifacts
+episodes/*/build/
+remotion/

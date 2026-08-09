@@ -1,0 +1,17 @@
+AI can write your wedding speech and pass the bar exam. Ask it to count letters in "strawberry," and it falls apart.
+
+Here's why. Every sentence you type gets sliced apart before the model ever reads it.
+
+Not into letters. Into tokens: chunks of a few characters each.
+
+So "strawberry" doesn't stay one word. It splits into pieces, something like "straw" and "berry," two chunks that have never met.
+
+Models don't read words either. Every token turns into a number. As far as it's concerned, you never typed a word.
+
+That's also why AI charges you per token, not per word. Even your typos cost something.
+
+The model never actually sees the letters inside those chunks. It's not doing bad math. It's not doing math at all.
+
+So next time AI botches something "simple," don't blame its intelligence. Blame its eyesight.
+
+Follow for how AI actually works, before you ask it to spell anything else.
