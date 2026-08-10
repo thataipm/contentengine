@@ -105,9 +105,15 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
     handling) plus an optional zoomed crop of one real detail. Generalizes the Claude Code
     skills episode's GitHub-specific
     `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/capture_screenshot.py`
-    for Tool Showdowns, where the subject is any product's own site, not a github.com repo page. See
-    `docs/thataipm_pillar2_content_plan.md`'s screenshot-sourcing-practice section for the
-    two-tier approach (public pages automatable, hands-on/logged-in use stays a manual capture).
+    for Tool Showdowns, where the subject is any product's own site, not a github.com repo page.
+    Two-tier sourcing approach (the source doc this came from, `docs/thataipm_pillar2_content_plan.md`,
+    was deleted 2026-08-10 with the rest of the retired pillar-2 strategy — see §7 — but the
+    practice itself still applies to any product-screenshot sourcing going forward): **Tier
+    A — public showcase pages (automatable, preferred)**, most tools have a public gallery/
+    showcase/examples/pricing page with real, attributable content and no login required, capture
+    via this script. **Tier B — hands-on product use (stays manual)**: if the compelling shot is
+    genuinely "watching a prompt generate inside the tool," that's behind a login and stays a
+    manual capture, no credential handling or scripted login of any kind.
   - **`.env` holds `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`.** The voice ID is still the
     old channel's clone — replace it with the new one before generating any real VO.
     `HEYGEN_API_KEY` is also present but unused (this project is faceless); harmless to leave.
@@ -663,9 +669,13 @@ Explicit decision: publish it as-is, do not reframe/regenerate/kill it, treat it
 transition episode and an informal baseline data point. Full detail in its own entry in §6.
 All content produced from this point forward follows v2.0.
 
-**Retired docs (kept for audit, not deleted)**: `docs/thataipm_pillar2_content_plan.md`,
-`docs/30_day_content_calendar.md`, `docs/channel_bio_copy.md`. `docs/posting_platforms.md` is
-unaffected (distribution mechanics, not strategy) and stays valid under v2.0 as-is.
+**Retired docs**: `docs/thataipm_pillar2_content_plan.md` and `docs/30_day_content_calendar.md`
+were kept RETIRED-but-present through the initial migration, then **deleted outright 2026-08-10**
+during a docs-folder cleanup — fully superseded, nothing in them was still being pointed to as
+current, and git history is the audit trail if either is needed again. `docs/channel_bio_copy.md`
+stays (its current v2.0 section and the old superseded draft live in the same file).
+`docs/posting_platforms.md` is unaffected (distribution mechanics, not strategy) and stays valid
+under v2.0 as-is.
 
 **Data-removal practice, added 2026-08-10** (direct instruction: "keep data removal practice
 from local and github post so we don't have any data crunch"): every episode's rendered
