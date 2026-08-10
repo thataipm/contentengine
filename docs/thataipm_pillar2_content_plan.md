@@ -1,3 +1,9 @@
+> **RETIRED 2026-08-10.** This entire pillar strategy (60% Trending Claude Code Skills / 40%
+> Best AI Tools listicles) is superseded by **That AI PM: Content System Operating Spec v2.0**
+> (`docs/thataipm_content_system_operating_spec_v2.md`). Kept in place for audit/history only,
+> not deleted; do not use anything below as current strategy. See `CLAUDE.md` §7 for the full
+> migration note.
+
 # ThatAIPM — Content Pillars (locked 2-pillar system, 2026-08-10)
 
 Originally locked 2026-08-09 after 6 educational "How AI Actually Works" videos didn't get the

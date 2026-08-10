@@ -1,5 +1,14 @@
 # Video Production Engine
 
+**Current strategic system, 2026-08-10**: content strategy for this channel (still the same
+`@thataipm` handle) is governed by **That AI PM: Content System Operating Spec v2.0**
+(`docs/thataipm_content_system_operating_spec_v2.md`), approved this date. This is a
+deliberate, new PM-focused positioning ("AI-native product thinking"), not a revival of the
+old archived "That AI PM" content described in the paragraph below. That archive stays
+retired and unused; v2.0 is a fresh strategy that happens to reuse the same brand name and
+handle. See §7 for the full migration note and the new experiment-log/quality-gate layer
+added on top of the production engine this file otherwise describes.
+
 This project was reset on 2026-08-06. Everything from the prior "That AI PM" channel (its
 scripts, episodes, content plan, channel identity, and visual theme) was moved to
 `archive_thataipm/` for historical reference — **removed from this project entirely 2026-08-10**
@@ -383,6 +392,19 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
   implementation. **Use `ContentZone` for every future shot's main content area** instead of a
   raw absolutely-positioned div with a fixed `top` — this is now the standing layout convention,
   not a one-off sk1 patch.
+- **Content-strategy system RETIRED, 2026-08-10**: everything above describing WHAT to make,
+  the "Pillar pivot, 2026-08-09" bullet's 60/20/20 split and its later refinement into the
+  2-pillar system (60% Trending Claude Code Skills / 40% Best AI Tools) in
+  `docs/thataipm_pillar2_content_plan.md`, is retired as the strategic source of truth,
+  superseded by **That AI PM: Content System Operating Spec v2.0**. Kept in place for
+  audit/history per the migration decision, not deleted. **This retirement is about content
+  strategy only** (which pillars, which topics, audience). The PRODUCTION VISUAL SYSTEM
+  described in the "Visual system unified, 2026-08-10" bullet above (dark-grid canvas, rotating
+  `ACCENTS`, real screenshots, `TerminalCard`/`RepoScreenshot`/`CaptionsPop`) is unaffected and
+  stays the default for all new production, it doesn't conflict with v2.0's own format
+  principles (§11 of the new spec explicitly wants the same premium/clean/real-asset approach).
+  Full migration detail, the new architecture layer, and the Zernio analytics investigation are
+  in §7 below.
 - Episode/folder naming convention: `episodes/cm{N}/`/`tn{N}` short codes were the original
   pattern (mirroring `remotion/src/episodes/cm{N}/` for shot components/orchestrator, same shape
   as the old project's `da{N}` convention) but both pillars using them are retired (see the
@@ -530,6 +552,30 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
   for the now-standing format this establishes for every future episode). **Posting automation
   is the next open item, not yet built** — see the "Posting automation" note below.
 
+- **`the-karpathy-skill`, "The Karpathy Skill" (Main pillar, single-skill spotlight), produced
+  2026-08-10: `episodes/the-karpathy-skill/build/the-karpathy-skill.mp4`, ~54.4s.** Real,
+  verified facts: `forrestchang/andrej-karpathy-skills` (a repo now transferred to the
+  `multica-ai` org, 201,077 GitHub stars as of production date), a single `CLAUDE.md` file
+  encoding four rules derived from an Andrej Karpathy post on AI coding-agent failure patterns
+  (Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution), works with
+  Claude Code and Cursor. Hook went through a real rewrite after direct feedback ("doesn't say
+  that video is going to be about"), researching actual Instagram hook mechanics (viewers decide
+  in ~1s, lead with the viewer's problem before any stat/artifact fact) rather than assuming,
+  documented in the `feedback-hook-must-state-topic` memory's 2026-08-10 extension. Script run
+  through the newly-installed `humanizer` skill's real draft-audit-final loop (not just
+  eyeballed), which caught and fixed a staccato four-fragment run. First episode built entirely
+  under the full-slug naming convention in both the top-level `episodes/` folder AND the
+  internal `remotion/src/episodes/`/`remotion/public/` paths (no short-code invention, unlike
+  `sk1`/`sd1`), since there was no already-shipped constraint blocking it.
+
+  **Status, 2026-08-10: LEGACY / TRANSITION episode, per explicit decision during the v2.0
+  migration (see §7 below).** Fully produced under the now-retired 2-pillar content strategy,
+  before the v2.0 positioning existed. It is being **published as-is**, not reframed,
+  regenerated, or killed, and is being treated as an informal baseline data point for comparison
+  against the first true v2.0 experiment batch once one exists. It is explicitly NOT assigned an
+  experiment_log.md batch, since it predates that system. All content produced after this point
+  follows v2.0.
+
 ### Posting automation (not yet built, 2026-08-09)
 
 Requested after sk1's distribution deliverables shipped: automate posting to all 3 platforms
@@ -546,3 +592,74 @@ which path: actually publishing a post is a "send on the user's behalf" / "publi
 content" action per this assistant's own standing rules, so even a fully automated pipeline
 still needs an explicit go-ahead per post, not a silent auto-publish** — the automation should
 prepare/queue, not fire without confirmation, unless the user later says otherwise explicitly.
+
+## 7. Strategic system: That AI PM v2.0 (2026-08-10)
+
+**What changed**: the user supplied "That AI PM: Content System Operating Spec v2.0"
+(`docs/thataipm_content_system_operating_spec_v2.md`), a formal strategy document positioning
+the channel around "AI-native product thinking" for a Product Manager audience. This
+**fully supersedes** the 2-pillar content strategy documented earlier in §6 (retirement note
+in that section). It does not touch the production engine described in §§2-5, which stays
+exactly as built.
+
+**Architecture principle**: strategy sits ABOVE the existing production pipeline, not inside
+it. Nothing in `automation/`, `remotion/src/`, the GitHub hosting flow, or the Zernio
+scheduling flow changed or needs to change for this migration. What's new is a thin layer of
+structured planning/tracking docs the production pipeline didn't have before:
+
+```
+STRATEGY                docs/thataipm_content_system_operating_spec_v2.md (north star)
+  |
+CONTENT PILLARS          same doc, section 3 (35/30/20/15, hypothesis not fixed)
+  |
+HYPOTHESIS               docs/experiment_log.md, opened per batch
+  |
+EXPERIMENT BATCH         same log, grouped entries
+  |
+TOPIC SELECTION           scored against the 100K test + the 4 AI-native-PM questions
+  |
+STRATEGIC QUALITY GATE   recorded per concept inside the batch entry (see the log's
+                        Quality Gate sub-schema), only PASS concepts proceed
+  |
+RESEARCH / FACT CHECK    unchanged discipline: live research, cited in the script file
+  |
+SCRIPT -> PRODUCTION -> RENDER -> CAPTIONS -> DISTRIBUTION   unchanged, see §§2-5
+  |
+ANALYTICS                hybrid, see the finding below
+  |
+LEARNING                 memory system (durable rules) + experiment_log (batch-specific)
+  |
+KEEP / SCALE / MODIFY / KILL   written into the batch entry, closes it
+  |
+NEXT EXPERIMENT          new batch opens
+```
+
+**Zernio analytics investigation, 2026-08-10**: checked Zernio's own docs
+(`docs.zernio.com/llms-full.txt`) for what its Analytics API (`GET /v1/analytics`, included on
+paid Usage plan) actually exposes, rather than assuming either way. Finding is a genuine
+hybrid, not a clean yes/no:
+
+- **Available per post, via Zernio's API**: Instagram gets impressions, reach, likes,
+  comments, shares, saves, views. YouTube gets likes, comments, views, and shares (shares only
+  via the daily Analytics API, not the basic Data API).
+- **Not available anywhere, for either platform**: follows attributable to a specific post,
+  3-second hold rate, average watch percentage. No known public API exposes these at the
+  post level for Instagram or YouTube, this is a platform limitation, not specific to Zernio
+  (confirmed against TikTok's own docs stating the same gap explicitly for its own API).
+  Instagram's follower data is only available as an account-level daily snapshot
+  (`followers_gained`/`followers_lost` deltas), not tied to individual posts.
+- **Practical effect**: the spec's single most important metric, follows per 1,000 views,
+  cannot be pulled automatically and attributed to one post. The 90-day fallback is manual:
+  capture that number (and 3-second hold / average watch %) from Instagram's and YouTube's own
+  native Insights/Studio UI, log it by hand into `docs/experiment_log.md`'s `results:` field,
+  noting which numbers came from Zernio's API versus manual capture so the two don't get
+  silently blended.
+
+**"The Karpathy Skill" episode**: produced before this migration, under the old strategy.
+Explicit decision: publish it as-is, do not reframe/regenerate/kill it, treat it as a legacy/
+transition episode and an informal baseline data point. Full detail in its own entry in §6.
+All content produced from this point forward follows v2.0.
+
+**Retired docs (kept for audit, not deleted)**: `docs/thataipm_pillar2_content_plan.md`,
+`docs/30_day_content_calendar.md`, `docs/channel_bio_copy.md`. `docs/posting_platforms.md` is
+unaffected (distribution mechanics, not strategy) and stays valid under v2.0 as-is.

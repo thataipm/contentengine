@@ -1,3 +1,9 @@
+> **RETIRED 2026-08-10.** Built entirely around the now-retired 60/40 pillar system. Superseded
+> by **That AI PM: Content System Operating Spec v2.0**
+> (`docs/thataipm_content_system_operating_spec_v2.md`) and its experiment-batch structure in
+> `docs/experiment_log.md`. Kept in place for audit/history only, not deleted; do not schedule
+> new content off this calendar. See `CLAUDE.md` §7 for the full migration note.
+
 # 30-Day Posting Calendar — starts 2026-08-09
 
 **Rebuilt 2026-08-10** for the 2-pillar system (`thataipm_pillar2_content_plan.md`): the

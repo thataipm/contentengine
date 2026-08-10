@@ -1,3 +1,9 @@
+> **RETIRED 2026-08-10.** Written for the now-retired 2-pillar identity (Claude Code skills /
+> Tool Showdowns). Superseded by **That AI PM: Content System Operating Spec v2.0**
+> (`docs/thataipm_content_system_operating_spec_v2.md`)'s "AI-native product thinking"
+> positioning. Kept in place for audit/history only; fresh bio copy under v2.0 is a small
+> follow-up task, not yet written. See `CLAUDE.md` §7 for the full migration note.
+
 # Channel Bio Copy — drafted 2026-08-10
 
 Reflects the locked 2-pillar identity (Main pillar: Claude Code skills/plugins + Tool

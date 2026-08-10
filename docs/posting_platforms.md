@@ -1,5 +1,10 @@
 # Posting platforms
 
+**Still valid under That AI PM v2.0, 2026-08-10**: this file describes distribution mechanics
+(which platforms, not which content), unaffected by the content-strategy migration documented
+in `CLAUDE.md` §7. The spec's own §13 confirms the same platform split (Instagram + YouTube
+automated, LinkedIn manual).
+
 Locked 2026-08-09. Every episode publishes to the same 3 platforms, same @thataipm identity:
 
 - **Instagram** (Reels) — primary channel, where the content strategy (comment-gate CTA,
