@@ -1,0 +1,163 @@
+[
+  {
+    "word": "So",
+    "start_seconds": 0.213,
+    "end_seconds": 0.907,
+    "start_frame": 6,
+    "end_frame": 27
+  },
+  {
+    "word": "next",
+    "start_seconds": 0.938,
+    "end_seconds": 1.066,
+    "start_frame": 28,
+    "end_frame": 32
+  },
+  {
+    "word": "time",
+    "start_seconds": 1.114,
+    "end_seconds": 1.306,
+    "start_frame": 33,
+    "end_frame": 39
+  },
+  {
+    "word": "AI",
+    "start_seconds": 1.413,
+    "end_seconds": 1.627,
+    "start_frame": 42,
+    "end_frame": 49
+  },
+  {
+    "word": "solves",
+    "start_seconds": 1.672,
+    "end_seconds": 1.947,
+    "start_frame": 50,
+    "end_frame": 58
+  },
+  {
+    "word": "something",
+    "start_seconds": 1.978,
+    "end_seconds": 2.267,
+    "start_frame": 59,
+    "end_frame": 68
+  },
+  {
+    "word": "instantly,",
+    "start_seconds": 2.331,
+    "end_seconds": 3.066,
+    "start_frame": 70,
+    "end_frame": 92
+  },
+  {
+    "word": "remember:",
+    "start_seconds": 3.12,
+    "end_seconds": 3.627,
+    "start_frame": 94,
+    "end_frame": 109
+  },
+  {
+    "word": "in",
+    "start_seconds": 3.813,
+    "end_seconds": 4.187,
+    "start_frame": 114,
+    "end_frame": 126
+  },
+  {
+    "word": "2020",
+    "start_seconds": 4.346,
+    "end_seconds": 4.986,
+    "start_frame": 130,
+    "end_frame": 150
+  },
+  {
+    "word": "it",
+    "start_seconds": 5.039,
+    "end_seconds": 5.146,
+    "start_frame": 151,
+    "end_frame": 154
+  },
+  {
+    "word": "could",
+    "start_seconds": 5.187,
+    "end_seconds": 5.386,
+    "start_frame": 156,
+    "end_frame": 162
+  },
+  {
+    "word": "write",
+    "start_seconds": 5.426,
+    "end_seconds": 5.627,
+    "start_frame": 163,
+    "end_frame": 169
+  },
+  {
+    "word": "you",
+    "start_seconds": 5.646,
+    "end_seconds": 5.706,
+    "start_frame": 169,
+    "end_frame": 171
+  },
+  {
+    "word": "a",
+    "start_seconds": 5.746,
+    "end_seconds": 5.786,
+    "start_frame": 172,
+    "end_frame": 174
+  },
+  {
+    "word": "sonnet.",
+    "start_seconds": 5.846,
+    "end_seconds": 6.507,
+    "start_frame": 175,
+    "end_frame": 195
+  },
+  {
+    "word": "It",
+    "start_seconds": 6.587,
+    "end_seconds": 6.746,
+    "start_frame": 198,
+    "end_frame": 202
+  },
+  {
+    "word": "just",
+    "start_seconds": 6.794,
+    "end_seconds": 6.986,
+    "start_frame": 204,
+    "end_frame": 210
+  },
+  {
+    "word": "couldn't",
+    "start_seconds": 7.01,
+    "end_seconds": 7.227,
+    "start_frame": 210,
+    "end_frame": 217
+  },
+  {
+    "word": "count",
+    "start_seconds": 7.267,
+    "end_seconds": 7.466,
+    "start_frame": 218,
+    "end_frame": 224
+  },
+  {
+    "word": "to",
+    "start_seconds": 7.52,
+    "end_seconds": 7.627,
+    "start_frame": 226,
+    "end_frame": 229
+  },
+  {
+    "word": "a",
+    "start_seconds": 7.666,
+    "end_seconds": 7.706,
+    "start_frame": 230,
+    "end_frame": 231
+  },
+  {
+    "word": "hundred.",
+    "start_seconds": 7.757,
+    "end_seconds": 8.146,
+    "start_frame": 233,
+    "end_frame": 244
+  }
+]

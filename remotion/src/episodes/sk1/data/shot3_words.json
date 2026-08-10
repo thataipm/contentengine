@@ -1,0 +1,226 @@
+[
+  {
+    "word": "Step",
+    "start_seconds": 0.216,
+    "end_seconds": 0.984,
+    "start_frame": 6,
+    "end_frame": 30
+  },
+  {
+    "word": "two:",
+    "start_seconds": 1.044,
+    "end_seconds": 1.304,
+    "start_frame": 31,
+    "end_frame": 39
+  },
+  {
+    "word": "HyperFrames.",
+    "start_seconds": 1.384,
+    "end_seconds": 2.184,
+    "start_frame": 42,
+    "end_frame": 66
+  },
+  {
+    "word": "I",
+    "start_seconds": 2.504,
+    "end_seconds": 2.824,
+    "start_frame": 75,
+    "end_frame": 85
+  },
+  {
+    "word": "write",
+    "start_seconds": 2.864,
+    "end_seconds": 3.064,
+    "start_frame": 86,
+    "end_frame": 92
+  },
+  {
+    "word": "plain",
+    "start_seconds": 3.117,
+    "end_seconds": 3.384,
+    "start_frame": 94,
+    "end_frame": 102
+  },
+  {
+    "word": "HTML,",
+    "start_seconds": 3.512,
+    "end_seconds": 4.184,
+    "start_frame": 105,
+    "end_frame": 126
+  },
+  {
+    "word": "and",
+    "start_seconds": 4.204,
+    "end_seconds": 4.264,
+    "start_frame": 126,
+    "end_frame": 128
+  },
+  {
+    "word": "it",
+    "start_seconds": 4.317,
+    "end_seconds": 4.424,
+    "start_frame": 130,
+    "end_frame": 133
+  },
+  {
+    "word": "renders",
+    "start_seconds": 4.474,
+    "end_seconds": 4.824,
+    "start_frame": 134,
+    "end_frame": 145
+  },
+  {
+    "word": "real",
+    "start_seconds": 4.888,
+    "end_seconds": 5.144,
+    "start_frame": 147,
+    "end_frame": 154
+  },
+  {
+    "word": "motion",
+    "start_seconds": 5.19,
+    "end_seconds": 5.464,
+    "start_frame": 156,
+    "end_frame": 164
+  },
+  {
+    "word": "graphics,",
+    "start_seconds": 5.517,
+    "end_seconds": 6.024,
+    "start_frame": 166,
+    "end_frame": 181
+  },
+  {
+    "word": "frame",
+    "start_seconds": 6.117,
+    "end_seconds": 6.584,
+    "start_frame": 184,
+    "end_frame": 198
+  },
+  {
+    "word": "by",
+    "start_seconds": 6.637,
+    "end_seconds": 6.744,
+    "start_frame": 199,
+    "end_frame": 202
+  },
+  {
+    "word": "frame,",
+    "start_seconds": 6.797,
+    "end_seconds": 7.144,
+    "start_frame": 204,
+    "end_frame": 214
+  },
+  {
+    "word": "deterministic",
+    "start_seconds": 7.201,
+    "end_seconds": 7.944,
+    "start_frame": 216,
+    "end_frame": 238
+  },
+  {
+    "word": "every",
+    "start_seconds": 7.997,
+    "end_seconds": 8.264,
+    "start_frame": 240,
+    "end_frame": 248
+  },
+  {
+    "word": "time.",
+    "start_seconds": 8.328,
+    "end_seconds": 8.984,
+    "start_frame": 250,
+    "end_frame": 270
+  },
+  {
+    "word": "Forty",
+    "start_seconds": 9.051,
+    "end_seconds": 9.384,
+    "start_frame": 272,
+    "end_frame": 282
+  },
+  {
+    "word": "thousand",
+    "start_seconds": 9.42,
+    "end_seconds": 9.704,
+    "start_frame": 283,
+    "end_frame": 291
+  },
+  {
+    "word": "stars,",
+    "start_seconds": 9.771,
+    "end_seconds": 10.384,
+    "start_frame": 293,
+    "end_frame": 312
+  },
+  {
+    "word": "already",
+    "start_seconds": 10.419,
+    "end_seconds": 10.664,
+    "start_frame": 313,
+    "end_frame": 320
+  },
+  {
+    "word": "running",
+    "start_seconds": 10.694,
+    "end_seconds": 10.904,
+    "start_frame": 321,
+    "end_frame": 327
+  },
+  {
+    "word": "in",
+    "start_seconds": 10.931,
+    "end_seconds": 10.984,
+    "start_frame": 328,
+    "end_frame": 330
+  },
+  {
+    "word": "production",
+    "start_seconds": 11.035,
+    "end_seconds": 11.544,
+    "start_frame": 331,
+    "end_frame": 346
+  },
+  {
+    "word": "at",
+    "start_seconds": 11.597,
+    "end_seconds": 11.704,
+    "start_frame": 348,
+    "end_frame": 351
+  },
+  {
+    "word": "companies",
+    "start_seconds": 11.752,
+    "end_seconds": 12.184,
+    "start_frame": 353,
+    "end_frame": 366
+  },
+  {
+    "word": "like",
+    "start_seconds": 12.232,
+    "end_seconds": 12.424,
+    "start_frame": 367,
+    "end_frame": 373
+  },
+  {
+    "word": "tldraw",
+    "start_seconds": 12.544,
+    "end_seconds": 13.064,
+    "start_frame": 376,
+    "end_frame": 392
+  },
+  {
+    "word": "and",
+    "start_seconds": 13.104,
+    "end_seconds": 13.224,
+    "start_frame": 393,
+    "end_frame": 397
+  },
+  {
+    "word": "TanStack.",
+    "start_seconds": 13.304,
+    "end_seconds": 13.944,
+    "start_frame": 399,
+    "end_frame": 418
+  }
+]

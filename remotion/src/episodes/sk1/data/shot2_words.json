@@ -1,0 +1,226 @@
+[
+  {
+    "word": "Step",
+    "start_seconds": 0.184,
+    "end_seconds": 0.696,
+    "start_frame": 6,
+    "end_frame": 21
+  },
+  {
+    "word": "one:",
+    "start_seconds": 0.756,
+    "end_seconds": 1.016,
+    "start_frame": 23,
+    "end_frame": 30
+  },
+  {
+    "word": "video-use",
+    "start_seconds": 1.096,
+    "end_seconds": 1.736,
+    "start_frame": 33,
+    "end_frame": 52
+  },
+  {
+    "word": "edits",
+    "start_seconds": 1.803,
+    "end_seconds": 2.136,
+    "start_frame": 54,
+    "end_frame": 64
+  },
+  {
+    "word": "my",
+    "start_seconds": 2.189,
+    "end_seconds": 2.296,
+    "start_frame": 66,
+    "end_frame": 69
+  },
+  {
+    "word": "raw",
+    "start_seconds": 2.356,
+    "end_seconds": 2.536,
+    "start_frame": 71,
+    "end_frame": 76
+  },
+  {
+    "word": "footage.",
+    "start_seconds": 2.596,
+    "end_seconds": 3.376,
+    "start_frame": 78,
+    "end_frame": 101
+  },
+  {
+    "word": "I",
+    "start_seconds": 3.556,
+    "end_seconds": 3.736,
+    "start_frame": 107,
+    "end_frame": 112
+  },
+  {
+    "word": "just",
+    "start_seconds": 3.768,
+    "end_seconds": 3.896,
+    "start_frame": 113,
+    "end_frame": 117
+  },
+  {
+    "word": "tell",
+    "start_seconds": 3.928,
+    "end_seconds": 4.056,
+    "start_frame": 118,
+    "end_frame": 122
+  },
+  {
+    "word": "it",
+    "start_seconds": 4.083,
+    "end_seconds": 4.136,
+    "start_frame": 122,
+    "end_frame": 124
+  },
+  {
+    "word": "what",
+    "start_seconds": 4.168,
+    "end_seconds": 4.296,
+    "start_frame": 125,
+    "end_frame": 129
+  },
+  {
+    "word": "I",
+    "start_seconds": 4.336,
+    "end_seconds": 4.376,
+    "start_frame": 130,
+    "end_frame": 131
+  },
+  {
+    "word": "want,",
+    "start_seconds": 4.456,
+    "end_seconds": 4.936,
+    "start_frame": 134,
+    "end_frame": 148
+  },
+  {
+    "word": "cut",
+    "start_seconds": 4.996,
+    "end_seconds": 5.176,
+    "start_frame": 150,
+    "end_frame": 155
+  },
+  {
+    "word": "clips,",
+    "start_seconds": 5.243,
+    "end_seconds": 5.656,
+    "start_frame": 157,
+    "end_frame": 170
+  },
+  {
+    "word": "add",
+    "start_seconds": 5.716,
+    "end_seconds": 5.896,
+    "start_frame": 171,
+    "end_frame": 177
+  },
+  {
+    "word": "captions,",
+    "start_seconds": 5.958,
+    "end_seconds": 6.536,
+    "start_frame": 179,
+    "end_frame": 196
+  },
+  {
+    "word": "mix",
+    "start_seconds": 6.596,
+    "end_seconds": 6.776,
+    "start_frame": 198,
+    "end_frame": 203
+  },
+  {
+    "word": "audio,",
+    "start_seconds": 6.843,
+    "end_seconds": 7.256,
+    "start_frame": 205,
+    "end_frame": 218
+  },
+  {
+    "word": "all",
+    "start_seconds": 7.396,
+    "end_seconds": 7.816,
+    "start_frame": 222,
+    "end_frame": 234
+  },
+  {
+    "word": "through",
+    "start_seconds": 7.836,
+    "end_seconds": 7.976,
+    "start_frame": 235,
+    "end_frame": 239
+  },
+  {
+    "word": "conversation.",
+    "start_seconds": 8.031,
+    "end_seconds": 8.776,
+    "start_frame": 241,
+    "end_frame": 263
+  },
+  {
+    "word": "Twenty",
+    "start_seconds": 8.879,
+    "end_seconds": 9.496,
+    "start_frame": 266,
+    "end_frame": 285
+  },
+  {
+    "word": "thousand",
+    "start_seconds": 9.54,
+    "end_seconds": 9.896,
+    "start_frame": 286,
+    "end_frame": 297
+  },
+  {
+    "word": "GitHub",
+    "start_seconds": 9.942,
+    "end_seconds": 10.216,
+    "start_frame": 298,
+    "end_frame": 306
+  },
+  {
+    "word": "stars,",
+    "start_seconds": 10.283,
+    "end_seconds": 10.776,
+    "start_frame": 308,
+    "end_frame": 323
+  },
+  {
+    "word": "built",
+    "start_seconds": 10.803,
+    "end_seconds": 10.936,
+    "start_frame": 324,
+    "end_frame": 328
+  },
+  {
+    "word": "by",
+    "start_seconds": 10.989,
+    "end_seconds": 11.096,
+    "start_frame": 330,
+    "end_frame": 333
+  },
+  {
+    "word": "the",
+    "start_seconds": 11.116,
+    "end_seconds": 11.176,
+    "start_frame": 333,
+    "end_frame": 335
+  },
+  {
+    "word": "browser-use",
+    "start_seconds": 11.226,
+    "end_seconds": 11.816,
+    "start_frame": 337,
+    "end_frame": 354
+  },
+  {
+    "word": "team.",
+    "start_seconds": 11.88,
+    "end_seconds": 12.216,
+    "start_frame": 356,
+    "end_frame": 366
+  }
+]

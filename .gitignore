@@ -16,4 +16,3 @@ __pycache__/
 
 # Build artifacts
 episodes/*/build/
-remotion/

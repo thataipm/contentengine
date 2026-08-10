@@ -1,0 +1,100 @@
+[
+  {
+    "word": "I",
+    "start_seconds": 0.0,
+    "end_seconds": 0.16,
+    "start_frame": 0,
+    "end_frame": 5
+  },
+  {
+    "word": "automated",
+    "start_seconds": 0.208,
+    "end_seconds": 0.64,
+    "start_frame": 6,
+    "end_frame": 19
+  },
+  {
+    "word": "my",
+    "start_seconds": 0.667,
+    "end_seconds": 0.72,
+    "start_frame": 20,
+    "end_frame": 22
+  },
+  {
+    "word": "entire",
+    "start_seconds": 0.766,
+    "end_seconds": 1.04,
+    "start_frame": 23,
+    "end_frame": 31
+  },
+  {
+    "word": "video",
+    "start_seconds": 1.093,
+    "end_seconds": 1.36,
+    "start_frame": 33,
+    "end_frame": 41
+  },
+  {
+    "word": "pipeline",
+    "start_seconds": 1.404,
+    "end_seconds": 1.76,
+    "start_frame": 42,
+    "end_frame": 53
+  },
+  {
+    "word": "with",
+    "start_seconds": 1.808,
+    "end_seconds": 2.0,
+    "start_frame": 54,
+    "end_frame": 60
+  },
+  {
+    "word": "three",
+    "start_seconds": 2.027,
+    "end_seconds": 2.16,
+    "start_frame": 61,
+    "end_frame": 65
+  },
+  {
+    "word": "tools.",
+    "start_seconds": 2.227,
+    "end_seconds": 2.72,
+    "start_frame": 67,
+    "end_frame": 82
+  },
+  {
+    "word": "Here's",
+    "start_seconds": 2.752,
+    "end_seconds": 3.12,
+    "start_frame": 83,
+    "end_frame": 94
+  },
+  {
+    "word": "exactly",
+    "start_seconds": 3.15,
+    "end_seconds": 3.36,
+    "start_frame": 94,
+    "end_frame": 101
+  },
+  {
+    "word": "how",
+    "start_seconds": 3.4,
+    "end_seconds": 3.52,
+    "start_frame": 102,
+    "end_frame": 106
+  },
+  {
+    "word": "it",
+    "start_seconds": 3.547,
+    "end_seconds": 3.6,
+    "start_frame": 106,
+    "end_frame": 108
+  },
+  {
+    "word": "works.",
+    "start_seconds": 3.667,
+    "end_seconds": 4.08,
+    "start_frame": 110,
+    "end_frame": 122
+  }
+]

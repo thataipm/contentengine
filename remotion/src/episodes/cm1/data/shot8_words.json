@@ -1,0 +1,100 @@
+[
+  {
+    "word": "So",
+    "start_seconds": 0.187,
+    "end_seconds": 0.774,
+    "start_frame": 6,
+    "end_frame": 23
+  },
+  {
+    "word": "next",
+    "start_seconds": 0.822,
+    "end_seconds": 1.014,
+    "start_frame": 25,
+    "end_frame": 30
+  },
+  {
+    "word": "time",
+    "start_seconds": 1.062,
+    "end_seconds": 1.254,
+    "start_frame": 32,
+    "end_frame": 38
+  },
+  {
+    "word": "AI",
+    "start_seconds": 1.361,
+    "end_seconds": 1.574,
+    "start_frame": 41,
+    "end_frame": 47
+  },
+  {
+    "word": "botches",
+    "start_seconds": 1.634,
+    "end_seconds": 2.053,
+    "start_frame": 49,
+    "end_frame": 62
+  },
+  {
+    "word": "something",
+    "start_seconds": 2.086,
+    "end_seconds": 2.373,
+    "start_frame": 63,
+    "end_frame": 71
+  },
+  {
+    "word": "\"simple,\"",
+    "start_seconds": 2.413,
+    "end_seconds": 3.334,
+    "start_frame": 72,
+    "end_frame": 100
+  },
+  {
+    "word": "don't",
+    "start_seconds": 3.373,
+    "end_seconds": 3.574,
+    "start_frame": 101,
+    "end_frame": 107
+  },
+  {
+    "word": "blame",
+    "start_seconds": 3.614,
+    "end_seconds": 3.814,
+    "start_frame": 108,
+    "end_frame": 114
+  },
+  {
+    "word": "its",
+    "start_seconds": 3.854,
+    "end_seconds": 3.974,
+    "start_frame": 116,
+    "end_frame": 119
+  },
+  {
+    "word": "intelligence.",
+    "start_seconds": 4.029,
+    "end_seconds": 4.894,
+    "start_frame": 121,
+    "end_frame": 147
+  },
+  {
+    "word": "Blame",
+    "start_seconds": 4.961,
+    "end_seconds": 5.174,
+    "start_frame": 149,
+    "end_frame": 155
+  },
+  {
+    "word": "its",
+    "start_seconds": 5.214,
+    "end_seconds": 5.334,
+    "start_frame": 156,
+    "end_frame": 160
+  },
+  {
+    "word": "eyesight.",
+    "start_seconds": 5.413,
+    "end_seconds": 5.974,
+    "start_frame": 162,
+    "end_frame": 179
+  }
+]

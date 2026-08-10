@@ -1,0 +1,156 @@
+[
+  {
+    "word": "AI",
+    "start_seconds": 0.0,
+    "end_seconds": 0.24,
+    "start_frame": 0,
+    "end_frame": 7
+  },
+  {
+    "word": "can",
+    "start_seconds": 0.3,
+    "end_seconds": 0.48,
+    "start_frame": 9,
+    "end_frame": 14
+  },
+  {
+    "word": "write",
+    "start_seconds": 0.52,
+    "end_seconds": 0.72,
+    "start_frame": 16,
+    "end_frame": 22
+  },
+  {
+    "word": "your",
+    "start_seconds": 0.736,
+    "end_seconds": 0.8,
+    "start_frame": 22,
+    "end_frame": 24
+  },
+  {
+    "word": "wedding",
+    "start_seconds": 0.84,
+    "end_seconds": 1.12,
+    "start_frame": 25,
+    "end_frame": 34
+  },
+  {
+    "word": "speech",
+    "start_seconds": 1.2,
+    "end_seconds": 1.68,
+    "start_frame": 36,
+    "end_frame": 50
+  },
+  {
+    "word": "and",
+    "start_seconds": 1.74,
+    "end_seconds": 1.92,
+    "start_frame": 52,
+    "end_frame": 58
+  },
+  {
+    "word": "pass",
+    "start_seconds": 1.968,
+    "end_seconds": 2.16,
+    "start_frame": 59,
+    "end_frame": 65
+  },
+  {
+    "word": "the",
+    "start_seconds": 2.18,
+    "end_seconds": 2.24,
+    "start_frame": 65,
+    "end_frame": 67
+  },
+  {
+    "word": "bar",
+    "start_seconds": 2.3,
+    "end_seconds": 2.48,
+    "start_frame": 69,
+    "end_frame": 74
+  },
+  {
+    "word": "exam.",
+    "start_seconds": 2.56,
+    "end_seconds": 3.52,
+    "start_frame": 77,
+    "end_frame": 106
+  },
+  {
+    "word": "Ask",
+    "start_seconds": 3.58,
+    "end_seconds": 3.76,
+    "start_frame": 107,
+    "end_frame": 113
+  },
+  {
+    "word": "it",
+    "start_seconds": 3.813,
+    "end_seconds": 3.92,
+    "start_frame": 114,
+    "end_frame": 118
+  },
+  {
+    "word": "to",
+    "start_seconds": 3.947,
+    "end_seconds": 4.0,
+    "start_frame": 118,
+    "end_frame": 120
+  },
+  {
+    "word": "count",
+    "start_seconds": 4.04,
+    "end_seconds": 4.24,
+    "start_frame": 121,
+    "end_frame": 127
+  },
+  {
+    "word": "letters",
+    "start_seconds": 4.29,
+    "end_seconds": 4.64,
+    "start_frame": 129,
+    "end_frame": 139
+  },
+  {
+    "word": "in",
+    "start_seconds": 4.693,
+    "end_seconds": 4.8,
+    "start_frame": 141,
+    "end_frame": 144
+  },
+  {
+    "word": "\"strawberry,\"",
+    "start_seconds": 4.84,
+    "end_seconds": 5.6,
+    "start_frame": 145,
+    "end_frame": 168
+  },
+  {
+    "word": "and",
+    "start_seconds": 5.62,
+    "end_seconds": 5.68,
+    "start_frame": 169,
+    "end_frame": 170
+  },
+  {
+    "word": "it",
+    "start_seconds": 5.733,
+    "end_seconds": 5.84,
+    "start_frame": 172,
+    "end_frame": 175
+  },
+  {
+    "word": "falls",
+    "start_seconds": 5.893,
+    "end_seconds": 6.16,
+    "start_frame": 177,
+    "end_frame": 185
+  },
+  {
+    "word": "apart.",
+    "start_seconds": 6.227,
+    "end_seconds": 6.6,
+    "start_frame": 187,
+    "end_frame": 198
+  }
+]

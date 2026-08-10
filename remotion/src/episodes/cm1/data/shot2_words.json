@@ -1,0 +1,107 @@
+[
+  {
+    "word": "Here's",
+    "start_seconds": 0.092,
+    "end_seconds": 0.748,
+    "start_frame": 3,
+    "end_frame": 22
+  },
+  {
+    "word": "why.",
+    "start_seconds": 0.808,
+    "end_seconds": 1.068,
+    "start_frame": 24,
+    "end_frame": 32
+  },
+  {
+    "word": "Every",
+    "start_seconds": 1.268,
+    "end_seconds": 2.268,
+    "start_frame": 38,
+    "end_frame": 68
+  },
+  {
+    "word": "sentence",
+    "start_seconds": 2.312,
+    "end_seconds": 2.668,
+    "start_frame": 69,
+    "end_frame": 80
+  },
+  {
+    "word": "you",
+    "start_seconds": 2.708,
+    "end_seconds": 2.828,
+    "start_frame": 81,
+    "end_frame": 85
+  },
+  {
+    "word": "type",
+    "start_seconds": 2.908,
+    "end_seconds": 3.228,
+    "start_frame": 87,
+    "end_frame": 97
+  },
+  {
+    "word": "gets",
+    "start_seconds": 3.324,
+    "end_seconds": 3.708,
+    "start_frame": 100,
+    "end_frame": 111
+  },
+  {
+    "word": "sliced",
+    "start_seconds": 3.765,
+    "end_seconds": 4.108,
+    "start_frame": 113,
+    "end_frame": 123
+  },
+  {
+    "word": "apart",
+    "start_seconds": 4.175,
+    "end_seconds": 4.508,
+    "start_frame": 125,
+    "end_frame": 135
+  },
+  {
+    "word": "before",
+    "start_seconds": 4.565,
+    "end_seconds": 4.908,
+    "start_frame": 137,
+    "end_frame": 147
+  },
+  {
+    "word": "the",
+    "start_seconds": 4.928,
+    "end_seconds": 4.988,
+    "start_frame": 148,
+    "end_frame": 150
+  },
+  {
+    "word": "model",
+    "start_seconds": 5.041,
+    "end_seconds": 5.308,
+    "start_frame": 151,
+    "end_frame": 159
+  },
+  {
+    "word": "ever",
+    "start_seconds": 5.372,
+    "end_seconds": 5.628,
+    "start_frame": 161,
+    "end_frame": 169
+  },
+  {
+    "word": "reads",
+    "start_seconds": 5.681,
+    "end_seconds": 5.948,
+    "start_frame": 170,
+    "end_frame": 178
+  },
+  {
+    "word": "it.",
+    "start_seconds": 6.001,
+    "end_seconds": 6.188,
+    "start_frame": 180,
+    "end_frame": 186
+  }
+]

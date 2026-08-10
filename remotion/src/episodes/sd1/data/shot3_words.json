@@ -1,0 +1,233 @@
+[
+  {
+    "word": "If",
+    "start_seconds": 0.186,
+    "end_seconds": 0.773,
+    "start_frame": 6,
+    "end_frame": 23
+  },
+  {
+    "word": "you",
+    "start_seconds": 0.793,
+    "end_seconds": 0.853,
+    "start_frame": 24,
+    "end_frame": 26
+  },
+  {
+    "word": "want",
+    "start_seconds": 0.901,
+    "end_seconds": 1.093,
+    "start_frame": 27,
+    "end_frame": 33
+  },
+  {
+    "word": "real",
+    "start_seconds": 1.157,
+    "end_seconds": 1.413,
+    "start_frame": 35,
+    "end_frame": 42
+  },
+  {
+    "word": "studio",
+    "start_seconds": 1.47,
+    "end_seconds": 1.813,
+    "start_frame": 44,
+    "end_frame": 54
+  },
+  {
+    "word": "control,",
+    "start_seconds": 1.873,
+    "end_seconds": 2.613,
+    "start_frame": 56,
+    "end_frame": 78
+  },
+  {
+    "word": "pitch,",
+    "start_seconds": 2.666,
+    "end_seconds": 3.173,
+    "start_frame": 80,
+    "end_frame": 95
+  },
+  {
+    "word": "pauses,",
+    "start_seconds": 3.242,
+    "end_seconds": 3.813,
+    "start_frame": 97,
+    "end_frame": 114
+  },
+  {
+    "word": "emphasis,",
+    "start_seconds": 3.884,
+    "end_seconds": 5.013,
+    "start_frame": 117,
+    "end_frame": 150
+  },
+  {
+    "word": "Murf",
+    "start_seconds": 5.073,
+    "end_seconds": 5.413,
+    "start_frame": 152,
+    "end_frame": 162
+  },
+  {
+    "word": "is",
+    "start_seconds": 5.466,
+    "end_seconds": 5.573,
+    "start_frame": 164,
+    "end_frame": 167
+  },
+  {
+    "word": "built",
+    "start_seconds": 5.613,
+    "end_seconds": 5.813,
+    "start_frame": 168,
+    "end_frame": 174
+  },
+  {
+    "word": "for",
+    "start_seconds": 5.853,
+    "end_seconds": 5.973,
+    "start_frame": 176,
+    "end_frame": 179
+  },
+  {
+    "word": "that.",
+    "start_seconds": 6.021,
+    "end_seconds": 6.293,
+    "start_frame": 181,
+    "end_frame": 189
+  },
+  {
+    "word": "Just",
+    "start_seconds": 6.389,
+    "end_seconds": 6.773,
+    "start_frame": 192,
+    "end_frame": 203
+  },
+  {
+    "word": "know",
+    "start_seconds": 6.821,
+    "end_seconds": 7.013,
+    "start_frame": 205,
+    "end_frame": 210
+  },
+  {
+    "word": "voice",
+    "start_seconds": 7.146,
+    "end_seconds": 7.813,
+    "start_frame": 214,
+    "end_frame": 234
+  },
+  {
+    "word": "cloning",
+    "start_seconds": 7.853,
+    "end_seconds": 8.133,
+    "start_frame": 236,
+    "end_frame": 244
+  },
+  {
+    "word": "isn't",
+    "start_seconds": 8.213,
+    "end_seconds": 8.733,
+    "start_frame": 246,
+    "end_frame": 262
+  },
+  {
+    "word": "included",
+    "start_seconds": 8.764,
+    "end_seconds": 9.013,
+    "start_frame": 263,
+    "end_frame": 270
+  },
+  {
+    "word": "in",
+    "start_seconds": 9.093,
+    "end_seconds": 9.253,
+    "start_frame": 273,
+    "end_frame": 278
+  },
+  {
+    "word": "any",
+    "start_seconds": 9.333,
+    "end_seconds": 9.573,
+    "start_frame": 280,
+    "end_frame": 287
+  },
+  {
+    "word": "regular",
+    "start_seconds": 9.633,
+    "end_seconds": 10.053,
+    "start_frame": 289,
+    "end_frame": 302
+  },
+  {
+    "word": "plan.",
+    "start_seconds": 10.133,
+    "end_seconds": 10.653,
+    "start_frame": 304,
+    "end_frame": 320
+  },
+  {
+    "word": "That's",
+    "start_seconds": 10.693,
+    "end_seconds": 10.933,
+    "start_frame": 321,
+    "end_frame": 328
+  },
+  {
+    "word": "Enterprise",
+    "start_seconds": 10.984,
+    "end_seconds": 11.493,
+    "start_frame": 330,
+    "end_frame": 345
+  },
+  {
+    "word": "only,",
+    "start_seconds": 11.573,
+    "end_seconds": 12.373,
+    "start_frame": 347,
+    "end_frame": 371
+  },
+  {
+    "word": "over",
+    "start_seconds": 12.421,
+    "end_seconds": 12.613,
+    "start_frame": 373,
+    "end_frame": 378
+  },
+  {
+    "word": "a",
+    "start_seconds": 12.653,
+    "end_seconds": 12.693,
+    "start_frame": 380,
+    "end_frame": 381
+  },
+  {
+    "word": "thousand",
+    "start_seconds": 12.737,
+    "end_seconds": 13.093,
+    "start_frame": 382,
+    "end_frame": 393
+  },
+  {
+    "word": "dollars",
+    "start_seconds": 13.143,
+    "end_seconds": 13.493,
+    "start_frame": 394,
+    "end_frame": 405
+  },
+  {
+    "word": "a",
+    "start_seconds": 13.533,
+    "end_seconds": 13.573,
+    "start_frame": 406,
+    "end_frame": 407
+  },
+  {
+    "word": "year.",
+    "start_seconds": 13.637,
+    "end_seconds": 13.933,
+    "start_frame": 409,
+    "end_frame": 418
+  }
+]

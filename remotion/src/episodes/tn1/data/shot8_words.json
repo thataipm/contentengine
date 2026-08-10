@@ -1,0 +1,86 @@
+[
+  {
+    "word": "Follow",
+    "start_seconds": 0.1,
+    "end_seconds": 1.06,
+    "start_frame": 3,
+    "end_frame": 32
+  },
+  {
+    "word": "for",
+    "start_seconds": 1.12,
+    "end_seconds": 1.3,
+    "start_frame": 34,
+    "end_frame": 39
+  },
+  {
+    "word": "how",
+    "start_seconds": 1.36,
+    "end_seconds": 1.54,
+    "start_frame": 41,
+    "end_frame": 46
+  },
+  {
+    "word": "AI",
+    "start_seconds": 1.647,
+    "end_seconds": 1.86,
+    "start_frame": 49,
+    "end_frame": 56
+  },
+  {
+    "word": "actually",
+    "start_seconds": 1.913,
+    "end_seconds": 2.34,
+    "start_frame": 57,
+    "end_frame": 70
+  },
+  {
+    "word": "works,",
+    "start_seconds": 2.42,
+    "end_seconds": 3.06,
+    "start_frame": 73,
+    "end_frame": 92
+  },
+  {
+    "word": "one",
+    "start_seconds": 3.12,
+    "end_seconds": 3.3,
+    "start_frame": 94,
+    "end_frame": 99
+  },
+  {
+    "word": "real",
+    "start_seconds": 3.348,
+    "end_seconds": 3.54,
+    "start_frame": 100,
+    "end_frame": 106
+  },
+  {
+    "word": "comparison",
+    "start_seconds": 3.598,
+    "end_seconds": 4.18,
+    "start_frame": 108,
+    "end_frame": 125
+  },
+  {
+    "word": "at",
+    "start_seconds": 4.233,
+    "end_seconds": 4.34,
+    "start_frame": 127,
+    "end_frame": 130
+  },
+  {
+    "word": "a",
+    "start_seconds": 4.38,
+    "end_seconds": 4.42,
+    "start_frame": 131,
+    "end_frame": 133
+  },
+  {
+    "word": "time.",
+    "start_seconds": 4.468,
+    "end_seconds": 4.82,
+    "start_frame": 134,
+    "end_frame": 145
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "word": "Step",
+    "start_seconds": 0.168,
+    "end_seconds": 0.872,
+    "start_frame": 5,
+    "end_frame": 26
+  },
+  {
+    "word": "three:",
+    "start_seconds": 0.912,
+    "end_seconds": 1.512,
+    "start_frame": 27,
+    "end_frame": 45
+  },
+  {
+    "word": "the",
+    "start_seconds": 1.532,
+    "end_seconds": 1.592,
+    "start_frame": 46,
+    "end_frame": 48
+  },
+  {
+    "word": "official",
+    "start_seconds": 1.645,
+    "end_seconds": 2.072,
+    "start_frame": 49,
+    "end_frame": 62
+  },
+  {
+    "word": "Remotion",
+    "start_seconds": 2.152,
+    "end_seconds": 2.632,
+    "start_frame": 65,
+    "end_frame": 79
+  },
+  {
+    "word": "skill.",
+    "start_seconds": 2.699,
+    "end_seconds": 3.112,
+    "start_frame": 81,
+    "end_frame": 93
+  },
+  {
+    "word": "I",
+    "start_seconds": 3.432,
+    "end_seconds": 3.752,
+    "start_frame": 103,
+    "end_frame": 113
+  },
+  {
+    "word": "describe",
+    "start_seconds": 3.796,
+    "end_seconds": 4.152,
+    "start_frame": 114,
+    "end_frame": 125
+  },
+  {
+    "word": "the",
+    "start_seconds": 4.172,
+    "end_seconds": 4.232,
+    "start_frame": 125,
+    "end_frame": 127
+  },
+  {
+    "word": "video",
+    "start_seconds": 4.272,
+    "end_seconds": 4.472,
+    "start_frame": 128,
+    "end_frame": 134
+  },
+  {
+    "word": "I",
+    "start_seconds": 4.552,
+    "end_seconds": 4.632,
+    "start_frame": 137,
+    "end_frame": 139
+  },
+  {
+    "word": "want",
+    "start_seconds": 4.68,
+    "end_seconds": 4.872,
+    "start_frame": 140,
+    "end_frame": 146
+  },
+  {
+    "word": "in",
+    "start_seconds": 4.899,
+    "end_seconds": 4.952,
+    "start_frame": 147,
+    "end_frame": 149
+  },
+  {
+    "word": "plain",
+    "start_seconds": 5.005,
+    "end_seconds": 5.272,
+    "start_frame": 150,
+    "end_frame": 158
+  },
+  {
+    "word": "English,",
+    "start_seconds": 5.322,
+    "end_seconds": 5.752,
+    "start_frame": 160,
+    "end_frame": 173
+  },
+  {
+    "word": "and",
+    "start_seconds": 5.792,
+    "end_seconds": 5.912,
+    "start_frame": 174,
+    "end_frame": 177
+  },
+  {
+    "word": "it",
+    "start_seconds": 5.939,
+    "end_seconds": 5.992,
+    "start_frame": 178,
+    "end_frame": 180
+  },
+  {
+    "word": "writes",
+    "start_seconds": 6.038,
+    "end_seconds": 6.312,
+    "start_frame": 181,
+    "end_frame": 189
+  },
+  {
+    "word": "the",
+    "start_seconds": 6.352,
+    "end_seconds": 6.472,
+    "start_frame": 191,
+    "end_frame": 194
+  },
+  {
+    "word": "actual",
+    "start_seconds": 6.518,
+    "end_seconds": 6.792,
+    "start_frame": 196,
+    "end_frame": 204
+  },
+  {
+    "word": "code",
+    "start_seconds": 6.84,
+    "end_seconds": 7.032,
+    "start_frame": 205,
+    "end_frame": 211
+  },
+  {
+    "word": "behind",
+    "start_seconds": 7.078,
+    "end_seconds": 7.352,
+    "start_frame": 212,
+    "end_frame": 221
+  },
+  {
+    "word": "it.",
+    "start_seconds": 7.432,
+    "end_seconds": 7.832,
+    "start_frame": 223,
+    "end_frame": 235
+  },
+  {
+    "word": "Its",
+    "start_seconds": 7.952,
+    "end_seconds": 8.312,
+    "start_frame": 239,
+    "end_frame": 249
+  },
+  {
+    "word": "own",
+    "start_seconds": 8.372,
+    "end_seconds": 8.552,
+    "start_frame": 251,
+    "end_frame": 257
+  },
+  {
+    "word": "launch",
+    "start_seconds": 8.598,
+    "end_seconds": 8.872,
+    "start_frame": 258,
+    "end_frame": 266
+  },
+  {
+    "word": "demo",
+    "start_seconds": 8.936,
+    "end_seconds": 9.192,
+    "start_frame": 268,
+    "end_frame": 276
+  },
+  {
+    "word": "hit",
+    "start_seconds": 9.252,
+    "end_seconds": 9.432,
+    "start_frame": 278,
+    "end_frame": 283
+  },
+  {
+    "word": "six",
+    "start_seconds": 9.492,
+    "end_seconds": 9.672,
+    "start_frame": 285,
+    "end_frame": 290
+  },
+  {
+    "word": "million",
+    "start_seconds": 9.712,
+    "end_seconds": 9.992,
+    "start_frame": 291,
+    "end_frame": 300
+  },
+  {
+    "word": "views",
+    "start_seconds": 10.059,
+    "end_seconds": 10.392,
+    "start_frame": 302,
+    "end_frame": 312
+  },
+  {
+    "word": "in",
+    "start_seconds": 10.419,
+    "end_seconds": 10.472,
+    "start_frame": 313,
+    "end_frame": 314
+  },
+  {
+    "word": "just",
+    "start_seconds": 10.536,
+    "end_seconds": 10.792,
+    "start_frame": 316,
+    "end_frame": 324
+  },
+  {
+    "word": "forty",
+    "start_seconds": 10.832,
+    "end_seconds": 11.032,
+    "start_frame": 325,
+    "end_frame": 331
+  },
+  {
+    "word": "eight",
+    "start_seconds": 11.059,
+    "end_seconds": 11.192,
+    "start_frame": 332,
+    "end_frame": 336
+  },
+  {
+    "word": "hours.",
+    "start_seconds": 11.272,
+    "end_seconds": 11.792,
+    "start_frame": 338,
+    "end_frame": 354
+  }
+]
