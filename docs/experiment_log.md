@@ -171,11 +171,13 @@ concepts:
     sources: user-provided (resume / first-hand account, 2026-08-10)
 success_metrics: follows per 1,000 views (primary, comparing the two concepts against each
   other), saves and comments (secondary), per spec §9
-status: PLANNED
+status: IN_PRODUCTION
 results:
 learning:
 decision:
-next_action: script and produce both concepts
+next_action: "The AI PM Pay Gap" produced 2026-08-10 (episodes/the-ai-pm-pay-gap/), pending
+  schedule/publish. SenseBug AI concept still needs real details from the user (screenshots,
+  the specific trigger story) before scripting.
 ```
 
 Notes: Reserve candidates from the same research pass, held for Batch 2 rather than crowding
