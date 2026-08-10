@@ -634,26 +634,29 @@ KEEP / SCALE / MODIFY / KILL   written into the batch entry, closes it
 NEXT EXPERIMENT          new batch opens
 ```
 
-**Zernio analytics investigation, 2026-08-10**: checked Zernio's own docs
-(`docs.zernio.com/llms-full.txt`) for what its Analytics API (`GET /v1/analytics`, included on
-paid Usage plan) actually exposes, rather than assuming either way. Finding is a genuine
-hybrid, not a clean yes/no:
+**Zernio analytics investigation, 2026-08-10, corrected same day**: initially checked Zernio's
+own docs (`docs.zernio.com/llms-full.txt`) only, and wrongly concluded follows/watch-time
+weren't available per post. Re-checked by actually calling the real API against sd1's already-
+published posts, not just reading docs, which is the only reason the mistake got caught. Real
+finding, via `automation/fetch_zernio_analytics.py`:
 
-- **Available per post, via Zernio's API**: Instagram gets impressions, reach, likes,
-  comments, shares, saves, views. YouTube gets likes, comments, views, and shares (shares only
-  via the daily Analytics API, not the basic Data API).
-- **Not available anywhere, for either platform**: follows attributable to a specific post,
-  3-second hold rate, average watch percentage. No known public API exposes these at the
-  post level for Instagram or YouTube, this is a platform limitation, not specific to Zernio
-  (confirmed against TikTok's own docs stating the same gap explicitly for its own API).
-  Instagram's follower data is only available as an account-level daily snapshot
-  (`followers_gained`/`followers_lost` deltas), not tied to individual posts.
-- **Practical effect**: the spec's single most important metric, follows per 1,000 views,
-  cannot be pulled automatically and attributed to one post. The 90-day fallback is manual:
-  capture that number (and 3-second hold / average watch %) from Instagram's and YouTube's own
-  native Insights/Studio UI, log it by hand into `docs/experiment_log.md`'s `results:` field,
-  noting which numbers came from Zernio's API versus manual capture so the two don't get
-  silently blended.
+- **Instagram**: `GET /v1/analytics?postId=...` returns impressions, reach, likes, comments,
+  shares, saves, views, AND per-post `follows` and average watch time
+  (`igReelsAvgWatchTime`/`igReelsVideoViewTotalTime`), confirmed present on a real post
+  (`follows: 0, igReelsAvgWatchTime: 6896` on sd1's Reel). The earlier claim that Instagram
+  doesn't expose these was wrong.
+- **YouTube**: the same endpoint returned all-zero follows/watch-time fields on the one real
+  post tested, still unclear whether that's a genuine zero or a platform placeholder. A
+  separate endpoint, `GET /v1/analytics/youtube/video-retention`, returns a real
+  audience-retention curve once a video clears YouTube's own view-count and 2-3 day
+  processing-delay thresholds, confirmed working (`hasAnalyticsScope: true`) but empty on
+  sd1's low-view video. No single named "3-second hold rate" field exists, but it's derivable
+  from this curve's early points once populated.
+- **Practical effect**: automated capture via `fetch_zernio_analytics.py` covers most of the
+  spec's metrics, including the previously-assumed-unavailable follows-per-post on Instagram.
+  Manual capture from native Insights/Studio UI is now the fallback for whatever the script
+  genuinely can't get (confirmed real gaps, not assumed ones), logged into
+  `docs/experiment_log.md`'s `results:` field with the source noted per number.
 
 **"The Karpathy Skill" episode**: produced before this migration, under the old strategy.
 Explicit decision: publish it as-is, do not reframe/regenerate/kill it, treat it as a legacy/
@@ -663,3 +666,26 @@ All content produced from this point forward follows v2.0.
 **Retired docs (kept for audit, not deleted)**: `docs/thataipm_pillar2_content_plan.md`,
 `docs/30_day_content_calendar.md`, `docs/channel_bio_copy.md`. `docs/posting_platforms.md` is
 unaffected (distribution mechanics, not strategy) and stays valid under v2.0 as-is.
+
+**Data-removal practice, added 2026-08-10** (direct instruction: "keep data removal practice
+from local and github post so we don't have any data crunch"): every episode's rendered
+`build/*.mp4` + cover PNG get force-added to git despite `.gitignore`'s own
+`episodes/*/build/` rule, since Zernio needs a real public URL to fetch the video from at
+publish time, and GitHub raw hosting is what serves that. At v2.0's target cadence (60-90
+pieces over 90 days), keeping every one of those videos permanently git-tracked would grow
+this repo without bound. **Standing rule**: once a scheduled post's Zernio status reads
+`published` (not just `scheduled`), untrack that episode's `build/*.mp4` and cover from git
+(`git rm --cached`, never a plain `rm`, the local file stays on disk) in the next commit, the
+existing `.gitignore` rule then keeps it untracked going forward. Applied immediately to `sk1`
+and `best-ai-tools-for-voiceovers`, both confirmed published, local files untouched. **Do NOT
+untrack an episode before its post is confirmed published.** "The Karpathy Skill" stays
+tracked until its 2026-08-11 09:00 IST scheduled post is verified live, since Zernio needs the
+GitHub URL to still resolve at fire time. Note this only bounds the size of the repo's current
+tree; git history still retains every blob ever committed (see the standing, still-unanswered
+offer to do a full history rewrite, noted elsewhere in this file) unless a separate,
+deliberate history-rewrite pass is run.
+
+**CTA fulfillment, deliberately deferred 2026-08-10**: every episode still closes on "Comment
+[KEYWORD] and I'll send you the link" with no actual fulfillment process behind it (see the
+"Still open" note under Posting automation below). Direct decision: not worth building yet,
+revisit only if a single post crosses 10 real comments. Not an oversight, a threshold.

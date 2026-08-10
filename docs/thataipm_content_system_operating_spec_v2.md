@@ -137,13 +137,16 @@ Do not optimize for views alone. Track:
 A lower-view post that attracts many relevant followers can beat a viral post that attracts
 the wrong audience.
 
-**Analytics reality check (investigated 2026-08-10, see `CLAUDE.md`'s migration note for the
-full finding)**: Zernio's Analytics API is real and included on its paid Usage plan, and does
-return post-level views/likes/comments/shares/saves for Instagram and views/likes/comments for
-YouTube. It does **not** expose follows attributable to a specific post, 3-second hold, or
-average watch percentage for either platform. No known public API for Instagram or YouTube
-exposes those at the post level. Those four metrics need manual capture from each platform's
-native Insights/Studio UI for now, logged by hand into `docs/experiment_log.md`.
+**Analytics reality check (investigated 2026-08-10, corrected same day after testing against
+real published posts, see `docs/experiment_log.md`'s Analytics Capture Note for the full
+finding)**: Zernio's Analytics API is real and included on its paid Usage plan.
+`automation/fetch_zernio_analytics.py` pulls it. Instagram returns impressions, reach, likes,
+comments, shares, saves, views, and, confirmed via a real post, per-post follows and average
+watch time. YouTube's own follows/watch-time fields on the same endpoint read 0 on the one post
+tested (unclear yet if that's real or a platform placeholder), but a separate retention-curve
+endpoint gives real audience-retention data once a video has enough views and clears YouTube's
+2-3 day processing delay. Manual capture from native Insights/Studio UI is now the fallback for
+whatever the script can't get, not the default assumption.
 
 ## 10. Batch decision rule
 

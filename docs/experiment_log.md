@@ -60,14 +60,31 @@ past the gate into research and scripting.
 
 ### Analytics capture note
 
-Per the 2026-08-10 Zernio investigation (full finding in `CLAUDE.md`'s migration note and
-`thataipm_content_system_operating_spec_v2.md` §9): Zernio's Analytics API is real and covers
-post-level views/likes/comments/shares/saves on Instagram and views/likes/comments on YouTube.
-It does **not** expose follows attributable to a specific post, 3-second hold, or average
-watch percentage on either platform. No known public API does. Populate `results:` with
-whatever Zernio's API returns automatically, and capture those four remaining metrics manually
-from each platform's native Insights/Studio UI. Note in `results:` which numbers came from
-which source so the gap stays visible rather than silently blended.
+**Corrected 2026-08-10** after actually calling the API against real published posts (sd1),
+not just reading docs: the initial investigation understated what's available. Real, verified
+fields per post via `GET /v1/analytics?postId=...` (`automation/fetch_zernio_analytics.py`):
+
+- **Instagram**: impressions, reach, likes, comments, shares, saves, clicks, views, and
+  (confirmed present, contrary to the earlier claim) **`follows`** and Instagram-specific
+  average watch time (`igReelsAvgWatchTime` in ms, `igReelsVideoViewTotalTime`,
+  `videoDurationSeconds`), all directly attributable to one post.
+- **YouTube**: impressions/reach/likes/comments/shares/saves/clicks/views/follows come back in
+  the same schema, but were all 0 on the one real post tested, unclear yet whether YouTube
+  populates these the same way Instagram does or whether they're placeholders on this
+  endpoint for that platform. A **separate** endpoint,
+  `GET /v1/analytics/youtube/video-retention` (`automation/fetch_zernio_analytics.py
+  --youtube-retention`), returns a real audience-retention curve (up to 100 points across the
+  video timeline), confirmed working (`hasAnalyticsScope: true`) but empty on a low-view video,
+  YouTube needs enough views plus its own 2-3 day analytics-processing delay before the curve
+  populates. A literal "3-second hold rate" isn't a single named field anywhere, but is
+  derivable from this curve's early points once it has data.
+
+**Still genuinely unclear, re-verify once the Karpathy post has real traffic**: whether
+YouTube's `follows`/watch-time fields on the main endpoint ever populate for real, or whether
+YouTube's follow/watch-quality signal only ever comes through the retention-curve endpoint.
+Populate `results:` with whatever `fetch_zernio_analytics.py` returns automatically, and only
+fall back to manual capture from a platform's native Insights/Studio UI for whatever the script
+still can't get once real data exists. Note in `results:` which numbers came from which source.
 
 ---
 
