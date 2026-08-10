@@ -17,6 +17,16 @@ Gotchas this encodes so they don't get rediscovered:
   (NOT a sibling of mediaItems' url like YouTube's thumbnail field).
 - Always verify with GET /v1/posts?status=scheduled after creating,
   a 201 response alone doesn't prove it didn't silently land as draft.
+- YouTube tags/keywords have NO field inside platforms[].platformSpecificData
+  -- they're a POST-LEVEL `tags` array (sibling of `content`/`platforms`),
+  confirmed 2026-08-10 after a real post shipped with title+description but
+  an empty tags array. Always pass --yt-tags for a YouTube post; a `#hashtag`
+  block at the end of the content field is a separate, additional thing
+  (visible in the description) and does not substitute for this field.
+- On PUT /v1/posts/{id} (editing an existing post), platforms[].accountId
+  must be the plain account ID STRING (e.g. "6a79aacf..."), not the nested
+  account object GET returns -- sending the object 400s with
+  "expected string, received undefined".
 
 Usage:
   py schedule_zernio_post.py \
@@ -24,6 +34,7 @@ Usage:
     --cover-url <github raw cover png url> \
     --ig-account-id <id> --ig-content-file <path to .txt> \
     --yt-account-id <id> --yt-content-file <path to .txt> --yt-title "..." \
+    --yt-tags "Claude Code,Cursor AI,AI coding agent,..." \
     --scheduled-for "2026-08-11T09:00:00" --timezone "Asia/Kolkata"
 """
 import argparse
@@ -76,6 +87,7 @@ def main():
     parser.add_argument("--yt-content-file")
     parser.add_argument("--yt-title")
     parser.add_argument("--yt-category-id", default="28")
+    parser.add_argument("--yt-tags", help="Comma-separated SEO keyword phrases, no # prefix, <=500 chars combined")
     parser.add_argument("--scheduled-for", required=True, help='e.g. "2026-08-11T09:00:00"')
     parser.add_argument("--timezone", required=True, help='IANA name, e.g. "Asia/Kolkata"')
     args = parser.parse_args()
@@ -105,9 +117,13 @@ def main():
 
     if args.yt_account_id and args.yt_content_file:
         yt_content = open(args.yt_content_file, encoding="utf-8").read()
+        if not args.yt_tags:
+            print("WARNING: no --yt-tags passed -- the post will ship with an empty tags array (title/description alone, no SEO keywords).")
+        tags = [t.strip() for t in args.yt_tags.split(",")] if args.yt_tags else []
         post(
             {
                 "content": yt_content,
+                "tags": tags,
                 "mediaItems": [{"type": "video", "url": args.video_url, "thumbnail": args.cover_url}],
                 "platforms": [{
                     "platform": "youtube",

@@ -36,19 +36,38 @@ If you're running AI agents against a real codebase, this is worth five minutes.
 
 ## YouTube
 
-**Title:** This CLAUDE.md File Has 201K GitHub Stars (Fixes Claude Code & Cursor Guessing)
+**Revised 2026-08-10**, direct feedback after the post was already scheduled ("your not adding
+tags for scheduled youtube video, only title and description is written... make sure it
+follows all best YouTube SEO practices"): rewritten with the keyword-first sentence up front
+(what shows in search before "...more"), and a real `tags` array added via Zernio's API PUT
+`/v1/posts/{postId}` (Zernio's YouTube schema has no dedicated tags field in
+`platformSpecificData`; the actual video tags/keywords come from the post-level `tags` array,
+separate from the `#hashtag` block in the description). Live post confirmed still `scheduled`
+for 2026-08-11 09:00 IST after the edit, not bumped back to draft.
+
+**Title:** This CLAUDE.md File (201K GitHub Stars) Fixes Claude Code & Cursor's Guessing
 
 **Description:**
-A single CLAUDE.md file built from Andrej Karpathy's observations on AI coding agent
-failures just passed 201,000 GitHub stars. Created by developer Forrest Chang, it's four
-rules, zero code: Think Before Coding, Simplicity First, Surgical Changes, and Goal-Driven
-Execution.
+Claude Code and Cursor keep making the same mistake: guessing what you meant, then rewriting
+code you never asked them to touch. A single CLAUDE.md file fixes it.
 
-If you use Claude Code or Cursor and you're tired of your AI agent rewriting code you never
-asked it to touch, this fixes it in one curl command.
+Built from Andrej Karpathy's own observations on AI coding agent failure patterns, developer
+Forrest Chang turned it into four rules and zero code: Think Before Coding, Simplicity First,
+Surgical Changes, Goal-Driven Execution. It's sitting at 201,000+ GitHub stars and climbing.
 
-Repo (via the README's install path): github.com/forrestchang/andrej-karpathy-skills
+Works with both Claude Code and Cursor. Drop it in as your project's CLAUDE.md and the
+guessing stops.
 
-Timestamps and full breakdown: comment KARPATHY and I'll send you the link.
+Repo: github.com/forrestchang/andrej-karpathy-skills
 
-#Shorts #ClaudeCode #AndrejKarpathy #AICodingAgent
+Comment KARPATHY and I'll send you the link.
+
+#Shorts #ClaudeCode #CursorAI #ClaudeCodeTips #AICodingAgent #CursorAITips #AIAgents
+#VibeCoding #SoftwareEngineering #AIDevTools #AndrejKarpathy #ClaudeAI #AIforDevelopers
+#CodingWithAI #ClaudeCodeSkills
+
+**Tags** (Zernio post-level `tags` field, feeds YouTube's actual video keywords metadata):
+Claude Code, Cursor AI, CLAUDE.md, AI coding agent, Andrej Karpathy, AI agent rules, Claude
+Code tips, Cursor AI tips, AI pair programming, vibe coding, software engineering AI, AI dev
+tools, Claude Code skills, coding with AI, AI agents 2026, Forrest Chang, AI coding assistant
+(246 of 500 available characters)
