@@ -1,6 +1,6 @@
 import React from "react";
 import { interpolate } from "remotion";
-import { springIn } from "../motion";
+import { springIn, breathe } from "../motion";
 import { F_ACCENT, F_UI, CARD_BORDER, INK_LIGHT } from "../theme_skills";
 
 // A labeled horizontal bar that fills from 0 to a real percent, literal
@@ -20,6 +20,11 @@ export const DisparityBar: React.FC<{
   const fillWidth = interpolate(p, [0, 1], [0, (percent / 100) * trackWidth], { extrapolateRight: "clamp" });
   const numberOpacity = interpolate(p, [0.6, 1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
+  // Once the fill has settled, keep a slow glow pulse alive on the bar
+  // instead of leaving it fully static (the "Never Let a Frame Sit" rule).
+  const glowMul = breathe(frame - born, 50, 0.5);
+  const numberGlowMul = breathe(frame - born, 50, 0.12);
+
   return (
     <div style={{ opacity, display: "flex", flexDirection: "column", gap: 10, width: trackWidth }}>
       <div style={{ fontFamily: F_UI, fontSize: 20, fontWeight: 700, color: INK_LIGHT }}>{label}</div>
@@ -33,11 +38,11 @@ export const DisparityBar: React.FC<{
             width: fillWidth,
             borderRadius: 999,
             background: accent,
-            boxShadow: `0 0 24px -4px ${accent}`,
+            boxShadow: `0 0 ${24 * glowMul}px -4px ${accent}`,
           }}
         />
       </div>
-      <div style={{ fontFamily: F_ACCENT, fontSize: 30, fontWeight: 800, color: accent, opacity: numberOpacity }}>{percent}%</div>
+      <div style={{ fontFamily: F_ACCENT, fontSize: 30, fontWeight: 800, color: accent, opacity: numberOpacity, transform: `scale(${numberGlowMul})` }}>{percent}%</div>
     </div>
   );
 };

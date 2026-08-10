@@ -1,163 +1,163 @@
 [
   {
     "word": "Companies",
-    "start_seconds": 0.462,
-    "end_seconds": 1.218,
-    "start_frame": 14,
-    "end_frame": 37
+    "start_seconds": 0.867,
+    "end_seconds": 0.993,
+    "start_frame": 26,
+    "end_frame": 30
   },
   {
     "word": "want",
-    "start_seconds": 1.298,
-    "end_seconds": 1.618,
-    "start_frame": 39,
-    "end_frame": 49
+    "start_seconds": 1.073,
+    "end_seconds": 1.393,
+    "start_frame": 32,
+    "end_frame": 42
   },
   {
     "word": "AI-native",
-    "start_seconds": 1.698,
-    "end_seconds": 2.258,
-    "start_frame": 51,
-    "end_frame": 68
+    "start_seconds": 1.5,
+    "end_seconds": 2.033,
+    "start_frame": 45,
+    "end_frame": 61
   },
   {
     "word": "PMs.",
-    "start_seconds": 2.365,
-    "end_seconds": 2.898,
-    "start_frame": 71,
-    "end_frame": 87
+    "start_seconds": 2.166,
+    "end_seconds": 2.673,
+    "start_frame": 65,
+    "end_frame": 80
   },
   {
     "word": "They're",
-    "start_seconds": 3.01,
-    "end_seconds": 3.538,
-    "start_frame": 90,
-    "end_frame": 106
+    "start_seconds": 2.769,
+    "end_seconds": 3.233,
+    "start_frame": 83,
+    "end_frame": 97
   },
   {
     "word": "just",
-    "start_seconds": 3.57,
-    "end_seconds": 3.698,
-    "start_frame": 107,
-    "end_frame": 111
+    "start_seconds": 3.281,
+    "end_seconds": 3.473,
+    "start_frame": 98,
+    "end_frame": 104
   },
   {
     "word": "not",
-    "start_seconds": 3.738,
-    "end_seconds": 3.858,
-    "start_frame": 112,
-    "end_frame": 116
+    "start_seconds": 3.513,
+    "end_seconds": 3.633,
+    "start_frame": 105,
+    "end_frame": 109
   },
   {
     "word": "building",
-    "start_seconds": 3.911,
-    "end_seconds": 4.338,
-    "start_frame": 117,
-    "end_frame": 130
+    "start_seconds": 3.686,
+    "end_seconds": 4.113,
+    "start_frame": 111,
+    "end_frame": 123
   },
   {
     "word": "them,",
-    "start_seconds": 4.37,
-    "end_seconds": 4.818,
-    "start_frame": 131,
-    "end_frame": 145
+    "start_seconds": 4.161,
+    "end_seconds": 4.753,
+    "start_frame": 125,
+    "end_frame": 143
   },
   {
     "word": "they're",
-    "start_seconds": 4.85,
-    "end_seconds": 5.058,
-    "start_frame": 146,
-    "end_frame": 152
+    "start_seconds": 4.769,
+    "end_seconds": 4.993,
+    "start_frame": 143,
+    "end_frame": 150
   },
   {
     "word": "hiring",
-    "start_seconds": 5.115,
-    "end_seconds": 5.458,
-    "start_frame": 153,
-    "end_frame": 164
+    "start_seconds": 5.039,
+    "end_seconds": 5.313,
+    "start_frame": 151,
+    "end_frame": 159
   },
   {
     "word": "for",
-    "start_seconds": 5.498,
-    "end_seconds": 5.618,
-    "start_frame": 165,
-    "end_frame": 169
+    "start_seconds": 5.373,
+    "end_seconds": 5.553,
+    "start_frame": 161,
+    "end_frame": 167
   },
   {
     "word": "it",
-    "start_seconds": 5.645,
-    "end_seconds": 5.698,
-    "start_frame": 169,
-    "end_frame": 171
+    "start_seconds": 5.58,
+    "end_seconds": 5.633,
+    "start_frame": 167,
+    "end_frame": 169
   },
   {
     "word": "instead.",
-    "start_seconds": 5.758,
-    "end_seconds": 6.258,
-    "start_frame": 173,
-    "end_frame": 188
+    "start_seconds": 5.683,
+    "end_seconds": 6.193,
+    "start_frame": 170,
+    "end_frame": 186
   },
   {
     "word": "Comment",
-    "start_seconds": 6.428,
-    "end_seconds": 7.618,
-    "start_frame": 193,
-    "end_frame": 229
+    "start_seconds": 6.323,
+    "end_seconds": 7.233,
+    "start_frame": 190,
+    "end_frame": 217
   },
   {
     "word": "AIPM",
-    "start_seconds": 7.738,
-    "end_seconds": 8.418,
-    "start_frame": 232,
-    "end_frame": 253
+    "start_seconds": 7.353,
+    "end_seconds": 7.953,
+    "start_frame": 221,
+    "end_frame": 239
   },
   {
     "word": "and",
-    "start_seconds": 8.498,
-    "end_seconds": 8.738,
-    "start_frame": 255,
-    "end_frame": 262
+    "start_seconds": 8.013,
+    "end_seconds": 8.193,
+    "start_frame": 240,
+    "end_frame": 246
   },
   {
     "word": "I'll",
-    "start_seconds": 8.778,
-    "end_seconds": 8.898,
-    "start_frame": 263,
-    "end_frame": 267
+    "start_seconds": 8.233,
+    "end_seconds": 8.353,
+    "start_frame": 247,
+    "end_frame": 251
   },
   {
     "word": "send",
-    "start_seconds": 8.946,
-    "end_seconds": 9.138,
-    "start_frame": 268,
-    "end_frame": 274
+    "start_seconds": 8.401,
+    "end_seconds": 8.593,
+    "start_frame": 252,
+    "end_frame": 258
   },
   {
     "word": "you",
-    "start_seconds": 9.178,
-    "end_seconds": 9.298,
-    "start_frame": 275,
-    "end_frame": 279
+    "start_seconds": 8.613,
+    "end_seconds": 8.673,
+    "start_frame": 258,
+    "end_frame": 260
   },
   {
     "word": "where",
-    "start_seconds": 9.351,
-    "end_seconds": 9.618,
-    "start_frame": 281,
-    "end_frame": 289
+    "start_seconds": 8.7,
+    "end_seconds": 8.833,
+    "start_frame": 261,
+    "end_frame": 265
   },
   {
     "word": "to",
-    "start_seconds": 9.645,
-    "end_seconds": 9.698,
-    "start_frame": 289,
-    "end_frame": 291
+    "start_seconds": 8.86,
+    "end_seconds": 8.913,
+    "start_frame": 266,
+    "end_frame": 267
   },
   {
     "word": "start.",
-    "start_seconds": 9.751,
-    "end_seconds": 10.178,
-    "start_frame": 293,
-    "end_frame": 305
+    "start_seconds": 8.98,
+    "end_seconds": 9.473,
+    "start_frame": 269,
+    "end_frame": 284
   }
 ]

@@ -20,6 +20,18 @@ export const springIn = (frame: number, fps: number, delay: number) =>
 // "cropped"/rushed-sounding speech). Pass the result as the `volume` prop on
 // that shot's <Audio>/<Video> element. `fadeFrames` should match (or be <=)
 // the episode's transitionFrames (see Episode.tsx's DEFAULT_TRANSITION_FRAMES).
+// Continuous, subtle oscillation for holding an already-popped-in element
+// alive during a long static stretch, the channel's own "Never Let a Frame
+// Sit" rule (no static frame longer than 2s) needs a secondary motion cue
+// on any beat that runs longer than that, added 2026-08-10 after a real
+// episode held payoff cards fully static for 3-5s+ at a stretch. Returns a
+// multiplier centered on 1 (e.g. 0.9-1.1 at amplitude 0.1), apply it to
+// scale/glow/opacity on top of whatever pop-in animation already ran.
+// Deliberately NOT frame-delay-gated (unlike springIn) so it runs for the
+// element's entire remaining lifetime, not just its entrance.
+export const breathe = (frame: number, period = 45, amplitude = 0.08) =>
+  1 + amplitude * Math.sin((2 * Math.PI * frame) / period);
+
 export const edgeFadeVolume = (frame: number, durationInFrames: number, fadeFrames: number) => {
   const fadeIn = interpolate(frame, [0, fadeFrames], [0, 1], {
     extrapolateLeft: "clamp",

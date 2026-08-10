@@ -47,12 +47,31 @@ def split_shots(script_text: str):
 
 
 def words_in_span(characters, starts, ends, char_start, char_end):
-    """Group characters in [char_start, char_end) into words with start/end times."""
+    """Group characters in [char_start, char_end) into words with start/end times.
+
+    ElevenLabs v3 audio tags (e.g. "[rushed]") written inline in the script text
+    to control delivery pace/emotion still show up as ordinary characters in the
+    alignment, each with a real (if brief) timestamp, even though nothing audible
+    corresponds to them. Skip any "[...]" span entirely so it never becomes a
+    spurious caption word.
+    """
     words = []
     cur_word = ""
     cur_start = None
+    in_tag = False
     for i in range(char_start, char_end):
         c = characters[i]
+        if c == "[":
+            in_tag = True
+            if cur_word:
+                words.append({"word": cur_word, "start": cur_start, "end": ends[i - 1]})
+                cur_word = ""
+                cur_start = None
+            continue
+        if in_tag:
+            if c == "]":
+                in_tag = False
+            continue
         if c.strip() == "":
             if cur_word:
                 words.append({"word": cur_word, "start": cur_start, "end": ends[i - 1]})

@@ -14,10 +14,10 @@ import words from "./data/shot4_words.json";
 
 // VO: "Eighty five percent of leadership is investing in AI tools, and
 // only two percent are investing in the PMs who'd actually use them."
-// (253 frames). Real screenshot of Productboard's CPO survey sentence,
+// (236 frames). Real screenshot of Productboard's CPO survey sentence,
 // then the two real bars.
-const BEAT_B = 130; // "and" landing, right after "tools,"
-const BAR_B_BORN = 145; // "two"
+const BEAT_B = 114; // "and" landing, right after "tools,"
+const BAR_B_BORN = 125; // "two"
 
 export const Shot4_InvestmentGap: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
@@ -40,8 +40,8 @@ export const Shot4_InvestmentGap: React.FC<{ durationInFrames: number }> = ({ du
             url="productboard.com — CPO survey"
             starsBox={{ x: 340, y: 475, w: 940, h: 95 }}
             born={0}
-            zoomStart={10}
-            zoomEnd={120}
+            zoomStart={30}
+            zoomEnd={110}
             frame={frame}
             fps={fps}
           />

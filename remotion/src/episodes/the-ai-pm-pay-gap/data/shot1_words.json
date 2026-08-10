@@ -1,9 +1,9 @@
 [
   {
     "word": "If",
-    "start_seconds": 0.0,
+    "start_seconds": 0.067,
     "end_seconds": 0.08,
-    "start_frame": 0,
+    "start_frame": 2,
     "end_frame": 2
   },
   {
@@ -36,30 +36,30 @@
   },
   {
     "word": "manager",
-    "start_seconds": 1.08,
-    "end_seconds": 1.36,
-    "start_frame": 32,
-    "end_frame": 41
+    "start_seconds": 1.09,
+    "end_seconds": 1.44,
+    "start_frame": 33,
+    "end_frame": 43
   },
   {
     "word": "right",
-    "start_seconds": 1.4,
-    "end_seconds": 1.6,
-    "start_frame": 42,
-    "end_frame": 48
+    "start_seconds": 1.48,
+    "end_seconds": 1.68,
+    "start_frame": 44,
+    "end_frame": 50
   },
   {
     "word": "now,",
-    "start_seconds": 1.66,
-    "end_seconds": 1.92,
-    "start_frame": 50,
-    "end_frame": 58
+    "start_seconds": 1.74,
+    "end_seconds": 2.4,
+    "start_frame": 52,
+    "end_frame": 72
   },
   {
     "word": "hiring",
-    "start_seconds": 2.034,
+    "start_seconds": 2.446,
     "end_seconds": 2.72,
-    "start_frame": 61,
+    "start_frame": 73,
     "end_frame": 82
   },
   {
@@ -85,93 +85,93 @@
   },
   {
     "word": "just",
-    "start_seconds": 3.344,
-    "end_seconds": 3.6,
-    "start_frame": 100,
-    "end_frame": 108
+    "start_seconds": 3.36,
+    "end_seconds": 3.68,
+    "start_frame": 101,
+    "end_frame": 110
   },
   {
     "word": "dropped",
-    "start_seconds": 3.64,
-    "end_seconds": 3.92,
-    "start_frame": 109,
-    "end_frame": 118
+    "start_seconds": 3.72,
+    "end_seconds": 4.0,
+    "start_frame": 112,
+    "end_frame": 120
   },
   {
     "word": "double",
-    "start_seconds": 3.977,
+    "start_seconds": 4.046,
     "end_seconds": 4.32,
-    "start_frame": 119,
+    "start_frame": 121,
     "end_frame": 130
   },
   {
     "word": "digits.",
-    "start_seconds": 4.389,
-    "end_seconds": 4.88,
+    "start_seconds": 4.4,
+    "end_seconds": 5.24,
     "start_frame": 132,
-    "end_frame": 146
+    "end_frame": 157
   },
   {
     "word": "If",
-    "start_seconds": 5.147,
-    "end_seconds": 5.68,
-    "start_frame": 154,
-    "end_frame": 170
+    "start_seconds": 5.36,
+    "end_seconds": 5.6,
+    "start_frame": 161,
+    "end_frame": 168
   },
   {
     "word": "you're",
-    "start_seconds": 5.7,
-    "end_seconds": 5.84,
-    "start_frame": 171,
-    "end_frame": 175
+    "start_seconds": 5.62,
+    "end_seconds": 5.76,
+    "start_frame": 169,
+    "end_frame": 173
   },
   {
     "word": "senior",
-    "start_seconds": 5.909,
-    "end_seconds": 6.32,
-    "start_frame": 177,
-    "end_frame": 190
+    "start_seconds": 5.829,
+    "end_seconds": 6.24,
+    "start_frame": 175,
+    "end_frame": 187
   },
   {
     "word": "and",
-    "start_seconds": 6.38,
-    "end_seconds": 6.56,
-    "start_frame": 191,
-    "end_frame": 197
+    "start_seconds": 6.28,
+    "end_seconds": 6.4,
+    "start_frame": 188,
+    "end_frame": 192
   },
   {
     "word": "AI-fluent,",
-    "start_seconds": 6.667,
-    "end_seconds": 7.68,
-    "start_frame": 200,
-    "end_frame": 230
+    "start_seconds": 6.507,
+    "end_seconds": 7.36,
+    "start_frame": 195,
+    "end_frame": 221
   },
   {
     "word": "it's",
-    "start_seconds": 7.707,
-    "end_seconds": 7.92,
-    "start_frame": 231,
-    "end_frame": 238
+    "start_seconds": 7.413,
+    "end_seconds": 7.68,
+    "start_frame": 222,
+    "end_frame": 230
   },
   {
     "word": "never",
-    "start_seconds": 7.96,
-    "end_seconds": 8.16,
-    "start_frame": 239,
-    "end_frame": 245
+    "start_seconds": 7.72,
+    "end_seconds": 7.92,
+    "start_frame": 232,
+    "end_frame": 238
   },
   {
     "word": "been",
-    "start_seconds": 8.192,
-    "end_seconds": 8.32,
-    "start_frame": 246,
-    "end_frame": 250
+    "start_seconds": 7.952,
+    "end_seconds": 8.08,
+    "start_frame": 239,
+    "end_frame": 242
   },
   {
     "word": "better.",
-    "start_seconds": 8.377,
-    "end_seconds": 8.799,
-    "start_frame": 251,
-    "end_frame": 264
+    "start_seconds": 8.126,
+    "end_seconds": 8.56,
+    "start_frame": 244,
+    "end_frame": 257
   }
 ]

@@ -13,7 +13,7 @@ import { ACCENTS, CARD_DIM } from "../../theme_skills";
 import words from "./data/shot2_words.json";
 
 // VO: "Senior AI-PM hiring is up thirty four percent this year. Junior
-// and mid-level PM hiring dropped twelve percent." (246 frames). Beat A
+// and mid-level PM hiring dropped twelve percent." (221 frames). Beat A
 // shows the REAL institutepm.com stat cards (BCG's 2026 workforce
 // report) zoomed into the actual +34%/-12% figures, real evidence this
 // number exists, not an assertion. Beat B is the clean payoff.
@@ -67,7 +67,7 @@ export const Shot2_SalaryGap: React.FC<{ durationInFrames: number }> = ({ durati
               scale={interpolate(rightPop, [0, 1], [0.9, 0.94])}
               glowStrength={0.15}
               born={170}
-              valueBorn={225}
+              valueBorn={191}
               frame={frame}
               fps={fps}
             />

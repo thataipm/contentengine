@@ -1,42 +1,42 @@
 [
   {
     "shot": 1,
-    "text": "If you're a mid-level product manager right now, hiring for your role just dropped double digits. If you're senior and AI-fluent, it's never been better.",
+    "text": "[rushed] If you're a mid-level product manager right now, hiring for your role just dropped double digits. If you're senior and AI-fluent, it's never been better.",
     "global_start": 0.0,
-    "global_end": 8.896,
-    "duration": 8.896,
-    "duration_frames": 267
+    "global_end": 8.8,
+    "duration": 8.8,
+    "duration_frames": 264
   },
   {
     "shot": 2,
-    "text": "Senior AI-PM hiring is up thirty four percent this year. Junior and mid-level PM hiring dropped twelve percent.",
-    "global_start": 8.896,
-    "global_end": 17.11,
-    "duration": 8.213,
-    "duration_frames": 246
+    "text": "[rushed] Senior AI-PM hiring is up thirty four percent this year. Junior and mid-level PM hiring dropped twelve percent.",
+    "global_start": 8.8,
+    "global_end": 16.16,
+    "duration": 7.36,
+    "duration_frames": 221
   },
   {
     "shot": 3,
-    "text": "Sixty one percent of senior PM postings now require AI fluency, up from twenty three percent just last year.",
-    "global_start": 17.11,
-    "global_end": 25.64,
-    "duration": 8.53,
-    "duration_frames": 256
+    "text": "[rushed] Sixty one percent of senior PM postings now require AI fluency, up from twenty three percent just last year.",
+    "global_start": 16.16,
+    "global_end": 23.853,
+    "duration": 7.693,
+    "duration_frames": 231
   },
   {
     "shot": 4,
-    "text": "Eighty five percent of leadership is investing in AI tools, and only two percent are investing in the PMs who'd actually use them.",
-    "global_start": 25.64,
-    "global_end": 34.062,
-    "duration": 8.422,
-    "duration_frames": 253
+    "text": "[rushed] Eighty five percent of leadership is investing in AI tools, and only two percent are investing in the PMs who'd actually use them.",
+    "global_start": 23.853,
+    "global_end": 31.732,
+    "duration": 7.879,
+    "duration_frames": 236
   },
   {
     "shot": 5,
-    "text": "Companies want AI-native PMs. They're just not building them, they're hiring for it instead. Comment AIPM and I'll send you where to start.",
-    "global_start": 34.062,
-    "global_end": 44.54,
-    "duration": 10.478,
-    "duration_frames": 314
+    "text": "[rushed] Companies want AI-native PMs. They're just not building them, they're hiring for it instead. Comment AIPM and I'll send you where to start.",
+    "global_start": 31.732,
+    "global_end": 41.505,
+    "duration": 9.773,
+    "duration_frames": 293
   }
 ]

@@ -11,7 +11,7 @@ import words from "./data/shot5_words.json";
 
 // VO: "Companies want AI-native PMs. They're just not building them,
 // they're hiring for it instead. Comment AIPM and I'll send you where to
-// start." (314 frames).
+// start." (293 frames).
 export const Shot5_Close: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();

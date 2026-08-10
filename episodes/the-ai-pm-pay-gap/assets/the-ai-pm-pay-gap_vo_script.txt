@@ -1,9 +1,9 @@
-If you're a mid-level product manager right now, hiring for your role just dropped double digits. If you're senior and AI-fluent, it's never been better.
+[rushed] If you're a mid-level product manager right now, hiring for your role just dropped double digits. If you're senior and AI-fluent, it's never been better.
 
-Senior AI-PM hiring is up thirty four percent this year. Junior and mid-level PM hiring dropped twelve percent.
+[rushed] Senior AI-PM hiring is up thirty four percent this year. Junior and mid-level PM hiring dropped twelve percent.
 
-Sixty one percent of senior PM postings now require AI fluency, up from twenty three percent just last year.
+[rushed] Sixty one percent of senior PM postings now require AI fluency, up from twenty three percent just last year.
 
-Eighty five percent of leadership is investing in AI tools, and only two percent are investing in the PMs who'd actually use them.
+[rushed] Eighty five percent of leadership is investing in AI tools, and only two percent are investing in the PMs who'd actually use them.
 
-Companies want AI-native PMs. They're just not building them, they're hiring for it instead. Comment AIPM and I'll send you where to start.
+[rushed] Companies want AI-native PMs. They're just not building them, they're hiring for it instead. Comment AIPM and I'll send you where to start.

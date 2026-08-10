@@ -1,6 +1,6 @@
 import React from "react";
 import { interpolate } from "remotion";
-import { springIn } from "../motion";
+import { springIn, breathe } from "../motion";
 import { F_ACCENT, F_UI, CARD_BG, INK_LIGHT } from "../theme_skills";
 
 // A single side of a two-thing comparison (pay, hiring rate, anything with a
@@ -27,17 +27,25 @@ export const ComparisonCard: React.FC<{
   const valueOpacity = interpolate(valueP, [0, 1], [0, 1], { extrapolateRight: "clamp" });
   const valueScale = interpolate(valueP, [0, 1], [0.7, 1], { extrapolateRight: "clamp" });
 
+  // Keep the card subtly alive for the rest of its on-screen life instead of
+  // freezing once the pop-in spring settles (the "Never Let a Frame Sit"
+  // rule). Gated by `p` so it ramps in with the entrance rather than
+  // jittering before the card has even appeared.
+  const breatheMul = breathe(frame - born);
+  const liveScale = scale * (1 + (breatheMul - 1) * p);
+  const liveGlow = glowStrength + (breatheMul - 1) * 0.4 * p;
+
   return (
     <div
       style={{
         width,
         opacity,
-        transform: `scale(${scale})`,
+        transform: `scale(${liveScale})`,
         borderRadius: 20,
         border: `2px solid ${accent}`,
-        borderColor: `rgba(${hexToRgb(accent)},${0.25 + glowStrength * 0.75})`,
+        borderColor: `rgba(${hexToRgb(accent)},${0.25 + liveGlow * 0.75})`,
         background: CARD_BG,
-        boxShadow: glowStrength > 0.05 ? `0 0 ${40 * glowStrength}px -6px ${accent}${Math.round(glowStrength * 153).toString(16).padStart(2, "0")}` : "none",
+        boxShadow: liveGlow > 0.05 ? `0 0 ${40 * liveGlow}px -6px ${accent}${Math.round(Math.min(Math.max(liveGlow, 0), 1) * 153).toString(16).padStart(2, "0")}` : "none",
         padding: "28px 20px",
         display: "flex",
         flexDirection: "column",

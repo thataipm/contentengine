@@ -12,13 +12,13 @@ import words from "./data/shot1_words.json";
 
 // VO: "If you're a mid-level product manager right now, hiring for your
 // role just dropped double digits. If you're senior and AI-fluent, it's
-// never been better." (267 frames). Two identical PM cards diverge in two
+// never been better." (264 frames). Two identical PM cards diverge in two
 // beats matching the two real clauses: the right card dims on "dropped
 // double digits," the left card grows bright on "never been better."
-const DIM_START = 109; // "dropped"
-const DIM_END = 146; // end of "digits."
-const GROW_START = 239; // "never"
-const GROW_END = 264; // end of "better."
+const DIM_START = 112; // "dropped"
+const DIM_END = 157; // end of "digits."
+const GROW_START = 232; // "never"
+const GROW_END = 257; // end of "better."
 
 export const Shot1_Hook: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
