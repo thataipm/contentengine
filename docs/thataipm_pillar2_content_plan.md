@@ -7,6 +7,17 @@ takes" pillar (planned as a 20% slot, never built out) was also dropped in favor
 concrete pillar with its own locked idea bank, for a cleaner two-pillar system. This is still
 the same **@thataipm** channel. See `CLAUDE.md` §1 for the original channel brief.
 
+## Hook rule (both pillars), locked 2026-08-10
+
+Flagged directly after sd1: a hook can have the right contrast/tension shape and still fail if
+it doesn't say what the video is actually about. sd1's hook ("Three AI voice tools, three
+completely different reasons to pick one over the other") didn't make the subject clear
+enough, fast enough. Every hook from here forward needs BOTH a reason to keep watching
+(contrast, stakes, a claim worth checking) AND a clear statement of the actual subject —
+which tools, which category — within the first line or two. Test: if someone only heard the
+hook line, would they know what the video covers? If not, rewrite it. Full writeup in
+[[feedback-hook-must-state-topic]] memory.
+
 ## Rotation
 
 - **60% — Main pillar: Trending Claude Code skills/plugins.** Sourced via continuous research

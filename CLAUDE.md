@@ -76,7 +76,15 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
   (re-check if that changes).
 - `automation/` — VO generation and word-timing tooling, ElevenLabs-backed:
   - `generate_vo.py [--timestamps]` — text-to-speech via the ElevenLabs REST API (`eleven_v3`),
-    `--timestamps` also fetches character-level alignment.
+    `--timestamps` also fetches character-level alignment. **VO delivery pace, 2026-08-10**:
+    sd1's VO read as slow on direct feedback. The obvious fix — `voice_settings.speed` — does
+    **not work here**: that parameter only applies to non-v3 models (range 0.25-4.0 via the raw
+    API, 0.7-1.2 on the Agents Platform), and **v3 explicitly does not support it**. v3 also
+    doesn't support SSML break tags. The actual v3 mechanism is **inline audio tags in the
+    script text itself** — `[rushed]`, `[rapid-fire]`, `[deliberate]`, `[slows down]`, etc. —
+    written directly into the text sent to the API, the same as any other v3 expression tag.
+    For a faster-reading VO, open the script (or a slow section of it) with a tag like
+    `[rushed]` rather than trying to fix this via an API parameter.
   - `derive_word_timing.py` — for a **brand-new** episode: splits a script into shots (blank-line
     separated), cuts precise per-shot audio from a continuous VO take using the real alignment
     data, writes per-shot word timing.
@@ -130,14 +138,15 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
   pan/zoom "camera push" into one real detail (`highlightBox`), added 2026-08-10 for Tool
   Showdowns. Generalizes `RepoScreenshot` (which assumes a github.com repo page + stars badge)
   for any product's public page — same visual technique, no GitHub-specific assumptions. Pair
-  with `automation/capture_product_screenshot.py` for the actual capture. **Pacing note added
-  2026-08-10** (direct feedback on sd1's pacing reading slow): don't span `zoomStart`→`zoomEnd`
-  across the whole pre-payoff hold — sd1 used e.g. `zoomStart=30, zoomEnd=322` on a beat that
-  didn't land until frame 330, a ~9.7s continuous drift that reads as slow even though it's
-  technically always in motion. Keep the zoom window short (roughly 60-90 frames / 2-3s) and
-  position it to land right before the payoff beat, so the screenshot holds briefly at its
-  settled pop-in scale first, then the push-in itself is a quick, punchy motion rather than a
-  slow continuous drift.
+  with `automation/capture_product_screenshot.py` for the actual capture. **Zoom-window note
+  added 2026-08-10, still good practice but NOT the cause of the "pacing is slow" feedback
+  (corrected same day — that was about VO delivery speed, see §2's `generate_vo.py` entry)**:
+  don't span `zoomStart`→`zoomEnd` across the whole pre-payoff hold regardless — sd1 used e.g.
+  `zoomStart=30, zoomEnd=322` on a beat that didn't land until frame 330, a ~9.7s continuous
+  drift that's slower than it needs to be even though it's technically always in motion. Keep
+  the zoom window short (roughly 60-90 frames / 2-3s) and position it to land right before the
+  payoff beat, so the screenshot holds briefly at its settled pop-in scale first, then the
+  push-in itself is a quick, punchy motion rather than a slow continuous drift.
 - `three/SceneRig.tsx` — per-shot `<ThreeCanvas>` wrapper for any React Three Fiber content:
   orthographic camera sized so 1 world unit = 1 screen pixel, shared neutral key/fill lighting,
   a local deterministic environment map, bloom post-processing. Wrap any 3D shot content in
