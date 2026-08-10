@@ -3,6 +3,9 @@
 .env.*
 .claude/
 
+# Local-only reference docs (not for the public repo)
+docs/technical_architecture.md
+
 # Node / Remotion
 remotion/node_modules/
 remotion/out/
