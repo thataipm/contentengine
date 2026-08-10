@@ -186,9 +186,12 @@ status: IN_PRODUCTION
 results:
 learning:
 decision:
-next_action: "What AI Is Actually Doing to PM Hiring" produced and rebuilt 2026-08-10
-  (episodes/the-ai-pm-pay-gap/), pending schedule/publish. SenseBug AI concept still needs
-  real details from the user (screenshots, the specific trigger story) before scripting.
+next_action: "What AI Is Actually Doing to PM Hiring" produced, rebuilt, and scheduled
+  2026-08-10 (episodes/the-ai-pm-pay-gap/) -- Instagram + YouTube via Zernio, live
+  2026-08-11 17:00 IST. Once confirmed published, pull analytics and log results: below;
+  status moves to EVALUATING once both this and the-karpathy-skill (informal baseline)
+  have real traffic. SenseBug AI concept still needs real details from the user
+  (screenshots, the specific trigger story) before scripting.
 ```
 
 Notes: Reserve candidates from the same research pass, held for Batch 2 rather than crowding
