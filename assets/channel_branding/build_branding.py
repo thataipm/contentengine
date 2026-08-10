@@ -69,7 +69,7 @@ BANNER_HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>
   <div class="glow" style="right:260px; bottom:80px; width:360px; height:360px; background:#5FC4E0;"></div>
   <div class="safe">
     <div class="handle">@thataipm</div>
-    <div class="tagline">Claude Code Skills &middot; Tool Showdowns &middot; New video daily</div>
+    <div class="tagline">AI-native product thinking &middot; The AI PM Brief</div>
   </div>
 </body></html>"""
 

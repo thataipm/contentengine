@@ -6,12 +6,6 @@
       "sourceType": "github",
       "skillPath": "SKILL.md",
       "computedHash": "73c03cc8028b39c9c2ecb94b81e9c9cf4276e4062ac127ed251006ab7facd67d"
-    },
-    "socialclaw": {
-      "source": "ndesv21/socialclaw",
-      "sourceType": "github",
-      "skillPath": "skill/SKILL.md",
-      "computedHash": "e250b36fbad61b8ac5ff15c7a364b6019f2a56bb5a23e9fd34527331f605b18e"
     }
   }
 }
