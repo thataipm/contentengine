@@ -33,3 +33,36 @@ HeyGen, Veo, and more)
 
 New video daily. Comment on any video for the exact setup and links.
 ```
+
+---
+
+# Channel Bio Copy v2.0, drafted 2026-08-10
+
+Reflects **That AI PM: Content System Operating Spec v2.0**'s "AI-native product thinking"
+positioning. Drafts only, not yet applied to the live profile, changing account bio/settings
+needs your explicit go-ahead before it's pushed live. Edit freely before posting.
+
+## Instagram bio (150 character limit)
+
+```
+Helping product people go AI-native
+Real workflows, real experiments, no fluff
+The AI PM Brief, link below
+```
+
+~103 characters including line breaks, comfortable margin under the 150 limit.
+
+## YouTube "About" description
+
+```
+Practical AI workflows for product people going AI-native.
+
+Real experiments, real product thinking, honest AI tool breakdowns, no
+generic hype and no invented stats.
+
+Videos on Claude Code workflows, AI product teardowns, build-in-public
+experiments, and what's actually changing for PM work.
+
+The AI PM Brief (weekly, practical): link in bio.
+```
+
