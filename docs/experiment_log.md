@@ -141,21 +141,32 @@ hypothesis: First-hand build-in-public content and researched AI-PM authority co
   establishes the first real baseline for both under v2.0.
 target_audience: Primary (PMs and aspiring PMs becoming AI-native)
 concepts:
-  - concept: "The AI PM pay gap is real: $245K vs $123K"
+  - concept: "What AI Is Actually Doing to PM Hiring" (originally "The AI PM pay gap is real:
+      $245K vs $123K", RENAMED after a correction, see below)
     pillar_fit: PASS, AI PM / authority
     audience_fit: PASS, direct career-stakes relevance to the primary audience
     100k_test: PASS, this is exactly the audience worth having
     pm_question: KNOW
-    originality: real 2026 comp data (AI-focused PMs ~$245K vs traditional ~$123K), senior
-      AI-PM hiring +34% vs junior/mid -12% over the same period, not a generic "AI is
-      changing PM work" take
-    payoff: viewer learns the actual stakes of not becoming AI-native, with a number to
+    originality: real, source-verified 2026 data: senior AI-PM hiring +34% vs junior/mid
+      -12% over the same period, 61% of senior PM postings now require AI fluency (up from
+      23% in 2024), 85% of leadership investing in AI tools vs only 2% in PM talent
+      development
+    payoff: viewer learns the actual stakes of not becoming AI-native, with real numbers to
       anchor it
     brand_value: high, this is close to the channel's core premise stated as a fact
     worth_producing: PASS
-    gate_result: PASS
-    sources: https://www.institutepm.com/knowledge-hub/ai-reshaping-pm-role-2026 ,
-      https://www.productboard.com/blog/ai-in-product-management-cpo-mandates-missteps/
+    gate_result: PASS (see correction note)
+    sources: https://www.institutepm.com/knowledge-hub/ai-reshaping-pm-role-2026 (BCG's 2026
+      workforce report), https://www.productboard.com/blog/ai-in-product-management-cpo-mandates-missteps/
+    correction_2026-08-10: the original concept's headline claim ($245K AI-native PM comp
+      vs $123K traditional) was bundled by a research agent alongside two real, sourced
+      stats. Direct user feedback on thin visuals prompted a source re-check, which found
+      the compensation figures don't appear on either cited source or any other real
+      citation, only plausible-sounding. Dropped entirely and the episode rebuilt around the
+      three stats above, all independently re-verified against primary sources. See
+      `CLAUDE.md` for the full incident note. Lesson: verify a research pass's specific
+      numbers against the primary source directly before scripting, a citation bundle isn't
+      proof every number in it is real.
   - concept: "I built an AI tool because bug priority is political, not factual" (SenseBug AI)
     pillar_fit: PASS, Build in Public / differentiation
     audience_fit: PASS, every PM has lived the "whoever escalates loudest wins" problem
@@ -175,9 +186,9 @@ status: IN_PRODUCTION
 results:
 learning:
 decision:
-next_action: "The AI PM Pay Gap" produced 2026-08-10 (episodes/the-ai-pm-pay-gap/), pending
-  schedule/publish. SenseBug AI concept still needs real details from the user (screenshots,
-  the specific trigger story) before scripting.
+next_action: "What AI Is Actually Doing to PM Hiring" produced and rebuilt 2026-08-10
+  (episodes/the-ai-pm-pay-gap/), pending schedule/publish. SenseBug AI concept still needs
+  real details from the user (screenshots, the specific trigger story) before scripting.
 ```
 
 Notes: Reserve candidates from the same research pass, held for Batch 2 rather than crowding

@@ -689,3 +689,32 @@ deliberate history-rewrite pass is run.
 [KEYWORD] and I'll send you the link" with no actual fulfillment process behind it (see the
 "Still open" note under Posting automation below). Direct decision: not worth building yet,
 revisit only if a single post crosses 10 real comments. Not an oversight, a threshold.
+
+**Fabricated-stat incident, caught and corrected 2026-08-10**: Batch 1's first concept
+(originally scripted, rendered, and shown to the user as "The AI PM Pay Gap," headlined on a
+$245K AI-native PM vs $123K traditional PM compensation claim) was produced and only caught as
+wrong because the user gave direct feedback that the visuals looked thin ("why have you not
+used any screenshots or created something of your own"). Going to find real screenshots to fix
+the visuals meant re-reading the actual cited source pages directly, which is what surfaced
+that the compensation figures don't appear on either cited source, or anywhere else checkable,
+only the episode's other two stats (the +34%/-12% hiring split, the 85%/2% investment gap)
+turned out to be real and verbatim on the pages. The research agent that originally supplied
+the figure had bundled a plausible-sounding number in with two real, sourced ones under a
+single citation pair, and that number was used in a script, a render, a cover, and captions
+without ever being independently checked against its primary source.
+
+**The actual failure**: trusting a research agent's citation as proof, rather than opening the
+cited URL directly and confirming the specific number is actually printed on the page. This is
+exactly the discipline already applied successfully elsewhere this session (the Zernio
+analytics correction earlier in this same section came from doing precisely that), it simply
+didn't get applied to this one research pass before scripting from it.
+
+**Standing rule, going forward**: before locking a script that cites a specific number from a
+research pass (not a well-known, easily-verified fact like a GitHub star count checked via
+`gh api`, but any research-agent-supplied statistic), open the actual cited source and confirm
+the number is printed on the page, in the same way `WebFetch` was used here to re-check both
+sources directly. A citation existing is not the same as a citation being checked. The episode
+was fully rebuilt around only re-verified facts, real evidence screenshots of the actual source
+pages were added to every stat-bearing shot in the process, which also directly answered the
+visual-thinness feedback. See `docs/experiment_log.md`'s Batch 1 entry for the full correction
+note, and the episode's own script file for the incident writeup.
