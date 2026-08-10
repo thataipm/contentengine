@@ -6,13 +6,16 @@ import { FPS } from "../../theme";
 import { INK_LIGHT } from "../../theme_skills";
 import { Shot1_Hook } from "./Shot1_Hook";
 import { Shot2_SalaryGap } from "./Shot2_SalaryGap";
-import { Shot3_HiringTrend } from "./Shot3_HiringTrend";
+import { Shot3_AiFluency } from "./Shot3_AiFluency";
 import { Shot4_InvestmentGap } from "./Shot4_InvestmentGap";
 import { Shot5_Close } from "./Shot5_Close";
 
-// "The AI PM Pay Gap" — @thataipm v2.0, Batch 1 concept 1 of 2. AI PM
-// pillar (authority), stat-driven, no product/tool to screenshot, so
-// visuals are comparison cards and disparity bars instead of RepoScreenshot.
+// "What AI Is Actually Doing to PM Hiring", @thataipm v2.0, Batch 1
+// concept 1 of 2. AI PM pillar (authority), stat-driven. Rebuilt
+// 2026-08-10: the original $245K/$123K compensation claim didn't hold up
+// against its cited sources, so every fact here was re-verified directly
+// against primary sources, and each stat-bearing shot now opens on the
+// real source screenshot as evidence before the clean payoff.
 type Props = {
   frames: {
     shot1: number;
@@ -51,7 +54,7 @@ export const calculateAiPmPayGapMetadata: CalculateMetadataFunction<Props> = asy
 const buildShots = (frames: Props["frames"]): ShotDef[] => [
   { durationInFrames: frames.shot1, component: Shot1_Hook },
   { durationInFrames: frames.shot2, component: Shot2_SalaryGap },
-  { durationInFrames: frames.shot3, component: Shot3_HiringTrend },
+  { durationInFrames: frames.shot3, component: Shot3_AiFluency },
   { durationInFrames: frames.shot4, component: Shot4_InvestmentGap },
   { durationInFrames: frames.shot5, component: Shot5_Close },
 ];

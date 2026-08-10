@@ -1,128 +1,177 @@
 [
   {
-    "word": "There",
+    "word": "If",
     "start_seconds": 0.0,
-    "end_seconds": 0.16,
+    "end_seconds": 0.08,
     "start_frame": 0,
-    "end_frame": 5
+    "end_frame": 2
   },
   {
-    "word": "are",
-    "start_seconds": 0.18,
+    "word": "you're",
+    "start_seconds": 0.1,
     "end_seconds": 0.24,
-    "start_frame": 5,
+    "start_frame": 3,
     "end_frame": 7
   },
   {
-    "word": "now",
+    "word": "a",
     "start_seconds": 0.28,
-    "end_seconds": 0.4,
+    "end_seconds": 0.32,
     "start_frame": 8,
-    "end_frame": 12
+    "end_frame": 10
   },
   {
-    "word": "two",
-    "start_seconds": 0.44,
-    "end_seconds": 0.56,
-    "start_frame": 13,
-    "end_frame": 17
-  },
-  {
-    "word": "kinds",
-    "start_seconds": 0.613,
-    "end_seconds": 0.88,
-    "start_frame": 18,
-    "end_frame": 26
-  },
-  {
-    "word": "of",
-    "start_seconds": 0.907,
-    "end_seconds": 0.96,
-    "start_frame": 27,
-    "end_frame": 29
+    "word": "mid-level",
+    "start_seconds": 0.36,
+    "end_seconds": 0.72,
+    "start_frame": 11,
+    "end_frame": 22
   },
   {
     "word": "product",
-    "start_seconds": 0.99,
-    "end_seconds": 1.2,
-    "start_frame": 30,
-    "end_frame": 36
+    "start_seconds": 0.76,
+    "end_seconds": 1.04,
+    "start_frame": 23,
+    "end_frame": 31
   },
   {
-    "word": "managers,",
-    "start_seconds": 1.262,
-    "end_seconds": 2.24,
-    "start_frame": 38,
-    "end_frame": 67
+    "word": "manager",
+    "start_seconds": 1.08,
+    "end_seconds": 1.36,
+    "start_frame": 32,
+    "end_frame": 41
   },
   {
-    "word": "and",
-    "start_seconds": 2.28,
-    "end_seconds": 2.4,
-    "start_frame": 68,
-    "end_frame": 72
+    "word": "right",
+    "start_seconds": 1.4,
+    "end_seconds": 1.6,
+    "start_frame": 42,
+    "end_frame": 48
   },
   {
-    "word": "one",
-    "start_seconds": 2.44,
-    "end_seconds": 2.56,
-    "start_frame": 73,
-    "end_frame": 77
+    "word": "now,",
+    "start_seconds": 1.66,
+    "end_seconds": 1.92,
+    "start_frame": 50,
+    "end_frame": 58
   },
   {
-    "word": "of",
-    "start_seconds": 2.587,
-    "end_seconds": 2.64,
-    "start_frame": 78,
-    "end_frame": 79
+    "word": "hiring",
+    "start_seconds": 2.034,
+    "end_seconds": 2.72,
+    "start_frame": 61,
+    "end_frame": 82
   },
   {
-    "word": "them",
-    "start_seconds": 2.688,
+    "word": "for",
+    "start_seconds": 2.76,
     "end_seconds": 2.88,
-    "start_frame": 81,
+    "start_frame": 83,
     "end_frame": 86
   },
   {
-    "word": "earns",
-    "start_seconds": 2.947,
+    "word": "your",
+    "start_seconds": 2.912,
+    "end_seconds": 3.04,
+    "start_frame": 87,
+    "end_frame": 91
+  },
+  {
+    "word": "role",
+    "start_seconds": 3.088,
     "end_seconds": 3.28,
-    "start_frame": 88,
+    "start_frame": 93,
     "end_frame": 98
   },
   {
-    "word": "almost",
-    "start_seconds": 3.337,
-    "end_seconds": 3.68,
+    "word": "just",
+    "start_seconds": 3.344,
+    "end_seconds": 3.6,
     "start_frame": 100,
-    "end_frame": 110
+    "end_frame": 108
+  },
+  {
+    "word": "dropped",
+    "start_seconds": 3.64,
+    "end_seconds": 3.92,
+    "start_frame": 109,
+    "end_frame": 118
   },
   {
     "word": "double",
-    "start_seconds": 3.737,
-    "end_seconds": 4.08,
-    "start_frame": 112,
-    "end_frame": 122
+    "start_seconds": 3.977,
+    "end_seconds": 4.32,
+    "start_frame": 119,
+    "end_frame": 130
   },
   {
-    "word": "the",
-    "start_seconds": 4.12,
-    "end_seconds": 4.24,
-    "start_frame": 124,
-    "end_frame": 127
+    "word": "digits.",
+    "start_seconds": 4.389,
+    "end_seconds": 4.88,
+    "start_frame": 132,
+    "end_frame": 146
   },
   {
-    "word": "other's",
-    "start_seconds": 4.267,
-    "end_seconds": 4.48,
-    "start_frame": 128,
-    "end_frame": 134
+    "word": "If",
+    "start_seconds": 5.147,
+    "end_seconds": 5.68,
+    "start_frame": 154,
+    "end_frame": 170
   },
   {
-    "word": "salary.",
-    "start_seconds": 4.537,
-    "end_seconds": 4.92,
-    "start_frame": 136,
-    "end_frame": 148
+    "word": "you're",
+    "start_seconds": 5.7,
+    "end_seconds": 5.84,
+    "start_frame": 171,
+    "end_frame": 175
+  },
+  {
+    "word": "senior",
+    "start_seconds": 5.909,
+    "end_seconds": 6.32,
+    "start_frame": 177,
+    "end_frame": 190
+  },
+  {
+    "word": "and",
+    "start_seconds": 6.38,
+    "end_seconds": 6.56,
+    "start_frame": 191,
+    "end_frame": 197
+  },
+  {
+    "word": "AI-fluent,",
+    "start_seconds": 6.667,
+    "end_seconds": 7.68,
+    "start_frame": 200,
+    "end_frame": 230
+  },
+  {
+    "word": "it's",
+    "start_seconds": 7.707,
+    "end_seconds": 7.92,
+    "start_frame": 231,
+    "end_frame": 238
+  },
+  {
+    "word": "never",
+    "start_seconds": 7.96,
+    "end_seconds": 8.16,
+    "start_frame": 239,
+    "end_frame": 245
+  },
+  {
+    "word": "been",
+    "start_seconds": 8.192,
+    "end_seconds": 8.32,
+    "start_frame": 246,
+    "end_frame": 250
+  },
+  {
+    "word": "better.",
+    "start_seconds": 8.377,
+    "end_seconds": 8.799,
+    "start_frame": 251,
+    "end_frame": 264
   }
 ]

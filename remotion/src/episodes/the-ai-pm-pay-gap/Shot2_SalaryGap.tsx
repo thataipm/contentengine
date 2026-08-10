@@ -1,6 +1,8 @@
 import React from "react";
 import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { GridBackground } from "../../components/GridBackground";
+import { RepoScreenshot } from "../../components/RepoScreenshot";
+import { SourceIcon } from "../../components/SourceIcon";
 import { ComparisonCard } from "../../components/ComparisonCard";
 import { CaptionsPop } from "../../components/CaptionsPop";
 import { ContentZone } from "../../components/ContentZone";
@@ -10,57 +12,67 @@ import { DEFAULT_TRANSITION_FRAMES } from "../../Episode";
 import { ACCENTS, CARD_DIM } from "../../theme_skills";
 import words from "./data/shot2_words.json";
 
-// VO: "AI-native PMs are averaging around two hundred forty five thousand
-// dollars. Traditional PMs, about one hundred twenty three thousand."
-// (243 frames). Same two cards from Shot 1, now labeled and given their
-// real numbers as each side is spoken.
-const LEFT_LABEL_BORN = 6; // "AI-native"
-const LEFT_VALUE_BORN = 124; // "dollars."
-const RIGHT_LABEL_BORN = 141; // "Traditional"
-const RIGHT_VALUE_BORN = 227; // "thousand."
+// VO: "Senior AI-PM hiring is up thirty four percent this year. Junior
+// and mid-level PM hiring dropped twelve percent." (246 frames). Beat A
+// shows the REAL institutepm.com stat cards (BCG's 2026 workforce
+// report) zoomed into the actual +34%/-12% figures, real evidence this
+// number exists, not an assertion. Beat B is the clean payoff.
+const BEAT_B = 95; // "year." landing
 
 export const Shot2_SalaryGap: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const leftPop = interpolate(springIn(frame, fps, LEFT_LABEL_BORN), [0, 1], [0, 1], { extrapolateRight: "clamp" });
-  const rightPop = interpolate(springIn(frame, fps, RIGHT_LABEL_BORN), [0, 1], [0, 1], { extrapolateRight: "clamp" });
+  const rightPop = interpolate(springIn(frame, fps, 170), [0, 1], [0, 1], { extrapolateRight: "clamp" });
 
   return (
     <AbsoluteFill>
       <GridBackground />
       <Audio src={staticFile("the-ai-pm-pay-gap/shot2_vo.wav")} volume={edgeFadeVolume(frame, durationInFrames, DEFAULT_TRANSITION_FRAMES)} />
 
-      <Sfx type="tick" at={LEFT_LABEL_BORN} />
-      <Sfx type="chime" at={LEFT_VALUE_BORN} />
-      <Sfx type="tick" at={RIGHT_LABEL_BORN} />
-      <Sfx type="chime" at={RIGHT_VALUE_BORN} />
+      <Sfx type="tick" at={0} />
+      <Sfx type="chime" at={BEAT_B} />
+      <Sfx type="tick" at={170} />
 
       <ContentZone>
-        <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
-          <ComparisonCard
-            label="AI-Native PM"
-            value="$245,000"
-            accent={ACCENTS[0]}
-            scale={interpolate(leftPop, [0, 1], [0.9, 1.1])}
-            glowStrength={interpolate(leftPop, [0, 1], [0, 0.85])}
-            born={LEFT_LABEL_BORN}
-            valueBorn={LEFT_VALUE_BORN}
+        {frame < BEAT_B ? (
+          <RepoScreenshot
+            image={staticFile("the-ai-pm-pay-gap/shots/institutepm_stats.png")}
+            icon={<SourceIcon />}
+            url="institutepm.com — BCG 2026 workforce report"
+            starsBox={{ x: 165, y: 350, w: 665, h: 195 }}
+            born={0}
+            zoomStart={10}
+            zoomEnd={90}
             frame={frame}
             fps={fps}
           />
-          <ComparisonCard
-            label="Traditional PM"
-            value="$123,000"
-            accent={CARD_DIM}
-            scale={interpolate(rightPop, [0, 1], [0.9, 0.9])}
-            glowStrength={interpolate(rightPop, [0, 1], [0, 0.1])}
-            born={RIGHT_LABEL_BORN}
-            valueBorn={RIGHT_VALUE_BORN}
-            frame={frame}
-            fps={fps}
-          />
-        </div>
+        ) : (
+          <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
+            <ComparisonCard
+              label="Senior AI-PM hiring"
+              value="+34%"
+              accent={ACCENTS[1]}
+              scale={1.1}
+              glowStrength={0.85}
+              born={BEAT_B}
+              valueBorn={BEAT_B}
+              frame={frame}
+              fps={fps}
+            />
+            <ComparisonCard
+              label="Junior/mid PM hiring"
+              value="-12%"
+              accent={CARD_DIM}
+              scale={interpolate(rightPop, [0, 1], [0.9, 0.94])}
+              glowStrength={0.15}
+              born={170}
+              valueBorn={225}
+              frame={frame}
+              fps={fps}
+            />
+          </div>
+        )}
       </ContentZone>
 
       <CaptionsPop words={words} frame={frame} fps={fps} />

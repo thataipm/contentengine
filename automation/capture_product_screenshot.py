@@ -32,7 +32,13 @@ out_full = Path(args.out_full)
 with sync_playwright() as p:
     browser = p.chromium.launch()
     page = browser.new_page(viewport={"width": vw, "height": vh}, device_scale_factor=2)
-    page.goto(args.url, wait_until="networkidle", timeout=30000)
+    try:
+        page.goto(args.url, wait_until="networkidle", timeout=30000)
+    except Exception:
+        # Some sites (trackers, chat widgets, ongoing polling) never truly go
+        # idle. Fall back to "load" plus the extra --wait settle time instead
+        # of failing the whole capture.
+        page.goto(args.url, wait_until="load", timeout=30000)
     page.wait_for_timeout(args.wait)
     out_full.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(out_full))

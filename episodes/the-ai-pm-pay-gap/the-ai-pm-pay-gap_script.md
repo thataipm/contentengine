@@ -1,54 +1,70 @@
-# The AI PM Pay Gap — Script & Shot List
+# What AI Is Actually Doing to PM Hiring: Script & Shot List
 
-**Pillar**: AI PM (authority) — v2.0, Batch 1, concept 1 of 2
-**Status**: Approved 2026-08-10, ready for production
+**Pillar**: AI PM (authority), v2.0 Batch 1, concept 1 of 2
+**Status**: REBUILT 2026-08-10 after a factual error was caught and corrected. Originally
+scripted around a $245K vs $123K compensation-gap claim from a research pass that bundled a
+plausible-sounding but unverifiable figure alongside two real, sourced stats. Direct user
+feedback on thin visuals prompted a source re-check, which found the compensation figures
+don't appear on either cited source or anywhere else checkable. Rebuilt entirely around facts
+that are independently confirmed against primary sources. See `CLAUDE.md` for the full
+incident note.
 **Target runtime**: ~35-40s
 
-## Verified facts (sourced 2026-08-10)
+## Verified facts (re-verified 2026-08-10 directly against primary sources, not secondhand)
 
-- AI-native PMs averaging roughly $245,000 vs traditional PMs at roughly $123,000.
-- Senior (Staff/Principal/Director) PM hiring up 34% while junior/mid-level PM hiring
-  contracted 12%, same period.
-  Source: https://www.institutepm.com/knowledge-hub/ai-reshaping-pm-role-2026
-- 85% of leadership investing in AI tools; only 2% prioritizing PM talent development.
-  Source: https://www.productboard.com/blog/ai-in-product-management-cpo-mandates-missteps/
+- Senior AI-PM hiring (Staff/Principal/Director level) up 34% in 2025; junior/mid-level PM
+  hiring down 12% in 2025. Source: BCG's 2026 workforce-transformation report, as reported by
+  institutepm.com. Confirmed verbatim on the page, with a real on-page stat-card display.
+  https://www.institutepm.com/knowledge-hub/ai-reshaping-pm-role-2026
+- Senior PM job postings requiring AI fluency: 61%, up from 23% in 2024. Same source, same
+  stat-card display.
+- 85% of respondents plan to invest in AI/ML tools over the next year; only 2% consider talent
+  development their biggest focus. Source: Productboard's CPO survey.
+  https://www.productboard.com/blog/ai-in-product-management-cpo-mandates-missteps/
+
+**Explicitly dropped**: the $245,000 (AI-native PM) vs $123,000 (traditional PM) compensation
+comparison from the first draft. Checked directly against both sources above and a fresh web
+search; no source states these as actual reported figures. Do not reuse this claim.
 
 ## Script
 
-**Shot 1 (Hook, ~4s)**
-> "There are now two kinds of product managers, and one of them earns almost double the
-> other's salary."
+**Shot 1 (Hook, ~5s)**
+> "If you're a mid-level product manager right now, hiring for your role just dropped double
+> digits. If you're senior and AI-fluent, it's never been better."
 
-**Shot 2 (~8s)**
-> "AI-native PMs are averaging around two hundred forty five thousand dollars. Traditional
-> PMs, about one hundred twenty three thousand."
+**Shot 2 (~7s)**
+> "Senior AI-PM hiring is up thirty four percent this year. Junior and mid-level PM hiring
+> dropped twelve percent."
 
 **Shot 3 (~8s)**
-> "Senior AI-PM hiring is up thirty four percent. Junior and mid-level PM hiring dropped
-> twelve percent, same period."
+> "Sixty one percent of senior PM postings now require AI fluency, up from twenty three
+> percent just last year."
 
 **Shot 4 (~9s)**
 > "Eighty five percent of leadership is investing in AI tools, and only two percent are
 > investing in the PMs who'd actually use them."
 
 **Shot 5 (~8s, close)**
-> "That gap is the whole reason this channel exists. Comment AIPM and I'll send you where to
-> start."
+> "Companies want AI-native PMs. They're just not building them, they're hiring for it
+> instead. Comment AIPM and I'll send you where to start."
 
 ## Notes
 
-Ran through the `humanizer` skill's real draft-audit-final loop. Individual shots were clean;
-the flag was structural, shots 2-3-4 all used an identical "stat. stat." two-sentence parallel
-form, which read as formulaic across three shots in a row even though no single sentence hit a
-listed AI-writing pattern. Fixed by merging Shot 4 into one flowing sentence, no facts changed.
+Ran through the `humanizer` skill's real audit twice (once on the original draft, once on
+this rebuild). Second pass caught Shots 2 and 3 using the identical back-to-back "stat
+sentence. stat sentence." structure, the same uniform-cadence issue flagged on the Karpathy
+episode. Fixed by merging Shot 3 into one flowing sentence.
 
-## Visual plan
+## Visual plan, revised after direct feedback ("too plain, no screenshots")
 
-Pillar: AI PM (authority), not a tool/product demo, so no real screenshots to capture here.
-Stat-driven, dark-grid/ACCENTS system per the standing production visual (unaffected by the
-v2.0 strategy migration). Plan:
-- Shot 1: two contrasting role cards ("AI-Native PM" / "Traditional PM"), no numbers yet.
-- Shot 2: the two salary numbers reveal as large stat callouts, bright vs dim accent.
-- Shot 3: the two hiring-trend percentages, directional (up/down) treatment.
-- Shot 4: the 85%/2% investment-gap stat, visualized as a real disparity (not just text).
-- Shot 5: `CommentCTA` (reused component), keyword AIPM.
+Original build used only abstract comparison cards, no real evidence. Rebuilt as two-beat
+shots per the established RepoScreenshot pattern: each stat-bearing shot opens on the real
+source page (proof the number is real, not asserted), then transitions to the clean
+stat-card/bar payoff for legibility.
+- Shot 1: unchanged, two neutral role cards diverging (no data yet, this is the hook).
+- Shot 2: real institutepm.com screenshot zoomed on the actual +34%/-12% stat cards, then
+  transitions to the clean ComparisonCard payoff.
+- Shot 3: same real screenshot, zoomed on the 61% stat card, then a StatCallout payoff.
+- Shot 4: real productboard.com screenshot zoomed on the actual 85%/2% sentence, then the
+  DisparityBar payoff (reused from the original build, this part wasn't the problem).
+- Shot 5: `CommentCTA`, unchanged.

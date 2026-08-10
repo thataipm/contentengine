@@ -9,8 +9,9 @@ import { edgeFadeVolume } from "../../motion";
 import { DEFAULT_TRANSITION_FRAMES } from "../../Episode";
 import words from "./data/shot5_words.json";
 
-// VO: "That gap is the whole reason this channel exists. Comment AIPM and
-// I'll send you where to start." (209 frames).
+// VO: "Companies want AI-native PMs. They're just not building them,
+// they're hiring for it instead. Comment AIPM and I'll send you where to
+// start." (314 frames).
 export const Shot5_Close: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -20,10 +21,10 @@ export const Shot5_Close: React.FC<{ durationInFrames: number }> = ({ durationIn
       <GridBackground />
       <Audio src={staticFile("the-ai-pm-pay-gap/shot5_vo.wav")} volume={edgeFadeVolume(frame, durationInFrames, DEFAULT_TRANSITION_FRAMES)} />
 
-      <Sfx type="chime" at={9} />
+      <Sfx type="chime" at={14} />
 
       <ContentZone top={220} bottom={220}>
-        <CommentCTA keyword="AIPM" born={9} frame={frame} fps={fps} />
+        <CommentCTA keyword="AIPM" born={14} frame={frame} fps={fps} />
       </ContentZone>
 
       <CaptionsPop words={words} frame={frame} fps={fps} />

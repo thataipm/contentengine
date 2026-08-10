@@ -1,42 +1,42 @@
 [
   {
     "shot": 1,
-    "text": "There are now two kinds of product managers, and one of them earns almost double the other's salary.",
+    "text": "If you're a mid-level product manager right now, hiring for your role just dropped double digits. If you're senior and AI-fluent, it's never been better.",
     "global_start": 0.0,
-    "global_end": 5.127,
-    "duration": 5.127,
-    "duration_frames": 154
+    "global_end": 8.896,
+    "duration": 8.896,
+    "duration_frames": 267
   },
   {
     "shot": 2,
-    "text": "AI-native PMs are averaging around two hundred forty five thousand dollars. Traditional PMs, about one hundred twenty three thousand.",
-    "global_start": 5.127,
-    "global_end": 13.223,
-    "duration": 8.096,
-    "duration_frames": 243
+    "text": "Senior AI-PM hiring is up thirty four percent this year. Junior and mid-level PM hiring dropped twelve percent.",
+    "global_start": 8.896,
+    "global_end": 17.11,
+    "duration": 8.213,
+    "duration_frames": 246
   },
   {
     "shot": 3,
-    "text": "Senior AI-PM hiring is up thirty four percent. Junior and mid-level PM hiring dropped twelve percent, same period.",
-    "global_start": 13.223,
-    "global_end": 22.227,
-    "duration": 9.004,
-    "duration_frames": 270
+    "text": "Sixty one percent of senior PM postings now require AI fluency, up from twenty three percent just last year.",
+    "global_start": 17.11,
+    "global_end": 25.64,
+    "duration": 8.53,
+    "duration_frames": 256
   },
   {
     "shot": 4,
     "text": "Eighty five percent of leadership is investing in AI tools, and only two percent are investing in the PMs who'd actually use them.",
-    "global_start": 22.227,
-    "global_end": 31.168,
-    "duration": 8.941,
-    "duration_frames": 268
+    "global_start": 25.64,
+    "global_end": 34.062,
+    "duration": 8.422,
+    "duration_frames": 253
   },
   {
     "shot": 5,
-    "text": "That gap is the whole reason this channel exists. Comment AIPM and I'll send you where to start.",
-    "global_start": 31.168,
-    "global_end": 38.14,
-    "duration": 6.972,
-    "duration_frames": 209
+    "text": "Companies want AI-native PMs. They're just not building them, they're hiring for it instead. Comment AIPM and I'll send you where to start.",
+    "global_start": 34.062,
+    "global_end": 44.54,
+    "duration": 10.478,
+    "duration_frames": 314
   }
 ]

@@ -1,128 +1,135 @@
 [
   {
-    "word": "Senior",
-    "start_seconds": 0.103,
-    "end_seconds": 1.337,
-    "start_frame": 3,
-    "end_frame": 40
+    "word": "Sixty",
+    "start_seconds": 0.19,
+    "end_seconds": 1.29,
+    "start_frame": 6,
+    "end_frame": 39
   },
   {
-    "word": "AI-PM",
-    "start_seconds": 1.444,
-    "end_seconds": 1.977,
+    "word": "one",
+    "start_seconds": 1.31,
+    "end_seconds": 1.37,
+    "start_frame": 39,
+    "end_frame": 41
+  },
+  {
+    "word": "percent",
+    "start_seconds": 1.43,
+    "end_seconds": 1.85,
     "start_frame": 43,
-    "end_frame": 59
+    "end_frame": 56
   },
   {
-    "word": "hiring",
-    "start_seconds": 2.034,
-    "end_seconds": 2.377,
-    "start_frame": 61,
-    "end_frame": 71
+    "word": "of",
+    "start_seconds": 1.877,
+    "end_seconds": 1.93,
+    "start_frame": 56,
+    "end_frame": 58
   },
   {
-    "word": "is",
-    "start_seconds": 2.457,
-    "end_seconds": 2.617,
-    "start_frame": 74,
-    "end_frame": 79
-  },
-  {
-    "word": "up",
-    "start_seconds": 2.697,
-    "end_seconds": 2.857,
-    "start_frame": 81,
-    "end_frame": 86
-  },
-  {
-    "word": "thirty",
-    "start_seconds": 2.914,
-    "end_seconds": 3.257,
-    "start_frame": 87,
-    "end_frame": 98
-  },
-  {
-    "word": "four",
-    "start_seconds": 3.305,
-    "end_seconds": 3.497,
-    "start_frame": 99,
-    "end_frame": 105
-  },
-  {
-    "word": "percent.",
-    "start_seconds": 3.567,
-    "end_seconds": 4.137,
-    "start_frame": 107,
-    "end_frame": 124
-  },
-  {
-    "word": "Junior",
-    "start_seconds": 4.308,
-    "end_seconds": 5.337,
-    "start_frame": 129,
-    "end_frame": 160
-  },
-  {
-    "word": "and",
-    "start_seconds": 5.397,
-    "end_seconds": 5.577,
-    "start_frame": 162,
-    "end_frame": 167
-  },
-  {
-    "word": "mid-level",
-    "start_seconds": 5.617,
-    "end_seconds": 6.057,
-    "start_frame": 169,
-    "end_frame": 182
+    "word": "senior",
+    "start_seconds": 1.976,
+    "end_seconds": 2.25,
+    "start_frame": 59,
+    "end_frame": 68
   },
   {
     "word": "PM",
-    "start_seconds": 6.164,
-    "end_seconds": 6.377,
-    "start_frame": 185,
-    "end_frame": 191
+    "start_seconds": 2.357,
+    "end_seconds": 2.57,
+    "start_frame": 71,
+    "end_frame": 77
   },
   {
-    "word": "hiring",
-    "start_seconds": 6.434,
-    "end_seconds": 6.777,
-    "start_frame": 193,
-    "end_frame": 203
+    "word": "postings",
+    "start_seconds": 2.641,
+    "end_seconds": 3.21,
+    "start_frame": 79,
+    "end_frame": 96
   },
   {
-    "word": "dropped",
-    "start_seconds": 6.837,
-    "end_seconds": 7.257,
-    "start_frame": 205,
-    "end_frame": 218
+    "word": "now",
+    "start_seconds": 3.29,
+    "end_seconds": 3.53,
+    "start_frame": 99,
+    "end_frame": 106
   },
   {
-    "word": "twelve",
-    "start_seconds": 7.314,
-    "end_seconds": 7.657,
-    "start_frame": 219,
-    "end_frame": 230
+    "word": "require",
+    "start_seconds": 3.59,
+    "end_seconds": 4.01,
+    "start_frame": 108,
+    "end_frame": 120
   },
   {
-    "word": "percent,",
-    "start_seconds": 7.717,
-    "end_seconds": 8.217,
-    "start_frame": 232,
-    "end_frame": 247
+    "word": "AI",
+    "start_seconds": 4.09,
+    "end_seconds": 4.25,
+    "start_frame": 123,
+    "end_frame": 128
   },
   {
-    "word": "same",
-    "start_seconds": 8.265,
-    "end_seconds": 8.457,
-    "start_frame": 248,
-    "end_frame": 254
+    "word": "fluency,",
+    "start_seconds": 4.31,
+    "end_seconds": 5.45,
+    "start_frame": 129,
+    "end_frame": 163
   },
   {
-    "word": "period.",
-    "start_seconds": 8.503,
-    "end_seconds": 8.857,
-    "start_frame": 255,
-    "end_frame": 266
+    "word": "up",
+    "start_seconds": 5.503,
+    "end_seconds": 5.61,
+    "start_frame": 165,
+    "end_frame": 168
+  },
+  {
+    "word": "from",
+    "start_seconds": 5.642,
+    "end_seconds": 5.77,
+    "start_frame": 169,
+    "end_frame": 173
+  },
+  {
+    "word": "twenty",
+    "start_seconds": 5.816,
+    "end_seconds": 6.09,
+    "start_frame": 174,
+    "end_frame": 183
+  },
+  {
+    "word": "three",
+    "start_seconds": 6.117,
+    "end_seconds": 6.25,
+    "start_frame": 184,
+    "end_frame": 188
+  },
+  {
+    "word": "percent",
+    "start_seconds": 6.32,
+    "end_seconds": 6.81,
+    "start_frame": 190,
+    "end_frame": 204
+  },
+  {
+    "word": "just",
+    "start_seconds": 6.89,
+    "end_seconds": 7.21,
+    "start_frame": 207,
+    "end_frame": 216
+  },
+  {
+    "word": "last",
+    "start_seconds": 7.258,
+    "end_seconds": 7.45,
+    "start_frame": 218,
+    "end_frame": 223
+  },
+  {
+    "word": "year.",
+    "start_seconds": 7.514,
+    "end_seconds": 8.25,
+    "start_frame": 225,
+    "end_frame": 248
   }
 ]

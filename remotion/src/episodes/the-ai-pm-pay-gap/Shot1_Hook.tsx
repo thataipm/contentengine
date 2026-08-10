@@ -10,23 +10,22 @@ import { DEFAULT_TRANSITION_FRAMES } from "../../Episode";
 import { ACCENTS, CARD_DIM } from "../../theme_skills";
 import words from "./data/shot1_words.json";
 
-// VO: "There are now two kinds of product managers, and one of them earns
-// almost double the other's salary." (154 frames). Two identical, unlabeled
-// PM cards appear immediately (hook lands in the first frame, no build-up),
-// then physically diverge, one growing brighter and larger, the other
-// dimming, as "earns almost double" plays. The disparity itself is the
-// visual, not a diagram of it.
-const DISPARITY_START = 88; // "earns"
-const DISPARITY_END = 122; // end of "double"
+// VO: "If you're a mid-level product manager right now, hiring for your
+// role just dropped double digits. If you're senior and AI-fluent, it's
+// never been better." (267 frames). Two identical PM cards diverge in two
+// beats matching the two real clauses: the right card dims on "dropped
+// double digits," the left card grows bright on "never been better."
+const DIM_START = 109; // "dropped"
+const DIM_END = 146; // end of "digits."
+const GROW_START = 239; // "never"
+const GROW_END = 264; // end of "better."
 
 export const Shot1_Hook: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const growProgress = interpolate(frame, [DISPARITY_START, DISPARITY_END], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const dimProgress = interpolate(frame, [DIM_START, DIM_END], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const growProgress = interpolate(frame, [GROW_START, GROW_END], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
     <AbsoluteFill>
@@ -34,13 +33,14 @@ export const Shot1_Hook: React.FC<{ durationInFrames: number }> = ({ durationInF
       <Audio src={staticFile("the-ai-pm-pay-gap/shot1_vo.wav")} volume={edgeFadeVolume(frame, durationInFrames, DEFAULT_TRANSITION_FRAMES)} />
 
       <Sfx type="tick" at={0} />
-      <Sfx type="whoosh" at={DISPARITY_START} />
-      <Sfx type="chime" at={DISPARITY_END} />
+      <Sfx type="whoosh" at={DIM_START} />
+      <Sfx type="whoosh" at={GROW_START} />
+      <Sfx type="chime" at={GROW_END} />
 
       <ContentZone>
         <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
           <ComparisonCard
-            label="PM"
+            label="Senior + AI-fluent PM"
             accent={ACCENTS[0]}
             scale={interpolate(growProgress, [0, 1], [1, 1.14])}
             glowStrength={interpolate(growProgress, [0, 1], [0.15, 0.9])}
@@ -49,10 +49,10 @@ export const Shot1_Hook: React.FC<{ durationInFrames: number }> = ({ durationInF
             fps={fps}
           />
           <ComparisonCard
-            label="PM"
+            label="Mid-level PM"
             accent={CARD_DIM}
-            scale={interpolate(growProgress, [0, 1], [1, 0.86])}
-            glowStrength={interpolate(growProgress, [0, 1], [0.15, 0.05])}
+            scale={interpolate(dimProgress, [0, 1], [1, 0.86])}
+            glowStrength={interpolate(dimProgress, [0, 1], [0.15, 0.05])}
             born={0}
             frame={frame}
             fps={fps}

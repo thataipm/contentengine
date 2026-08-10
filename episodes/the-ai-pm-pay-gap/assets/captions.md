@@ -1,20 +1,21 @@
-# Platform Captions: The AI PM Pay Gap
+# Platform Captions: What AI Is Actually Doing to PM Hiring
 
-Genuinely distinct drafts per platform, not the VO script reused. Facts verified 2026-08-10
-(see `the-ai-pm-pay-gap_script.md`); re-check the comp/hiring numbers before posting if this
-sits for a while.
+Genuinely distinct drafts per platform, not the VO script reused. Facts re-verified directly
+against primary sources 2026-08-10 (see `the-ai-pm-pay-gap_script.md` for the full incident
+note and sources); re-check before posting if this sits for a while.
 
 ## Instagram
 
-There are two kinds of product managers right now, and one of them earns almost double the
-other's salary.
+If you're a mid-level product manager right now, hiring for your role just dropped double
+digits. If you're senior and AI-fluent, it's never been better.
 
-AI-native PMs are averaging around $245,000, versus about $123,000 for traditional PMs.
-Senior AI-PM hiring is up 34%, while junior and mid-level hiring dropped 12% over the same
-period.
+Senior AI-PM hiring is up 34% this year. Junior and mid-level PM hiring dropped 12%. And 61%
+of senior PM postings now require AI fluency, up from 23% just last year.
 
-Here's the part that should worry you more: 85% of leadership is investing in AI tools. Only
-2% is investing in the PMs who'd actually use them well.
+Here's the part that should actually worry you: 85% of leadership is investing in AI tools.
+Only 2% is investing in the PMs who'd use them.
+
+Companies want AI-native PMs. They're just not building them, they're hiring for it instead.
 
 Comment AIPM and I'll send you where to start.
 
@@ -22,36 +23,35 @@ Comment AIPM and I'll send you where to start.
 
 ## LinkedIn
 
-I keep seeing the same pattern in AI product management right now: two tracks, one title.
+Two real numbers changed how I think about PM hiring this year.
 
-AI-native PMs are averaging around $245,000, traditional PMs around $123,000. Senior AI-PM
-hiring is up 34%, while junior and mid-level PM hiring dropped 12% over the same period.
+Senior AI-PM hiring is up 34%. Junior and mid-level PM hiring is down 12%, same period. And
+61% of senior PM postings now require AI fluency, up from 23% just twelve months ago.
+(Source: institutepm.com, citing BCG's 2026 workforce report.)
 
-The part I find more telling than the pay gap itself: 85% of leadership is investing in AI
-tools, and only 2% is investing in developing the PMs who'd actually use them well. Companies
-are buying the tools and skipping the people who'd make them worth buying.
+Here's what I think is the real story though, not the hiring split itself, but what's behind
+it: 85% of leadership is planning to invest in AI tools this year. Only 2% names talent
+development as their biggest focus. (Source: Productboard's CPO survey.)
 
-If you're a PM and you haven't picked up real AI fluency yet, this is the actual argument for
-why it matters, not vibes, a real compensation and hiring gap that's already showing up in the
-data.
+Companies want AI-native PMs. They're just not building them internally, they're hiring for
+it instead. If you're mid-career and not deliberately building AI fluency right now, this is
+the data that says it matters.
 
 #ProductManagement #AIProductManagement #CareerDevelopment #ProductStrategy #FutureOfWork
 
 ## YouTube
 
-**Title:** The AI PM Pay Gap Is Real: $245K vs $123K (2026 Data)
+**Title:** What AI Is Actually Doing to PM Hiring (Real 2026 Data)
 
 **Description:**
-There are now two tracks in product management, AI-native and traditional, and the
-compensation gap between them is real. AI-native PMs are averaging around $245,000 versus
-roughly $123,000 for traditional PMs. Senior AI-PM hiring is up 34% while junior and mid-level
-PM hiring dropped 12% over the same period.
+Senior AI-PM hiring is up 34% this year while junior and mid-level PM hiring dropped 12%,
+same period. 61% of senior PM postings now require AI fluency, up from 23% just last year.
+Source: institutepm.com, citing BCG's 2026 workforce report.
 
 The bigger signal: 85% of leadership is investing in AI tools, but only 2% is investing in
-developing the PMs who'd actually use them well.
+developing the PMs who'd actually use them. Source: Productboard's CPO survey.
 
-If you're a product manager figuring out whether AI fluency actually matters for your career,
-this is the real data behind that question.
+Companies want AI-native PMs. They're just not building them, they're hiring for it instead.
 
 Comment AIPM and I'll send you where to start.
 
