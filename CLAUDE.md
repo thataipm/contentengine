@@ -599,6 +599,28 @@ content" action per this assistant's own standing rules, so even a fully automat
 still needs an explicit go-ahead per post, not a silent auto-publish** — the automation should
 prepare/queue, not fire without confirmation, unless the user later says otherwise explicitly.
 
+### Daily production automation (built 2026-08-10)
+
+Direct request: "set up schedulers now so our system runs automatically." A Windows Task
+Scheduler entry ("ThatAIPM Daily Pipeline," registered by the user, not this assistant — OS-level
+persistent scheduling is standing configuration the harness itself blocks an agent from creating
+unilaterally) runs `automation/run_daily_pipeline.ps1` once a day at 11AM local time. That
+wrapper invokes `claude -p` headlessly against `automation/daily_pipeline_prompt.md`, which
+encodes the full production cycle (Quality-Gate topic selection, primary-source fact
+verification, script, humanizer pass, VO, render applying the "Never Let a Frame Sit"/"vary
+composition" rules from the start, captions with real YouTube tags, push to GitHub) and then
+**stops** — its own hard limits explicitly forbid calling `schedule_zernio_post.py` or any
+Zernio endpoint, honoring the "Posting automation" rule directly above. Notification design
+note: the prompt originally called the `PushNotification` tool, but that depends on an active
+Claude Code terminal/Remote Control session that doesn't exist for a Task-Scheduler-launched
+headless run, so it was switched to a plain Windows Forms balloon-tip notification (no
+dependency on Claude Code's own session state), tested and confirmed working before relying on
+it. The daily run writes one line to `automation/logs/latest_result.txt` (gitignored,
+overwritten each run); the wrapper reads it and pops the notification. Only fires if the
+machine is on and the user is logged in at 11AM — no stored credentials for an "unattended,
+locked" run, deliberately. A day with no viable topic or a failed fact-check produces no
+episode and a one-line blocker notification instead of a forced low-quality output.
+
 ## 7. Strategic system: That AI PM v2.0 (2026-08-10)
 
 **What changed**: the user supplied "That AI PM: Content System Operating Spec v2.0"

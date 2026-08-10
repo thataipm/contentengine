@@ -16,3 +16,6 @@ __pycache__/
 
 # Build artifacts
 episodes/*/build/
+
+# Daily pipeline run logs
+automation/logs/
