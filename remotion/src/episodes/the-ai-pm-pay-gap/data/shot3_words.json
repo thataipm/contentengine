@@ -1,0 +1,128 @@
+[
+  {
+    "word": "Senior",
+    "start_seconds": 0.103,
+    "end_seconds": 1.337,
+    "start_frame": 3,
+    "end_frame": 40
+  },
+  {
+    "word": "AI-PM",
+    "start_seconds": 1.444,
+    "end_seconds": 1.977,
+    "start_frame": 43,
+    "end_frame": 59
+  },
+  {
+    "word": "hiring",
+    "start_seconds": 2.034,
+    "end_seconds": 2.377,
+    "start_frame": 61,
+    "end_frame": 71
+  },
+  {
+    "word": "is",
+    "start_seconds": 2.457,
+    "end_seconds": 2.617,
+    "start_frame": 74,
+    "end_frame": 79
+  },
+  {
+    "word": "up",
+    "start_seconds": 2.697,
+    "end_seconds": 2.857,
+    "start_frame": 81,
+    "end_frame": 86
+  },
+  {
+    "word": "thirty",
+    "start_seconds": 2.914,
+    "end_seconds": 3.257,
+    "start_frame": 87,
+    "end_frame": 98
+  },
+  {
+    "word": "four",
+    "start_seconds": 3.305,
+    "end_seconds": 3.497,
+    "start_frame": 99,
+    "end_frame": 105
+  },
+  {
+    "word": "percent.",
+    "start_seconds": 3.567,
+    "end_seconds": 4.137,
+    "start_frame": 107,
+    "end_frame": 124
+  },
+  {
+    "word": "Junior",
+    "start_seconds": 4.308,
+    "end_seconds": 5.337,
+    "start_frame": 129,
+    "end_frame": 160
+  },
+  {
+    "word": "and",
+    "start_seconds": 5.397,
+    "end_seconds": 5.577,
+    "start_frame": 162,
+    "end_frame": 167
+  },
+  {
+    "word": "mid-level",
+    "start_seconds": 5.617,
+    "end_seconds": 6.057,
+    "start_frame": 169,
+    "end_frame": 182
+  },
+  {
+    "word": "PM",
+    "start_seconds": 6.164,
+    "end_seconds": 6.377,
+    "start_frame": 185,
+    "end_frame": 191
+  },
+  {
+    "word": "hiring",
+    "start_seconds": 6.434,
+    "end_seconds": 6.777,
+    "start_frame": 193,
+    "end_frame": 203
+  },
+  {
+    "word": "dropped",
+    "start_seconds": 6.837,
+    "end_seconds": 7.257,
+    "start_frame": 205,
+    "end_frame": 218
+  },
+  {
+    "word": "twelve",
+    "start_seconds": 7.314,
+    "end_seconds": 7.657,
+    "start_frame": 219,
+    "end_frame": 230
+  },
+  {
+    "word": "percent,",
+    "start_seconds": 7.717,
+    "end_seconds": 8.217,
+    "start_frame": 232,
+    "end_frame": 247
+  },
+  {
+    "word": "same",
+    "start_seconds": 8.265,
+    "end_seconds": 8.457,
+    "start_frame": 248,
+    "end_frame": 254
+  },
+  {
+    "word": "period.",
+    "start_seconds": 8.503,
+    "end_seconds": 8.857,
+    "start_frame": 255,
+    "end_frame": 266
+  }
+]
