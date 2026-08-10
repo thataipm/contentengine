@@ -1,0 +1,247 @@
+[
+  {
+    "word": "A",
+    "start_seconds": 0.26,
+    "end_seconds": 0.74,
+    "start_frame": 8,
+    "end_frame": 22
+  },
+  {
+    "word": "developer",
+    "start_seconds": 0.788,
+    "end_seconds": 1.22,
+    "start_frame": 24,
+    "end_frame": 37
+  },
+  {
+    "word": "named",
+    "start_seconds": 1.26,
+    "end_seconds": 1.46,
+    "start_frame": 38,
+    "end_frame": 44
+  },
+  {
+    "word": "Forrest",
+    "start_seconds": 1.52,
+    "end_seconds": 1.94,
+    "start_frame": 46,
+    "end_frame": 58
+  },
+  {
+    "word": "Chang",
+    "start_seconds": 2.02,
+    "end_seconds": 2.42,
+    "start_frame": 61,
+    "end_frame": 73
+  },
+  {
+    "word": "turned",
+    "start_seconds": 2.477,
+    "end_seconds": 2.82,
+    "start_frame": 74,
+    "end_frame": 85
+  },
+  {
+    "word": "Karpathy's",
+    "start_seconds": 2.86,
+    "end_seconds": 3.38,
+    "start_frame": 86,
+    "end_frame": 101
+  },
+  {
+    "word": "complaints",
+    "start_seconds": 3.424,
+    "end_seconds": 3.86,
+    "start_frame": 103,
+    "end_frame": 116
+  },
+  {
+    "word": "into",
+    "start_seconds": 3.908,
+    "end_seconds": 4.1,
+    "start_frame": 117,
+    "end_frame": 123
+  },
+  {
+    "word": "one",
+    "start_seconds": 4.16,
+    "end_seconds": 4.34,
+    "start_frame": 125,
+    "end_frame": 130
+  },
+  {
+    "word": "file,",
+    "start_seconds": 4.42,
+    "end_seconds": 5.22,
+    "start_frame": 133,
+    "end_frame": 157
+  },
+  {
+    "word": "CLAUDE.md,",
+    "start_seconds": 5.273,
+    "end_seconds": 6.58,
+    "start_frame": 158,
+    "end_frame": 197
+  },
+  {
+    "word": "four",
+    "start_seconds": 6.708,
+    "end_seconds": 7.22,
+    "start_frame": 201,
+    "end_frame": 217
+  },
+  {
+    "word": "rules",
+    "start_seconds": 7.273,
+    "end_seconds": 7.54,
+    "start_frame": 218,
+    "end_frame": 226
+  },
+  {
+    "word": "long:",
+    "start_seconds": 7.62,
+    "end_seconds": 8.02,
+    "start_frame": 229,
+    "end_frame": 241
+  },
+  {
+    "word": "think",
+    "start_seconds": 8.18,
+    "end_seconds": 8.98,
+    "start_frame": 245,
+    "end_frame": 269
+  },
+  {
+    "word": "before",
+    "start_seconds": 9.026,
+    "end_seconds": 9.3,
+    "start_frame": 271,
+    "end_frame": 279
+  },
+  {
+    "word": "coding,",
+    "start_seconds": 9.357,
+    "end_seconds": 9.78,
+    "start_frame": 281,
+    "end_frame": 293
+  },
+  {
+    "word": "keep",
+    "start_seconds": 9.892,
+    "end_seconds": 10.34,
+    "start_frame": 297,
+    "end_frame": 310
+  },
+  {
+    "word": "it",
+    "start_seconds": 10.393,
+    "end_seconds": 10.5,
+    "start_frame": 312,
+    "end_frame": 315
+  },
+  {
+    "word": "simple,",
+    "start_seconds": 10.557,
+    "end_seconds": 10.98,
+    "start_frame": 317,
+    "end_frame": 329
+  },
+  {
+    "word": "touch",
+    "start_seconds": 11.1,
+    "end_seconds": 11.7,
+    "start_frame": 333,
+    "end_frame": 351
+  },
+  {
+    "word": "only",
+    "start_seconds": 11.764,
+    "end_seconds": 12.02,
+    "start_frame": 353,
+    "end_frame": 361
+  },
+  {
+    "word": "what",
+    "start_seconds": 12.052,
+    "end_seconds": 12.18,
+    "start_frame": 362,
+    "end_frame": 365
+  },
+  {
+    "word": "you're",
+    "start_seconds": 12.22,
+    "end_seconds": 12.42,
+    "start_frame": 367,
+    "end_frame": 373
+  },
+  {
+    "word": "asked",
+    "start_seconds": 12.447,
+    "end_seconds": 12.58,
+    "start_frame": 373,
+    "end_frame": 377
+  },
+  {
+    "word": "to",
+    "start_seconds": 12.607,
+    "end_seconds": 12.66,
+    "start_frame": 378,
+    "end_frame": 380
+  },
+  {
+    "word": "touch,",
+    "start_seconds": 12.727,
+    "end_seconds": 13.22,
+    "start_frame": 382,
+    "end_frame": 397
+  },
+  {
+    "word": "and",
+    "start_seconds": 13.3,
+    "end_seconds": 13.54,
+    "start_frame": 399,
+    "end_frame": 406
+  },
+  {
+    "word": "define",
+    "start_seconds": 13.609,
+    "end_seconds": 14.02,
+    "start_frame": 408,
+    "end_frame": 421
+  },
+  {
+    "word": "what",
+    "start_seconds": 14.068,
+    "end_seconds": 14.26,
+    "start_frame": 422,
+    "end_frame": 428
+  },
+  {
+    "word": "done",
+    "start_seconds": 14.356,
+    "end_seconds": 14.74,
+    "start_frame": 431,
+    "end_frame": 442
+  },
+  {
+    "word": "actually",
+    "start_seconds": 14.793,
+    "end_seconds": 15.22,
+    "start_frame": 444,
+    "end_frame": 457
+  },
+  {
+    "word": "looks",
+    "start_seconds": 15.26,
+    "end_seconds": 15.46,
+    "start_frame": 458,
+    "end_frame": 464
+  },
+  {
+    "word": "like.",
+    "start_seconds": 15.54,
+    "end_seconds": 15.9,
+    "start_frame": 466,
+    "end_frame": 477
+  }
+]

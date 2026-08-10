@@ -1,0 +1,42 @@
+[
+  {
+    "shot": 1,
+    "text": "Your AI coding agent keeps rewriting code you never asked it to touch. This file, two hundred thousand GitHub stars, fixes exactly that.",
+    "global_start": 0.0,
+    "global_end": 9.094,
+    "duration": 9.094,
+    "duration_frames": 273
+  },
+  {
+    "shot": 2,
+    "text": "Andrej Karpathy, who built Tesla's Autopilot and co-founded OpenAI, posted about how AI coding agents keep making the same mistakes: guessing what you meant, and rewriting code nobody asked them to touch.",
+    "global_start": 9.094,
+    "global_end": 22.7,
+    "duration": 13.607,
+    "duration_frames": 408
+  },
+  {
+    "shot": 3,
+    "text": "A developer named Forrest Chang turned Karpathy's complaints into one file, CLAUDE.md, four rules long: think before coding, keep it simple, touch only what you're asked to touch, and define what done actually looks like.",
+    "global_start": 22.7,
+    "global_end": 38.724,
+    "duration": 16.024,
+    "duration_frames": 481
+  },
+  {
+    "shot": 4,
+    "text": "That's two hundred and one thousand stars, on a single markdown file, and it's still climbing.",
+    "global_start": 38.724,
+    "global_end": 45.04,
+    "duration": 6.316,
+    "duration_frames": 189
+  },
+  {
+    "shot": 5,
+    "text": "It works with Claude Code and Cursor. Drop it in as your CLAUDE.md and the agent stops guessing. Comment KARPATHY and I'll send you the link.",
+    "global_start": 45.04,
+    "global_end": 55.34,
+    "duration": 10.3,
+    "duration_frames": 309
+  }
+]

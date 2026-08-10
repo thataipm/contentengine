@@ -9,6 +9,8 @@ import { CoverSk1 } from "./covers/CoverSk1";
 import { Sk1Episode, calculateSk1Metadata } from "./episodes/sk1/Sk1Episode";
 import { CoverSd1 } from "./covers/CoverSd1";
 import { Sd1Episode, calculateSd1Metadata } from "./episodes/sd1/Sd1Episode";
+import { CoverKarpathySkill } from "./covers/CoverKarpathySkill";
+import { KarpathySkillEpisode, calculateKarpathySkillMetadata } from "./episodes/the-karpathy-skill/KarpathySkillEpisode";
 
 const ZERO_FRAMES_CM1 = {
   shot1: 0,
@@ -42,6 +44,14 @@ const ZERO_FRAMES_SK1 = {
 };
 
 const ZERO_FRAMES_SD1 = {
+  shot1: 0,
+  shot2: 0,
+  shot3: 0,
+  shot4: 0,
+  shot5: 0,
+};
+
+const ZERO_FRAMES_KARPATHY = {
   shot1: 0,
   shot2: 0,
   shot3: 0,
@@ -108,6 +118,17 @@ export const MyComposition = () => {
         calculateMetadata={calculateSd1Metadata}
       />
       <Composition id="Cover-sd1" component={CoverSd1} durationInFrames={90} fps={FPS} width={W} height={H} />
+      <Composition
+        id="Episode-the-karpathy-skill"
+        component={KarpathySkillEpisode}
+        durationInFrames={150}
+        fps={FPS}
+        width={W}
+        height={H}
+        defaultProps={{ frames: ZERO_FRAMES_KARPATHY }}
+        calculateMetadata={calculateKarpathySkillMetadata}
+      />
+      <Composition id="Cover-the-karpathy-skill" component={CoverKarpathySkill} durationInFrames={90} fps={FPS} width={W} height={H} />
     </>
   );
 };

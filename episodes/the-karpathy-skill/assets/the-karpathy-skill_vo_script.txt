@@ -1,0 +1,9 @@
+Your AI coding agent keeps rewriting code you never asked it to touch. This file, two hundred thousand GitHub stars, fixes exactly that.
+
+Andrej Karpathy, who built Tesla's Autopilot and co-founded OpenAI, posted about how AI coding agents keep making the same mistakes: guessing what you meant, and rewriting code nobody asked them to touch.
+
+A developer named Forrest Chang turned Karpathy's complaints into one file, CLAUDE.md, four rules long: think before coding, keep it simple, touch only what you're asked to touch, and define what done actually looks like.
+
+That's two hundred and one thousand stars, on a single markdown file, and it's still climbing.
+
+It works with Claude Code and Cursor. Drop it in as your CLAUDE.md and the agent stops guessing. Comment KARPATHY and I'll send you the link.
