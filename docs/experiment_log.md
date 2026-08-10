@@ -124,8 +124,66 @@ Notes: (free text once the batch is underway)
 
 ## Batches
 
-No batch has been opened yet. The first batch opens once topic selection begins for the first
-episode produced under v2.0. "The Karpathy Skill" predates this system (see `CLAUDE.md`'s
-legacy/transition note) and is not retroactively assigned a batch, though its eventual
-real-world performance is worth recording here once available as an informal baseline data
-point for comparison against the first true v2.0 batch.
+"The Karpathy Skill" predates this system (see `CLAUDE.md`'s legacy/transition note) and is
+not retroactively assigned a batch, though its eventual real-world performance is worth
+recording here once available as an informal baseline data point for comparison against
+Batch 1 below.
+
+## Batch 1
+
+```
+batch_id: BATCH-001
+date_started: 2026-08-10
+pillar: AI PM + Build in Public (two concepts, deliberately different formats)
+series: none
+hypothesis: First-hand build-in-public content and researched AI-PM authority content pull
+  different quality-follower rates. Neither format is assumed better going in; this batch
+  establishes the first real baseline for both under v2.0.
+target_audience: Primary (PMs and aspiring PMs becoming AI-native)
+concepts:
+  - concept: "The AI PM pay gap is real: $245K vs $123K"
+    pillar_fit: PASS, AI PM / authority
+    audience_fit: PASS, direct career-stakes relevance to the primary audience
+    100k_test: PASS, this is exactly the audience worth having
+    pm_question: KNOW
+    originality: real 2026 comp data (AI-focused PMs ~$245K vs traditional ~$123K), senior
+      AI-PM hiring +34% vs junior/mid -12% over the same period, not a generic "AI is
+      changing PM work" take
+    payoff: viewer learns the actual stakes of not becoming AI-native, with a number to
+      anchor it
+    brand_value: high, this is close to the channel's core premise stated as a fact
+    worth_producing: PASS
+    gate_result: PASS
+    sources: https://www.institutepm.com/knowledge-hub/ai-reshaping-pm-role-2026 ,
+      https://www.productboard.com/blog/ai-in-product-management-cpo-mandates-missteps/
+  - concept: "I built an AI tool because bug priority is political, not factual" (SenseBug AI)
+    pillar_fit: PASS, Build in Public / differentiation
+    audience_fit: PASS, every PM has lived the "whoever escalates loudest wins" problem
+    100k_test: PASS
+    pm_question: BUILD, and KNOW (the politics-not-facts framing is a usable mental model
+      even for a viewer who never touches the tool)
+    originality: first-hand founder story (solo-built, shipped V1 in under a month, Next.js
+      14 + Supabase + Claude), not a researched piece
+    payoff: a real, validated problem framing plus a real shipped tool
+    brand_value: high, this is the Build-in-Public pillar's exact purpose
+    worth_producing: PASS
+    gate_result: PASS
+    sources: user-provided (resume / first-hand account, 2026-08-10)
+success_metrics: follows per 1,000 views (primary, comparing the two concepts against each
+  other), saves and comments (secondary), per spec §9
+status: PLANNED
+results:
+learning:
+decision:
+next_action: script and produce both concepts
+```
+
+Notes: Reserve candidates from the same research pass, held for Batch 2 rather than crowding
+this one: "Why ChatGPT Pulse actually died" (AI PM teardown, real but drop or re-verify the
+64.4% interruption-accuracy stat before scripting, the launch/shutdown dates and 96%
+search-decline number are independently corroborated and solid as-is), "I installed 65 PM
+skills into Claude" (AI Workflows, real verified repo, needs an actual on-screen demo not just
+narration), Claude Cowork for PM workflows (AI Workflows, first-hand angle available since the
+user already runs this channel's own pipeline through Cowork), GigOS reframed around the
+AI-assisted solo build rather than the product itself (Build in Public, weaker AI-native fit
+than SenseBug AI). Full research trail and sourcing in this session's history.
