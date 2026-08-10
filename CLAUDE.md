@@ -130,7 +130,14 @@ instinct — this is the channel's actual retention mechanism, not a nice-to-hav
   pan/zoom "camera push" into one real detail (`highlightBox`), added 2026-08-10 for Tool
   Showdowns. Generalizes `RepoScreenshot` (which assumes a github.com repo page + stars badge)
   for any product's public page — same visual technique, no GitHub-specific assumptions. Pair
-  with `automation/capture_product_screenshot.py` for the actual capture.
+  with `automation/capture_product_screenshot.py` for the actual capture. **Pacing note added
+  2026-08-10** (direct feedback on sd1's pacing reading slow): don't span `zoomStart`→`zoomEnd`
+  across the whole pre-payoff hold — sd1 used e.g. `zoomStart=30, zoomEnd=322` on a beat that
+  didn't land until frame 330, a ~9.7s continuous drift that reads as slow even though it's
+  technically always in motion. Keep the zoom window short (roughly 60-90 frames / 2-3s) and
+  position it to land right before the payoff beat, so the screenshot holds briefly at its
+  settled pop-in scale first, then the push-in itself is a quick, punchy motion rather than a
+  slow continuous drift.
 - `three/SceneRig.tsx` — per-shot `<ThreeCanvas>` wrapper for any React Three Fiber content:
   orthographic camera sized so 1 world unit = 1 screen pixel, shared neutral key/fill lighting,
   a local deterministic environment map, bloom post-processing. Wrap any 3D shot content in
@@ -293,10 +300,24 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
    YouTube as of 2026-08-09 — see `docs/posting_platforms.md` if that list changes). **Each
    platform's copy must be written for that platform, never the same block reused three times**
    (flagged directly after sk1's first pass just re-ran the VO script as the caption everywhere)
-   — same underlying facts/stats, different structure: Instagram leads with a fast hook + emoji
-   scan + a dense hashtag block (~10-15 tags), LinkedIn is a first-person practitioner narrative
-   with real paragraph breaks and only 3-5 tags, YouTube is a searchable title + keyword-dense
-   description with `#Shorts`. See `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/captions.md` for the reference shape.
+   — same underlying facts/stats, different structure.
+   **Revised 2026-08-10, direct feedback after watching sd1 live** ("you copy script and use it
+   as captions, they are almost same... write caption, title description properly"): a caption
+   that closely paraphrases the VO script sentence-by-sentence still fails this rule even if the
+   wording isn't byte-identical — the standard is genuinely distinct platform-native copy, not a
+   rephrased transcript. Concretely:
+   - **Instagram**: a real hook (a question or a claim, not "here's what the video says"),
+     scannable structure, **3-6 relevant hashtags, not a dense block** — the old ~10-15 tag
+     block is retired, it reads as spammy, not searchable.
+   - **LinkedIn**: first-person practitioner narrative, real paragraph breaks, 3-5 tags
+     (unchanged, this one was already right).
+   - **YouTube**: title and description must be **genuinely SEO-considered** — real keyword
+     phrases a viewer would actually search (tool names, "vs", "pricing," the year, etc.) placed
+     early in the title and description, not just a restated video summary. Keep `#Shorts` plus
+     2-3 more targeted tags, not a long list.
+   See `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/captions.md` for
+   the reference *structure* (still valid — separate sections, distinct tone per platform); the
+   hashtag-count and SEO guidance above supersedes what that specific file did.
 
 ## 6. Decided 2026-08-06: visual direction, voice, content plan
 
