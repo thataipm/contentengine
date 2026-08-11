@@ -790,3 +790,45 @@ was fully rebuilt around only re-verified facts, real evidence screenshots of th
 pages were added to every stat-bearing shot in the process, which also directly answered the
 visual-thinness feedback. See `docs/experiment_log.md`'s Batch 1 entry for the full correction
 note, and the episode's own script file for the incident writeup.
+
+## 8. Working discipline (adapted from the karpathy-skill rules, 2026-08-11)
+
+Direct instruction, prompted by watching this project's own actual failure modes and then
+asking whether `multica-ai/andrej-karpathy-skills` (201,420 stars as of 2026-08-11, the same
+repo covered in the-karpathy-skill episode) was worth adopting here. Evaluated each of its four
+rules against real incidents in this project rather than copying it wholesale — one of them
+doesn't fit this codebase and is deliberately NOT adopted; say why, not just what.
+
+**Goal-Driven Execution — adopt fully, already validated in practice.** "Looks right" is not a
+success criterion; a check that can print PASS/FAIL is. This is the exact mechanism that fixed
+the static-frame problem (§5b, `automation/check_static_frames.py`): the fix wasn't "try
+harder," it was turning an unverifiable feeling into a command with an exit code. Apply this
+pattern generally: before calling a subjective judgment call "done" (does this hook state the
+topic fast enough, is this motion actually visible, does this fact check out), ask whether it
+can be turned into something that can fail loudly instead of just feeling fine. Not everything
+can (hook clarity is closer to editorial judgment than a pixel diff), but default to trying
+before settling for eyeballing.
+
+**Think Before Coding — adopt, with a concrete trigger.** State a visual/creative assumption
+out loud when making it, specifically anything with a magnitude nobody supplied (an animation
+amplitude, a hold duration, a threshold) — these are exactly the silent judgment calls that
+went wrong this session (`breathe()` at 0.02, assumed sufficient, wasn't). Naming the assumption
+doesn't make it correct, but it's the difference between a guess that quietly ships and a guess
+that gets checked.
+
+**Surgical Changes — already covered, formalizing the existing practice.** This project already
+has the equivalent rule in a narrower form (§6: once a video is posted, don't re-edit it; the
+shared-component-fix pattern used throughout this session — e.g. adding `breathe()` to
+`ComparisonCard`/`PipelineFlow`/`TerminalCard` — is fine specifically because it doesn't touch
+already-rendered output, only future renders). No behavior change, just naming the general
+version of a rule this project already follows.
+
+**Simplicity First — NOT adopted as written, real conflict with this codebase.** Its own text
+says "no abstractions for single-use code," but this project deliberately builds shared,
+reusable components (`ComparisonCard`, `DisparityBar`, `PipelineFlow`, `TerminalCard`, etc.)
+from their FIRST use, because the channel's format guarantees dozens of future episodes will
+need the same visual patterns — that's a known, structural requirement here, not speculative
+gold-plating the karpathy rule is warning against in general software. Blind adoption would
+argue against this project's own working architecture. The part worth keeping: don't add
+config/flexibility/error-handling nobody asked for on top of a component — build the reusable
+shape because it's genuinely needed, not the unneeded flourishes around it.
