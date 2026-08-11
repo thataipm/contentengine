@@ -217,7 +217,62 @@ this one: "Why ChatGPT Pulse actually died" (AI PM teardown, real but drop or re
 64.4% interruption-accuracy stat before scripting, the launch/shutdown dates and 96%
 search-decline number are independently corroborated and solid as-is), "I installed 65 PM
 skills into Claude" (AI Workflows, real verified repo, needs an actual on-screen demo not just
-narration), Claude Cowork for PM workflows (AI Workflows, first-hand angle available since the
-user already runs this channel's own pipeline through Cowork), GigOS reframed around the
-AI-assisted solo build rather than the product itself (Build in Public, weaker AI-native fit
-than SenseBug AI). Full research trail and sourcing in this session's history.
+narration) — **used to open Batch 2 below, 2026-08-11**, "Claude Cowork for PM workflows" (AI
+Workflows, first-hand angle available since the user already runs this channel's own pipeline
+through Cowork) — **checked 2026-08-11 by the daily pipeline run and found NOT verifiable**:
+nothing in this project's actual production pipeline (CLAUDE.md §2, the daily
+`run_daily_pipeline.ps1` -> headless `claude -p` flow) uses Claude Cowork, so the reserve
+note's first-hand premise doesn't hold; still viable as a concept if reframed as a
+non-first-hand tool spotlight, or dropped if that framing is judged too generic, GigOS
+reframed around the AI-assisted solo build rather than the product itself (Build in Public,
+weaker AI-native fit than SenseBug AI). Full research trail and sourcing in this session's
+history.
+
+---
+
+## Batch 2
+
+```
+batch_id: BATCH-002
+date_started: 2026-08-11
+pillar: AI Workflows & Tools
+series: none
+hypothesis: Real, installable-tool spotlights (a specific repo, real install command, real
+  numbers) generate stronger saves and follows-per-1000-views than researched authority
+  content (Batch 1's AI PM pillar concept) or first-hand build-in-public content, since the
+  payoff is something the viewer can act on immediately.
+target_audience: Primary (PMs and aspiring PMs becoming AI-native, specifically those already
+  using Claude day to day)
+concepts:
+  - concept: "Claude Just Got 68 Product Management Skills" (product-on-purpose/pm-skills
+      plugin spotlight)
+    pillar_fit: PASS, AI Workflows & Tools / acquisition via a real, installable tool
+    audience_fit: PASS, directly useful to PMs who already use Claude
+    100k_test: PASS, exactly the audience worth having
+    pm_question: USE and WORK
+    originality: leads with the repo's own stated problem (AI output quality anchored to a
+      mediocre training-data average) and structural answer (a full product lifecycle of
+      skills, not a prompt pack), not a generic tools listicle
+    payoff: a specific, real, installable system with an exact install command
+    brand_value: high, concrete AI-native-product-thinking example, product is the lens not
+      just a tool ad
+    worth_producing: PASS
+    gate_result: PASS
+    sources: https://github.com/product-on-purpose/pm-skills (README fetched directly via
+      raw.githubusercontent.com 2026-08-11, not just a research-pass summary), GitHub API for
+      star/fork counts
+    episode_status: PRODUCED (episodes/claude-just-got-68-product-management-skills/, ready
+      for scheduling)
+success_metrics: follows per 1,000 views (primary, compared against Batch 1's two concepts
+  once all three have real traffic), saves and comments (secondary), per spec §9
+status: IN_PRODUCTION
+results:
+learning:
+decision:
+next_action: Episode produced 2026-08-11 by the unattended daily pipeline. Awaiting user
+  review and go-ahead before scheduling via Zernio (per the standing rule: automation prepares/
+  queues, a human approves the actual publish). Suggested post time proposed in the daily run's
+  notification.
+```
+
+Notes: (batch opened by the unattended daily pipeline run, 2026-08-11)

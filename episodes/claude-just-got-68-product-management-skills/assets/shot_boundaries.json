@@ -1,0 +1,42 @@
+[
+  {
+    "shot": 1,
+    "text": "Ask Claude to write a PRD, and you'll get the same mediocre draft everyone else gets. This repo fixes that with sixty eight real product management skills.",
+    "global_start": 0.0,
+    "global_end": 9.386,
+    "duration": 9.386,
+    "duration_frames": 282
+  },
+  {
+    "shot": 2,
+    "text": "It's built around the real product lifecycle: thirty skills across six phases, discover, define, develop, deliver, measure, iterate, plus foundation, utility, and sprint toolkit skills that make up the rest of the sixty eight.",
+    "global_start": 9.386,
+    "global_end": 25.84,
+    "duration": 16.453,
+    "duration_frames": 494
+  },
+  {
+    "shot": 3,
+    "text": "It also ships specialist sub agents that Claude can spawn on demand. One of them, the critic, adversarially reviews your PRD or your hypothesis before stakeholders ever see it.",
+    "global_start": 25.84,
+    "global_end": 38.87,
+    "duration": 13.03,
+    "duration_frames": 391
+  },
+  {
+    "shot": 4,
+    "text": "Sixty eight skills, five hundred thirty GitHub stars, and it's Apache licensed and still shipping new updates.",
+    "global_start": 38.87,
+    "global_end": 46.074,
+    "duration": 7.203,
+    "duration_frames": 216
+  },
+  {
+    "shot": 5,
+    "text": "It works with Claude Code, Cursor, and Codex. Install it as a plugin, and every future PRD starts from real product thinking, not average. Comment PLAYBOOK and I'll send you the link.",
+    "global_start": 46.074,
+    "global_end": 59.66,
+    "duration": 13.586,
+    "duration_frames": 408
+  }
+]

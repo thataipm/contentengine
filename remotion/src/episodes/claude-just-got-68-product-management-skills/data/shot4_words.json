@@ -1,0 +1,121 @@
+[
+  {
+    "word": "Sixty",
+    "start_seconds": 0.19,
+    "end_seconds": 1.29,
+    "start_frame": 6,
+    "end_frame": 39
+  },
+  {
+    "word": "eight",
+    "start_seconds": 1.303,
+    "end_seconds": 1.37,
+    "start_frame": 39,
+    "end_frame": 41
+  },
+  {
+    "word": "skills,",
+    "start_seconds": 1.439,
+    "end_seconds": 2.09,
+    "start_frame": 43,
+    "end_frame": 63
+  },
+  {
+    "word": "five",
+    "start_seconds": 2.122,
+    "end_seconds": 2.25,
+    "start_frame": 64,
+    "end_frame": 67
+  },
+  {
+    "word": "hundred",
+    "start_seconds": 2.28,
+    "end_seconds": 2.49,
+    "start_frame": 68,
+    "end_frame": 75
+  },
+  {
+    "word": "thirty",
+    "start_seconds": 2.547,
+    "end_seconds": 2.89,
+    "start_frame": 76,
+    "end_frame": 87
+  },
+  {
+    "word": "GitHub",
+    "start_seconds": 2.947,
+    "end_seconds": 3.29,
+    "start_frame": 88,
+    "end_frame": 99
+  },
+  {
+    "word": "stars,",
+    "start_seconds": 3.357,
+    "end_seconds": 4.09,
+    "start_frame": 101,
+    "end_frame": 123
+  },
+  {
+    "word": "and",
+    "start_seconds": 4.13,
+    "end_seconds": 4.25,
+    "start_frame": 124,
+    "end_frame": 127
+  },
+  {
+    "word": "it's",
+    "start_seconds": 4.277,
+    "end_seconds": 4.41,
+    "start_frame": 128,
+    "end_frame": 132
+  },
+  {
+    "word": "Apache",
+    "start_seconds": 4.467,
+    "end_seconds": 4.81,
+    "start_frame": 134,
+    "end_frame": 144
+  },
+  {
+    "word": "licensed",
+    "start_seconds": 4.863,
+    "end_seconds": 5.29,
+    "start_frame": 146,
+    "end_frame": 159
+  },
+  {
+    "word": "and",
+    "start_seconds": 5.35,
+    "end_seconds": 5.53,
+    "start_frame": 160,
+    "end_frame": 166
+  },
+  {
+    "word": "still",
+    "start_seconds": 5.583,
+    "end_seconds": 5.85,
+    "start_frame": 167,
+    "end_frame": 175
+  },
+  {
+    "word": "shipping",
+    "start_seconds": 5.886,
+    "end_seconds": 6.17,
+    "start_frame": 177,
+    "end_frame": 185
+  },
+  {
+    "word": "new",
+    "start_seconds": 6.23,
+    "end_seconds": 6.41,
+    "start_frame": 187,
+    "end_frame": 192
+  },
+  {
+    "word": "updates.",
+    "start_seconds": 6.48,
+    "end_seconds": 7.01,
+    "start_frame": 194,
+    "end_frame": 210
+  }
+]

@@ -1,0 +1,226 @@
+[
+  {
+    "word": "It",
+    "start_seconds": 0.194,
+    "end_seconds": 0.886,
+    "start_frame": 6,
+    "end_frame": 27
+  },
+  {
+    "word": "works",
+    "start_seconds": 0.939,
+    "end_seconds": 1.206,
+    "start_frame": 28,
+    "end_frame": 36
+  },
+  {
+    "word": "with",
+    "start_seconds": 1.222,
+    "end_seconds": 1.286,
+    "start_frame": 37,
+    "end_frame": 39
+  },
+  {
+    "word": "Claude",
+    "start_seconds": 1.343,
+    "end_seconds": 1.686,
+    "start_frame": 40,
+    "end_frame": 51
+  },
+  {
+    "word": "Code,",
+    "start_seconds": 1.75,
+    "end_seconds": 2.086,
+    "start_frame": 53,
+    "end_frame": 63
+  },
+  {
+    "word": "Cursor,",
+    "start_seconds": 2.189,
+    "end_seconds": 2.966,
+    "start_frame": 66,
+    "end_frame": 89
+  },
+  {
+    "word": "and",
+    "start_seconds": 3.006,
+    "end_seconds": 3.127,
+    "start_frame": 90,
+    "end_frame": 94
+  },
+  {
+    "word": "Codex.",
+    "start_seconds": 3.186,
+    "end_seconds": 3.767,
+    "start_frame": 96,
+    "end_frame": 113
+  },
+  {
+    "word": "Install",
+    "start_seconds": 3.896,
+    "end_seconds": 4.806,
+    "start_frame": 117,
+    "end_frame": 144
+  },
+  {
+    "word": "it",
+    "start_seconds": 4.833,
+    "end_seconds": 4.886,
+    "start_frame": 145,
+    "end_frame": 147
+  },
+  {
+    "word": "as",
+    "start_seconds": 4.913,
+    "end_seconds": 4.966,
+    "start_frame": 147,
+    "end_frame": 149
+  },
+  {
+    "word": "a",
+    "start_seconds": 5.046,
+    "end_seconds": 5.127,
+    "start_frame": 151,
+    "end_frame": 154
+  },
+  {
+    "word": "plugin,",
+    "start_seconds": 5.183,
+    "end_seconds": 5.606,
+    "start_frame": 156,
+    "end_frame": 168
+  },
+  {
+    "word": "and",
+    "start_seconds": 5.646,
+    "end_seconds": 5.767,
+    "start_frame": 169,
+    "end_frame": 173
+  },
+  {
+    "word": "every",
+    "start_seconds": 5.819,
+    "end_seconds": 6.086,
+    "start_frame": 175,
+    "end_frame": 183
+  },
+  {
+    "word": "future",
+    "start_seconds": 6.155,
+    "end_seconds": 6.566,
+    "start_frame": 185,
+    "end_frame": 197
+  },
+  {
+    "word": "PRD",
+    "start_seconds": 6.673,
+    "end_seconds": 7.046,
+    "start_frame": 200,
+    "end_frame": 211
+  },
+  {
+    "word": "starts",
+    "start_seconds": 7.16,
+    "end_seconds": 7.846,
+    "start_frame": 215,
+    "end_frame": 235
+  },
+  {
+    "word": "from",
+    "start_seconds": 7.895,
+    "end_seconds": 8.086,
+    "start_frame": 237,
+    "end_frame": 243
+  },
+  {
+    "word": "real",
+    "start_seconds": 8.15,
+    "end_seconds": 8.406,
+    "start_frame": 245,
+    "end_frame": 252
+  },
+  {
+    "word": "product",
+    "start_seconds": 8.447,
+    "end_seconds": 8.726,
+    "start_frame": 253,
+    "end_frame": 262
+  },
+  {
+    "word": "thinking,",
+    "start_seconds": 8.779,
+    "end_seconds": 9.366,
+    "start_frame": 263,
+    "end_frame": 281
+  },
+  {
+    "word": "not",
+    "start_seconds": 9.447,
+    "end_seconds": 9.686,
+    "start_frame": 283,
+    "end_frame": 291
+  },
+  {
+    "word": "average.",
+    "start_seconds": 9.746,
+    "end_seconds": 10.326,
+    "start_frame": 292,
+    "end_frame": 310
+  },
+  {
+    "word": "Comment",
+    "start_seconds": 10.486,
+    "end_seconds": 11.606,
+    "start_frame": 315,
+    "end_frame": 348
+  },
+  {
+    "word": "PLAYBOOK",
+    "start_seconds": 11.67,
+    "end_seconds": 12.166,
+    "start_frame": 350,
+    "end_frame": 365
+  },
+  {
+    "word": "and",
+    "start_seconds": 12.206,
+    "end_seconds": 12.326,
+    "start_frame": 366,
+    "end_frame": 370
+  },
+  {
+    "word": "I'll",
+    "start_seconds": 12.366,
+    "end_seconds": 12.526,
+    "start_frame": 371,
+    "end_frame": 376
+  },
+  {
+    "word": "send",
+    "start_seconds": 12.55,
+    "end_seconds": 12.646,
+    "start_frame": 377,
+    "end_frame": 379
+  },
+  {
+    "word": "you",
+    "start_seconds": 12.666,
+    "end_seconds": 12.726,
+    "start_frame": 380,
+    "end_frame": 382
+  },
+  {
+    "word": "the",
+    "start_seconds": 12.746,
+    "end_seconds": 12.806,
+    "start_frame": 382,
+    "end_frame": 384
+  },
+  {
+    "word": "link.",
+    "start_seconds": 12.87,
+    "end_seconds": 13.286,
+    "start_frame": 386,
+    "end_frame": 399
+  }
+]

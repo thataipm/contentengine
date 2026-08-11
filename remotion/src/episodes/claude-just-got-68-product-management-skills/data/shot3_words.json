@@ -1,0 +1,205 @@
+[
+  {
+    "word": "It",
+    "start_seconds": 0.24,
+    "end_seconds": 1.04,
+    "start_frame": 7,
+    "end_frame": 31
+  },
+  {
+    "word": "also",
+    "start_seconds": 1.104,
+    "end_seconds": 1.36,
+    "start_frame": 33,
+    "end_frame": 41
+  },
+  {
+    "word": "ships",
+    "start_seconds": 1.427,
+    "end_seconds": 1.76,
+    "start_frame": 43,
+    "end_frame": 53
+  },
+  {
+    "word": "specialist",
+    "start_seconds": 1.825,
+    "end_seconds": 2.48,
+    "start_frame": 55,
+    "end_frame": 74
+  },
+  {
+    "word": "sub",
+    "start_seconds": 2.54,
+    "end_seconds": 2.72,
+    "start_frame": 76,
+    "end_frame": 82
+  },
+  {
+    "word": "agents",
+    "start_seconds": 2.789,
+    "end_seconds": 3.2,
+    "start_frame": 84,
+    "end_frame": 96
+  },
+  {
+    "word": "that",
+    "start_seconds": 3.248,
+    "end_seconds": 3.44,
+    "start_frame": 97,
+    "end_frame": 103
+  },
+  {
+    "word": "Claude",
+    "start_seconds": 3.497,
+    "end_seconds": 3.84,
+    "start_frame": 105,
+    "end_frame": 115
+  },
+  {
+    "word": "can",
+    "start_seconds": 3.86,
+    "end_seconds": 3.92,
+    "start_frame": 116,
+    "end_frame": 118
+  },
+  {
+    "word": "spawn",
+    "start_seconds": 4.0,
+    "end_seconds": 4.4,
+    "start_frame": 120,
+    "end_frame": 132
+  },
+  {
+    "word": "on",
+    "start_seconds": 4.453,
+    "end_seconds": 4.56,
+    "start_frame": 134,
+    "end_frame": 137
+  },
+  {
+    "word": "demand.",
+    "start_seconds": 4.617,
+    "end_seconds": 5.44,
+    "start_frame": 139,
+    "end_frame": 163
+  },
+  {
+    "word": "One",
+    "start_seconds": 5.56,
+    "end_seconds": 5.92,
+    "start_frame": 167,
+    "end_frame": 178
+  },
+  {
+    "word": "of",
+    "start_seconds": 5.947,
+    "end_seconds": 6.0,
+    "start_frame": 178,
+    "end_frame": 180
+  },
+  {
+    "word": "them,",
+    "start_seconds": 6.048,
+    "end_seconds": 6.4,
+    "start_frame": 181,
+    "end_frame": 192
+  },
+  {
+    "word": "the",
+    "start_seconds": 6.44,
+    "end_seconds": 6.56,
+    "start_frame": 193,
+    "end_frame": 197
+  },
+  {
+    "word": "critic,",
+    "start_seconds": 6.617,
+    "end_seconds": 7.44,
+    "start_frame": 199,
+    "end_frame": 223
+  },
+  {
+    "word": "adversarially",
+    "start_seconds": 7.497,
+    "end_seconds": 8.24,
+    "start_frame": 225,
+    "end_frame": 247
+  },
+  {
+    "word": "reviews",
+    "start_seconds": 8.3,
+    "end_seconds": 8.72,
+    "start_frame": 249,
+    "end_frame": 262
+  },
+  {
+    "word": "your",
+    "start_seconds": 8.736,
+    "end_seconds": 8.8,
+    "start_frame": 262,
+    "end_frame": 264
+  },
+  {
+    "word": "PRD",
+    "start_seconds": 8.933,
+    "end_seconds": 9.36,
+    "start_frame": 268,
+    "end_frame": 281
+  },
+  {
+    "word": "or",
+    "start_seconds": 9.44,
+    "end_seconds": 9.6,
+    "start_frame": 283,
+    "end_frame": 288
+  },
+  {
+    "word": "your",
+    "start_seconds": 9.632,
+    "end_seconds": 9.76,
+    "start_frame": 289,
+    "end_frame": 293
+  },
+  {
+    "word": "hypothesis",
+    "start_seconds": 9.833,
+    "end_seconds": 10.56,
+    "start_frame": 295,
+    "end_frame": 317
+  },
+  {
+    "word": "before",
+    "start_seconds": 10.674,
+    "end_seconds": 11.36,
+    "start_frame": 320,
+    "end_frame": 341
+  },
+  {
+    "word": "stakeholders",
+    "start_seconds": 11.409,
+    "end_seconds": 12.0,
+    "start_frame": 342,
+    "end_frame": 360
+  },
+  {
+    "word": "ever",
+    "start_seconds": 12.064,
+    "end_seconds": 12.32,
+    "start_frame": 362,
+    "end_frame": 370
+  },
+  {
+    "word": "see",
+    "start_seconds": 12.38,
+    "end_seconds": 12.56,
+    "start_frame": 371,
+    "end_frame": 377
+  },
+  {
+    "word": "it.",
+    "start_seconds": 12.64,
+    "end_seconds": 12.84,
+    "start_frame": 379,
+    "end_frame": 385
+  }
+]
