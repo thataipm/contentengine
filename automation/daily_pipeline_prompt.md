@@ -64,6 +64,10 @@ explaining the blocker, and end the session. Do not guess at things a human need
    - `npx tsc --noEmit` in `remotion/`, fix any type errors before rendering.
    - Render, verify via checkpoint stills at a few points (especially anything with a long VO
      beat -- confirm real motion, not a static hold).
+   - `py automation/check_static_frames.py episodes/{slug}/build/{slug}.mp4` -- MANDATORY, not
+     optional. Checkpoint stills alone have repeatedly missed real static-frame violations. On
+     a FAIL, fix the flagged window and re-render before proceeding; do not finish the episode
+     with a failing check.
    - `ffmpeg -af volumedetect -f null -` sanity check on the final audio (expect normal speech
      levels, not near-silence).
    - Render the cover image (`npx remotion still`).

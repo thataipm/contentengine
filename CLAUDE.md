@@ -314,6 +314,22 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
 4. Build shots against real word-level `born` frames from the start, not estimates.
 5. Render, verify via checkpoint stills before committing to a full render, especially for any
    new crop/positioning logic — sample a real extracted frame's pixels before trusting a guess.
+5b. **Run `py automation/check_static_frames.py episodes/{id}/build/{id}.mp4` on every full
+   render before showing it to the user — this is a hard gate, not optional, added 2026-08-11
+   after "Never Let a Frame Sit" got violated twice on the same episode despite the rule being
+   written down and checkpoint stills having been reviewed.** Eyeballing checkpoint stills
+   catches gross errors (wrong content, broken layout) but has repeatedly missed real
+   static-frame violations — a shot "has motion in it" reads as fine even when a multi-second
+   chunk of it doesn't, and code that animates something can still be too subtle to register
+   (confirmed: a `breathe()` amplitude of 0.02 was mathematically live but read as frozen). The
+   script uses ffmpeg's `freezedetect`, cropped to the content+caption zone (excluding the
+   deliberately-static background/watermark/progress bar, which otherwise dilutes real motion
+   into a "looks frozen" false positive) — see the script's own docstring for the exact
+   calibration and why it's tuned the way it is, including a real case where the crop itself
+   was wrong and produced a confident false failure. On a FAIL, fix the flagged window (usually
+   `breathe()` at a bigger amplitude, or a literal device like a blinking cursor / pre-reveal
+   placeholder state) and re-render before proceeding — don't ship a render this check hasn't
+   passed.
 6. **Cover image**, locked in as a standing deliverable 2026-08-09: a `covers/Cover{id}.tsx`
    still (frame 60, no timeline/audio), reusing the episode's own real visual assets (a real
    set-piece from the episode, not a separate template — see `CoverCm1`/`CoverTn1`/`CoverSk1`),

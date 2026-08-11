@@ -34,7 +34,10 @@ export const RepoScreenshot: React.FC<{
   // Once the zoom finishes, the frame would otherwise sit perfectly frozen for however long
   // the shot holds afterward -- a subtle idle pulse (gated by zoomP so it only kicks in once
   // the push-in has actually landed) keeps it alive without fighting the zoom animation itself.
-  const idleBreathe = breathe(frame - zoomEnd, 60, 0.02);
+  // 2026-08-11: 0.02 amplitude measured (via automation/check_static_frames.py, ffmpeg
+  // freezedetect) as mathematically present but too subtle to register as real motion --
+  // this shot still flagged as frozen for 5+ seconds. Bumped until the same check passes.
+  const idleBreathe = breathe(frame - zoomEnd, 60, 0.06);
   const zoomScale = (1 + zoomP * 2.2) * (1 + (idleBreathe - 1) * zoomP);
   const originX = ((starsBox.x + starsBox.w / 2) / imgW) * 100;
   const originY = ((starsBox.y + starsBox.h / 2) / imgH) * 100;

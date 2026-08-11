@@ -5,7 +5,7 @@ import { PipelineFlow, PipelineNode } from "../../components/PipelineFlow";
 import { CaptionsPop } from "../../components/CaptionsPop";
 import { ContentZone } from "../../components/ContentZone";
 import { Sfx } from "../../components/Sfx";
-import { springIn, edgeFadeVolume } from "../../motion";
+import { springIn, breathe, edgeFadeVolume } from "../../motion";
 import { DEFAULT_TRANSITION_FRAMES } from "../../Episode";
 import { F_ACCENT, F_UI, INK_LIGHT, CARD_BG, CARD_BORDER, ACCENTS } from "../../theme_skills";
 import words from "./data/shot2_words.json";
@@ -94,12 +94,15 @@ const RemainingCategories: React.FC<{ frame: number; fps: number }> = ({ frame, 
           const p = springIn(frame, fps, c.born);
           const opacity = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
           const y = interpolate(p, [0, 1], [16, 0], { extrapolateRight: "clamp" });
+          // Settled chips otherwise sit pixel-frozen waiting for the "68" payoff below --
+          // confirmed a real freeze via automation/check_static_frames.py, not just a hunch.
+          const waitPulse = breathe(frame - c.born, 48, 0.02) * p + (1 - p);
           return (
             <div
               key={c.label}
               style={{
                 opacity,
-                transform: `translateY(${y}px)`,
+                transform: `translateY(${y}px) scale(${waitPulse})`,
                 fontFamily: F_UI,
                 fontSize: 26,
                 fontWeight: 700,

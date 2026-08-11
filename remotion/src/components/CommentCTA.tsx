@@ -8,9 +8,14 @@ const Star: React.FC<{ size: number; delay: number; twinklePeriod: number; frame
   const scale = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
   const opacity = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
   // Each star twinkles on its own period once settled, so the CTA card
-  // (often held on screen the longest of any shot) never sits fully static.
-  const twinkleMul = breathe(frame - delay, twinklePeriod, 0.14) * p + (1 - p);
-  const glowMul = breathe(frame - delay, twinklePeriod, 0.4) * p + (1 - p);
+  // (often held on screen the longest of any shot, and the whole video's last
+  // beat) never sits fully static. Amplitudes bumped 2026-08-11: the original
+  // 0.14/0.4 was real motion but too small to reliably clear
+  // automation/check_static_frames.py's freeze detector near a sine
+  // peak/trough, where three independently-timed sines can still all be
+  // near-flat at once for a moment.
+  const twinkleMul = breathe(frame - delay, twinklePeriod, 0.22) * p + (1 - p);
+  const glowMul = breathe(frame - delay, twinklePeriod, 0.6) * p + (1 - p);
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" style={{ transform: `scale(${scale * twinkleMul})`, opacity, filter: `drop-shadow(0 0 ${14 * glowMul}px rgba(224,131,79,0.55))` }}>
       <path
@@ -34,9 +39,12 @@ export const CommentCTA: React.FC<{ keyword: string; born: number; frame: number
   const p = springIn(frame, fps, born);
   const opacity = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
   const y = interpolate(p, [0, 1], [16, 0], { extrapolateRight: "clamp" });
+  // A different period from any of the three stars' own (38/44/52), so the whole card has an
+  // independent motion source too -- makes it very unlikely every source is near-flat at once.
+  const containerPulse = breathe(frame - born, 29, 0.012) * p + (1 - p);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", opacity, transform: `translateY(${y}px)` }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", opacity, transform: `translateY(${y}px) scale(${containerPulse})` }}>
       <div style={{ fontFamily: F_UI, fontSize: 46, fontWeight: 800, color: INK_LIGHT, marginBottom: 22 }}>
         Comment <span style={{ textDecoration: "underline" }}>{keyword}</span>
       </div>
