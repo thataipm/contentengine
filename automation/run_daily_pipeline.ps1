@@ -61,21 +61,26 @@ $promptPath = Join-Path $repoRoot "automation\daily_pipeline_prompt.md"
 # since it's still one less hop.
 $claudeExe = "C:\Users\Vinay\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\bin\claude.exe"
 
-# Stdin/window note, 2026-08-11: three attempts with `Get-Content -Raw | & $claudeExe -p ...`
-# (PowerShell's pipe operator into a native .exe) all opened a blank, permanently-stuck console
-# with zero output, watched live and confirmed not a trust-prompt or rendering issue -- genuinely
-# just hung. PowerShell's `|` into a native process doesn't reliably signal end-of-input the way
-# a real file handle does, unlike a Unix pipe. Switched entirely to file-based redirection instead
-# (stdin FROM the prompt file directly, stdout/stderr TO files) via Start-Process -NoNewWindow,
-# which sidesteps the console/pipe ambiguity altogether: no window is created at all (so nothing
-# to get stuck rendering), and file handles always EOF correctly. Trade-off, discussed directly:
-# no more live-in-a-window viewing, but the log file is still fully readable during and after the
-# run for the same "is it working, did it error" visibility.
+# Stdin note, 2026-08-11: `Get-Content -Raw | & $claudeExe -p ...` (PowerShell's pipe operator
+# into a native .exe) hung with zero output every time -- PowerShell's `|` doesn't reliably
+# signal end-of-input to a native process the way a real file handle does. Fixed by redirecting
+# stdin FROM the prompt file directly instead.
+#
+# Live-visibility note, 2026-08-11, direct instruction ("don't keep it invisible, I want to see
+# progress happening"): stdout/stderr are still redirected to files (needed for a reliable
+# after-the-fact log), but this script now actively tails those files while the process runs and
+# prints new content straight into ITS OWN console window -- which Task Scheduler launches
+# visibly (no -WindowStyle Hidden). This is plain PowerShell text output, not the child .exe's
+# own console rendering, so it doesn't depend on however claude.exe's TUI behaves when launched
+# without a real attached terminal.
 
 "=== ThatAIPM daily pipeline run: $timestamp ===" | Out-File -FilePath $logFile -Encoding utf8
+Write-Output "Starting run $timestamp -- watching for output below..."
 
 $stdoutLog = Join-Path $logDir "daily_pipeline_${timestamp}_stdout.log"
 $stderrLog = Join-Path $logDir "daily_pipeline_${timestamp}_stderr.log"
+New-Item -ItemType File -Force -Path $stdoutLog | Out-Null
+New-Item -ItemType File -Force -Path $stderrLog | Out-Null
 
 $argList = @(
     "-p",
@@ -88,7 +93,31 @@ $proc = Start-Process -FilePath $claudeExe -ArgumentList $argList `
     -RedirectStandardInput $promptPath `
     -RedirectStandardOutput $stdoutLog `
     -RedirectStandardError $stderrLog `
-    -NoNewWindow -Wait -PassThru -WorkingDirectory $repoRoot
+    -NoNewWindow -PassThru -WorkingDirectory $repoRoot
+
+# Tail both files live: print new bytes as they appear, so the visible parent window actually
+# shows progress instead of sitting blank until the whole run finishes.
+$stdoutPos = 0
+$stderrPos = 0
+while (-not $proc.HasExited) {
+    Start-Sleep -Seconds 2
+    $stdoutContent = Get-Content $stdoutLog -Raw -ErrorAction SilentlyContinue
+    if ($stdoutContent -and $stdoutContent.Length -gt $stdoutPos) {
+        Write-Output $stdoutContent.Substring($stdoutPos)
+        $stdoutPos = $stdoutContent.Length
+    }
+    $stderrContent = Get-Content $stderrLog -Raw -ErrorAction SilentlyContinue
+    if ($stderrContent -and $stderrContent.Length -gt $stderrPos) {
+        Write-Output "[stderr] $($stderrContent.Substring($stderrPos))"
+        $stderrPos = $stderrContent.Length
+    }
+}
+$proc.WaitForExit()
+# Final flush in case output landed between the last poll and process exit.
+$stdoutContent = Get-Content $stdoutLog -Raw -ErrorAction SilentlyContinue
+if ($stdoutContent -and $stdoutContent.Length -gt $stdoutPos) { Write-Output $stdoutContent.Substring($stdoutPos) }
+$stderrContent = Get-Content $stderrLog -Raw -ErrorAction SilentlyContinue
+if ($stderrContent -and $stderrContent.Length -gt $stderrPos) { Write-Output "[stderr] $($stderrContent.Substring($stderrPos))" }
 
 $exitCode = $proc.ExitCode
 
@@ -98,6 +127,7 @@ Add-Content -Path $logFile -Value "--- stderr ---"
 if (Test-Path $stderrLog) { Get-Content $stderrLog | Add-Content -Path $logFile }
 
 "=== Run finished, exit code $exitCode ===" | Out-File -FilePath $logFile -Append -Encoding utf8
+Write-Output "=== Run finished, exit code $exitCode ==="
 
 # Notify: prefer the one-line result the run itself wrote; fall back to a generic message if it
 # crashed before reaching that step (exit code or missing file both count as "something's wrong,
