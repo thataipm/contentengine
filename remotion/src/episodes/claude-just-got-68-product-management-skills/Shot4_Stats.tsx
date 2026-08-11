@@ -3,10 +3,11 @@ import { AbsoluteFill, Audio, interpolate, staticFile, useCurrentFrame, useVideo
 import { GridBackground } from "../../components/GridBackground";
 import { CaptionsPop } from "../../components/CaptionsPop";
 import { ContentZone } from "../../components/ContentZone";
+import { CountUp } from "../../components/CountUp";
 import { Sfx } from "../../components/Sfx";
-import { springIn, breathe, edgeFadeVolume } from "../../motion";
+import { springIn, edgeFadeVolume } from "../../motion";
 import { DEFAULT_TRANSITION_FRAMES } from "../../Episode";
-import { F_ACCENT, F_UI, INK_LIGHT, CARD_DIM, ACCENTS } from "../../theme_skills";
+import { F_UI, CARD_DIM, ACCENTS } from "../../theme_skills";
 import words from "./data/shot4_words.json";
 
 const SLUG = "claude-just-got-68-product-management-skills";
@@ -18,6 +19,10 @@ const SLUG = "claude-just-got-68-product-management-skills";
 // callout (two numbers side by side) varies composition from
 // the-karpathy-skill's single-number Shot4 layout per the "vary
 // composition, not just motion" rule.
+//
+// Revised 2026-08-11: swapped the local static-pop StatCallout for the new shared
+// components/CountUp.tsx (schema vocabulary addition) -- both numbers now roll up to their
+// real value instead of just popping in, more weight for the shot's actual payoff beat.
 export const Shot4_Stats: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -34,8 +39,8 @@ export const Shot4_Stats: React.FC<{ durationInFrames: number }> = ({ durationIn
       <ContentZone>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 30 }}>
           <div style={{ display: "flex", gap: 70, alignItems: "flex-start" }}>
-            <StatCallout value="68" label="skills" accent={ACCENTS[1]} born={27} frame={frame} fps={fps} />
-            <StatCallout value="530" label="GitHub stars" accent={ACCENTS[3]} born={63} frame={frame} fps={fps} />
+            <CountUp value={68} label="skills" accent={ACCENTS[1]} born={27} frame={frame} fps={fps} />
+            <CountUp value={530} label="GitHub stars" accent={ACCENTS[3]} born={63} frame={frame} fps={fps} />
           </div>
           <SubLabel text="Apache licensed, still shipping new updates" born={137} frame={frame} fps={fps} />
         </div>
@@ -43,26 +48,6 @@ export const Shot4_Stats: React.FC<{ durationInFrames: number }> = ({ durationIn
 
       <CaptionsPop words={words} frame={frame} fps={fps} />
     </AbsoluteFill>
-  );
-};
-
-const StatCallout: React.FC<{ value: string; label: string; accent: string; born: number; frame: number; fps: number }> = ({
-  value,
-  label,
-  accent,
-  born,
-  frame,
-  fps,
-}) => {
-  const p = springIn(frame, fps, born);
-  const opacity = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
-  const scale = interpolate(p, [0, 1], [0.8, 1], { extrapolateRight: "clamp" });
-  const breatheMul = breathe(frame - born) * p + (1 - p);
-  return (
-    <div style={{ textAlign: "center", opacity, transform: `scale(${scale * breatheMul})` }}>
-      <div style={{ fontFamily: F_ACCENT, fontSize: 84, fontWeight: 800, color: accent, textShadow: `0 0 ${50 * breatheMul}px ${accent}55` }}>{value}</div>
-      <div style={{ fontFamily: F_UI, fontSize: 24, fontWeight: 700, color: INK_LIGHT, marginTop: 6 }}>{label}</div>
-    </div>
   );
 };
 

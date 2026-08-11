@@ -2,12 +2,13 @@ import React from "react";
 import { AbsoluteFill, Audio, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { GridBackground } from "../../components/GridBackground";
 import { PipelineFlow, PipelineNode } from "../../components/PipelineFlow";
+import { CountUp } from "../../components/CountUp";
 import { CaptionsPop } from "../../components/CaptionsPop";
 import { ContentZone } from "../../components/ContentZone";
 import { Sfx } from "../../components/Sfx";
 import { springIn, breathe, edgeFadeVolume } from "../../motion";
 import { DEFAULT_TRANSITION_FRAMES } from "../../Episode";
-import { F_ACCENT, F_UI, INK_LIGHT, CARD_BG, CARD_BORDER, ACCENTS } from "../../theme_skills";
+import { F_UI, INK_LIGHT, CARD_BG, CARD_BORDER, ACCENTS } from "../../theme_skills";
 import words from "./data/shot2_words.json";
 
 const SLUG = "claude-just-got-68-product-management-skills";
@@ -83,10 +84,6 @@ const CATEGORY_CHIPS = [
 ];
 
 const RemainingCategories: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
-  const totalP = springIn(frame, fps, 430);
-  const totalOpacity = interpolate(totalP, [0, 1], [0, 1], { extrapolateRight: "clamp" });
-  const totalScale = interpolate(totalP, [0, 1], [0.7, 1], { extrapolateRight: "clamp" });
-
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 40 }}>
       <div style={{ display: "flex", gap: 18, flexWrap: "wrap", justifyContent: "center" }}>
@@ -119,10 +116,7 @@ const RemainingCategories: React.FC<{ frame: number; fps: number }> = ({ frame, 
           );
         })}
       </div>
-      <div style={{ textAlign: "center", opacity: totalOpacity, transform: `scale(${totalScale})` }}>
-        <div style={{ fontFamily: F_ACCENT, fontSize: 96, fontWeight: 800, color: ACCENTS[1], textShadow: `0 0 50px ${ACCENTS[1]}55` }}>68</div>
-        <div style={{ fontFamily: F_UI, fontSize: 26, fontWeight: 700, color: INK_LIGHT, marginTop: 4 }}>skills total</div>
-      </div>
+      <CountUp value={68} label="skills total" accent={ACCENTS[1]} born={430} frame={frame} fps={fps} />
     </div>
   );
 };
