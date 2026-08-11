@@ -182,7 +182,8 @@ concepts:
       proof every number in it is real.
     episode_status: PRODUCED (episodes/the-ai-pm-pay-gap/ -- NOTE: folder slug predates the
       concept rename above, do not match by title). Scheduled via Zernio for 2026-08-11
-      17:00 IST (Instagram + YouTube). Do NOT reproduce this concept.
+      17:00 IST (Instagram + YouTube); YouTube confirmed published 2026-08-11, Instagram was
+      still mid-fire at last check (same slot). Do NOT reproduce this concept.
   - concept: "I built an AI tool because bug priority is political, not factual" (SenseBug AI)
     pillar_fit: PASS, Build in Public / differentiation
     audience_fit: PASS, every PM has lived the "whoever escalates loudest wins" problem
@@ -205,11 +206,11 @@ results:
 learning:
 decision:
 next_action: "What AI Is Actually Doing to PM Hiring" produced, rebuilt, and scheduled
-  2026-08-10 (episodes/the-ai-pm-pay-gap/) -- Instagram + YouTube via Zernio, live
-  2026-08-11 17:00 IST. Once confirmed published, pull analytics and log results: below;
-  status moves to EVALUATING once both this and the-karpathy-skill (informal baseline)
-  have real traffic. SenseBug AI concept still needs real details from the user
-  (screenshots, the specific trigger story) before scripting.
+  2026-08-10 (episodes/the-ai-pm-pay-gap/) -- YouTube confirmed published 2026-08-11 17:00
+  IST, Instagram mid-fire at last check. Once both platforms confirm published, pull
+  analytics and log results: below; status moves to EVALUATING once this, the-karpathy-skill,
+  and Batch 2's pm-skills concept all have real traffic. SenseBug AI concept still needs real
+  details from the user (screenshots, the specific trigger story) before scripting.
 ```
 
 Notes: Reserve candidates from the same research pass, held for Batch 2 rather than crowding
@@ -261,18 +262,18 @@ concepts:
     sources: https://github.com/product-on-purpose/pm-skills (README fetched directly via
       raw.githubusercontent.com 2026-08-11, not just a research-pass summary), GitHub API for
       star/fork counts
-    episode_status: PRODUCED (episodes/claude-just-got-68-product-management-skills/, ready
-      for scheduling)
+    episode_status: PRODUCED (episodes/claude-just-got-68-product-management-skills/).
+      Scheduled via Zernio for 2026-08-12 19:00 IST (Instagram + YouTube).
 success_metrics: follows per 1,000 views (primary, compared against Batch 1's two concepts
   once all three have real traffic), saves and comments (secondary), per spec §9
 status: IN_PRODUCTION
 results:
 learning:
 decision:
-next_action: Episode produced 2026-08-11 by the unattended daily pipeline. Awaiting user
-  review and go-ahead before scheduling via Zernio (per the standing rule: automation prepares/
-  queues, a human approves the actual publish). Suggested post time proposed in the daily run's
-  notification.
+next_action: Episode produced 2026-08-11 by the unattended daily pipeline (killed mid-render,
+  finished in a live session -- see the episode's own script.md "Revision 1" for the
+  hook/static-frame/pace fixes applied after review). Scheduled 2026-08-11 for 2026-08-12
+  19:00 IST. Once confirmed published, pull analytics and log results below.
 ```
 
 Notes: (batch opened by the unattended daily pipeline run, 2026-08-11)

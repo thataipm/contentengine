@@ -750,12 +750,24 @@ this repo without bound. **Standing rule**: once a scheduled post's Zernio statu
 (`git rm --cached`, never a plain `rm`, the local file stays on disk) in the next commit, the
 existing `.gitignore` rule then keeps it untracked going forward. Applied immediately to `sk1`
 and `best-ai-tools-for-voiceovers`, both confirmed published, local files untouched. **Do NOT
-untrack an episode before its post is confirmed published.** "The Karpathy Skill" stays
-tracked until its 2026-08-11 09:00 IST scheduled post is verified live, since Zernio needs the
-GitHub URL to still resolve at fire time. Note this only bounds the size of the repo's current
-tree; git history still retains every blob ever committed (see the standing, still-unanswered
-offer to do a full history rewrite, noted elsewhere in this file) unless a separate,
-deliberate history-rewrite pass is run.
+untrack an episode before its post is confirmed published.** Note this only bounds the size of
+the repo's current tree; git history still retains every blob ever committed (see the standing,
+still-unanswered offer to do a full history rewrite, noted elsewhere in this file) unless a
+separate, deliberate history-rewrite pass is run.
+
+**"The Karpathy Skill" and "What AI Is Actually Doing to PM Hiring" (the-ai-pm-pay-gap)
+confirmed published 2026-08-11** — both platforms live for the former (checked directly via
+`GET /v1/posts?status=published`, not assumed from the schedule time passing), untracked from
+git per the rule above. The latter's YouTube post is published; Instagram was still mid-fire at
+last check (same 17:00 IST slot) — its `build/` stays tracked until that's confirmed too.
+
+**`episodes/scheduled/` index, added 2026-08-11** (direct request: "so i can see scheduled
+episodes in one place"): one small manifest file per episode with at least one platform post
+still in Zernio's `scheduled` state, not yet `published`. Deliberately an index, not storage —
+episode folders never move here, since Zernio holds the exact GitHub raw URL for each scheduled
+post and needs it to keep resolving until it fires; moving a folder after scheduling would
+break that. Delete an episode's file from here once every platform on it shows `published`. See
+`episodes/scheduled/README.md` for the exact format and lifecycle.
 
 **CTA fulfillment, deliberately deferred 2026-08-10**: every episode still closes on "Comment
 [KEYWORD] and I'll send you the link" with no actual fulfillment process behind it (see the
