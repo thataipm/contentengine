@@ -58,7 +58,13 @@ step, not just editing:
 
 1. **Hard limit**: no static frame longer than 2s. A narration beat running longer than that
    needs a secondary motion cue (slow zoom, subtle pulse, particle drift, parallax shift) to
-   bridge it.
+   bridge it. **Applies to real-asset beats too, not just graphics** — added 2026-08-11 after
+   direct feedback ("along with screenshots, let's not waste a single frame"): a held
+   screenshot is real content, but it's still a frame, and a barely-perceptible zoom-scale
+   pulse alone has already been measured (via `automation/check_static_frames.py`) as too
+   subtle to register. `components/RepoScreenshot.tsx` now runs a continuous scan-sweep
+   (a soft light band crossing the crop window) during any post-zoom hold — reuses rule 2's own
+   "moving spotlight" idea rather than inventing a separate device for real assets vs graphics.
 2. **Literal visualization**: represent the concept physically, not as a generic diagram —
    tokens = a sentence physically breaking into colored chunks, snapping into place one at a
    time, synced to narration; attention/transformers = a moving spotlight/laser sweeping across
@@ -77,6 +83,44 @@ step, not just editing:
 
 Check any new shot design against these 6 rules directly, not just a general "keep it moving"
 instinct — this is the channel's actual retention mechanism, not a nice-to-have.
+
+### Schema vocabulary — reach for a literal device before another stat card
+
+Added 2026-08-11, direct feedback: too many shots were a static card with `breathe()` patched
+on afterward to stop it from freezing, rather than a visual that's inherently a build/reveal
+device by construction (partly inspired by evaluating `famous-reel-editor`'s own schema
+catalog — its talking-head editing pipeline doesn't apply here, faceless with no raw footage,
+but its practice of maintaining a growing list of literal chart/graphic TYPES to pick from,
+instead of defaulting to the same few, is worth copying). **Before building a new stat/data
+beat, check this list first** — it should grow every time a genuinely new device gets built,
+the same way this rule's own "errors not to repeat" pattern already works elsewhere in this
+file:
+
+- `components/TrendChart.tsx` — a single line that draws itself (SVG `strokeDasharray`), up or
+  down, with a glowing marker riding the tip. For "this metric moved."
+- `components/PipelineFlow.tsx` — nodes building themselves in sequence, connected by growing
+  stems; supports `slotsVisibleFrom` for a dim pre-reveal state so a long VO preamble before
+  the first node's word doesn't leave the content zone empty. For a process/lifecycle/pipeline.
+- `components/BarChart.tsx` — labeled columns growing from a shared baseline, real values only.
+  For comparing several discrete numbers side by side (distinct from `DisparityBar`, which is
+  one horizontal fill framed as "this much of a whole").
+- `components/CountUp.tsx` — a number rolling up to its real target instead of just popping in.
+  For a single big stat that deserves more weight than a static pop.
+- `components/DisparityBar.tsx` — a labeled horizontal fill bar. For "X% vs Y%" gap framing.
+- `components/ComparisonCard.tsx` — two labeled values side by side. For a direct A-vs-B stat
+  pair when neither a bar nor a line fits better.
+- `components/TerminalCard.tsx` — a typed command sequence with a blinking cursor (real motion
+  for the whole hold, not just the typing). For install commands, code, CLI output.
+- `components/RepoScreenshot.tsx` / `ProductScreenshot.tsx` — a real captured screenshot with a
+  camera-push zoom into one real detail, plus a continuous scan-sweep during any hold (see rule
+  1 above). For citing real evidence — never fabricate what this shows.
+- `components/CommentCTA.tsx` — the closing comment-keyword card with twinkling stars.
+
+Still generic/underused (not yet built as shared components — build one the next time a shot
+actually needs it, don't pre-build speculatively): gauge/donut (percent-of-total as a filling
+ring), staggered-reveal table (feature/tool comparison rows), timeline (chronological
+before/after). Real data only, same as everything else on this list — a chart TYPE is just a
+container, it doesn't excuse inventing the numbers inside it.
 
 ## 2. What's here
 

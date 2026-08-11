@@ -39,6 +39,18 @@ export const RepoScreenshot: React.FC<{
   // this shot still flagged as frozen for 5+ seconds. Bumped until the same check passes.
   const idleBreathe = breathe(frame - zoomEnd, 60, 0.06);
   const zoomScale = (1 + zoomP * 2.2) * (1 + (idleBreathe - 1) * zoomP);
+
+  // Scan sweep: 2026-08-11, direct instruction ("along with screenshots, let's not waste a
+  // single frame"). A held real screenshot is real content, not a graphic we're building --
+  // but it can still sit as static as any other beat. Rather than lean harder on a barely-
+  // perceptible scale pulse, this reuses the channel's own literal-visualization rule
+  // (CLAUDE.md 1: "attention = a moving spotlight sweeping across content") -- a soft light
+  // band continuously sweeps the crop window, reads as "this evidence is being scanned,"
+  // and gives large, unambiguous pixel-level motion regardless of tolerance/threshold.
+  const SWEEP_PERIOD = 70;
+  const sweepT = ((frame % SWEEP_PERIOD) + SWEEP_PERIOD) % SWEEP_PERIOD / SWEEP_PERIOD;
+  const sweepX = interpolate(sweepT, [0, 1], [-width * 0.6, width * 1.3]);
+  const sweepOpacity = zoomP;
   const originX = ((starsBox.x + starsBox.w / 2) / imgW) * 100;
   const originY = ((starsBox.y + starsBox.h / 2) / imgH) * 100;
 
@@ -83,6 +95,19 @@ export const RepoScreenshot: React.FC<{
             display: "block",
             transform: `translate(${panX * zoomP}px, ${panY * zoomP}px) scale(${displayScale * zoomScale})`,
             transformOrigin: `${originX}% ${originY}%`,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: -windowHeight * 0.5,
+            left: sweepX,
+            width: width * 0.3,
+            height: windowHeight * 2,
+            background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.14) 45%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.14) 55%, transparent)",
+            transform: "rotate(10deg)",
+            opacity: sweepOpacity,
+            pointerEvents: "none",
           }}
         />
       </div>
