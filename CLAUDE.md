@@ -353,6 +353,24 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
 ## 5. Standing production workflow (VO-first, still applies)
 
 1. Script + shot list first, saved as its own file. Get it approved before touching render code.
+   **Each shot in that list, added 2026-08-11 after direct feedback on pm-skills's Shot2/Shot3
+   ("use relevant motion graphics... not simple UI buttons/icons"), needs one explicit line
+   before any component gets picked**: `Concept → Real shape (what this literally looks like in
+   the physical world) → Device (component to use) → Why it matches (how the device's STRUCTURE,
+   not just its topic, embodies that real shape)`. This can't be a mechanical PASS/FAIL check the
+   way `check_static_frames.py` catches frozen frames — it's editorial judgment — so the shot
+   list document is the forcing function instead: if the "why it matches" column can't be
+   honestly filled in, that's the signal to design a new device rather than reach for the
+   nearest thing already built. This is exactly where pm-skills broke: a product lifecycle's
+   real shape is a loop (it ends back where it started), but `PipelineFlow` was picked because it
+   was already built and animated, not because a straight left-to-right build matches a cycle.
+   Same failure on "Foundation/Utility/Sprint Toolkit" (generic pill chips for what's actually a
+   grouping/container of skills) and the subagent card (a decorative shield-checkmark badge for
+   what's actually a delegate-and-report-back device). **The schema vocabulary list in §1 is a
+   menu to check against defaulting to a static stat card — it is not itself proof of fit.**
+   Picking the closest topical entry from that list without checking structural match is the
+   same shortcut that produced all three misses above; verify the shape, not just the topic,
+   even when reaching for an already-built component.
 2. Generate VO via `automation/generate_vo.py --timestamps` (once the new voice ID is in `.env`).
 3. Cut per-shot audio + derive word timing via `automation/derive_word_timing.py`.
 4. Build shots against real word-level `born` frames from the start, not estimates.
