@@ -621,6 +621,30 @@ machine is on and the user is logged in at 11AM — no stored credentials for an
 locked" run, deliberately. A day with no viable topic or a failed fact-check produces no
 episode and a one-line blocker notification instead of a forced low-quality output.
 
+**Disabled 2026-08-11, direct decision after live debugging looked unresolved in the moment —
+correction same day, it wasn't actually broken.** During live debugging, several triggered runs
+showed a blank console with zero visible output for minutes at a stretch, which read as a hang;
+went through several real fixes in order (piping the prompt via `|` → switching `claude.cmd` →
+`claude.exe` directly → redirecting stdin from the prompt file instead of piping → live-tailing
+the redirected stdout/stderr into the wrapper's own visible console) without the visible output
+ever appearing in the short window each was watched. **What was actually happening**: a full
+production run (research, fact-check, script, ElevenLabs VO, Remotion render) genuinely takes
+20-30+ minutes and doesn't produce much console output along the way, so "nothing visible after
+a couple minutes" looked identical to "hung" but wasn't. One of the very triggers fired during
+this debugging session kept running successfully in the true background the whole time —
+confirmed after the fact by real `claude` processes still alive with substantial accumulated CPU
+time, and by a genuinely completed episode (`episodes/claude-just-got-68-product-management-skills/`,
+Batch 2 in `docs/experiment_log.md`) that this same run produced, unattended, end to end. So the
+underlying mechanism does work; the real gap was visibility into "still working" vs. "stuck"
+during the first few minutes, not a functional bug. **User's call regardless of this
+correction: stop pursuing daily automation, keep it simple, trigger episode production manually
+in a live session instead.** `Disable-ScheduledTask` was run (task definition left in place, not
+deleted) and `automation/daily_pipeline_prompt.md`/`run_daily_pipeline.ps1` are kept as-is in
+case this gets revisited later, but nothing runs on a schedule currently. If picked back up, the
+actual fix needed is probably just patience (or an early heartbeat write to the log/result file
+so "still working" is distinguishable from "stuck" within the first minute) rather than more
+stdin/output-plumbing changes — those were never the real problem.
+
 ## 7. Strategic system: That AI PM v2.0 (2026-08-10)
 
 **What changed**: the user supplied "That AI PM: Content System Operating Spec v2.0"
