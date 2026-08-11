@@ -31,15 +31,15 @@ export const Shot3_Critic: React.FC<{ durationInFrames: number }> = ({ durationI
       <Audio src={staticFile(`${SLUG}/shot3_vo.wav`)} volume={edgeFadeVolume(frame, durationInFrames, DEFAULT_TRANSITION_FRAMES)} />
 
       <Sfx type="tick" at={4} />
-      <Sfx type="whoosh" at={225} />
-      <Sfx type="chime" at={342} />
+      <Sfx type="whoosh" at={232} />
+      <Sfx type="chime" at={304} />
 
       <ContentZone>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 26 }}>
           <CriticCard frame={frame} fps={fps} />
           <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
-            <PainTag text="reviews your PRD or hypothesis" born={225} accent={ACCENTS[2]} frame={frame} fps={fps} />
-            <PainTag text="before stakeholders ever see it" born={320} accent={ACCENTS[0]} frame={frame} fps={fps} />
+            <PainTag text="reviews your PRD or hypothesis" born={232} accent={ACCENTS[2]} frame={frame} fps={fps} />
+            <PainTag text="before stakeholders ever see it" born={304} accent={ACCENTS[0]} frame={frame} fps={fps} />
           </div>
         </div>
       </ContentZone>

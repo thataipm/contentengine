@@ -1,10 +1,37 @@
 # Claude Just Got 68 Product Management Skills — Script & Shot List
 
 **Pillar**: AI Workflows & Tools (v2.0, ~30% share) — Batch 2, produced by the unattended
-daily pipeline 2026-08-11.
-**Status**: Produced 2026-08-11, ready for scheduling.
+daily pipeline 2026-08-11 (killed mid-render when its console window was closed; finished
+directly in a live session).
+**Status**: Produced 2026-08-11, revised same day after direct feedback (hook buried the
+topic until ~9s in, a real static-frame gap in Shot 2, pace too slow) — see "Revision 1" below.
+Ready for scheduling.
 **Target runtime**: ~55s (confirmed comfortable range for this channel, see
 `feedback-prefers-substance-over-brevity` memory).
+
+## Revision 1 (current), 2026-08-11
+
+Three direct fixes:
+1. **Hook rewritten.** Original Shot 1 line ("Ask Claude to write a PRD, and you'll get the
+   same mediocre draft everyone else gets. This repo fixes that with sixty eight real product
+   management skills.") didn't state the actual topic until its final clause, ~7s into an 8s
+   shot — a real violation of the standing "hook must state the topic within ~2s" rule. Rewritten
+   to lead with the topic: "Claude just got sixty eight real product management skills, because
+   your PRDs deserve better than the same mediocre draft everyone else gets." Now states the
+   subject within the first ~3s, contrast follows as the reason it matters.
+2. **Real static-frame gap fixed in Shot 2.** The VO's own preamble ("It's built around the
+   real product lifecycle...") runs ~5s before "discover" is spoken, and the original build
+   gated every `PipelineFlow` node's existence on its own word-synced `born` frame — so nothing
+   rendered in the content zone for that entire preamble. Fixed by adding an opt-in
+   `slotsVisibleFrom` prop to `PipelineFlow` (all 6 dim slots now appear together right after
+   the shot starts, each lighting up individually at the same word-synced times as before).
+3. **Pace sped up.** Every shot's VO re-generated with ElevenLabs v3's `[rushed]` tag (same
+   fix as `the-ai-pm-pay-gap`). Runtime 58.8s -> 55.0s.
+
+Also added a subtle idle pulse to `RepoScreenshot` (post-zoom hold) and a blinking terminal
+cursor to `TerminalCard` (a literal, on-brand motion cue that stays alive for however long that
+card holds, addressing long static stretches in Shots 1 and 5 without needing a `breathe()`
+retrofit on every caller).
 
 ## Verified facts (sourced 2026-08-11, re-verify before reusing this repo in a future episode)
 
@@ -75,8 +102,8 @@ to the real, verified 68.
 ## Script
 
 **Shot 1 (Hook, ~8s)** — real screenshot of the repo page, zoomed into the skill-count badge
-> "Ask Claude to write a PRD, and you'll get the same mediocre draft everyone else gets. This
-> repo fixes that with sixty eight real product management skills."
+> "Claude just got sixty eight real product management skills, because your PRDs deserve
+> better than the same mediocre draft everyone else gets." (rewritten in Revision 1, see above)
 
 **Shot 2 (~13s)** — the six lifecycle phases building one at a time (PipelineFlow-style reveal)
 > "It's built around the real product lifecycle: thirty skills across six phases, discover,

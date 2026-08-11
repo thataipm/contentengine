@@ -1,9 +1,9 @@
-Ask Claude to write a PRD, and you'll get the same mediocre draft everyone else gets. This repo fixes that with sixty eight real product management skills.
+[rushed] Claude just got sixty eight real product management skills, because your PRDs deserve better than the same mediocre draft everyone else gets.
 
-It's built around the real product lifecycle: thirty skills across six phases, discover, define, develop, deliver, measure, iterate, plus foundation, utility, and sprint toolkit skills that make up the rest of the sixty eight.
+[rushed] It's built around the real product lifecycle: thirty skills across six phases, discover, define, develop, deliver, measure, iterate, plus foundation, utility, and sprint toolkit skills that make up the rest of the sixty eight.
 
-It also ships specialist sub agents that Claude can spawn on demand. One of them, the critic, adversarially reviews your PRD or your hypothesis before stakeholders ever see it.
+[rushed] It also ships specialist sub agents that Claude can spawn on demand. One of them, the critic, adversarially reviews your PRD or your hypothesis before stakeholders ever see it.
 
-Sixty eight skills, five hundred thirty GitHub stars, and it's Apache licensed and still shipping new updates.
+[rushed] Sixty eight skills, five hundred thirty GitHub stars, and it's Apache licensed and still shipping new updates.
 
-It works with Claude Code, Cursor, and Codex. Install it as a plugin, and every future PRD starts from real product thinking, not average. Comment PLAYBOOK and I'll send you the link.
+[rushed] It works with Claude Code, Cursor, and Codex. Install it as a plugin, and every future PRD starts from real product thinking, not average. Comment PLAYBOOK and I'll send you the link.

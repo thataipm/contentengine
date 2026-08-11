@@ -15,22 +15,33 @@ const SLUG = "claude-just-got-68-product-management-skills";
 // VO: "It's built around the real product lifecycle: thirty skills across
 // six phases, discover, define, develop, deliver, measure, iterate, plus
 // foundation, utility, and sprint toolkit skills that make up the rest of
-// the sixty eight." (494 frames). Beat A (0-332) builds the 6 real phase
-// names one at a time via PipelineFlow, synced to each word's own born
-// frame (verified against the README's own TOC: Discover 5, Define 5,
-// Develop 4, Deliver 6, Measure 6, Iterate 4 = 30). Beat B (from "plus" at
-// frame 332) switches to the 3 remaining real categories as chips, closing
-// on the "68" total -- varies composition from Shot1's screenshot card
-// per the channel's "vary composition, not just motion" rule.
-const BEAT_B = 332; // "plus"
+// the sixty eight." (455 frames). Beat A builds the 6 real phase names one
+// at a time via PipelineFlow, synced to each word's own born frame
+// (verified against the README's own TOC: Discover 5, Define 5, Develop 4,
+// Deliver 6, Measure 6, Iterate 4 = 30). Beat B (from "plus") switches to
+// the 3 remaining real categories as chips, closing on the "68" total --
+// varies composition from Shot1's screenshot card per the channel's "vary
+// composition, not just motion" rule.
+//
+// Retimed 2026-08-11 after direct feedback: the VO's own preamble ("It's
+// built around the real product lifecycle...") runs ~5s before "discover"
+// is even spoken, and the original version gated EVERY node's existence on
+// its own born frame -- so nothing rendered in the content zone for that
+// entire preamble, a real "Never Let a Frame Sit" violation (frames
+// 0-~160 were background-only). Fixed with PipelineFlow's new
+// `slotsVisibleFrom`: all 6 dim slots now appear together right after the
+// shot starts, then light up individually at the same word-synced times as
+// before.
+const SLOTS_VISIBLE_FROM = 20;
+const BEAT_B = 282; // "plus"
 
 const phaseNodes = (): PipelineNode[] => [
-  { label: "Discover", accent: ACCENTS[0], born: 163 },
-  { label: "Define", accent: ACCENTS[1], born: 198 },
-  { label: "Develop", accent: ACCENTS[2], born: 224 },
-  { label: "Deliver", accent: ACCENTS[3], born: 251 },
-  { label: "Measure", accent: ACCENTS[0], born: 277 },
-  { label: "Iterate", accent: ACCENTS[1], born: 299 },
+  { label: "Discover", accent: ACCENTS[0], born: 159 },
+  { label: "Define", accent: ACCENTS[1], born: 184 },
+  { label: "Develop", accent: ACCENTS[2], born: 205 },
+  { label: "Deliver", accent: ACCENTS[3], born: 224 },
+  { label: "Measure", accent: ACCENTS[0], born: 246 },
+  { label: "Iterate", accent: ACCENTS[1], born: 265 },
 ];
 
 export const Shot2_Lifecycle: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
@@ -42,18 +53,19 @@ export const Shot2_Lifecycle: React.FC<{ durationInFrames: number }> = ({ durati
       <GridBackground />
       <Audio src={staticFile(`${SLUG}/shot2_vo.wav`)} volume={edgeFadeVolume(frame, durationInFrames, DEFAULT_TRANSITION_FRAMES)} />
 
-      <Sfx type="tick" at={163} />
-      <Sfx type="tick" at={198} />
+      <Sfx type="tick" at={SLOTS_VISIBLE_FROM} />
+      <Sfx type="tick" at={159} />
+      <Sfx type="tick" at={184} />
+      <Sfx type="tick" at={205} />
       <Sfx type="tick" at={224} />
-      <Sfx type="tick" at={251} />
-      <Sfx type="tick" at={277} />
-      <Sfx type="tick" at={299} />
+      <Sfx type="tick" at={246} />
+      <Sfx type="tick" at={265} />
       <Sfx type="whoosh" at={BEAT_B} />
-      <Sfx type="chime" at={471} />
+      <Sfx type="chime" at={430} />
 
       <ContentZone top={220} bottom={560}>
         {frame < BEAT_B ? (
-          <PipelineFlow nodes={phaseNodes()} frame={frame} fps={fps} />
+          <PipelineFlow nodes={phaseNodes()} frame={frame} fps={fps} slotsVisibleFrom={SLOTS_VISIBLE_FROM} />
         ) : (
           <RemainingCategories frame={frame} fps={fps} />
         )}
@@ -65,13 +77,13 @@ export const Shot2_Lifecycle: React.FC<{ durationInFrames: number }> = ({ durati
 };
 
 const CATEGORY_CHIPS = [
-  { label: "Foundation", born: 342, accent: ACCENTS[2] },
-  { label: "Utility", born: 369, accent: ACCENTS[3] },
-  { label: "Sprint Toolkit", born: 392, accent: ACCENTS[0] },
+  { label: "Foundation", born: 303, accent: ACCENTS[2] },
+  { label: "Utility", born: 328, accent: ACCENTS[3] },
+  { label: "Sprint Toolkit", born: 351, accent: ACCENTS[0] },
 ];
 
 const RemainingCategories: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
-  const totalP = springIn(frame, fps, 471);
+  const totalP = springIn(frame, fps, 430);
   const totalOpacity = interpolate(totalP, [0, 1], [0, 1], { extrapolateRight: "clamp" });
   const totalScale = interpolate(totalP, [0, 1], [0.7, 1], { extrapolateRight: "clamp" });
 

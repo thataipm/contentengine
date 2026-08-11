@@ -6,7 +6,7 @@ import { CommentCTA } from "../../components/CommentCTA";
 import { CaptionsPop } from "../../components/CaptionsPop";
 import { ContentZone } from "../../components/ContentZone";
 import { Sfx } from "../../components/Sfx";
-import { springIn, edgeFadeVolume } from "../../motion";
+import { springIn, breathe, edgeFadeVolume } from "../../motion";
 import { DEFAULT_TRANSITION_FRAMES } from "../../Episode";
 import { F_UI, INK_LIGHT } from "../../theme_skills";
 import words from "./data/shot5_words.json";
@@ -21,8 +21,8 @@ const SLUG = "claude-just-got-68-product-management-skills";
 // sequence, not the single-line curl karpathy used, since that's what
 // this repo's own README actually recommends). Beat C: comment CTA,
 // callback to Shot 1's "mediocre" hook via "not average."
-const BEAT_B = 117; // "Install"
-const BEAT_C = 315; // "Comment"
+const BEAT_B = 103; // "Install"
+const BEAT_C = 297; // "Comment"
 
 export const Shot5_Close: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
@@ -65,9 +65,10 @@ const WorksWithLogos: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
   const p = springIn(frame, fps, 10);
   const opacity = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
   const scale = interpolate(p, [0, 1], [0.85, 1], { extrapolateRight: "clamp" });
+  const breatheMul = breathe(frame - 10, 55, 0.02) * p + (1 - p);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22, opacity, transform: `scale(${scale})` }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22, opacity, transform: `scale(${scale * breatheMul})` }}>
       <div style={{ fontFamily: F_UI, fontSize: 24, fontWeight: 700, color: INK_LIGHT }}>Works with</div>
       <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
         <Img src={staticFile(`${SLUG}/logos/claude-code.png`)} style={{ width: 84, height: 84, borderRadius: 18 }} />

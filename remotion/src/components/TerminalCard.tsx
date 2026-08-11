@@ -1,6 +1,6 @@
 import React from "react";
 import { interpolate } from "remotion";
-import { springIn } from "../motion";
+import { springIn, breathe } from "../motion";
 import { F_UI, CARD_BG, CARD_BORDER, CARD_TEXT, CARD_DIM } from "../theme_skills";
 
 // Recreated (not screen-recorded) dark terminal/app card, matching the two
@@ -19,13 +19,18 @@ export const TerminalCard: React.FC<{
   const p = springIn(frame, fps, born);
   const opacity = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
   const scale = interpolate(p, [0, 1], [0.94, 1], { extrapolateRight: "clamp" });
+  const breatheMul = breathe(frame - born, 70, 0.006) * p + (1 - p);
+  // A real terminal cursor blinks -- literal, on-brand motion that stays
+  // alive no matter how long this card holds on screen, instead of a
+  // freeze-frame after the pop-in settles.
+  const cursorOn = Math.floor((frame - born) / 15) % 2 === 0;
 
   return (
     <div
       style={{
         width,
         opacity,
-        transform: `scale(${scale})`,
+        transform: `scale(${scale * breatheMul})`,
         borderRadius: 20,
         border: `1px solid ${CARD_BORDER}`,
         background: CARD_BG,
@@ -61,6 +66,9 @@ export const TerminalCard: React.FC<{
             <div key={i} style={{ fontFamily: "monospace", fontSize: 20, color: CARD_TEXT, lineHeight: 1.5 }}>
               <span style={{ color: CARD_DIM, marginRight: 10 }}>&gt;</span>
               {line.prompt}
+              {i === lines.length - 1 ? (
+                <span style={{ marginLeft: 6, opacity: cursorOn ? 1 : 0, color: CARD_TEXT }}>&#9608;</span>
+              ) : null}
             </div>
           ),
         )}

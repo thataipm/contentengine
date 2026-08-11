@@ -1,6 +1,6 @@
 import React from "react";
 import { Img, interpolate } from "remotion";
-import { springIn } from "../motion";
+import { springIn, breathe } from "../motion";
 import { F_UI, CARD_BG, CARD_BORDER, CARD_DIM } from "../theme_skills";
 
 // A REAL browser screenshot of the actual GitHub repo (captured via
@@ -31,7 +31,11 @@ export const RepoScreenshot: React.FC<{
   const cardScale = interpolate(p, [0, 1], [0.94, 1], { extrapolateRight: "clamp" });
 
   const zoomP = interpolate(frame, [zoomStart, zoomEnd], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const zoomScale = 1 + zoomP * 2.2;
+  // Once the zoom finishes, the frame would otherwise sit perfectly frozen for however long
+  // the shot holds afterward -- a subtle idle pulse (gated by zoomP so it only kicks in once
+  // the push-in has actually landed) keeps it alive without fighting the zoom animation itself.
+  const idleBreathe = breathe(frame - zoomEnd, 60, 0.02);
+  const zoomScale = (1 + zoomP * 2.2) * (1 + (idleBreathe - 1) * zoomP);
   const originX = ((starsBox.x + starsBox.w / 2) / imgW) * 100;
   const originY = ((starsBox.y + starsBox.h / 2) / imgH) * 100;
 

@@ -11,14 +11,15 @@ import words from "./data/shot1_words.json";
 
 const SLUG = "claude-just-got-68-product-management-skills";
 
-// VO: "Ask Claude to write a PRD, and you'll get the same mediocre draft
-// everyone else gets. This repo fixes that with sixty eight real product
-// management skills." (282 frames). Problem-first hook (per
-// feedback-hook-must-state-topic): the real repo card is visible from
-// frame 0 while VO states the viewer's problem, then the zoom lands on
-// the real "68 skills" line in the About panel right as "sixty eight"
-// pays it off. Zoom window kept short (~80 frames) per the CLAUDE.md
-// pitfall note.
+// VO: "Claude just got sixty eight real product management skills, because
+// your PRDs deserve better than the same mediocre draft everyone else
+// gets." (246 frames). Rewritten 2026-08-11 after direct feedback that the
+// original problem-first hook buried the topic until ~9s in -- now leads
+// with the actual subject ("sixty eight...skills") inside the first ~3s,
+// contrast/problem follows as the reason it matters, not the opener. Zoom
+// lands on the real skill-count badge right as "skills," pays off; a
+// subtle idle pulse (RepoScreenshot's own breathe-gated zoom) keeps the
+// remaining hold alive instead of freezing.
 export const Shot1_Hook: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -29,8 +30,8 @@ export const Shot1_Hook: React.FC<{ durationInFrames: number }> = ({ durationInF
       <Audio src={staticFile(`${SLUG}/shot1_vo.wav`)} volume={edgeFadeVolume(frame, durationInFrames, DEFAULT_TRANSITION_FRAMES)} />
 
       <Sfx type="tick" at={0} />
-      <Sfx type="whoosh" at={130} />
-      <Sfx type="chime" at={208} />
+      <Sfx type="whoosh" at={21} />
+      <Sfx type="chime" at={90} />
 
       <ContentZone>
         <RepoScreenshot
@@ -39,8 +40,8 @@ export const Shot1_Hook: React.FC<{ durationInFrames: number }> = ({ durationInF
           url="github.com/product-on-purpose/pm-skills"
           starsBox={{ x: 1130, y: 75, w: 190, h: 60 }}
           born={0}
-          zoomStart={130}
-          zoomEnd={210}
+          zoomStart={15}
+          zoomEnd={90}
           frame={frame}
           fps={fps}
         />

@@ -11,42 +11,73 @@ export type PipelineNode = { label: string; accent: string; born: number };
 // agent/pipeline content, applied here to the user's own actual video
 // pipeline. Each node pops in with a connecting beam grown from the one
 // before it.
-export const PipelineFlow: React.FC<{ nodes: PipelineNode[]; frame: number; fps: number }> = ({ nodes, frame, fps }) => (
-  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-    {nodes.map((n, i) => {
-      const p = springIn(frame, fps, n.born);
-      const opacity = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
-      const scale = interpolate(p, [0, 1], [0.7, 1], { extrapolateRight: "clamp" });
-      const stemP = i > 0 ? springIn(frame, fps, nodes[i - 1].born + 6) : 0;
-      const stemHeight = interpolate(stemP, [0, 1], [0, 46], { extrapolateRight: "clamp" });
+//
+// `slotsVisibleFrom` (added 2026-08-11, opt-in, default off so existing
+// callers are unaffected): when set, every node's outline/stem appears
+// immediately as a dim, unlabeled slot at this frame, then each node
+// individually "lights up" (accent border/dot/label) at its own `born`.
+// Fixes a real static-frame gap found on the pm-skills episode -- if the
+// VO spends several seconds on preamble before the first node's own word
+// is spoken, leaving `slotsVisibleFrom` unset means literally nothing
+// renders in that window. Use this whenever a node's `born` is going to
+// land more than ~60 frames after the shot starts.
+export const PipelineFlow: React.FC<{ nodes: PipelineNode[]; frame: number; fps: number; slotsVisibleFrom?: number }> = ({
+  nodes,
+  frame,
+  fps,
+  slotsVisibleFrom,
+}) => {
+  const preReveal = slotsVisibleFrom !== undefined;
+  const containerP = preReveal ? springIn(frame, fps, slotsVisibleFrom as number) : 1;
+  const containerOpacity = preReveal ? interpolate(containerP, [0, 1], [0, 1], { extrapolateRight: "clamp" }) : 1;
 
-      return (
-        <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          {i > 0 ? <div style={{ width: 2, height: stemHeight, background: CARD_BORDER }} /> : null}
-          <div
-            style={{
-              opacity,
-              transform: `scale(${scale})`,
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              padding: "16px 28px",
-              borderRadius: 999,
-              background: CARD_BG,
-              border: `1.5px solid ${n.accent}`,
-              boxShadow: `0 0 30px -8px ${n.accent}88`,
-            }}
-          >
-            <div style={{ width: 10, height: 10, borderRadius: "50%", background: n.accent }} />
-            <div style={{ fontFamily: i === 0 || i === nodes.length - 1 ? F_UI : F_ACCENT, fontSize: 30, fontWeight: 800, color: INK_LIGHT }}>
-              {n.label}
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", opacity: containerOpacity }}>
+      {nodes.map((n, i) => {
+        const p = springIn(frame, fps, n.born);
+        const fillP = interpolate(p, [0, 1], [0, 1], { extrapolateRight: "clamp" });
+        const opacity = preReveal ? 1 : fillP;
+        const scale = preReveal ? 1 : interpolate(fillP, [0, 1], [0.7, 1], { extrapolateRight: "clamp" });
+        const stemP = i > 0 ? springIn(frame, fps, nodes[i - 1].born + 6) : 0;
+        const stemHeight = preReveal ? 46 : interpolate(stemP, [0, 1], [0, 46], { extrapolateRight: "clamp" });
+        const lit = fillP > 0.4;
+
+        return (
+          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {i > 0 ? <div style={{ width: 2, height: stemHeight, background: CARD_BORDER }} /> : null}
+            <div
+              style={{
+                opacity,
+                transform: `scale(${scale})`,
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                padding: "16px 28px",
+                borderRadius: 999,
+                background: CARD_BG,
+                border: `1.5px solid ${lit ? n.accent : CARD_BORDER}`,
+                boxShadow: lit ? `0 0 30px -8px ${n.accent}88` : "none",
+              }}
+            >
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: lit ? n.accent : CARD_BORDER }} />
+              <div
+                style={{
+                  fontFamily: i === 0 || i === nodes.length - 1 ? F_UI : F_ACCENT,
+                  fontSize: 30,
+                  fontWeight: 800,
+                  color: INK_LIGHT,
+                  opacity: preReveal ? fillP : 1,
+                }}
+              >
+                {n.label}
+              </div>
             </div>
           </div>
-        </div>
-      );
-    })}
-  </div>
-);
+        );
+      })}
+    </div>
+  );
+};
 
 export const defaultPipelineNodes = (): PipelineNode[] => [
   { label: "Raw Footage", accent: "#5A5A62", born: 0 },

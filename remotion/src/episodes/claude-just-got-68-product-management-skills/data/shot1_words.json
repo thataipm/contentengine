@@ -1,191 +1,156 @@
 [
   {
-    "word": "Ask",
-    "start_seconds": 0.0,
+    "word": "Claude",
+    "start_seconds": 0.189,
     "end_seconds": 0.24,
-    "start_frame": 0,
+    "start_frame": 6,
     "end_frame": 7
   },
   {
-    "word": "Claude",
-    "start_seconds": 0.286,
-    "end_seconds": 0.56,
-    "start_frame": 9,
-    "end_frame": 17
+    "word": "just",
+    "start_seconds": 0.272,
+    "end_seconds": 0.4,
+    "start_frame": 8,
+    "end_frame": 12
   },
   {
-    "word": "to",
-    "start_seconds": 0.587,
+    "word": "got",
+    "start_seconds": 0.46,
     "end_seconds": 0.64,
-    "start_frame": 18,
+    "start_frame": 14,
     "end_frame": 19
   },
   {
-    "word": "write",
-    "start_seconds": 0.667,
-    "end_seconds": 0.8,
-    "start_frame": 20,
-    "end_frame": 24
-  },
-  {
-    "word": "a",
-    "start_seconds": 0.84,
-    "end_seconds": 0.88,
-    "start_frame": 25,
-    "end_frame": 26
-  },
-  {
-    "word": "PRD,",
-    "start_seconds": 0.987,
-    "end_seconds": 1.6,
-    "start_frame": 30,
-    "end_frame": 48
-  },
-  {
-    "word": "and",
-    "start_seconds": 1.64,
-    "end_seconds": 1.76,
-    "start_frame": 49,
-    "end_frame": 53
-  },
-  {
-    "word": "you'll",
-    "start_seconds": 1.78,
-    "end_seconds": 1.92,
-    "start_frame": 53,
-    "end_frame": 58
-  },
-  {
-    "word": "get",
-    "start_seconds": 1.94,
-    "end_seconds": 2.0,
-    "start_frame": 58,
-    "end_frame": 60
-  },
-  {
-    "word": "the",
-    "start_seconds": 2.04,
-    "end_seconds": 2.16,
-    "start_frame": 61,
-    "end_frame": 65
-  },
-  {
-    "word": "same",
-    "start_seconds": 2.224,
-    "end_seconds": 2.48,
-    "start_frame": 67,
-    "end_frame": 74
-  },
-  {
-    "word": "mediocre",
-    "start_seconds": 2.533,
-    "end_seconds": 2.96,
-    "start_frame": 76,
-    "end_frame": 89
-  },
-  {
-    "word": "draft",
-    "start_seconds": 3.027,
-    "end_seconds": 3.36,
-    "start_frame": 91,
-    "end_frame": 101
-  },
-  {
-    "word": "everyone",
-    "start_seconds": 3.413,
-    "end_seconds": 3.84,
-    "start_frame": 102,
-    "end_frame": 115
-  },
-  {
-    "word": "else",
-    "start_seconds": 3.872,
-    "end_seconds": 4.0,
-    "start_frame": 116,
-    "end_frame": 120
-  },
-  {
-    "word": "gets.",
-    "start_seconds": 4.08,
-    "end_seconds": 4.56,
-    "start_frame": 122,
-    "end_frame": 137
-  },
-  {
-    "word": "This",
-    "start_seconds": 4.784,
-    "end_seconds": 5.68,
-    "start_frame": 144,
-    "end_frame": 170
-  },
-  {
-    "word": "repo",
-    "start_seconds": 5.744,
-    "end_seconds": 6.0,
-    "start_frame": 172,
-    "end_frame": 180
-  },
-  {
-    "word": "fixes",
-    "start_seconds": 6.067,
-    "end_seconds": 6.4,
-    "start_frame": 182,
-    "end_frame": 192
-  },
-  {
-    "word": "that",
-    "start_seconds": 6.448,
-    "end_seconds": 6.64,
-    "start_frame": 193,
-    "end_frame": 199
-  },
-  {
-    "word": "with",
-    "start_seconds": 6.688,
-    "end_seconds": 6.88,
-    "start_frame": 201,
-    "end_frame": 206
-  },
-  {
     "word": "sixty",
-    "start_seconds": 6.933,
-    "end_seconds": 7.2,
-    "start_frame": 208,
-    "end_frame": 216
+    "start_seconds": 0.707,
+    "end_seconds": 1.04,
+    "start_frame": 21,
+    "end_frame": 31
   },
   {
     "word": "eight",
-    "start_seconds": 7.227,
-    "end_seconds": 7.36,
-    "start_frame": 217,
-    "end_frame": 221
+    "start_seconds": 1.053,
+    "end_seconds": 1.12,
+    "start_frame": 32,
+    "end_frame": 34
   },
   {
     "word": "real",
-    "start_seconds": 7.456,
-    "end_seconds": 7.84,
-    "start_frame": 224,
-    "end_frame": 235
+    "start_seconds": 1.2,
+    "end_seconds": 1.52,
+    "start_frame": 36,
+    "end_frame": 46
   },
   {
     "word": "product",
-    "start_seconds": 7.89,
-    "end_seconds": 8.24,
-    "start_frame": 237,
-    "end_frame": 247
+    "start_seconds": 1.56,
+    "end_seconds": 1.84,
+    "start_frame": 47,
+    "end_frame": 55
   },
   {
     "word": "management",
-    "start_seconds": 8.276,
-    "end_seconds": 8.64,
-    "start_frame": 248,
-    "end_frame": 259
+    "start_seconds": 1.884,
+    "end_seconds": 2.32,
+    "start_frame": 57,
+    "end_frame": 70
   },
   {
-    "word": "skills.",
-    "start_seconds": 8.709,
-    "end_seconds": 9.2,
-    "start_frame": 261,
-    "end_frame": 276
+    "word": "skills,",
+    "start_seconds": 2.377,
+    "end_seconds": 3.28,
+    "start_frame": 71,
+    "end_frame": 98
+  },
+  {
+    "word": "because",
+    "start_seconds": 3.31,
+    "end_seconds": 3.52,
+    "start_frame": 99,
+    "end_frame": 106
+  },
+  {
+    "word": "your",
+    "start_seconds": 3.568,
+    "end_seconds": 3.76,
+    "start_frame": 107,
+    "end_frame": 113
+  },
+  {
+    "word": "PRDs",
+    "start_seconds": 3.867,
+    "end_seconds": 4.32,
+    "start_frame": 116,
+    "end_frame": 130
+  },
+  {
+    "word": "deserve",
+    "start_seconds": 4.37,
+    "end_seconds": 4.72,
+    "start_frame": 131,
+    "end_frame": 142
+  },
+  {
+    "word": "better",
+    "start_seconds": 4.777,
+    "end_seconds": 5.12,
+    "start_frame": 143,
+    "end_frame": 154
+  },
+  {
+    "word": "than",
+    "start_seconds": 5.2,
+    "end_seconds": 5.52,
+    "start_frame": 156,
+    "end_frame": 166
+  },
+  {
+    "word": "the",
+    "start_seconds": 5.54,
+    "end_seconds": 5.6,
+    "start_frame": 166,
+    "end_frame": 168
+  },
+  {
+    "word": "same",
+    "start_seconds": 5.648,
+    "end_seconds": 5.84,
+    "start_frame": 169,
+    "end_frame": 175
+  },
+  {
+    "word": "mediocre",
+    "start_seconds": 5.893,
+    "end_seconds": 6.32,
+    "start_frame": 177,
+    "end_frame": 190
+  },
+  {
+    "word": "draft",
+    "start_seconds": 6.387,
+    "end_seconds": 6.72,
+    "start_frame": 192,
+    "end_frame": 202
+  },
+  {
+    "word": "everyone",
+    "start_seconds": 6.773,
+    "end_seconds": 7.2,
+    "start_frame": 203,
+    "end_frame": 216
+  },
+  {
+    "word": "else",
+    "start_seconds": 7.248,
+    "end_seconds": 7.44,
+    "start_frame": 217,
+    "end_frame": 223
+  },
+  {
+    "word": "gets.",
+    "start_seconds": 7.52,
+    "end_seconds": 7.92,
+    "start_frame": 226,
+    "end_frame": 238
   }
 ]
