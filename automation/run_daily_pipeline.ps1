@@ -61,26 +61,42 @@ $promptPath = Join-Path $repoRoot "automation\daily_pipeline_prompt.md"
 # since it's still one less hop.
 $claudeExe = "C:\Users\Vinay\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\bin\claude.exe"
 
-# Window visibility note, 2026-08-11: this ran twice via Task Scheduler and both times opened a
-# blank, stuck console window with zero output -- even with -WindowStyle Hidden on the PARENT
-# powershell.exe process (which only hides powershell's own window, not a child's). Leading
-# theory: this is the first run of this newly-authenticated identity against this repo, and
-# Claude Code's one-time folder-trust confirmation is trying to render interactively; PowerShell's
-# `|` pipe into a native .exe doesn't reliably signal "fully non-interactive, no real console" the
-# way a Unix pipe does, so the child may still treat it as an attached, answerable console instead
-# of auto-skipping the prompt. Per the user's own call: stop hiding the window (let them actually
-# see and react to it if that theory's right) and tee output live to the console AND the log file,
-# instead of capturing to the log only, so a stuck run is visibly diagnosable in real time.
+# Stdin/window note, 2026-08-11: three attempts with `Get-Content -Raw | & $claudeExe -p ...`
+# (PowerShell's pipe operator into a native .exe) all opened a blank, permanently-stuck console
+# with zero output, watched live and confirmed not a trust-prompt or rendering issue -- genuinely
+# just hung. PowerShell's `|` into a native process doesn't reliably signal end-of-input the way
+# a real file handle does, unlike a Unix pipe. Switched entirely to file-based redirection instead
+# (stdin FROM the prompt file directly, stdout/stderr TO files) via Start-Process -NoNewWindow,
+# which sidesteps the console/pipe ambiguity altogether: no window is created at all (so nothing
+# to get stuck rendering), and file handles always EOF correctly. Trade-off, discussed directly:
+# no more live-in-a-window viewing, but the log file is still fully readable during and after the
+# run for the same "is it working, did it error" visibility.
 
 "=== ThatAIPM daily pipeline run: $timestamp ===" | Out-File -FilePath $logFile -Encoding utf8
 
-Get-Content -Path $promptPath -Raw | & $claudeExe -p `
-    --permission-mode auto `
-    --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Skill" `
-    --output-format text 2>&1 |
-    Tee-Object -FilePath $logFile -Append
+$stdoutLog = Join-Path $logDir "daily_pipeline_${timestamp}_stdout.log"
+$stderrLog = Join-Path $logDir "daily_pipeline_${timestamp}_stderr.log"
 
-$exitCode = $LASTEXITCODE
+$argList = @(
+    "-p",
+    "--permission-mode", "auto",
+    "--allowedTools", "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Skill",
+    "--output-format", "text"
+)
+
+$proc = Start-Process -FilePath $claudeExe -ArgumentList $argList `
+    -RedirectStandardInput $promptPath `
+    -RedirectStandardOutput $stdoutLog `
+    -RedirectStandardError $stderrLog `
+    -NoNewWindow -Wait -PassThru -WorkingDirectory $repoRoot
+
+$exitCode = $proc.ExitCode
+
+Add-Content -Path $logFile -Value "--- stdout ---"
+if (Test-Path $stdoutLog) { Get-Content $stdoutLog | Add-Content -Path $logFile }
+Add-Content -Path $logFile -Value "--- stderr ---"
+if (Test-Path $stderrLog) { Get-Content $stderrLog | Add-Content -Path $logFile }
+
 "=== Run finished, exit code $exitCode ===" | Out-File -FilePath $logFile -Append -Encoding utf8
 
 # Notify: prefer the one-line result the run itself wrote; fall back to a generic message if it
