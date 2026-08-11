@@ -56,20 +56,29 @@ if (-not $env:CLAUDE_CODE_OAUTH_TOKEN) {
 
 $promptPath = Join-Path $repoRoot "automation\daily_pipeline_prompt.md"
 
-# Use the real .exe, not the claude.cmd npm shim. First live trigger (2026-08-11) showed a
-# blank, stuck console window when launched via Task Scheduler -> claude.cmd, even though the
-# identical call worked cleanly when run directly in an existing shell -- batch-file shims are
-# a known cause of surprise new-console allocation when there's no console already attached the
-# way Task Scheduler spawns processes. Calling the .exe directly avoids that extra hop.
+# Use the real .exe, not the claude.cmd npm shim -- ruled out as the cause of the blank-window
+# issue (same symptom persisted after switching), but keeping the direct .exe call regardless
+# since it's still one less hop.
 $claudeExe = "C:\Users\Vinay\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\bin\claude.exe"
+
+# Window visibility note, 2026-08-11: this ran twice via Task Scheduler and both times opened a
+# blank, stuck console window with zero output -- even with -WindowStyle Hidden on the PARENT
+# powershell.exe process (which only hides powershell's own window, not a child's). Leading
+# theory: this is the first run of this newly-authenticated identity against this repo, and
+# Claude Code's one-time folder-trust confirmation is trying to render interactively; PowerShell's
+# `|` pipe into a native .exe doesn't reliably signal "fully non-interactive, no real console" the
+# way a Unix pipe does, so the child may still treat it as an attached, answerable console instead
+# of auto-skipping the prompt. Per the user's own call: stop hiding the window (let them actually
+# see and react to it if that theory's right) and tee output live to the console AND the log file,
+# instead of capturing to the log only, so a stuck run is visibly diagnosable in real time.
 
 "=== ThatAIPM daily pipeline run: $timestamp ===" | Out-File -FilePath $logFile -Encoding utf8
 
 Get-Content -Path $promptPath -Raw | & $claudeExe -p `
     --permission-mode auto `
     --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Skill" `
-    --output-format text `
-    *>> $logFile
+    --output-format text 2>&1 |
+    Tee-Object -FilePath $logFile -Append
 
 $exitCode = $LASTEXITCODE
 "=== Run finished, exit code $exitCode ===" | Out-File -FilePath $logFile -Append -Encoding utf8
