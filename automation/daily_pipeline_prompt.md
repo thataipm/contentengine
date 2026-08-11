@@ -12,9 +12,14 @@ explaining the blocker, and end the session. Do not guess at things a human need
 ## Task
 
 1. Read `docs/experiment_log.md`. Look for a concept in the current batch with
-   `gate_result: PASS` that has not yet been produced (no episode folder / not marked produced
-   in `next_action`). If one exists and isn't blocked on user-provided information, produce it
-   (skip to step 3).
+   `gate_result: PASS` AND `episode_status: NOT_PRODUCED`. Use `episode_status` directly --
+   do NOT infer "already made" by matching the concept's display name against `episodes/`
+   folder names, a concept can be renamed after its episode folder already exists (this has
+   happened for real: a folder slug predating a later title rename). If a matching concept
+   exists and its `episode_status` isn't `BLOCKED`, produce it (skip to step 3). Once you
+   finish producing it, update its `episode_status` to `PRODUCED (episodes/{slug}/, ...)` in
+   the same step you touch `docs/experiment_log.md` (step 7 below) so it can never be
+   redone by a future run.
 
 2. If nothing is ready, generate 2-3 fresh topic candidates:
    - Pull from `docs/experiment_log.md`'s "Notes" section reserve list first if anything there
@@ -24,9 +29,10 @@ explaining the blocker, and end the session. Do not guess at things a human need
      `docs/thataipm_content_system_operating_spec_v2.md` §3's 35/30/20/15 split.
    - Score every candidate against the Strategic Quality Gate (`docs/experiment_log.md`'s
      sub-schema: pillar_fit, audience_fit, 100k_test, pm_question, originality, payoff,
-     brand_value, worth_producing, gate_result). Only proceed with a concept that scores PASS
-     outright or PASS after a REFRAME. If everything you generate today fails the gate, do not
-     lower the bar to hit the daily cadence -- treat that as the blocked case in the note above.
+     brand_value, worth_producing, gate_result, episode_status). Only proceed with a concept
+     that scores PASS outright or PASS after a REFRAME. If everything you generate today fails
+     the gate, do not lower the bar to hit the daily cadence -- treat that as the blocked case
+     in the note above. Give every new concept `episode_status: NOT_PRODUCED` when you add it.
    - Do NOT pick "I built an AI tool because bug priority is political, not factual" (SenseBug
      AI) or any other concept explicitly marked as blocked on user-provided details in
      `docs/experiment_log.md` -- skip those, they need a live conversation with the user first.
@@ -76,9 +82,11 @@ explaining the blocker, and end the session. Do not guess at things a human need
    and cover actually serve the pushed files (`curl -I`, `Content-Length` matches the local file
    exactly) before considering the episode done.
 
-7. Update `docs/experiment_log.md`: mark the concept produced, note it's ready for scheduling
-   (not scheduled), and add its Quality Gate block if it was a freshly-generated concept from
-   step 2.
+7. Update `docs/experiment_log.md`: set the concept's `episode_status` to
+   `PRODUCED (episodes/{slug}/, ready for scheduling)` -- this is the field that prevents a
+   future run from redoing this concept, so don't skip it -- and add its Quality Gate block
+   (including `episode_status: NOT_PRODUCED` at first) if it was a freshly-generated concept
+   from step 2.
 
 8. **Do not call `automation/schedule_zernio_post.py`. Do not make any Zernio API call at all.**
    Publishing requires the user's explicit go-ahead in a live session, no exception, regardless

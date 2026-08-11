@@ -53,10 +53,22 @@ payoff:                 the specific, compelling thing the viewer walks away wit
 brand_value:            does this compound the brand long term, or is it a one off
 worth_producing:        pass/fail, is this worth real production time against alternatives
 gate_result:            PASS / REJECT / REFRAME
+episode_status:         NOT_PRODUCED / PRODUCED (episodes/{slug}/, + schedule/publish state)
+                        / BLOCKED (<specific reason, e.g. needs user-provided assets>)
 ```
 
 Only concepts with `gate_result: PASS` (directly, or after a REFRAME that then passes) proceed
 past the gate into research and scripting.
+
+**Why `episode_status` is a separate structured field, not inferred from `next_action` prose**:
+added 2026-08-11 after a real gap surfaced -- the automated daily pipeline (see
+`automation/daily_pipeline_prompt.md`) needs an unambiguous per-concept signal for "already
+made, don't redo this," and free-text `next_action` isn't reliably parseable for that,
+especially since a concept's display name and its `episodes/` folder slug can diverge (this
+happened for real: "What AI Is Actually Doing to PM Hiring" renamed from its original working
+title, but the folder stayed `episodes/the-ai-pm-pay-gap/`, the pre-rename slug). Matching by
+name alone would have missed it and risked a duplicate production run. `episode_status` always
+names the real folder path directly so there's no matching-by-title guesswork.
 
 ### Analytics capture note
 
@@ -110,6 +122,7 @@ concepts:
     brand_value:
     worth_producing:
     gate_result:
+    episode_status: NOT_PRODUCED
 success_metrics:
 status: PLANNED
 results:
@@ -167,6 +180,9 @@ concepts:
       `CLAUDE.md` for the full incident note. Lesson: verify a research pass's specific
       numbers against the primary source directly before scripting, a citation bundle isn't
       proof every number in it is real.
+    episode_status: PRODUCED (episodes/the-ai-pm-pay-gap/ -- NOTE: folder slug predates the
+      concept rename above, do not match by title). Scheduled via Zernio for 2026-08-11
+      17:00 IST (Instagram + YouTube). Do NOT reproduce this concept.
   - concept: "I built an AI tool because bug priority is political, not factual" (SenseBug AI)
     pillar_fit: PASS, Build in Public / differentiation
     audience_fit: PASS, every PM has lived the "whoever escalates loudest wins" problem
@@ -180,6 +196,8 @@ concepts:
     worth_producing: PASS
     gate_result: PASS
     sources: user-provided (resume / first-hand account, 2026-08-10)
+    episode_status: BLOCKED (needs real screenshots + the specific trigger story from the
+      user before scripting can start -- do not attempt to research or invent these details)
 success_metrics: follows per 1,000 views (primary, comparing the two concepts against each
   other), saves and comments (secondary), per spec §9
 status: IN_PRODUCTION
