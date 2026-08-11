@@ -56,7 +56,12 @@ if (-not $env:CLAUDE_CODE_OAUTH_TOKEN) {
 
 $promptPath = Join-Path $repoRoot "automation\daily_pipeline_prompt.md"
 
-$claudeExe = "C:\Users\Vinay\AppData\Roaming\npm\claude.cmd"
+# Use the real .exe, not the claude.cmd npm shim. First live trigger (2026-08-11) showed a
+# blank, stuck console window when launched via Task Scheduler -> claude.cmd, even though the
+# identical call worked cleanly when run directly in an existing shell -- batch-file shims are
+# a known cause of surprise new-console allocation when there's no console already attached the
+# way Task Scheduler spawns processes. Calling the .exe directly avoids that extra hop.
+$claudeExe = "C:\Users\Vinay\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\bin\claude.exe"
 
 "=== ThatAIPM daily pipeline run: $timestamp ===" | Out-File -FilePath $logFile -Encoding utf8
 
