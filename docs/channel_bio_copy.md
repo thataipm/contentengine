@@ -3,11 +3,41 @@
 Drafts, not final copy — edit freely. Changing live account bio/settings needs explicit
 go-ahead before it's pushed, per this assistant's standing rules on account-settings changes.
 
-## Current: v2.0, drafted 2026-08-10
+## Current: revised positioning, drafted 2026-08-12
 
-Reflects **That AI PM: Content System Operating Spec v2.0**'s "AI-native product thinking"
-positioning (`docs/thataipm_content_system_operating_spec_v2.md`). Not yet applied to the live
-profile.
+Reflects **That AI PM: Content System Operating Spec v2.0**'s revised positioning (updated in
+place 2026-08-12, see the spec doc's §0 revision note): building real AI automation systems, in
+public, not PM-education-specific. Not yet applied to the live profile.
+
+### Instagram bio (150 character limit)
+
+```
+Building real AI automation systems, in public
+Agents, workflows, tools — tested and shipped
+Follow the build
+```
+
+~99 characters including line breaks, comfortable margin under the 150 limit.
+
+### YouTube "About" description
+
+```
+Real AI automation systems, built in public.
+
+Agents, workflows, and tools, shown as they're actually built and tested,
+no theory, no generic hype, no invented stats.
+
+Videos on the real automation pipeline behind this channel, tool/agent
+spotlights, and what's actually changing in how people build with AI.
+```
+
+---
+
+## Superseded: v2.0 PM-focused draft, 2026-08-10
+
+Written for the original v2.0 "AI-native product thinking" positioning, before the 2026-08-12
+revision to building-real-AI-automation-in-public. Never applied to the live profile. Kept only
+as a reference point for how the bio framing shifted; not usable as current copy.
 
 ### Instagram bio (150 character limit)
 

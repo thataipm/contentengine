@@ -1,13 +1,15 @@
 # Video Production Engine
 
-**Current strategic system, 2026-08-10**: content strategy for this channel (still the same
-`@thataipm` handle) is governed by **That AI PM: Content System Operating Spec v2.0**
-(`docs/thataipm_content_system_operating_spec_v2.md`), approved this date. This is a
-deliberate, new PM-focused positioning ("AI-native product thinking"), not a revival of the
-old archived "That AI PM" content described in the paragraph below. That archive stays
-retired and unused; v2.0 is a fresh strategy that happens to reuse the same brand name and
-handle. See §7 for the full migration note and the new experiment-log/quality-gate layer
-added on top of the production engine this file otherwise describes.
+**Current strategic system, 2026-08-10, revised 2026-08-12**: content strategy for this channel
+(still the same `@thataipm` handle) is governed by **That AI PM: Content System Operating Spec
+v2.0** (`docs/thataipm_content_system_operating_spec_v2.md`), approved 2026-08-10. Its core
+positioning was revised in place 2026-08-12: from PM-focused "AI-native product thinking" to
+**building real AI automation systems, in public** — see §7's dated revision note below for why,
+and the spec doc itself (same file, still v2.0, edited in place rather than forked) for the full
+current positioning, audience, and pillars. Neither version is a revival of the old archived
+"That AI PM" content described in the paragraph below; that archive stays retired and unused.
+See §7 for the full migration note and the new experiment-log/quality-gate layer added on top of
+the production engine this file otherwise describes.
 
 This project was reset on 2026-08-06. Everything from the prior "That AI PM" channel (its
 scripts, episodes, content plan, channel identity, and visual theme) was moved to
@@ -864,6 +866,38 @@ was fully rebuilt around only re-verified facts, real evidence screenshots of th
 pages were added to every stat-bearing shot in the process, which also directly answered the
 visual-thinness feedback. See `docs/experiment_log.md`'s Batch 1 entry for the full correction
 note, and the episode's own script file for the incident writeup.
+
+**Positioning revised 2026-08-12, direct conversation, two days into the v2.0 window**: the
+"AI-native product thinking" / PM-education positioning documented above and in
+`docs/thataipm_content_system_operating_spec_v2.md` is superseded by a new core positioning:
+**building real AI automation systems, in public**. Full reasoning, the revised north star,
+audience, pillars, and newsletter/lead-magnet/monetization sections are all in the spec doc
+itself (updated in place, same file, still versioned v2.0 per explicit instruction not to fork
+a new document for this). Kept brief here since the spec doc is the source of truth, not this
+file, per §21 of that doc.
+
+**Why, briefly**: two things converged. The founder isn't interested in being seen as a PM
+educator and the real leverage is the automation system already being built for this channel's
+own production (this repo's Remotion/ElevenLabs/agentic pipeline), not PM domain expertise.
+Separately, the one real early data point available (the-karpathy-skill, the most
+automation/tooling-flavored post so far, meaningfully outperforming the-ai-pm-pay-gap, the most
+PM-specific one, on engagement/retention/saves, see `docs/experiment_log.md`) was consistent
+with that instinct, though three posts and zero follows anywhere is nowhere near enough
+evidence on its own, so this is a founder-conviction call, not a data-driven one, and is logged
+honestly as such.
+
+**What does NOT change**: the production pipeline, the visual system, the schema vocabulary,
+the quality gates (`check_static_frames.py`, the shot-list literal-device-justification rule),
+and the `@thataipm` handle (kept for now, a rename would be wasted motion before there's an
+audience to lose, revisit once there is one) are all unaffected. This is a strategy-layer
+change only, same as the original v2.0 migration was.
+
+**What's explicitly deferred, per direct instruction**: monetization shape and the newsletter/
+lead-magnet buildout (spec §14-16) are parked until there's a real audience to decide them
+against, not abandoned. Full autonomy (the daily pipeline, disabled 2026-08-11, see that
+section above) and long-form YouTube are both real future goals but explicitly not being
+pursued right now either, first priority is audience building on the existing Instagram +
+YouTube Shorts format under the new positioning.
 
 ## 8. Working discipline (adapted from the karpathy-skill rules, 2026-08-11)
 

@@ -142,6 +142,20 @@ not retroactively assigned a batch, though its eventual real-world performance i
 recording here once available as an informal baseline data point for comparison against
 Batch 1 below.
 
+**Positioning revised 2026-08-12** (see `CLAUDE.md` §7 and
+`docs/thataipm_content_system_operating_spec_v2.md`'s §0 revision note): the spec's core
+positioning shifted from PM-education to building real AI automation systems in public.
+Batches 1-2 below were run under the original PM-specific positioning and stay on the record
+as real data, not discarded or retroactively reclassified. One concrete read worth noting: the
+karpathy-skill legacy episode (automation/tooling-flavored) meaningfully outperformed
+Batch 1's the-ai-pm-pay-gap concept (PM-hiring-stats-flavored) on engagement, retention, and
+saves, an early signal consistent with the revised positioning, though far short of real
+evidence on three posts with zero follows anywhere. Batch 1's "What AI Is Actually Doing to PM
+Hiring" concept is now off-direction under the revised positioning, do not reproduce that
+angle; Batch 2's pm-skills concept (a real installable-tool spotlight) already fits the revised
+positioning fine without any reframing. Future batches should be scoped against the revised
+pillars in the spec doc's §3.
+
 ## Batch 1
 
 ```
