@@ -4,12 +4,20 @@
       "id": "01",
       "sfx": [
         "whoosh",
-        "chime"
+        "chime",
+        "ui pop"
       ]
     },
     {
       "id": "02",
       "sfx": [
+        "ui pop",
+        "ui pop",
+        "chime",
+        "ui pop",
+        "ui pop",
+        "ui pop",
+        "ui pop",
         "ui pop"
       ]
     },
@@ -17,12 +25,30 @@
       "id": "03",
       "sfx": [
         "ui pop",
-        "chime"
+        "chime",
+        "ui pop",
+        "whoosh",
+        "ui pop",
+        "ui pop",
+        "whoosh"
+      ]
+    },
+    {
+      "id": "04",
+      "sfx": [
+        "whoosh",
+        "ui pop",
+        "chime",
+        "whoosh",
+        "ui pop",
+        "ui pop"
       ]
     },
     {
       "id": "05",
       "sfx": [
+        "ui pop",
+        "ui pop",
         "chime"
       ]
     }

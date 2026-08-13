@@ -33,7 +33,7 @@ music: none
 - blueprint: dataviz-countup (Adapt — hook-counter-burst variant)
 - focal: the coral "380" hero number
 - roles: 380-number = foreground subject (coral, the one voltage moment) · hand-drawn component icons (terminal card, counting number, container, loop) = supporting, small and scattered · cream ground = background
-- sfx: whoosh, chime
+- sfx: whoosh (icon burst), chime (count locks), ui pop (label settles)
 
 narrativeRole: Opens the cognitive gap immediately — states both the cost (wasted hours) and the twist (the number already existed) in the first sentence, no build-up.
 keyMessage: The video's whole thesis lands in the first 4 seconds — effort that didn't need to happen.
@@ -59,7 +59,7 @@ Scene 3 (5.9–7.413s): "ready to install" — 380 settles at final size; a smal
 - blueprint: kinetic-type-beats (Reproduce — problem-kinetic-type-beats)
 - focal: each named component phrase, one at a time
 - roles: current phrase = foreground subject (centered, ink) · tile ground = background · a thin warm-navy code-surface strip low in frame = supporting (only in Scene 4, the "engine I built myself" beat)
-- sfx: ui pop
+- sfx: ui pop (terminal, counting, container appear x3), chime (count lands), ui pop (item drops x3, code surface)
 
 narrativeRole: Makes the "wasted hours" claim concrete and specific instead of abstract — names the actual real things that were hand-built, one phrase per item, matching the VO's own cue-by-cue phrasing.
 keyMessage: Real, specific effort was spent building things one at a time, by hand.
@@ -75,7 +75,7 @@ Scene 5 (7.3–10.607s): "I coded each one from scratch, in an engine I built my
 - scene: The same build stage continues — a grid of registry tiles self-assembles behind/beside the hand-built pile, surfacing the real named matches (terminal styles, count-up, scan-band) one at a time
 - voiceover: "It's called HyperFrames, forty thousand stars on GitHub. Fourteen terminal card styles. A count-up number, already built. Even the scanning light effect I invented by hand this session, already there."
 - duration: 13.08s
-- transition_in: push-slide LEFT
+- transition_in: zoom-through
 - status: outline
 - src: compositions/frames/03-proof.html
 - status: animated
@@ -84,15 +84,15 @@ Scene 5 (7.3–10.607s): "I coded each one from scratch, in an engine I built my
 - beat: recognition tipping into mild disbelief
 - blueprint: grid-card-assemble (Adapt — social-proof-logo-grid-zoom-out)
 - focal: the self-assembling registry tile grid
-- roles: registry tiles (named: terminal styles, count-up, scan-band) = foreground subject · "40,680 stars" proof number = supporting, coral, above the grid · tile ground = background
-- sfx: ui pop, chime
+- roles: registry tiles (named: terminal styles, count-up, scan-band) = foreground subject · "40,773 stars" proof number = supporting, coral, above the grid · tile ground = background
+- sfx: ui pop (screenshot appears), chime (zoom lands on stars), ui pop (rule/tiles), whoosh (tile build), ui pop x2 (spotlight rings), whoosh (scanline sweep)
 
 narrativeRole: Backs up the hook's 380 claim with specific, checkable overlaps rather than asserting it again — the credibility beat.
 keyMessage: The overlap isn't vague — it's the exact same things, by name, already built.
 
 Adapt: keep the logo-grid-zoom-out signature (a wall of items builds, a proof number fills in above, camera settles wide) but the "logos" are named registry tiles (real item names, not brand marks), and the proof number is the GitHub star count, not a generic "N+ teams" line.
 
-Scene 1 (0.0–2.8s): "It's called HyperFrames, forty thousand stars on GitHub." — kicker-spike "HYPERFRAMES" fades up top-left (mono, coral ✱); beneath it a coral "40,680" **counts up** (`counting-dynamic-scale`) with "GitHub stars" in mono unit type — Centered-upper, ~30% of frame.
+Scene 1 (0.0–2.8s): "It's called HyperFrames, forty thousand stars on GitHub." — kicker-spike "HYPERFRAMES" fades up top-left (mono, coral ✱); beneath it a coral "40,773" **counts up** (`counting-dynamic-scale`) with "GitHub stars" in mono unit type — Centered-upper, ~30% of frame.
 Scene 2 (2.8–6.0s): "Fourteen terminal card styles." — an empty tile grid region establishes below the stat; 14 small labeled tiles **stagger-assemble into slot** (`center-outward-expansion`, short-path direct-into-slot form, dense so no center-burst) reading real names from the registry (`code-snippet-apple-terminal-*` family) — asymmetric, tiles fill the lower 60% of frame.
 Scene 3 (6.0–9.5s): "A count-up number, already built." — one tile in the grid gets a coral highlight ring and its label reads "count-up"; the rest of the grid dims slightly (**selective dim/blur**, `depth-of-field-blur`) to spotlight it.
 Scene 4 (9.5–13.08s): "Even the scanning light effect I invented by hand this session, already there." — a second tile highlights coral, labeled "scan-band"; a thin diagonal light band sweeps once across that tile only (**SVG self-draw** style sweep, `svg-path-draw`); camera settles to a slightly wider hold on the full grid — held read.
@@ -102,7 +102,7 @@ Scene 4 (9.5–13.08s): "Even the scanning light effect I invented by hand this 
 - scene: Same tile grid from Frame 3, holding — but one slot stays visibly empty where a loop/cycle icon would sit
 - voiceover: "One thing wasn't in it either: a circular loop diagram. Even the best library has real gaps. Check first. Don't assume."
 - duration: 8.888s
-- transition_in: crossfade
+- transition_in: blur-crossfade
 - status: outline
 - src: compositions/frames/04-gap.html
 - status: animated
@@ -112,7 +112,7 @@ Scene 4 (9.5–13.08s): "Even the scanning light effect I invented by hand this 
 - blueprint: compose (no golden-clip shape fits an honesty/caveat beat)
 - focal: the one empty grid slot
 - roles: empty slot outline = foreground subject (dashed ink outline, no fill) · Frame 3's grid (now dimmed, static) = background · closing line = supporting, appears last
-- sfx: none
+- sfx: whoosh (grid fades in), ui pop (ghost fades in), chime (outline locks), whoosh (grid fades out), ui pop x2 (quote beats)
 
 narrativeRole: Keeps the piece honest instead of turning into a pitch — shows the one real limitation in the same visual system used to show abundance.
 keyMessage: The generalizable lesson: check what already exists before assuming, in either direction.
@@ -128,7 +128,7 @@ Scene 3 (5.6–8.888s): "Check first. Don't assume." — the grid fades out enti
 - scene: The build stage clears to a simple sign-off — a handoff mark (old tool to new) resolving into a plain follow prompt, no comment-keyword gate
 - voiceover: "This channel is switching to it, starting with this video. If you're building your own AI systems, follow along, it's happening in public."
 - duration: 8.171995s
-- transition_in: crossfade
+- transition_in: squeeze
 - status: outline
 - src: compositions/frames/05-close.html
 - status: animated
@@ -138,7 +138,7 @@ Scene 3 (5.6–8.888s): "Check first. Don't assume." — the grid fades out enti
 - blueprint: titlecard-reveal (Adapt — social-proof-reveal-card)
 - focal: the follow prompt
 - roles: sign-off line = foreground subject · one coral-callout follow mark = the single voltage moment · cream ground = background
-- sfx: chime
+- sfx: ui pop (line1 arrives), ui pop (line1 to line2 swap), chime (callout pops)
 
 narrativeRole: Closes the loop — states the real decision (switching tools) and makes a plain, low-pressure ask.
 keyMessage: Follow to see the process, not a hard sell.

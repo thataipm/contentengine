@@ -1,6 +1,15 @@
 {
+  "tts_provider": null,
+  "voice_id": null,
   "bgm": null,
   "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
   "voices": [
     {
       "frame": 1,
@@ -786,38 +795,193 @@
     },
     {
       "frame": 1,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 3.6,
+      "duration_s": 0.576,
+      "volume": 0.3
+    },
+    {
+      "frame": 1,
       "file": "assets/sfx/chime.mp3",
-      "offset_s": 0,
+      "offset_s": 5.4,
+      "duration_s": 0.72,
+      "volume": 0.35
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 6.1,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 2.2,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 3.6,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 4.65,
       "duration_s": 0.72,
       "volume": 0.35
     },
     {
       "frame": 2,
       "file": "assets/sfx/ui-pop.mp3",
-      "offset_s": 0,
+      "offset_s": 5.2,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 5.35,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 5.63,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 5.91,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 7.3,
       "duration_s": 0.576,
       "volume": 0.35
     },
     {
       "frame": 3,
       "file": "assets/sfx/ui-pop.mp3",
-      "offset_s": 0,
+      "offset_s": 0.15,
       "duration_s": 0.576,
       "volume": 0.35
     },
     {
       "frame": 3,
       "file": "assets/sfx/chime.mp3",
-      "offset_s": 0,
+      "offset_s": 2.15,
       "duration_s": 0.72,
+      "volume": 0.35
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 2.8,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 2.9,
+      "duration_s": 1.58,
+      "volume": 0.35
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 6,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 9.5,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 9.6,
+      "duration_s": 1.58,
+      "volume": 0.35
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 0,
+      "duration_s": 1.58,
+      "volume": 0.35
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 1.4,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 1.8,
+      "duration_s": 0.72,
+      "volume": 0.35
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 5.6,
+      "duration_s": 1.58,
+      "volume": 0.35
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 6.35,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 7.55,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 0.05,
+      "duration_s": 0.576,
+      "volume": 0.35
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/ui-pop.mp3",
+      "offset_s": 1.95,
+      "duration_s": 0.576,
       "volume": 0.35
     },
     {
       "frame": 5,
       "file": "assets/sfx/chime.mp3",
-      "offset_s": 0,
+      "offset_s": 3,
       "duration_s": 0.72,
       "volume": 0.35
     }
-  ]
+  ],
+  "total_duration_s": 48.16
 }

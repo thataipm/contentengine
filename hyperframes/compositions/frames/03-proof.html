@@ -60,10 +60,68 @@
       color: #141413;
     }
 
+    /* ---- real screenshot card: proof this is the actual repo, not a recreation ---- */
+    .p03proof-shot-card {
+      position: absolute;
+      top: 168px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 984px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #FAF9F5;
+      border: 1px solid rgba(20, 20, 19, 0.14);
+      box-shadow: 0 1px 3px rgba(20, 20, 19, 0.1), 0 10px 32px -6px rgba(20, 20, 19, 0.18);
+      opacity: 0;
+    }
+    .p03proof-shot-titlebar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      background: #EFE9DE;
+      border-bottom: 1px solid rgba(20, 20, 19, 0.1);
+    }
+    .p03proof-shot-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(20, 20, 19, 0.22);
+    }
+    .p03proof-shot-logo {
+      width: 22px;
+      height: 22px;
+      margin-left: 4px;
+      border-radius: 5px;
+    }
+    .p03proof-shot-url {
+      margin-left: 4px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 15px;
+      letter-spacing: 0.01em;
+      color: rgba(20, 20, 19, 0.55);
+    }
+    .p03proof-shot-viewport {
+      position: relative;
+      width: 984px;
+      height: 87.1px;
+      overflow: hidden;
+    }
+    .p03proof-shot-viewport img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 984px;
+      height: auto;
+      transform-origin: 95% 18%;
+      will-change: transform;
+    }
+
     /* ---- number-lockup (stat) ---- */
     .p03proof-stat {
       position: absolute;
-      top: 210px;
+      top: 340px;
       left: 0;
       width: 1080px;
       display: flex;
@@ -100,7 +158,7 @@
     /* ---- section rule ---- */
     .p03proof-rule {
       position: absolute;
-      top: 480px;
+      top: 560px;
       left: 72px;
       width: 936px;
       height: 1px;
@@ -200,13 +258,26 @@
     }
   </style>
 
-  <div data-hf-id="hf-lkwd" id="root" data-composition-id="03-proof" data-width="1080" data-height="1920" data-duration="13.58">
-    <div data-hf-id="hf-goku" id="p03proof-bg" class="clip p03proof-bg" data-start="0" data-duration="13.58" data-track-index="0" style="background: radial-gradient(ellipse 900px 600px at 50% 20%, rgba(28,135,168,0.10), transparent 65%), #FAF9F5; background-size: auto, auto;"></div>
+  <div data-hf-id="hf-lkwd" id="root" data-composition-id="03-proof" data-width="1080" data-height="1920" data-duration="14.18">
+    <div data-hf-id="hf-goku" id="p03proof-bg" class="clip p03proof-bg" data-start="0" data-duration="14.18" data-track-index="0" style="background: radial-gradient(ellipse 900px 600px at 50% 20%, rgba(28,135,168,0.10), transparent 65%), #FAF9F5; background-size: auto, auto;"></div>
 
-    <div data-hf-id="hf-f9ds" id="p03proof-content" class="clip" data-start="0" data-duration="13.58" data-track-index="1">
+    <div data-hf-id="hf-f9ds" id="p03proof-content" class="clip" data-start="0" data-duration="14.18" data-track-index="1">
       <div data-hf-id="hf-04v0" class="p03proof-kicker" id="p03proof-kicker">
         <span data-hf-id="hf-aza2" class="mark" id="p03proof-mark">✱</span>
         <span data-hf-id="hf-fxow" class="text">HyperFrames</span>
+      </div>
+
+      <div data-hf-id="hf-shot1" class="p03proof-shot-card" id="p03proof-shot-card">
+        <div data-hf-id="hf-shot2" class="p03proof-shot-titlebar">
+          <span data-hf-id="hf-shot3" class="p03proof-shot-dot"></span>
+          <span data-hf-id="hf-shot4" class="p03proof-shot-dot"></span>
+          <span data-hf-id="hf-shot5" class="p03proof-shot-dot"></span>
+          <img data-hf-id="hf-shot5b" class="p03proof-shot-logo" src="assets/screenshots/heygen-com-logo.png" alt="heygen-com" />
+          <span data-hf-id="hf-shot6" class="p03proof-shot-url">github.com/heygen-com/hyperframes</span>
+        </div>
+        <div data-hf-id="hf-shot7" class="p03proof-shot-viewport">
+          <img data-hf-id="hf-shot8" id="p03proof-shot-img" src="assets/screenshots/repo_wide_crop.png" alt="heygen-com/hyperframes real GitHub repo page" />
+        </div>
       </div>
 
       <div data-hf-id="hf-nz8u" class="p03proof-stat">
@@ -266,15 +337,16 @@
 
       var tl = gsap.timeline({ paused: true });
 
-      var COUNT_TARGET = 40680;
+      var COUNT_TARGET = 40773;
       var COUNT_DUR = 1.8;
-      var COUNT_START = 0.4;
+      var COUNT_START = 0.35; // lands at 2.15s, synced with the screenshot zoom's own
+        // landing (0.75+1.4=2.15) so one chime covers both payoffs at once
       var COUNT_EASE = "power3.out";
       var counterEl = document.getElementById("p03proof-counter");
       var counterState = { value: 0 };
       var START_SCALE = 0.55;
 
-      // ---- Scene 1 (0.0-2.8s): kicker + counting-dynamic-scale stat ----
+      // ---- Scene 1 (0.0-2.8s): kicker + real screenshot proof + counting-dynamic-scale stat ----
       tl.fromTo(
         "#p03proof-kicker",
         { opacity: 0, y: 10 },
@@ -286,6 +358,22 @@
         { scale: 0.92, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" },
         0
+      );
+
+      // real repo screenshot: settle in, then camera-push zoom into the real
+      // "Star 40.8k" badge (top-right of the crop), synced to "GitHub" landing
+      // in the VO -- proof this is the actual repo, not a recreation.
+      tl.fromTo(
+        "#p03proof-shot-card",
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        0.15
+      );
+      tl.fromTo(
+        "#p03proof-shot-img",
+        { scale: 1 },
+        { scale: 2.15, duration: 1.4, ease: "power2.inOut" },
+        0.75
       );
 
       tl.to(
@@ -320,6 +408,11 @@
       );
 
       // ---- Scene 2 (2.8-6.0s): section rule + 16-tile stagger-assemble ----
+      tl.to(
+        "#p03proof-shot-card",
+        { opacity: 0, y: -10, duration: 0.4, ease: "power1.in" },
+        2.5
+      );
       tl.to(
         "#p03proof-rule",
         { opacity: 1, duration: 0.4, ease: "power1.out" },
