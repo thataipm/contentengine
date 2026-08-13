@@ -1,0 +1,153 @@
+<template data-composition-id="04-cta" data-duration="4.8">
+  <style>
+    @font-face {
+      font-family: "EB Garamond";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/EBGaramond-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/Inter-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-weight: 500;
+      font-style: normal;
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+    }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Inter", sans-serif;
+    }
+
+    .cta4-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 900px 700px at 50% 30%, rgba(140, 124, 255, 0.16), transparent 65%),
+        #101014;
+    }
+
+    .cta4-line {
+      position: absolute;
+      top: 720px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 0 60px;
+      color: #f5f3ed;
+      font-family: "EB Garamond", serif;
+      font-weight: 400;
+      font-size: 8.4cqw;
+      line-height: 1.05;
+      letter-spacing: -0.024em;
+      opacity: 0;
+    }
+
+    .cta4-callout-wrap {
+      position: absolute;
+      top: 960px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .cta4-callout {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #8c7cff;
+      color: #101014;
+      padding: 24px 48px;
+      border-radius: 9999px;
+      box-shadow: 0 6px 24px -4px rgba(140, 124, 255, 0.55);
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 2.6cqw;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.25;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+    }
+
+    .cta4-callout-mark {
+      color: #101014;
+      opacity: 0.85;
+    }
+
+    .cta4-sub {
+      position: absolute;
+      top: 1080px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #9a9aa2;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 30px;
+      letter-spacing: -0.005em;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-cta" data-width="1080" data-height="1920">
+    <div id="cta4-bg" class="cta4-bg clip" data-start="0" data-duration="4.8" data-track-index="0"></div>
+
+    <div id="cta4-line" class="cta4-line clip" data-start="0" data-duration="4.8" data-track-index="1">
+      Try it yourself.
+    </div>
+
+    <div class="cta4-callout-wrap">
+      <div id="cta4-callout" class="cta4-callout clip" data-start="0" data-duration="4.8" data-track-index="2">
+        <span class="cta4-callout-mark">&#10033;</span>Comment BOOK
+      </div>
+    </div>
+
+    <div id="cta4-sub" class="cta4-sub clip" data-start="0" data-duration="4.8" data-track-index="3">
+      I'll send you the link
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    // Scene 1 (0.0-4.8s), single held scene: "So if you want to try this for
+    // yourself, just comment BOOK down below and I'll send it to you
+    // directly." Line fades in first (hero visible by t<=0.5s), the
+    // "Comment BOOK" accent-callout spring-settles right on "comment BOOK"
+    // (1.9-2.32s), the closing subline settles right after and holds.
+    tl.fromTo(
+      "#cta4-line",
+      { scale: 0.95, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+      0.05
+    );
+
+    tl.fromTo(
+      "#cta4-callout",
+      { scale: 0, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.6)" },
+      1.85
+    );
+
+    tl.fromTo(
+      "#cta4-sub",
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+      2.9
+    );
+
+    window.__timelines["04-cta"] = tl;
+  </script>
+</template>

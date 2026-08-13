@@ -1,0 +1,337 @@
+<template data-composition-id="03-proof" data-duration="8.8">
+  <style>
+    @font-face {
+      font-family: "EB Garamond";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/EBGaramond-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/Inter-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-weight: 500;
+      font-style: normal;
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+    }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+    }
+
+    .proof3-bg {
+      position: absolute;
+      inset: 0;
+      background: #101014;
+    }
+
+    /* -- kicker -- */
+    .proof3-kicker {
+      position: absolute;
+      left: 80px;
+      top: 140px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+    }
+    .proof3-kicker-mark {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 30px;
+      color: #8c7cff;
+    }
+    .proof3-kicker-text {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 28px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #f5f3ed;
+    }
+
+    /* -- terminal card: the real install command (scene 1) -- */
+    .proof3-terminal {
+      position: absolute;
+      left: 80px;
+      top: 700px;
+      width: 920px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(245, 243, 237, 0.14);
+      background: #1c1c22;
+      opacity: 0;
+    }
+    .proof3-terminal-titlebar {
+      height: 56px;
+      background: #242429;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+    .proof3-terminal-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(245, 243, 237, 0.3);
+      margin-right: 8px;
+    }
+    .proof3-terminal-label {
+      margin-left: 14px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.05em;
+      color: rgba(245, 243, 237, 0.55);
+    }
+    .proof3-terminal-body {
+      padding: 56px 40px;
+    }
+    .proof3-cmd-row {
+      display: flex;
+      align-items: baseline;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 32px;
+      line-height: 1.4;
+      white-space: pre;
+    }
+    .proof3-cmd-prompt {
+      color: #34d399;
+      margin-right: 16px;
+    }
+    .proof3-cmd-text {
+      color: #f5f3ed;
+    }
+    .proof3-cmd-cursor {
+      display: inline-block;
+      width: 16px;
+      height: 36px;
+      background: #f5f3ed;
+      margin-left: 4px;
+      opacity: 1;
+    }
+
+    /* -- browser-chrome card: the real screenshot (scene 2) -- */
+    .proof3-card {
+      position: absolute;
+      left: 80px;
+      top: 240px;
+      width: 920px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(245, 243, 237, 0.14);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      background: #101014;
+      opacity: 0;
+    }
+    .proof3-card-titlebar {
+      height: 56px;
+      background: #1a1a20;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      border-bottom: 1px solid rgba(245, 243, 237, 0.1);
+    }
+    .proof3-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(245, 243, 237, 0.25);
+      margin-right: 8px;
+    }
+    .proof3-card-url {
+      margin-left: 14px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.01em;
+      color: #9a9aa2;
+    }
+    .proof3-shot-wrap {
+      position: relative;
+      width: 920px;
+      height: 81.46px;
+      overflow: hidden;
+      background: #141413;
+    }
+    .proof3-shot-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 920px;
+      height: 81.46px;
+      display: block;
+      transform-origin: 96% 15%;
+    }
+
+    /* -- count-up stat, beneath the screenshot card (scene 2) -- */
+    .proof3-stat {
+      position: absolute;
+      left: 80px;
+      top: 440px;
+      opacity: 0;
+    }
+    .proof3-stat-figure {
+      font-family: "EB Garamond", serif;
+      font-weight: 400;
+      font-size: 130px;
+      line-height: 0.95;
+      letter-spacing: -0.025em;
+      color: #8c7cff;
+    }
+    .proof3-stat-unit {
+      margin-top: 16px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 32px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9a9aa2;
+    }
+  </style>
+
+  <div id="root" data-composition-id="03-proof" data-width="1080" data-height="1920">
+    <div id="proof3-bg" class="proof3-bg clip" data-start="0" data-duration="8.8" data-track-index="0"></div>
+
+    <div id="proof3-kicker" class="proof3-kicker clip" data-start="0" data-duration="8.8" data-track-index="1">
+      <span class="proof3-kicker-mark">&#10033;</span>
+      <span class="proof3-kicker-text">Book-to-Skill</span>
+    </div>
+
+    <!-- Scene 1 (0.0-3.3s): "To install it, just run this one command in your
+         Claude Code terminal." Real command types on, completes right on
+         "terminal." (2.66s), holds briefly into the cut. -->
+    <div id="proof3-terminal" class="proof3-terminal clip" data-start="0" data-duration="3.3" data-track-index="2">
+      <div class="proof3-terminal-titlebar">
+        <span class="proof3-terminal-dot"></span>
+        <span class="proof3-terminal-dot"></span>
+        <span class="proof3-terminal-dot"></span>
+        <span class="proof3-terminal-label">terminal</span>
+      </div>
+      <div class="proof3-terminal-body">
+        <div class="proof3-cmd-row">
+          <span class="proof3-cmd-prompt">$</span>
+          <span id="proof3-cmd-text" class="proof3-cmd-text"></span><span
+            id="proof3-cmd-cursor"
+            class="proof3-cmd-cursor"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 2 (3.3-8.4s): "It's already sitting at almost twenty-one
+         thousand stars on GitHub, built in the last three months." -->
+    <div id="proof3-card" class="proof3-card clip" data-start="3.3" data-duration="5.5" data-track-index="3">
+      <div class="proof3-card-titlebar">
+        <span class="proof3-dot"></span>
+        <span class="proof3-dot"></span>
+        <span class="proof3-dot"></span>
+        <span class="proof3-card-url">github.com/virgiliojr94/book-to-skill</span>
+      </div>
+      <div class="proof3-shot-wrap">
+        <img
+          id="proof3-shot-img"
+          class="proof3-shot-img"
+          data-layout-allow-overflow
+          src="assets/screenshots/repo_wide_crop.png"
+          alt="virgiliojr94/book-to-skill on GitHub"
+        />
+      </div>
+    </div>
+
+    <div id="proof3-stat" class="proof3-stat clip" data-start="3.3" data-duration="5.5" data-track-index="4">
+      <div id="proof3-stat-figure" class="proof3-stat-figure">0</div>
+      <div class="proof3-stat-unit">GitHub stars</div>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo(
+      "#proof3-kicker",
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+      0.0
+    );
+
+    // Scene 1: terminal card builds in immediately (hero visible by t<=0.5s).
+    tl.fromTo(
+      "#proof3-terminal",
+      { opacity: 0, y: 20, scale: 0.97 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power2.out" },
+      0.05
+    );
+
+    const proof3Cmd = "npx skills add virgiliojr94/book-to-skill";
+    const proof3Type = { n: 0 };
+    tl.to(
+      proof3Type,
+      {
+        n: proof3Cmd.length,
+        duration: 2.0,
+        ease: "none",
+        onUpdate: function () {
+          document.getElementById("proof3-cmd-text").textContent = proof3Cmd.slice(
+            0,
+            Math.round(proof3Type.n)
+          );
+        },
+      },
+      0.5
+    );
+
+    // Blinking cursor once typing completes (~2.5s), holding to the cut.
+    tl.set("#proof3-cmd-cursor", { opacity: 0 }, 2.7);
+    tl.set("#proof3-cmd-cursor", { opacity: 1 }, 2.9);
+    tl.set("#proof3-cmd-cursor", { opacity: 0 }, 3.1);
+
+    // Scene 2: real screenshot card settles, camera-push zoom into the real
+    // "Star 21k" badge (transform-origin anchored at the badge's real
+    // position, ~96%,15%), count-up landing right as "stars" is spoken (5.74s).
+    tl.fromTo(
+      "#proof3-card",
+      { opacity: 0, y: 20, scale: 0.97 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power2.out" },
+      3.35
+    );
+    tl.fromTo(
+      "#proof3-shot-img",
+      { scale: 1 },
+      { scale: 1.9, duration: 4.2, ease: "power1.inOut" },
+      3.8
+    );
+    tl.fromTo(
+      "#proof3-stat",
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
+      4.6
+    );
+    const proof3Counter = { val: 0 };
+    tl.to(
+      proof3Counter,
+      {
+        val: 20978,
+        duration: 1.1,
+        ease: "power1.out",
+        onUpdate: function () {
+          document.getElementById("proof3-stat-figure").textContent = Math.round(
+            proof3Counter.val
+          ).toLocaleString("en-US");
+        },
+      },
+      4.6
+    );
+
+    window.__timelines["03-proof"] = tl;
+  </script>
+</template>

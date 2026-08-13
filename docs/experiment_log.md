@@ -291,3 +291,53 @@ next_action: Episode produced 2026-08-11 by the unattended daily pipeline (kille
 ```
 
 Notes: (batch opened by the unattended daily pipeline run, 2026-08-11)
+
+## Batch 3
+
+```
+batch_id: BATCH-003
+date_started: 2026-08-13
+pillar: AI Tools & Agent Spotlights
+series: none
+hypothesis: A currently-trending, verified-real installable tool spotlight (not researched
+  from a stale bank, actually checked against live GitHub data the same session it's produced)
+  performs at least as well as Batch 2's pm-skills concept on saves/follows-per-1000-views,
+  now under the revised v2.0 positioning (building-in-public lens, not PM-education framing).
+target_audience: Builders already using Claude Code day to day, who want a real installable
+  tool with a concrete payoff, not a generic AI-news roundup
+concepts:
+  - concept: "book-to-skill: Turn Any Technical Book Into a Claude Code Skill"
+    pillar_fit: PASS, real installable Claude Code skill, exact install command
+    audience_fit: PASS, directly useful to anyone feeding reference material to an agent
+    100k_test: PASS, broad builder audience worth having
+    pm_question: USE (install and run it) and WORK (the map-reduce/two-tier skill-generation
+      mechanics -- why a 400-page book compresses to a few thousand tokens)
+    originality: leads with the real mechanical problem (dumping a whole book into context vs.
+      a compact on-demand skill) and a real measured number, not a generic "cool tool" listicle
+    payoff: a specific, real, installable tool with an exact install command and a concrete,
+      source-verified stat
+    brand_value: ties into this channel's own real context-cost problem (documented in
+      hyperframes/CLAUDE.md's orchestration-discipline section), a genuine callback, not a
+      forced connection
+    worth_producing: PASS
+    gate_result: PASS
+    sources: https://github.com/virgiliojr94/book-to-skill (README fetched directly via
+      raw.githubusercontent.com 2026-08-13, not just a search-result summary), GitHub API for
+      stars/forks/dates (20,978 stars, 2,212 forks, created 2026-05-01, pushed 2026-08-12,
+      MIT license, checked live 2026-08-13, not reused from a prior session)
+    episode_status: NOT_PRODUCED
+success_metrics: follows per 1,000 views (primary, compared against Batch 2's pm-skills
+  concept once both have real traffic under the same v2.0 positioning), saves and comments
+  (secondary), per spec §9
+status: PLANNED
+results:
+learning:
+decision:
+next_action: Topic confirmed by user 2026-08-13. Proceeding to production via the
+  faceless-explainer HyperFrames workflow.
+```
+
+Notes: topic surfaced via live web research (GitHub trending signals, not a pre-banked idea),
+cross-checked against 2-3 other real trending candidates (claude-video-vision, oh-my-pi,
+n8n-flavored tools) before the user confirmed this one, per the spec's human-owns-topic-
+approval boundary.

@@ -1,0 +1,9 @@
+If you're burning tokens feeding an agent entire PDFs, stop. There's a tool that turns any book into a skill, for up to fifty-one times less context.
+
+Feed an agent a four-hundred page book directly, and it burns through the context window before it even reaches your question. book-to-skill splits the book instead: one compact core file, plus per-chapter files that only load when you actually need them.
+
+It's called book-to-skill. Almost twenty-one thousand stars on GitHub, built in the last three months. One install command, point it at any PDF or EPUB, and the whole book becomes a skill your agent can actually afford to use.
+
+This is the same problem I hit building this channel's own video pipeline. Dump too much into context, and you pay for it, in tokens and in time. book-to-skill just solves it for books instead of frames.
+
+If you're feeding agents reference material by hand, stop. Follow along, I'm testing tools like this in public.

@@ -1,0 +1,25 @@
+{
+  "provider": "auto",
+  "speed": 1,
+  "lines": [
+    {
+      "id": "01",
+      "text": "[rushed] If your AI agent keeps choking on huge PDFs and burning through its context window, there's actually a free skill that fixes that. It's called book-to-skill, and it turns any book into a skill your agent can actually use, up to fifty-one times smaller than the original."
+    },
+    {
+      "id": "02",
+      "text": "[rushed] It doesn't just shrink the whole thing into one file either. It splits the book into a short core file that's always loaded, and separate chapter files that only open when your agent actually needs them."
+    },
+    {
+      "id": "03",
+      "text": "[rushed] To install it, just run this one command in your Claude Code terminal. It's already sitting at almost twenty-one thousand stars on GitHub, built in the last three months."
+    },
+    {
+      "id": "04",
+      "text": "[rushed] So if you want to try this for yourself, just comment BOOK down below and I'll send it to you directly."
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  }
+}

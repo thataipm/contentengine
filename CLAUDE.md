@@ -85,6 +85,24 @@ step, not just editing:
    subtle to register. `components/RepoScreenshot.tsx` now runs a continuous scan-sweep
    (a soft light band crossing the crop window) during any post-zoom hold — reuses rule 2's own
    "moving spotlight" idea rather than inventing a separate device for real assets vs graphics.
+   **Tightened 2026-08-13, book-to-skill redo**: a passive pulse on an ALREADY-PRESENT element
+   (breathing opacity, a slow scale wobble) is no longer sufficient on its own for a >2s hold —
+   direct feedback after a pulse-only fix was still flagged live ("No new visuals after every 2
+   seconds... make sure we don't forget this"). A >2s beat needs a genuinely NEW visual element
+   or detail appearing (a new chip/tile/stat/icon, not a re-triggered existing one), not just
+   motion on what's already on screen; a pulse can still accompany a new element, it just can't
+   be the whole fix by itself. **Also learned the same session**: `npx hyperframes check`'s own
+   Motion section does NOT catch a long static hold at all (it checks exit-without-hard-kill and
+   other runtime issues, not silence duration) — a real ~4.5s dead hold in book-to-skill's Frame
+   1 passed that check clean. `hyperframes/CLAUDE.md`'s `thataipm-assemble` skill now runs
+   `check_static_gaps.mjs` as a standing mechanical gate for this specific rule (parses each
+   frame's GSAP timeline for tween coverage, treating a tween's full `[start, start+duration]`
+   span as covered rather than just its start instant, and flags any uncovered stretch over the
+   threshold) — run it before every render, the same "turn eyeballing into a checkable command"
+   discipline as `check_static_frames.py` originally established. **Known limitation, stated
+   honestly in the tool's own output**: it proves something was still animating, not that what
+   animated is a genuinely new visual rather than an existing element re-pulsing — that
+   distinction still needs a human read of what's actually covering each flagged gap.
 2. **Literal visualization**: represent the concept physically, not as a generic diagram —
    tokens = a sentence physically breaking into colored chunks, snapping into place one at a
    time, synced to narration; attention/transformers = a moving spotlight/laser sweeping across
@@ -774,3 +792,40 @@ karpathy rule is warning against in general software. Blind adoption would argue
 project's own working architecture. The part worth keeping: don't add config/flexibility/
 error-handling nobody asked for on top of a component — build the reusable shape because it's
 genuinely needed, not the unneeded flourishes around it.
+
+## 9. Production-process skills (added 2026-08-13)
+
+Five project-scoped skills in `.claude/skills/` encode this channel's own hard-won production
+conventions on top of the generic global HyperFrames skills — built after the book-to-skill
+episode's VO-model mismatch and manual frame-timing resync cost real rework. Each is invokable
+directly (`/thataipm-vo`, etc.) and independently improvable; add findings/fixes to the
+relevant skill's `SKILL.md` rather than re-discovering the same gotcha in a future session.
+
+Standing production order: `/thataipm-script-review` → `/thataipm-vo` → (if VO changed after
+frames already existed) `/thataipm-resync` → `/thataipm-assemble` → `/thataipm-distribute`.
+
+- **`thataipm-vo`** — generates VO on the correct `eleven_v3` model (the shared `media-use`
+  engine's Python path hardcodes `eleven_multilingual_v2`, the exact bug that shipped
+  wrong-sounding VO on book-to-skill's first draft) via a direct ElevenLabs API call, runs real
+  forced-alignment for word timing, and writes into `audio_meta.json` without touching the
+  faceless-explainer wrapper's separate sidecar (`audio_engine_meta.json`) — the second real bug
+  hit this project, where a later `fetch-sfx` run silently overwrote hand-added word timing.
+- **`thataipm-script-review`** — chains `/humanizer`'s draft-audit-final loop with this
+  channel's own mechanical gates (zero em/en dashes anywhere per the standing hard rule, runtime
+  estimate calibrated against real measured episodes, staccato-fragment-run detection) plus a
+  manual proper-terms-restoration check, so a script gets reviewed against everything at once
+  instead of three separate user-feedback rounds.
+- **`thataipm-resync`** — after VO changes, prints every frame's real per-word timeline from
+  `audio_meta.json` (the exact manual step done by hand for book-to-skill's pacing revision) and
+  mechanically resets each frame's full-span `data-duration` values, leaving scene-specific
+  boundary placement as the judgment call it actually is.
+- **`thataipm-assemble`** — chains captions build → assemble-index → transitions inject →
+  `hyperframes check` → optional snapshot → render → `ffmpeg volumedetect` into one command,
+  stopping at the first failure with a clear report instead of six separate manual steps.
+- **`thataipm-distribute`** — cover still, platform captions with a mechanical distinctness
+  check (word-overlap similarity between platforms, calibrated against a real
+  too-similar-caption instance caught in an already-shipped episode), git push + URL
+  verification, and Zernio scheduling via the existing `automation/schedule_zernio_post.py`.
+  **Preserves the hard publish-confirmation gate** — states the full post plan and waits for
+  explicit per-episode confirmation before the actual schedule call, same as the manual process
+  it replaces.

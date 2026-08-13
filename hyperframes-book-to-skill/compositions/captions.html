@@ -1,0 +1,223 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'EB Garamond'; src: url('assets/fonts/EBGaramond-400.woff2') format('woff2'); font-weight: 400; font-display: block; }
+      @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-display: block; }
+      :root {
+      --ink: #141413;
+      --cream: #FAF9F5;
+      --tile: #EFE9DE;
+      --tile-strong: #ECE3D4;
+      --coral: #6952D6;
+      --navy: #1C1C22;
+      --navy-soft: #202027;
+      --navy-elev: #242429;
+      --cap-ink: #141413;
+      --cap-canvas: #FAF9F5;
+      --cap-accent: #6952D6;
+      --cap-accent-2: #ECE3D4;
+      --font-display: "EB Garamond", system-ui, serif;
+      --font-body: "Inter", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE lifted cream card — warm cream fill, 1px hairline ink border, one soft warm
+     shadow (code-editorial's only elevation language), 12px radius, no tilt */
+  .caption-pill {
+    max-width: 78%;
+    padding: 22px 44px 26px;
+    background: var(--cap-canvas, #faf9f5);
+    border: 1px solid color-mix(in srgb, var(--cap-ink, #141413) 12%, transparent);
+    border-radius: 12px;
+    box-shadow:
+      0 1px 3px color-mix(in srgb, var(--cap-ink, #141413) 8%, transparent),
+      0 4px 16px color-mix(in srgb, var(--cap-ink, #141413) 4%, transparent);
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.12em 0.3em;
+    font-family: "EB Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(40px, 4.4vw, 56px);
+    line-height: 1.24;
+    letter-spacing: -0.02em;
+  }
+
+  /* upcoming — faint warm ink, no underline */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.02em 0.06em;
+    color: color-mix(in srgb, var(--cap-ink, #141413) 40%, var(--cap-canvas, #faf9f5));
+    border-bottom: 3px solid transparent;
+  }
+  /* current word — full ink under the coral voltage underline (the brand's signature
+     inline-link gesture; border-bottom = underline without layout shift) */
+  .caption-word.is-active {
+    color: var(--cap-ink, #141413);
+    border-bottom: 3px solid var(--cap-accent, #cc785c);
+  }
+  /* already spoken — solid warm ink, underline cleared */
+  .caption-word.is-spoken {
+    color: var(--cap-ink, #141413);
+    border-bottom: 3px solid transparent;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — the expressive EB Garamond italic */
+  .caption-word.cap-brand {
+    font-style: italic;
+    color: var(--cap-ink, #141413);
+  }
+  .caption-word.cap-brand.is-active {
+    border-bottom: 3px solid var(--cap-accent, #cc785c);
+  }
+  /* numerals / data — slightly recessed warm ink */
+  .caption-word.cap-num {
+    color: color-mix(in srgb, var(--cap-ink, #141413) 72%, var(--cap-canvas, #faf9f5));
+  }
+  /* emphasis — a persistent coral voltage underline */
+  .caption-word.cap-cta {
+    border-bottom: 3px solid var(--cap-accent-2, #b5654a);
+    color: var(--cap-ink, #141413);
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(34px, 5.4vw, 46px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="40.88"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.119,"end":0.539,"text":"If your","words":[{"id":"caption-word-0-0","text":"If","start":0.119,"end":0.239},{"id":"caption-word-0-1","text":"your","start":0.28,"end":0.439}]},{"id":"caption-group-1","frame":1,"start":0.539,"end":1.279,"text":"AI agent","words":[{"id":"caption-word-1-0","text":"AI","start":0.539,"end":0.699},{"id":"caption-word-1-1","text":"agent","start":0.859,"end":1.159}]},{"id":"caption-group-2","frame":1,"start":1.279,"end":1.939,"text":"keeps choking","words":[{"id":"caption-word-2-0","text":"keeps","start":1.279,"end":1.5},{"id":"caption-word-2-1","text":"choking","start":1.539,"end":1.879}]},{"id":"caption-group-3","frame":1,"start":1.939,"end":3.279,"text":"on huge PDFs","words":[{"id":"caption-word-3-0","text":"on","start":1.939,"end":2.119},{"id":"caption-word-3-1","text":"huge","start":2.18,"end":2.46},{"id":"caption-word-3-2","text":"PDFs","start":2.519,"end":3.199}]},{"id":"caption-group-4","frame":1,"start":3.279,"end":3.859,"text":"and burning","words":[{"id":"caption-word-4-0","text":"and","start":3.279,"end":3.439},{"id":"caption-word-4-1","text":"burning","start":3.559,"end":3.819}]},{"id":"caption-group-5","frame":1,"start":3.859,"end":4.199,"text":"through its","words":[{"id":"caption-word-5-0","text":"through","start":3.859,"end":3.979},{"id":"caption-word-5-1","text":"its","start":4,"end":4.119}]},{"id":"caption-group-6","frame":1,"start":4.199,"end":5.04,"text":"context window,","words":[{"id":"caption-word-6-0","text":"context","start":4.199,"end":4.519},{"id":"caption-word-6-1","text":"window,","start":4.599,"end":4.92}]},{"id":"caption-group-7","frame":1,"start":5.559,"end":6.039,"text":"there's actually","words":[{"id":"caption-word-7-0","text":"there's","start":5.559,"end":5.699},{"id":"caption-word-7-1","text":"actually","start":5.759,"end":5.98}]},{"id":"caption-group-8","frame":1,"start":6.039,"end":6.519,"text":"a free","words":[{"id":"caption-word-8-0","text":"a","start":6.039,"end":6.179},{"id":"caption-word-8-1","text":"free","start":6.239,"end":6.399}]},{"id":"caption-group-9","frame":1,"start":6.559,"end":7.139,"text":"skill that","words":[{"id":"caption-word-9-0","text":"skill","start":6.559,"end":6.899},{"id":"caption-word-9-1","text":"that","start":6.98,"end":7.079}]},{"id":"caption-group-10","frame":1,"start":7.139,"end":7.859,"text":"fixes that.","words":[{"id":"caption-word-10-0","text":"fixes","start":7.139,"end":7.48},{"id":"caption-word-10-1","text":"that.","start":7.519,"end":7.739}]},{"id":"caption-group-11","frame":1,"start":8.319,"end":9.519,"text":"It's called book-to-skill,","words":[{"id":"caption-word-11-0","text":"It's","start":8.319,"end":8.46},{"id":"caption-word-11-1","text":"called","start":8.479,"end":8.639},{"id":"caption-word-11-2","text":"book-to-skill,","start":8.76,"end":9.399}]},{"id":"caption-group-12","frame":1,"start":9.699,"end":10.019,"text":"and it","words":[{"id":"caption-word-12-0","text":"and","start":9.699,"end":9.819},{"id":"caption-word-12-1","text":"it","start":9.88,"end":10}]},{"id":"caption-group-13","frame":1,"start":10.019,"end":10.4,"text":"turns","words":[{"id":"caption-word-13-0","text":"turns","start":10.019,"end":10.28}]},{"id":"caption-group-14","frame":1,"start":10.46,"end":11.179,"text":"any book","words":[{"id":"caption-word-14-0","text":"any","start":10.46,"end":10.679},{"id":"caption-word-14-1","text":"book","start":10.76,"end":11.119}]},{"id":"caption-group-15","frame":1,"start":11.179,"end":11.539,"text":"into a","words":[{"id":"caption-word-15-0","text":"into","start":11.179,"end":11.4},{"id":"caption-word-15-1","text":"a","start":11.439,"end":11.46}]},{"id":"caption-group-16","frame":1,"start":11.539,"end":12.099,"text":"skill your","words":[{"id":"caption-word-16-0","text":"skill","start":11.539,"end":11.8},{"id":"caption-word-16-1","text":"your","start":11.88,"end":12.019}]},{"id":"caption-group-17","frame":1,"start":12.099,"end":12.599,"text":"agent can","words":[{"id":"caption-word-17-0","text":"agent","start":12.099,"end":12.399},{"id":"caption-word-17-1","text":"can","start":12.439,"end":12.539}]},{"id":"caption-group-18","frame":1,"start":12.599,"end":13.42,"text":"actually use,","words":[{"id":"caption-word-18-0","text":"actually","start":12.599,"end":12.96},{"id":"caption-word-18-1","text":"use,","start":13.079,"end":13.3}]},{"id":"caption-group-19","frame":1,"start":13.859,"end":14.119,"text":"up to","words":[{"id":"caption-word-19-0","text":"up","start":13.859,"end":13.96},{"id":"caption-word-19-1","text":"to","start":14,"end":14.079}]},{"id":"caption-group-20","frame":1,"start":14.119,"end":15.5,"text":"fifty-one times smaller","words":[{"id":"caption-word-20-0","text":"fifty-one","start":14.119,"end":14.619},{"id":"caption-word-20-1","text":"times","start":14.779,"end":15.019},{"id":"caption-word-20-2","text":"smaller","start":15.039,"end":15.399}]},{"id":"caption-group-21","frame":1,"start":15.5,"end":15.759,"text":"than the","words":[{"id":"caption-word-21-0","text":"than","start":15.5,"end":15.619},{"id":"caption-word-21-1","text":"the","start":15.679,"end":15.719}]},{"id":"caption-group-22","frame":1,"start":15.759,"end":16.3,"text":"original.","words":[{"id":"caption-word-22-0","text":"original.","start":15.759,"end":16.18}]},{"id":"caption-group-23","frame":2,"start":16.339,"end":16.74,"text":"It doesn't","words":[{"id":"caption-word-23-0","text":"It","start":16.339,"end":16.439},{"id":"caption-word-23-1","text":"doesn't","start":16.459,"end":16.699}]},{"id":"caption-group-24","frame":2,"start":16.74,"end":17.279,"text":"just shrink","words":[{"id":"caption-word-24-0","text":"just","start":16.74,"end":16.879},{"id":"caption-word-24-1","text":"shrink","start":16.899,"end":17.24}]},{"id":"caption-group-25","frame":2,"start":17.279,"end":17.659,"text":"the whole","words":[{"id":"caption-word-25-0","text":"the","start":17.279,"end":17.399},{"id":"caption-word-25-1","text":"whole","start":17.439,"end":17.6}]},{"id":"caption-group-26","frame":2,"start":17.659,"end":18.1,"text":"thing into","words":[{"id":"caption-word-26-0","text":"thing","start":17.659,"end":17.779},{"id":"caption-word-26-1","text":"into","start":17.819,"end":17.999}]},{"id":"caption-group-27","frame":2,"start":18.1,"end":18.959,"text":"one file either.","words":[{"id":"caption-word-27-0","text":"one","start":18.1,"end":18.259},{"id":"caption-word-27-1","text":"file","start":18.359,"end":18.539},{"id":"caption-word-27-2","text":"either.","start":18.579,"end":18.839}]},{"id":"caption-group-28","frame":2,"start":19.339,"end":19.859,"text":"It splits","words":[{"id":"caption-word-28-0","text":"It","start":19.339,"end":19.439},{"id":"caption-word-28-1","text":"splits","start":19.499,"end":19.839}]},{"id":"caption-group-29","frame":2,"start":19.859,"end":20.259,"text":"the book","words":[{"id":"caption-word-29-0","text":"the","start":19.859,"end":19.96},{"id":"caption-word-29-1","text":"book","start":20.019,"end":20.199}]},{"id":"caption-group-30","frame":2,"start":20.259,"end":20.62,"text":"into a","words":[{"id":"caption-word-30-0","text":"into","start":20.259,"end":20.419},{"id":"caption-word-30-1","text":"a","start":20.479,"end":20.579}]},{"id":"caption-group-31","frame":2,"start":20.62,"end":21.719,"text":"short core file","words":[{"id":"caption-word-31-0","text":"short","start":20.62,"end":20.879},{"id":"caption-word-31-1","text":"core","start":21.039,"end":21.24},{"id":"caption-word-31-2","text":"file","start":21.339,"end":21.599}]},{"id":"caption-group-32","frame":2,"start":21.759,"end":22.879,"text":"that's always loaded,","words":[{"id":"caption-word-32-0","text":"that's","start":21.759,"end":21.999},{"id":"caption-word-32-1","text":"always","start":22.079,"end":22.379},{"id":"caption-word-32-2","text":"loaded,","start":22.459,"end":22.759}]},{"id":"caption-group-33","frame":2,"start":23.2,"end":24.299,"text":"and separate chapter","words":[{"id":"caption-word-33-0","text":"and","start":23.2,"end":23.399},{"id":"caption-word-33-1","text":"separate","start":23.479,"end":23.859},{"id":"caption-word-33-2","text":"chapter","start":23.919,"end":24.2}]},{"id":"caption-group-34","frame":2,"start":24.299,"end":25.339,"text":"files that only","words":[{"id":"caption-word-34-0","text":"files","start":24.299,"end":24.719},{"id":"caption-word-34-1","text":"that","start":24.759,"end":24.939},{"id":"caption-word-34-2","text":"only","start":25.04,"end":25.259}]},{"id":"caption-group-35","frame":2,"start":25.339,"end":25.979,"text":"open when","words":[{"id":"caption-word-35-0","text":"open","start":25.339,"end":25.779},{"id":"caption-word-35-1","text":"when","start":25.819,"end":25.939}]},{"id":"caption-group-36","frame":2,"start":25.979,"end":27.019,"text":"your agent actually","words":[{"id":"caption-word-36-0","text":"your","start":25.979,"end":26.099},{"id":"caption-word-36-1","text":"agent","start":26.179,"end":26.5},{"id":"caption-word-36-2","text":"actually","start":26.58,"end":26.979}]},{"id":"caption-group-37","frame":2,"start":27.019,"end":27.619,"text":"needs them.","words":[{"id":"caption-word-37-0","text":"needs","start":27.019,"end":27.279},{"id":"caption-word-37-1","text":"them.","start":27.299,"end":27.499}]},{"id":"caption-group-38","frame":3,"start":27.779,"end":28.259,"text":"To install","words":[{"id":"caption-word-38-0","text":"To","start":27.779,"end":27.859},{"id":"caption-word-38-1","text":"install","start":27.899,"end":28.199}]},{"id":"caption-group-39","frame":3,"start":28.259,"end":28.439,"text":"it,","words":[{"id":"caption-word-39-0","text":"it,","start":28.259,"end":28.36}]},{"id":"caption-group-40","frame":3,"start":28.439,"end":28.8,"text":"just run","words":[{"id":"caption-word-40-0","text":"just","start":28.439,"end":28.579},{"id":"caption-word-40-1","text":"run","start":28.619,"end":28.759}]},{"id":"caption-group-41","frame":3,"start":28.8,"end":29.239,"text":"this one","words":[{"id":"caption-word-41-0","text":"this","start":28.8,"end":28.959},{"id":"caption-word-41-1","text":"one","start":29.019,"end":29.199}]},{"id":"caption-group-42","frame":3,"start":29.239,"end":29.719,"text":"command in","words":[{"id":"caption-word-42-0","text":"command","start":29.239,"end":29.54},{"id":"caption-word-42-1","text":"in","start":29.599,"end":29.68}]},{"id":"caption-group-43","frame":3,"start":29.719,"end":30.099,"text":"your Claude","words":[{"id":"caption-word-43-0","text":"your","start":29.719,"end":29.779},{"id":"caption-word-43-1","text":"Claude","start":29.819,"end":30.059}]},{"id":"caption-group-44","frame":3,"start":30.099,"end":30.879,"text":"Code terminal.","words":[{"id":"caption-word-44-0","text":"Code","start":30.099,"end":30.279},{"id":"caption-word-44-1","text":"terminal.","start":30.339,"end":30.759}]},{"id":"caption-group-45","frame":3,"start":31.199,"end":31.68,"text":"It's already","words":[{"id":"caption-word-45-0","text":"It's","start":31.199,"end":31.339},{"id":"caption-word-45-1","text":"already","start":31.359,"end":31.599}]},{"id":"caption-group-46","frame":3,"start":31.68,"end":32.14,"text":"sitting at","words":[{"id":"caption-word-46-0","text":"sitting","start":31.68,"end":31.939},{"id":"caption-word-46-1","text":"at","start":31.999,"end":32.08}]},{"id":"caption-group-47","frame":3,"start":32.14,"end":33.419,"text":"almost twenty-one thousand","words":[{"id":"caption-word-47-0","text":"almost","start":32.14,"end":32.459},{"id":"caption-word-47-1","text":"twenty-one","start":32.519,"end":32.919},{"id":"caption-word-47-2","text":"thousand","start":33.06,"end":33.379}]},{"id":"caption-group-48","frame":3,"start":33.419,"end":33.839,"text":"stars on","words":[{"id":"caption-word-48-0","text":"stars","start":33.419,"end":33.66},{"id":"caption-word-48-1","text":"on","start":33.699,"end":33.779}]},{"id":"caption-group-49","frame":3,"start":33.839,"end":34.319,"text":"GitHub,","words":[{"id":"caption-word-49-0","text":"GitHub,","start":33.839,"end":34.199}]},{"id":"caption-group-50","frame":3,"start":34.399,"end":34.759,"text":"built in","words":[{"id":"caption-word-50-0","text":"built","start":34.399,"end":34.599},{"id":"caption-word-50-1","text":"in","start":34.66,"end":34.739}]},{"id":"caption-group-51","frame":3,"start":34.759,"end":35.279,"text":"the last","words":[{"id":"caption-word-51-0","text":"the","start":34.759,"end":34.819},{"id":"caption-word-51-1","text":"last","start":34.879,"end":35.219}]},{"id":"caption-group-52","frame":3,"start":35.279,"end":35.979,"text":"three months.","words":[{"id":"caption-word-52-0","text":"three","start":35.279,"end":35.459},{"id":"caption-word-52-1","text":"months.","start":35.519,"end":35.859}]},{"id":"caption-group-53","frame":4,"start":36.179,"end":36.379,"text":"So if","words":[{"id":"caption-word-53-0","text":"So","start":36.179,"end":36.239},{"id":"caption-word-53-1","text":"if","start":36.279,"end":36.339}]},{"id":"caption-group-54","frame":4,"start":36.379,"end":36.599,"text":"you want","words":[{"id":"caption-word-54-0","text":"you","start":36.379,"end":36.439},{"id":"caption-word-54-1","text":"want","start":36.479,"end":36.58}]},{"id":"caption-group-55","frame":4,"start":36.599,"end":36.919,"text":"to try","words":[{"id":"caption-word-55-0","text":"to","start":36.599,"end":36.7},{"id":"caption-word-55-1","text":"try","start":36.719,"end":36.859}]},{"id":"caption-group-56","frame":4,"start":36.919,"end":37.2,"text":"this for","words":[{"id":"caption-word-56-0","text":"this","start":36.919,"end":37.039},{"id":"caption-word-56-1","text":"for","start":37.08,"end":37.159}]},{"id":"caption-group-57","frame":4,"start":37.2,"end":37.779,"text":"yourself,","words":[{"id":"caption-word-57-0","text":"yourself,","start":37.2,"end":37.659}]},{"id":"caption-group-58","frame":4,"start":37.799,"end":38.82,"text":"just comment BOOK","words":[{"id":"caption-word-58-0","text":"just","start":37.799,"end":37.94},{"id":"caption-word-58-1","text":"comment","start":37.979,"end":38.28},{"id":"caption-word-58-2","text":"BOOK","start":38.399,"end":38.78}]},{"id":"caption-group-59","frame":4,"start":38.82,"end":39.359,"text":"down below","words":[{"id":"caption-word-59-0","text":"down","start":38.82,"end":38.959},{"id":"caption-word-59-1","text":"below","start":39.019,"end":39.239}]},{"id":"caption-group-60","frame":4,"start":39.399,"end":39.699,"text":"and I'll","words":[{"id":"caption-word-60-0","text":"and","start":39.399,"end":39.479},{"id":"caption-word-60-1","text":"I'll","start":39.519,"end":39.659}]},{"id":"caption-group-61","frame":4,"start":39.699,"end":40.019,"text":"send it","words":[{"id":"caption-word-61-0","text":"send","start":39.699,"end":39.859},{"id":"caption-word-61-1","text":"it","start":39.899,"end":39.979}]},{"id":"caption-group-62","frame":4,"start":40.019,"end":40.839,"text":"to you directly.","words":[{"id":"caption-word-62-0","text":"to","start":40.019,"end":40.08},{"id":"caption-word-62-1","text":"you","start":40.119,"end":40.219},{"id":"caption-word-62-2","text":"directly.","start":40.259,"end":40.719}]}];
+  var DURATION = 40.88;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.98 }, { scale: 1, duration: 0.16, ease: "power1.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>

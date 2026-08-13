@@ -14,3 +14,5 @@ __pycache__/
 episodes/*/build/
 hyperframes/renders/
 hyperframes/snapshots/
+hyperframes-book-to-skill/renders/
+hyperframes-book-to-skill/snapshots/

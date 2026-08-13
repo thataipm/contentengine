@@ -1,0 +1,347 @@
+<template data-composition-id="02-mechanism" data-duration="11.84">
+  <style>
+    @font-face {
+      font-family: "EB Garamond";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/EBGaramond-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/Inter-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-weight: 500;
+      font-style: normal;
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+    }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+    }
+
+    .mech2-bg {
+      position: absolute;
+      inset: 0;
+      background: #101014;
+    }
+
+    /* -- Scene 1: single oversized file, negated -- */
+    /* No static opacity here -- the framework manages the CLIP element's
+       visibility; the inner wrapper (below) owns the fade animation. Fighting
+       both was the actual bug that left Scene 1 rendering empty. */
+    .mech2-onefile {
+      position: absolute;
+      left: 390px;
+      top: 640px;
+      width: 300px;
+      height: 388px;
+    }
+    #mech2-onefile-inner {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+    .mech2-onefile svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .mech2-strike {
+      position: absolute;
+      left: 390px;
+      top: 640px;
+      width: 300px;
+      height: 388px;
+    }
+    #mech2-strike-inner {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+    .mech2-strike svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+    .mech2-strike-line {
+      stroke-dasharray: 480;
+      stroke-dashoffset: 480;
+    }
+
+    /* -- Scene 2: core file + on-demand chapter tiles -- */
+    .mech2-core-tile {
+      position: absolute;
+      left: 430px;
+      top: 895px;
+      width: 220px;
+      height: 170px;
+      border-radius: 12px;
+      background: #1a1a20;
+      border: 2px solid #34d399;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      opacity: 0;
+      transform-origin: center center;
+    }
+    .mech2-core-icon {
+      width: 58px;
+      height: 58px;
+    }
+    .mech2-core-label {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f5f3ed;
+    }
+
+    .mech2-chapter {
+      position: absolute;
+      width: 130px;
+      height: 110px;
+      border-radius: 10px;
+      background: #1a1a20;
+      border: 1.5px solid rgba(245, 243, 237, 0.16);
+      color: #9a9aa2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+      transform-origin: center center;
+    }
+    .mech2-chapter-icon {
+      width: 34px;
+      height: 34px;
+      color: inherit;
+    }
+    .mech2-chapter-idx {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      color: inherit;
+    }
+
+    #mech2-ch-0 { left: 475px; top: 705px; }
+    #mech2-ch-1 { left: 722px; top: 857px; }
+    #mech2-ch-2 { left: 628px; top: 1103px; }
+    #mech2-ch-3 { left: 322px; top: 1103px; }
+    #mech2-ch-4 { left: 228px; top: 857px; }
+  </style>
+
+  <div id="root" data-composition-id="02-mechanism" data-width="1080" data-height="1920">
+    <div id="mech2-bg" class="mech2-bg clip" data-start="0" data-duration="11.84" data-track-index="0"></div>
+
+    <!-- Scene 1 (0.0-3.1s): "It doesn't just shrink the whole thing into one
+         file either." One oversized file settles, gets a fast red negation
+         strike right on "either." -->
+    <div id="mech2-onefile" class="mech2-onefile clip" data-start="0" data-duration="3.1" data-track-index="1">
+      <div id="mech2-onefile-inner">
+        <svg viewBox="0 0 120 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M14,6 H84 L106,28 V146 a8,8 0 0 1 -8,8 H14 a8,8 0 0 1 -8,-8 V14 a8,8 0 0 1 8,-8 Z"
+            fill="#1A1A20"
+            stroke="#F5F3ED"
+            stroke-width="4"
+          />
+          <path d="M84,6 V22 a6,6 0 0 0 6,6 H106" fill="none" stroke="#F5F3ED" stroke-width="4" />
+          <line x1="26" y1="64" x2="94" y2="64" stroke="#F5F3ED" stroke-width="4" stroke-linecap="round" />
+          <line x1="26" y1="86" x2="94" y2="86" stroke="#F5F3ED" stroke-width="4" stroke-linecap="round" />
+          <line x1="26" y1="108" x2="70" y2="108" stroke="#F5F3ED" stroke-width="4" stroke-linecap="round" />
+        </svg>
+      </div>
+    </div>
+    <div id="mech2-strike" class="mech2-strike clip" data-start="0" data-duration="3.1" data-track-index="2">
+      <div id="mech2-strike-inner">
+        <svg viewBox="0 0 300 388" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line
+            id="mech2-strike-line"
+            class="mech2-strike-line"
+            x1="20"
+            y1="20"
+            x2="280"
+            y2="368"
+            stroke="#ff5c5c"
+            stroke-width="10"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Scene 2 (3.1-11.44s): "It splits the book into a short core file
+         that's always loaded, and separate chapter files that only open when
+         your agent actually needs them." -->
+    <div
+      id="mech2-core-tile"
+      class="mech2-core-tile clip"
+      data-start="3.1"
+      data-duration="8.74"
+      data-track-index="3"
+    >
+      <svg class="mech2-core-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M11,5 L25,5 L31,11 L31,35 C31,36.5 29.8,37.5 28.3,37.5 L11.7,37.5 C10.2,37.5 9,36.5 9,35 L9,7.5 C9,6 10.2,5 11,5 Z"
+          stroke="#34D399"
+          stroke-width="2.5"
+          stroke-linejoin="round"
+        />
+        <path d="M25,5 L25,11 L31,11" stroke="#34D399" stroke-width="2.5" stroke-linejoin="round" />
+      </svg>
+      <div class="mech2-core-label">Core file</div>
+    </div>
+
+    <div id="mech2-ch-0" class="mech2-chapter clip" data-start="6.3" data-duration="5.54" data-track-index="4">
+      <svg class="mech2-chapter-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2.5" />
+        <line x1="13" y1="16" x2="27" y2="16" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="22" x2="27" y2="22" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="2" />
+      </svg>
+      <div class="mech2-chapter-idx">01</div>
+    </div>
+    <div id="mech2-ch-1" class="mech2-chapter clip" data-start="7.2" data-duration="4.64" data-track-index="5">
+      <svg class="mech2-chapter-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2.5" />
+        <line x1="13" y1="16" x2="27" y2="16" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="22" x2="27" y2="22" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="2" />
+      </svg>
+      <div class="mech2-chapter-idx">02</div>
+    </div>
+    <div id="mech2-ch-2" class="mech2-chapter clip" data-start="8.1" data-duration="3.74" data-track-index="6">
+      <svg class="mech2-chapter-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2.5" />
+        <line x1="13" y1="16" x2="27" y2="16" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="22" x2="27" y2="22" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="2" />
+      </svg>
+      <div class="mech2-chapter-idx">03</div>
+    </div>
+    <div id="mech2-ch-3" class="mech2-chapter clip" data-start="9.0" data-duration="2.84" data-track-index="7">
+      <svg class="mech2-chapter-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2.5" />
+        <line x1="13" y1="16" x2="27" y2="16" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="22" x2="27" y2="22" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="2" />
+      </svg>
+      <div class="mech2-chapter-idx">04</div>
+    </div>
+    <div id="mech2-ch-4" class="mech2-chapter clip" data-start="9.9" data-duration="1.94" data-track-index="8">
+      <svg class="mech2-chapter-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2.5" />
+        <line x1="13" y1="16" x2="27" y2="16" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="22" x2="27" y2="22" stroke="currentColor" stroke-width="2" />
+        <line x1="13" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="2" />
+      </svg>
+      <div class="mech2-chapter-idx">05</div>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    // ===== Scene 1 (0.0-3.1s) =====
+    // "It doesn't just shrink the whole thing into one file either." Animate
+    // the INNER wrappers, not the clip elements themselves -- the framework
+    // already manages clip visibility, and a fade ending exactly at the clip
+    // boundary needs a matching hard kill so a non-linear seek can't land on
+    // stale opacity.
+    tl.fromTo(
+      "#mech2-onefile-inner",
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" },
+      0.0
+    );
+    // Red negation strike draws on right as "either." lands (2.34s).
+    tl.fromTo(
+      "#mech2-strike-inner",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.05 },
+      2.34
+    );
+    tl.to("#mech2-strike-line", { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, 2.34);
+    // Both fade out fast into the cut to Scene 2.
+    tl.to("#mech2-onefile-inner", { opacity: 0, scale: 0.85, duration: 0.35, ease: "power2.in" }, 2.75);
+    tl.to("#mech2-strike-inner", { opacity: 0, duration: 0.35, ease: "power2.in" }, 2.75);
+    // Hard kill exactly at the clip's own start boundary (3.10s) so a
+    // non-linear seek never lands between "faded to 0" and "clip unmounted"
+    // with stale visibility state.
+    tl.set("#mech2-onefile-inner", { opacity: 0 }, 3.1);
+    tl.set("#mech2-strike-inner", { opacity: 0 }, 3.1);
+
+    // ===== Scene 2 (3.1-11.44s) =====
+    // "It splits the book into a short core file that's always loaded, and
+    // separate chapter files that only open when your agent actually needs
+    // them." Core file settles right after the negation strike clears (3.3s)
+    // -- moved up from a literal "core file" word-sync (4.7s) after a
+    // snapshot review showed a ~1.6s dead-air gap between Scene 1 clearing
+    // and this reveal; settling early and holding/breathing into the actual
+    // words reads better than an empty near-black hold.
+    tl.fromTo(
+      "#mech2-core-tile",
+      { opacity: 0, y: 16, scale: 0.85 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.3)" },
+      3.3
+    );
+    // Gentle idle breathe so the hold across Scene 2 isn't a frozen frame.
+    tl.to("#mech2-core-tile", { scale: 1.03, duration: 0.7, ease: "sine.inOut" }, 5.6);
+    tl.to("#mech2-core-tile", { scale: 1, duration: 0.7, ease: "sine.inOut" }, 6.3);
+    tl.to("#mech2-core-tile", { scale: 1.03, duration: 0.7, ease: "sine.inOut" }, 9.5);
+    tl.to("#mech2-core-tile", { scale: 1, duration: 0.7, ease: "sine.inOut" }, 10.2);
+
+    // Chapter tiles stagger-assemble starting right after "loaded," (6.22s)
+    // through "needs them." (10.34-11.06s), each lighting green on-demand
+    // then dimming back to a neutral outline -- never all lit at once.
+    const chapterStarts = [6.3, 7.2, 8.1, 9.0, 9.9];
+    chapterStarts.forEach((t, i) => {
+      const sel = "#mech2-ch-" + i;
+      tl.fromTo(
+        sel,
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.5)" },
+        t
+      );
+      tl.to(
+        sel,
+        {
+          borderColor: "#34d399",
+          backgroundColor: "rgba(52,211,153,0.14)",
+          color: "#34d399",
+          duration: 0.22,
+          ease: "power2.out",
+        },
+        t + 0.24
+      );
+      tl.to(
+        sel,
+        {
+          borderColor: "rgba(245,243,237,0.16)",
+          backgroundColor: "#1a1a20",
+          color: "#9a9aa2",
+          duration: 0.3,
+          ease: "power1.inOut",
+        },
+        t + 0.46
+      );
+    });
+
+    window.__timelines["02-mechanism"] = tl;
+  </script>
+</template>
