@@ -1,0 +1,212 @@
+[
+  {
+    "word": "It's",
+    "start_seconds": 0.14,
+    "end_seconds": 0.7,
+    "start_frame": 4,
+    "end_frame": 21
+  },
+  {
+    "word": "called",
+    "start_seconds": 0.723,
+    "end_seconds": 0.86,
+    "start_frame": 22,
+    "end_frame": 26
+  },
+  {
+    "word": "HyperFrames,",
+    "start_seconds": 0.927,
+    "end_seconds": 1.9,
+    "start_frame": 28,
+    "end_frame": 57
+  },
+  {
+    "word": "forty",
+    "start_seconds": 1.953,
+    "end_seconds": 2.22,
+    "start_frame": 59,
+    "end_frame": 67
+  },
+  {
+    "word": "thousand",
+    "start_seconds": 2.256,
+    "end_seconds": 2.54,
+    "start_frame": 68,
+    "end_frame": 76
+  },
+  {
+    "word": "stars",
+    "start_seconds": 2.62,
+    "end_seconds": 3.02,
+    "start_frame": 79,
+    "end_frame": 91
+  },
+  {
+    "word": "on",
+    "start_seconds": 3.073,
+    "end_seconds": 3.18,
+    "start_frame": 92,
+    "end_frame": 95
+  },
+  {
+    "word": "GitHub.",
+    "start_seconds": 3.237,
+    "end_seconds": 3.74,
+    "start_frame": 97,
+    "end_frame": 112
+  },
+  {
+    "word": "Fourteen",
+    "start_seconds": 3.916,
+    "end_seconds": 4.78,
+    "start_frame": 117,
+    "end_frame": 143
+  },
+  {
+    "word": "terminal",
+    "start_seconds": 4.824,
+    "end_seconds": 5.18,
+    "start_frame": 145,
+    "end_frame": 155
+  },
+  {
+    "word": "card",
+    "start_seconds": 5.244,
+    "end_seconds": 5.5,
+    "start_frame": 157,
+    "end_frame": 165
+  },
+  {
+    "word": "styles.",
+    "start_seconds": 5.569,
+    "end_seconds": 6.18,
+    "start_frame": 167,
+    "end_frame": 185
+  },
+  {
+    "word": "A",
+    "start_seconds": 6.28,
+    "end_seconds": 6.38,
+    "start_frame": 188,
+    "end_frame": 191
+  },
+  {
+    "word": "count-up",
+    "start_seconds": 6.433,
+    "end_seconds": 6.78,
+    "start_frame": 193,
+    "end_frame": 203
+  },
+  {
+    "word": "number,",
+    "start_seconds": 6.837,
+    "end_seconds": 7.42,
+    "start_frame": 205,
+    "end_frame": 223
+  },
+  {
+    "word": "already",
+    "start_seconds": 7.45,
+    "end_seconds": 7.66,
+    "start_frame": 223,
+    "end_frame": 230
+  },
+  {
+    "word": "built.",
+    "start_seconds": 7.713,
+    "end_seconds": 8.14,
+    "start_frame": 231,
+    "end_frame": 244
+  },
+  {
+    "word": "Even",
+    "start_seconds": 8.284,
+    "end_seconds": 8.86,
+    "start_frame": 249,
+    "end_frame": 266
+  },
+  {
+    "word": "the",
+    "start_seconds": 8.88,
+    "end_seconds": 8.94,
+    "start_frame": 266,
+    "end_frame": 268
+  },
+  {
+    "word": "scanning",
+    "start_seconds": 8.984,
+    "end_seconds": 9.34,
+    "start_frame": 270,
+    "end_frame": 280
+  },
+  {
+    "word": "light",
+    "start_seconds": 9.38,
+    "end_seconds": 9.58,
+    "start_frame": 281,
+    "end_frame": 287
+  },
+  {
+    "word": "effect",
+    "start_seconds": 9.637,
+    "end_seconds": 9.98,
+    "start_frame": 289,
+    "end_frame": 299
+  },
+  {
+    "word": "I",
+    "start_seconds": 10.1,
+    "end_seconds": 10.22,
+    "start_frame": 303,
+    "end_frame": 307
+  },
+  {
+    "word": "invented",
+    "start_seconds": 10.264,
+    "end_seconds": 10.62,
+    "start_frame": 308,
+    "end_frame": 319
+  },
+  {
+    "word": "by",
+    "start_seconds": 10.673,
+    "end_seconds": 10.78,
+    "start_frame": 320,
+    "end_frame": 323
+  },
+  {
+    "word": "hand",
+    "start_seconds": 10.844,
+    "end_seconds": 11.1,
+    "start_frame": 325,
+    "end_frame": 333
+  },
+  {
+    "word": "this",
+    "start_seconds": 11.148,
+    "end_seconds": 11.34,
+    "start_frame": 334,
+    "end_frame": 340
+  },
+  {
+    "word": "session,",
+    "start_seconds": 11.4,
+    "end_seconds": 12.14,
+    "start_frame": 342,
+    "end_frame": 364
+  },
+  {
+    "word": "already",
+    "start_seconds": 12.18,
+    "end_seconds": 12.46,
+    "start_frame": 365,
+    "end_frame": 374
+  },
+  {
+    "word": "there.",
+    "start_seconds": 12.5,
+    "end_seconds": 12.78,
+    "start_frame": 375,
+    "end_frame": 383
+  }
+]

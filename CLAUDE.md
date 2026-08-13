@@ -1,5 +1,19 @@
 # Video Production Engine
 
+**Production engine, 2026-08-13: HyperFrames.** The render engine is now **HyperFrames**
+(`hyperframes/`) — HTML compositions + GSAP timelines, rendered headlessly to MP4. It replaced
+the Remotion/React pipeline this file originally documented, after `hyperframes-had-the-
+components-i-hand-built` shipped a full episode at a comparable quality bar with a simpler
+toolchain and lower per-episode token cost. **`hyperframes/CLAUDE.md` is now the canonical
+production-engine doc** — standing visual defaults, orchestration/token-cost discipline, the
+render/check/snapshot workflow all live there, not here. `remotion/` and its Remotion-only
+`automation/` scripts were moved to an external trash folder (not deleted outright, same
+never-hard-delete practice already used for content below) — nothing in this project still
+depends on them. See the retirement note at the end of §7 for the full "why" and what changed.
+Sections §§2-5 below are kept as a **frozen historical record** of the old engine (useful if
+old episode source is ever revisited), not current instructions — skip straight to
+`hyperframes/CLAUDE.md` for anything production-related.
+
 **Current strategic system, 2026-08-10, revised 2026-08-12**: content strategy for this channel
 (still the same `@thataipm` handle) is governed by **That AI PM: Content System Operating Spec
 v2.0** (`docs/thataipm_content_system_operating_spec_v2.md`), approved 2026-08-10. Its core
@@ -16,25 +30,29 @@ scripts, episodes, content plan, channel identity, and visual theme) was moved t
 `archive_thataipm/` for historical reference — **removed from this project entirely 2026-08-10**
 (backed up to Google Drive's `Content Engine/archive_thataipm/`, not deleted outright) once
 production fully converged on the new system below; it was never a starting point for new work
-even while it was still present locally. What survived the reset is the underlying render
-engine: the technical machinery for turning a script + VO into a rendered vertical video,
-independent of any particular topic or look.
+even while it was still present locally.
 
 The new project is a **faceless** Instagram page (no on-camera avatar). Its niche, content
 pillars, visual direction, and a 30-episode content plan are all decided now (below and
 `docs/how_ai_works_content_plan.md`) — don't assume any of it from the archive, that's the old
-channel's now-retired identity.
+channel's now-retired identity. **Note**: the content-plan pillars named in §1 below were
+themselves superseded twice since (§6's pillar pivot, then §7's v2.0 migration) — the spec doc
+is the actual current source of truth, §1 is kept for history same as everything else pre-dating
+v2.0.
 
 **Sibling project, unrelated brand**: `../ViralRespin/` (started 2026-08-08) sources real viral
-long-form videos and rebuilds original short-form Reels from them — different tooling
-(video-use + HyperFrames, not this Remotion engine), different visual style, no shared identity
-with this channel. See its own `CLAUDE.md` for full context; don't pull its conventions in here
-or vice versa.
+long-form videos and rebuilds original short-form Reels from them — different visual style, no
+shared identity with this channel, but now the **same core tooling** (video-use + HyperFrames)
+since this project retired Remotion. See its own `CLAUDE.md` for full context; don't pull its
+conventions in here or vice versa — a shared engine doesn't mean shared brand/content decisions.
 
-## 1. Channel brief: "How AI Actually Works"
+## 1. Channel brief: "How AI Actually Works" (historical — pillars retired, craft rules still live)
 
-Delivered by the user 2026-08-06 (`channel-brief-how-ai-works.md`), locked in as the project's
-niche and pillars going forward.
+Delivered by the user 2026-08-06 (`channel-brief-how-ai-works.md`). **The niche/pillars below
+are retired** (superseded by §6's pillar pivot, then fully by §7's v2.0 spec) — kept for
+history, not current targeting. **The Visual Retention Rule and Schema Vocabulary sections
+below them are NOT retired** — they're engine-agnostic craft principles that still govern every
+shot design under HyperFrames, same as they did under Remotion.
 
 - **Identity**: faceless explainer channel demystifying how AI actually works under the hood —
   tokens, attention, embeddings, diffusion/image generation, fine-tuning, agents, context
@@ -93,337 +111,96 @@ on afterward to stop it from freezing, rather than a visual that's inherently a 
 device by construction (partly inspired by evaluating `famous-reel-editor`'s own schema
 catalog — its talking-head editing pipeline doesn't apply here, faceless with no raw footage,
 but its practice of maintaining a growing list of literal chart/graphic TYPES to pick from,
-instead of defaulting to the same few, is worth copying). **Before building a new stat/data
-beat, check this list first** — it should grow every time a genuinely new device gets built,
-the same way this rule's own "errors not to repeat" pattern already works elsewhere in this
-file:
+instead of defaulting to the same few, is worth copying). **The principle still applies under
+HyperFrames — before building a new stat/data beat, check what's already built first, and grow
+the list every time a genuinely new device gets built.**
 
-- `components/TrendChart.tsx` — a single line that draws itself (SVG `strokeDasharray`), up or
-  down, with a glowing marker riding the tip. For "this metric moved."
-- `components/PipelineFlow.tsx` — nodes building themselves in sequence, connected by growing
-  stems; supports `slotsVisibleFrom` for a dim pre-reveal state so a long VO preamble before
-  the first node's word doesn't leave the content zone empty. For a process/lifecycle/pipeline.
-- `components/BarChart.tsx` — labeled columns growing from a shared baseline, real values only.
-  For comparing several discrete numbers side by side (distinct from `DisparityBar`, which is
-  one horizontal fill framed as "this much of a whole").
-- `components/CountUp.tsx` — a number rolling up to its real target instead of just popping in.
-  For a single big stat that deserves more weight than a static pop.
-- `components/DisparityBar.tsx` — a labeled horizontal fill bar. For "X% vs Y%" gap framing.
-- `components/ComparisonCard.tsx` — two labeled values side by side. For a direct A-vs-B stat
-  pair when neither a bar nor a line fits better.
-- `components/TerminalCard.tsx` — a typed command sequence with a blinking cursor (real motion
-  for the whole hold, not just the typing). For install commands, code, CLI output.
-- `components/RepoScreenshot.tsx` / `ProductScreenshot.tsx` — a real captured screenshot with a
-  camera-push zoom into one real detail, plus a continuous scan-sweep during any hold (see rule
-  1 above). For citing real evidence — never fabricate what this shows.
-- `components/CommentCTA.tsx` — the closing comment-keyword card with twinkling stars.
+**The list below is the frozen Remotion-era catalog** (component names like `TrendChart.tsx`
+no longer exist in this project — `remotion/` was retired, see the top of this file) — kept as
+a reference for the DEVICE TYPES themselves (trend line, pipeline build, bar comparison,
+count-up, disparity bar, comparison pair, terminal/CLI, real screenshot), not as literal code
+to reuse. HyperFrames' own equivalent catalog lives in `hyperframes/frame.md` and grows the
+same way — check there first, and add a new entry every time a genuinely new device gets built
+for this project (only 3 exist there so far: an icon-card literal-visualization, a count-up
+stat, and a 16-tile schema-device grid, from the first HyperFrames episode).
 
-Still generic/underused (not yet built as shared components — build one the next time a shot
+- `TrendChart` — a single line that draws itself (SVG `strokeDasharray`), up or down, with a
+  glowing marker riding the tip. For "this metric moved."
+- `PipelineFlow` — nodes building themselves in sequence, connected by growing stems, optional
+  dim pre-reveal state so a long VO preamble doesn't leave the content zone empty. For a
+  process/lifecycle/pipeline (but check the shape is actually linear — see §5's shot-list rule
+  below on why a loop/cycle needs a different device, not this one just because it's built).
+- `BarChart` — labeled columns growing from a shared baseline, real values only. For comparing
+  several discrete numbers side by side (distinct from a disparity bar, which is one horizontal
+  fill framed as "this much of a whole").
+- `CountUp` — a number rolling up to its real target instead of just popping in. For a single
+  big stat that deserves more weight than a static pop.
+- `DisparityBar` — a labeled horizontal fill bar. For "X% vs Y%" gap framing.
+- `ComparisonCard` — two labeled values side by side. For a direct A-vs-B stat pair when
+  neither a bar nor a line fits better.
+- `TerminalCard` — a typed command sequence with a blinking cursor (real motion for the whole
+  hold, not just the typing). For install commands, code, CLI output.
+- `RepoScreenshot` / `ProductScreenshot` — a real captured screenshot with a camera-push zoom
+  into one real detail, plus a continuous scan-sweep during any hold (see rule 1 above). For
+  citing real evidence — never fabricate what this shows.
+- `CommentCTA` — the closing comment-keyword card with twinkling stars.
+
+Still generic/underused (never built, Remotion or HyperFrames — build one the next time a shot
 actually needs it, don't pre-build speculatively): gauge/donut (percent-of-total as a filling
 ring), staggered-reveal table (feature/tool comparison rows), timeline (chronological
 before/after). Real data only, same as everything else on this list — a chart TYPE is just a
 container, it doesn't excuse inventing the numbers inside it.
 
-## 2. What's here
+## 2-5. Retired production engine (Remotion) — frozen historical record
 
-- `remotion/` — the Remotion (React/TypeScript) render engine. Node 18+, npm, ffmpeg required
-  (all already set up on this machine). Free under Remotion's individual/≤3-employee license
-  (re-check if that changes).
-- `automation/` — VO generation and word-timing tooling, ElevenLabs-backed:
-  - `generate_vo.py [--timestamps]` — text-to-speech via the ElevenLabs REST API (`eleven_v3`),
-    `--timestamps` also fetches character-level alignment. **VO delivery pace, 2026-08-10**:
-    sd1's VO read as slow on direct feedback. The obvious fix — `voice_settings.speed` — does
-    **not work here**: that parameter only applies to non-v3 models (range 0.25-4.0 via the raw
-    API, 0.7-1.2 on the Agents Platform), and **v3 explicitly does not support it**. v3 also
-    doesn't support SSML break tags. The actual v3 mechanism is **inline audio tags in the
-    script text itself** — `[rushed]`, `[rapid-fire]`, `[deliberate]`, `[slows down]`, etc. —
-    written directly into the text sent to the API, the same as any other v3 expression tag.
-    For a faster-reading VO, open the script (or a slow section of it) with a tag like
-    `[rushed]` rather than trying to fix this via an API parameter.
-  - `derive_word_timing.py` — for a **brand-new** episode: splits a script into shots (blank-line
-    separated), cuts precise per-shot audio from a continuous VO take using the real alignment
-    data, writes per-shot word timing.
-  - `align_shot_audio.py` — for **already-cut** shot audio: forced-alignment against its own
-    known line (needs the `forced_alignment` scope on the API key).
-  - `generate_sfx.py` — sound effect generation.
-  - `capture_product_screenshot.py` — Playwright (headless Chromium) capture of a product's
-    public page (a showcase/gallery/pricing page — never a login-gated dashboard, no credential
-    handling) plus an optional zoomed crop of one real detail. Generalizes the Claude Code
-    skills episode's GitHub-specific
-    `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/capture_screenshot.py`
-    for Tool Showdowns, where the subject is any product's own site, not a github.com repo page.
-    Two-tier sourcing approach (the source doc this came from, `docs/thataipm_pillar2_content_plan.md`,
-    was deleted 2026-08-10 with the rest of the retired pillar-2 strategy — see §7 — but the
-    practice itself still applies to any product-screenshot sourcing going forward): **Tier
-    A — public showcase pages (automatable, preferred)**, most tools have a public gallery/
-    showcase/examples/pricing page with real, attributable content and no login required, capture
-    via this script. **Tier B — hands-on product use (stays manual)**: if the compelling shot is
-    genuinely "watching a prompt generate inside the tool," that's behind a login and stays a
-    manual capture, no credential handling or scripted login of any kind.
-  - **`.env` holds `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`.** The voice ID is still the
-    old channel's clone — replace it with the new one before generating any real VO.
-    `HEYGEN_API_KEY` is also present but unused (this project is faceless); harmless to leave.
+**§§2-5 were the Remotion/React engine's full documentation (~300 lines: `automation/` script
+reference, `remotion/src/` component reference, durable technical pitfalls, the VO-first
+production workflow). Collapsed to this note 2026-08-13 when the engine was retired** — the
+detail itself is still real and correct for anyone who ever needs to touch old Remotion source
+again, but it no longer describes how this project makes videos. Full original text lives in
+git history (this commit's parent) if it's ever needed; `remotion/` itself lives in an external
+trash folder, not deleted.
 
-## 3. What survived in `remotion/src/` (the bare engine)
+**What actually carries forward, now living under `hyperframes/CLAUDE.md` instead**:
 
-- `theme.ts` — **technical constants only**: canvas `W`/`H`/`FPS`, and the Instagram Reels UI
-  safe-zone constants (`SAFE_X0`/`SAFE_X1`/`SAFE_Y0`/`SAFE_Y1`/`SAFE_W` — IG's own overlay
-  buttons cover roughly the right 120-150px and bottom 300-320px of the canvas; keep
-  load-bearing content inside these bounds). No colors, no fonts — that's the new theme,
-  decide it explicitly with the user before writing it into this file.
-- `motion.ts` — `springIn(frame, fps, delay)` (standard entrance spring) and
-  `edgeFadeVolume(frame, durationInFrames, fadeFrames)` (per-shot audio volume envelope, see
-  the crossfade pitfall below).
-- `Episode.tsx` — the episode-level orchestrator. Takes `shots: ShotDef[]` and sequences them
-  via `@remotion/transitions`' `<TransitionSeries>` (crossfade between shots,
-  `DEFAULT_TRANSITION_FRAMES = 5`). Exports `totalEpisodeFrames(shots, transitionFrames?)` —
-  **any `calculateMetadata` must use this, not a plain sum of shot durations**, since
-  transitions make shots overlap and a plain sum renders blank at the tail. Draws `Watermark`/
-  `ProgressBar` ONCE at the episode level, outside `<TransitionSeries>` — a shot-local
-  `useCurrentFrame()` resets to 0 every shot, so a progress bar drawn inside a shot has no way
-  to know its true position in the episode; drawn here it sees the real global frame for free.
-  Takes `watermarkHandle`/`watermarkColor`/`accentColor` as required props — no defaults, no
-  channel identity baked in, the caller decides.
-- `components/Chrome.tsx` — `Watermark` (`handle`/`color`/`opacity` props) and `ProgressBar`
-  (`color`/`track` props), both fully generic now.
-- `components/ContentZone.tsx` — vertically centers a shot's main content between a `top`/
-  `bottom` bound (defaults 260/560) instead of anchoring at a fixed `top`, fixing the dead-space
-  layout issue (see §6's 2026-08-10 entry). Use this for every shot's main content area going
-  forward, not a raw absolutely-positioned div.
-- `components/Sfx.tsx` — one-shot sound cue (`type: "tick" | "whoosh" | "chime"`, `at: <shot-local
-  frame>`) wrapping `<Sequence>` + `<Audio>` for the channel's "sound-synced beats" rule. `tick`
-  = small UI pop, `whoosh` = sustained camera-push motion, `chime` = payoff/reveal beat. Volume
-  kept to 40-50% per direct instruction — an accent under the VO, not a backing track. Reuses
-  `public/sfx/{tick,whoosh,chime}_raw.mp3`.
-- `components/ProductScreenshot.tsx` — real browser-chrome-framed product screenshot with a
-  pan/zoom "camera push" into one real detail (`highlightBox`), added 2026-08-10 for Tool
-  Showdowns. Generalizes `RepoScreenshot` (which assumes a github.com repo page + stars badge)
-  for any product's public page — same visual technique, no GitHub-specific assumptions. Pair
-  with `automation/capture_product_screenshot.py` for the actual capture. **Zoom-window note
-  added 2026-08-10, still good practice but NOT the cause of the "pacing is slow" feedback
-  (corrected same day — that was about VO delivery speed, see §2's `generate_vo.py` entry)**:
-  don't span `zoomStart`→`zoomEnd` across the whole pre-payoff hold regardless — sd1 used e.g.
-  `zoomStart=30, zoomEnd=322` on a beat that didn't land until frame 330, a ~9.7s continuous
-  drift that's slower than it needs to be even though it's technically always in motion. Keep
-  the zoom window short (roughly 60-90 frames / 2-3s) and position it to land right before the
-  payoff beat, so the screenshot holds briefly at its settled pop-in scale first, then the
-  push-in itself is a quick, punchy motion rather than a slow continuous drift.
-- `three/SceneRig.tsx` — per-shot `<ThreeCanvas>` wrapper for any React Three Fiber content:
-  orthographic camera sized so 1 world unit = 1 screen pixel, shared neutral key/fill lighting,
-  a local deterministic environment map, bloom post-processing. Wrap any 3D shot content in
-  this; it's the reusable rig, not tied to any particular object design. Takes optional `zoom`
-  (real camera zoom for a continuous push-in — see this section's pitfall on why this must be a
-  camera prop, never a CSS transform on a wrapper div), `vignette`, and `chromaticAberration`
-  (both passed through to `BloomRig`, off by default).
-- `three/BloomRig.tsx` — the bloom post-processing pass used by `SceneRig`, now also owns
-  optional `vignette`/`chromaticAberration` passes (one shared `<EffectComposer>`, see this
-  file's own comment on why a second `<EffectComposer>` doesn't layer correctly). Getting bloom
-  to actually read as a glow, not a flat shape, needs real HDR-bright material values — see this
-  section's pitfall below before reaching for it again.
-- `package.json` also has `@remotion/noise` and `@remotion/shapes` installed (official, free
-  Remotion packages) but not yet used by anything — pulled in 2026-08-06 for organic
-  noise-driven motion and clean procedural vector shapes respectively, available whenever a shot
-  needs them.
-- **Perspective-camera 3D is possible and works, but needs its own `<ThreeCanvas>`, not
-  `SceneRig`.** `SceneRig` is deliberately orthographic (1 world unit = 1 screen pixel, for flat
-  2D-style diagram placement via `pxToWorld`) — genuine depth/parallax content (a moving camera,
-  a particle field with real perspective falloff) needs a real `fov`-based camera instead, which
-  means standing up a `<ThreeCanvas>` directly rather than reusing `SceneRig`. `BloomRig`/
-  `EnvironmentSetter` are still reusable as-is in that setup (neither cares which camera type is
-  active). Animate the camera every frame via a `<PerspectiveCamera makeDefault position={...}
-  rotation={...} />` (drei) with frame-computed prop values, the same "just compute it from
-  `useCurrentFrame()`" pattern used everywhere else in this codebase, not imperative `useFrame`
-  mutation. First real example: `HookPreview_Vortex.tsx`'s particle-tunnel hook concept
-  (2026-08-06).
-- **Raw `<points>` with a manually-built `Float32Array` is the right tool for a large animated
-  particle field** (hundreds of points, one draw call, arbitrary per-particle HDR color) — build
-  positions once in `useMemo` (deterministic, no `Math.random()` per render), then derive a
-  second frame-animated array each render for motion (e.g. a looping "flow" offset with modulo
-  wraparound) and feed both into `<bufferAttribute>`. This TypeScript/R3F version requires the
-  array on `<bufferAttribute args={[array, itemSize]} count={n} />` — passing `array`/`itemSize`
-  as separate props compiles fine at the JS level but fails `tsc --noEmit`.
-- `three/environment.tsx` — `EnvironmentSetter`, a local `RoomEnvironment`-based env map
-  (deliberately NOT drei's `<Environment preset>`, which fetches an HDR from a remote CDN at
-  render time — a determinism risk for headless frame-by-frame export).
-- `three/coords.ts` — `pxToWorld(x, y, w, h, z?)`, converts top-left pixel coordinates (the
-  same numbers used for CSS/DOM layout) into `SceneRig`'s 3D world space, so 3D content can be
-  placed with the same numbers as 2D content.
-- `public/sfx/` — three raw stock sound effects (chime/tick/whoosh). `public/test/
-  placeholder_avatar.mp4` — a generic test clip, not tied to any content.
+- The render/check/render loop → `npx hyperframes check` (lint + runtime + layout + motion +
+  contrast, one command, replaces the old checkpoint-stills-plus-`check_static_frames.py`
+  two-step) → `npx hyperframes snapshot` (visual review) → `npx hyperframes render`.
+- VO/SFX generation → the `media-use` skill's shared audio engine, replaces the raw
+  `generate_vo.py`/`generate_sfx.py`/`derive_word_timing.py`/`align_shot_audio.py` scripts.
+- Real screenshot capture → HyperFrames' own capture tooling (see the `hyperframes` skill's
+  routing), replaces `capture_product_screenshot.py`.
+- The shot-list discipline (`Concept → Real shape → Device → Why it matches`, the same rule
+  §5 used to state) is engine-agnostic and still applies — see §1's Visual Retention Rule and
+  Schema Vocabulary above, now HyperFrames' problem to embody, not Remotion's.
+- Cover image + platform captions as standing deliverables (§5, steps 6-7 in the old numbering)
+  are unchanged in SPIRIT — still a required still image + genuinely distinct per-platform copy
+  — just produced via a HyperFrames still-frame render instead of `npx remotion still`. See
+  `hyperframes/CLAUDE.md` for the current exact steps.
+- ffmpeg/audio pitfalls that are facts about ffmpeg itself, not Remotion (the `-ss` before `-i`
+  ordering, the `volumedetect` sanity check) still apply verbatim to any ffmpeg step HyperFrames'
+  own render pipeline runs — HyperFrames handles this internally, but if you're ever debugging
+  an audio issue by hand, the old §4 pitfall entry (now only in git history) has the details.
+- The `.env` `ELEVENLABS_API_KEY`/`ELEVENLABS_VOICE_ID`/`HEYGEN_API_KEY` credentials are
+  unaffected by the engine change — HyperFrames' `media-use` skill reads the same `.env`.
 
-Nothing else is registered yet: `Composition.tsx` is empty on purpose (no compositions), ready
-for the first real shot once there's a script and a theme.
+**What did NOT carry forward** (Remotion/React-Three-Fiber-specific, no HyperFrames
+equivalent needed): `<TransitionSeries>` audio-crossfade handling, `@remotion/media`'s
+`<Video>` quirks, the whole `three/SceneRig.tsx`/`BloomRig.tsx` 3D bloom pipeline and its HDR-
+material/shape-matching pitfalls, `<Html transform>` not surviving headless export, the
+`tsconfig.json`/`remotion.config.ts` 3D-rendering setup requirements. HyperFrames' HTML/CSS/SVG/
+GSAP composition model doesn't have these problems in the first place — 3D content, if a shot
+ever needs it, goes through `hyperframes-keyframes`'s own Three.js adapter with its own (still
+unwritten, since not yet needed) pitfall list.
 
-## 4. Durable technical pitfalls (still apply, independent of theme/topic)
+## 6. Decided 2026-08-06: visual direction, voice, content plan (Remotion-era history)
 
-These were learned the hard way on the old project but are facts about Remotion/React Three
-Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identically here:
-
-- **`<TransitionSeries>` only crossfades the PICTURE, never the audio.** During a
-  `<TransitionSeries.Transition>` overlap, both neighboring shots' `<Audio>`/`<Video>` keep
-  playing at full volume, so two lines of dialogue can play simultaneously at a cut. Fix: every
-  shot with its own audio track passes `volume={edgeFadeVolume(frame, durationInFrames,
-  DEFAULT_TRANSITION_FRAMES)}` on its `<Audio>`/`<Video>` element (needs `durationInFrames`
-  threaded in as a prop). Retuning `DEFAULT_TRANSITION_FRAMES` alone does not fix this, it was
-  tried and wasn't sufficient — the volume envelope is the actual fix.
-- **Use `<Video>` from `@remotion/media`, not `<OffthreadVideo>`.** The latter can fail with
-  "No frame found at position N" on a real render (a known frame-cache issue); Remotion's own
-  current guidance is `@remotion/media`'s `<Video>` for new projects.
-- **Never wrap `<SceneRig>`/`<ThreeCanvas>` in a parent `<div>` with a CSS `transform`** (found
-  2026-08-06 chasing a fully-blank 3D layer). Wrapping it in something like `<div style={{
-  transform: "scale(1.04)" }}><SceneRig>...</SceneRig></div>` for a cheap "camera zoom" effect
-  looks completely correct in Remotion Studio's live preview, but silently renders the WebGL
-  canvas as fully blank (not clipped, not misplaced — just empty) in a real headless `render`/
-  `still`. Confirmed by isolating it: identical scene content rendered fine with no transformed
-  ancestor, and went blank the instant one was added, independent of any other prop (bloom,
-  vignette, sibling DOM overlays — none of those were the actual cause despite looking
-  suspicious first). **For any zoom/scale effect on 3D content, animate the actual camera**
-  (`SceneRig` takes a `zoom` prop for exactly this) instead of scaling a wrapper element. CSS
-  `transform` on a plain DOM layer (no canvas involved) is unaffected and safe.
-- **Getting real bloom requires genuinely HDR-bright material values, not a normal hex color.**
-  A `meshBasicMaterial`/`meshStandardMaterial` using an ordinary color like `#4FA8FF` sits right
-  at or barely above typical `luminanceThreshold` settings (~0.35), so `<Bloom>` only produces a
-  faint, easy-to-miss effect — it can look like bloom "isn't working" when it's actually just
-  underfed. Use `meshStandardMaterial` with a near-black base `color`, a bright `emissive`, and
-  `emissiveIntensity` pushed well past 1 (2-4 range reads as a genuine glowing light source, not
-  a flat colored shape); keep `toneMapped={false}` so the value isn't clamped back down before
-  bloom's extraction pass sees it. Tune the geometry small — bloom's own blur radius does the
-  soft spreading, so a large bright sphere reads as "a big flat ball," not "a glow," a common
-  overcorrection once bloom starts working (self-caught same session: an initial sphere `scale`
-  of 210 with `emissiveIntensity` up to 2 produced an opaque disc covering the frame, not a
-  halo — dropping scale to ~15-30 and intensity to ~0.2-1.8 depending on role read correctly).
-- **Match the SHAPE of a bloom light source to the shape of the DOM content it's meant to
-  backlight — a point-source orb behind wide text just looks like a ball sitting on the
-  letters, not a glow.** Found rebuilding cm1 on the real 3D bloom pipeline (2026-08-07): a
-  `GlowOrb3D` (sphere) centered behind a full word ("strawberry"), a multi-digit number
-  ($0.00038), and a pill-shaped button all rendered as a distracting hard-edged circle
-  overlapping or poking out from the content, not ambient backlight — because a sphere is a
-  POINT light and DOM text/buttons are WIDE, so there's no position that reads as "glowing
-  from behind" rather than "a ball in front of/beside this." The fix in each case was either
-  (a) use a bloom-lit **beam** (`GlowBeam3D`, a thin box) instead of an orb when the shape is
-  naturally line-like (a vertical slice through text, a scan light), which worked well and
-  matched the reference video's own light shapes, or (b) drop the 3D layer entirely and use a
-  plain CSS `text-shadow`/`box-shadow` glow, which is what actually looked right for compact
-  text (numbers) and shaped buttons. **Orbs only worked where the target was itself round**
-  (a glow inside a circular eye icon). Don't reach for a 3D glow orb as a default "make it
-  glow more" move — check the target's actual shape first.
-- **`@remotion/media`'s `<Video>` reads `objectFit` as a direct PROP, not `style.objectFit`**
-  (the latter is silently ignored), and has no `objectPosition` prop at all. For any crop other
-  than plain centered cover/contain, render the video at its own native pixel size inside an
-  `overflow: hidden` wrapper sized to the visible window, and shift it with `top`/`left` rather
-  than fighting the built-in fit modes.
-- **Drei's `<Html transform>` does not survive Remotion's headless export** — works fine in
-  Studio preview, renders as a completely empty element on a real `npx remotion render`/`still`.
-  For text or icons on a 3D face, rasterize onto an offscreen 2D `<canvas>` synchronously
-  (`ctx.font`/`fillText`, `Path2D` for icon shapes), wrap in a `THREE.CanvasTexture` with
-  `colorSpace = SRGBColorSpace`, apply via `meshBasicMaterial map={...} toneMapped={false}`.
-- **`remotion/tsconfig.json` needs `"dom"`/`"dom.iterable"` in `lib`** — three.js/R3F/drei types
-  reference `HTMLCanvasElement`/`WebGLRenderingContext` directly, `tsc --noEmit` fails without
-  it. **`remotion.config.ts` needs `Config.setChromiumOpenGlRenderer("angle")`** for any 3D
-  content — Remotion's own docs: "Three.JS does not render with the default OpenGL renderer."
-  Both are already set in this repo; don't remove them if this file is ever regenerated.
-- **ffmpeg: `-ss` must be an INPUT option (before `-i`), never an output option (after `-i`,
-  paired with `-to`), whenever the command also applies an `-af`/`-vf` filter.** With output
-  seeking, a filter like `afade`'s `st=` (start time) reads the segment's timestamps as still
-  absolute, not reset to zero by the seek — so a fade scheduled for "near the end of this short
-  clip" can fire and finish before the seeked content ever arrives, silencing the whole
-  segment. This is silent failure, not an error: the command exits 0 and the file has the right
-  duration, just no audible content. **Any ffmpeg cut+filter one-liner needs `-ss` before `-i`
-  and `-t` (duration) instead of `-to` (absolute end time).** Sanity-check any audio deliverable
-  with `ffmpeg -af volumedetect -f null -` (mean_volume in the normal ~-20dB speech range, not
-  the ~-90dB silence floor) before calling it done — a successful exit code alone doesn't prove
-  the audio is actually there.
-- **ElevenLabs has real forced alignment — use it instead of hand-estimating word timing.**
-  `generate_vo.py --timestamps` (brand-new VO) or `align_shot_audio.py` (already-cut audio)
-  both give exact word-level start/end frames; don't fall back to "word position in sentence /
-  speaking pace" guessing, it was measurably wrong by 10+ frames on real footage. Forced
-  alignment needs the `forced_alignment` scope enabled on the API key (a 401 with
-  `missing_permissions` means it isn't).
-- **A base64-embedded raster image inside 3D/SVG content costs far more per frame than vector
-  content** — if a shot ever embeds a real image (logo, photo) into a texture or SVG, expect a
-  real per-frame cost hit and chunk render calls smaller accordingly, or decode the image once
-  and reuse the decoded surface instead of re-embedding a fresh string per frame.
-- **Full-canvas post-processing (blur, bloom, vignette) is expensive; targeted/small-region
-  effects are not.** Prefer scoping an effect to the area that needs it.
-- **HTML entities like `&times;`/`&middot;` only decode when written directly as JSX children**
-  (e.g. `<div>47 &times; 68</div>` correctly renders "×"). Passed as a plain JS string into a
-  component prop (e.g. `<MathField expression="47 &times; 68" />`), they render as the literal
-  text `&times;`, not the symbol — a JS string has no HTML-entity decoding step. Found building
-  tn1 (2026-08-07): `MathField`/`ReasoningStep` props showed literal entity text until fixed by
-  using the actual Unicode characters (×, ·) directly in every prop string instead.
-
-## 5. Standing production workflow (VO-first, still applies)
-
-1. Script + shot list first, saved as its own file. Get it approved before touching render code.
-   **Each shot in that list, added 2026-08-11 after direct feedback on pm-skills's Shot2/Shot3
-   ("use relevant motion graphics... not simple UI buttons/icons"), needs one explicit line
-   before any component gets picked**: `Concept → Real shape (what this literally looks like in
-   the physical world) → Device (component to use) → Why it matches (how the device's STRUCTURE,
-   not just its topic, embodies that real shape)`. This can't be a mechanical PASS/FAIL check the
-   way `check_static_frames.py` catches frozen frames — it's editorial judgment — so the shot
-   list document is the forcing function instead: if the "why it matches" column can't be
-   honestly filled in, that's the signal to design a new device rather than reach for the
-   nearest thing already built. This is exactly where pm-skills broke: a product lifecycle's
-   real shape is a loop (it ends back where it started), but `PipelineFlow` was picked because it
-   was already built and animated, not because a straight left-to-right build matches a cycle.
-   Same failure on "Foundation/Utility/Sprint Toolkit" (generic pill chips for what's actually a
-   grouping/container of skills) and the subagent card (a decorative shield-checkmark badge for
-   what's actually a delegate-and-report-back device). **The schema vocabulary list in §1 is a
-   menu to check against defaulting to a static stat card — it is not itself proof of fit.**
-   Picking the closest topical entry from that list without checking structural match is the
-   same shortcut that produced all three misses above; verify the shape, not just the topic,
-   even when reaching for an already-built component.
-2. Generate VO via `automation/generate_vo.py --timestamps` (once the new voice ID is in `.env`).
-3. Cut per-shot audio + derive word timing via `automation/derive_word_timing.py`.
-4. Build shots against real word-level `born` frames from the start, not estimates.
-5. Render, verify via checkpoint stills before committing to a full render, especially for any
-   new crop/positioning logic — sample a real extracted frame's pixels before trusting a guess.
-5b. **Run `py automation/check_static_frames.py episodes/{id}/build/{id}.mp4` on every full
-   render before showing it to the user — this is a hard gate, not optional, added 2026-08-11
-   after "Never Let a Frame Sit" got violated twice on the same episode despite the rule being
-   written down and checkpoint stills having been reviewed.** Eyeballing checkpoint stills
-   catches gross errors (wrong content, broken layout) but has repeatedly missed real
-   static-frame violations — a shot "has motion in it" reads as fine even when a multi-second
-   chunk of it doesn't, and code that animates something can still be too subtle to register
-   (confirmed: a `breathe()` amplitude of 0.02 was mathematically live but read as frozen). The
-   script uses ffmpeg's `freezedetect`, cropped to the content+caption zone (excluding the
-   deliberately-static background/watermark/progress bar, which otherwise dilutes real motion
-   into a "looks frozen" false positive) — see the script's own docstring for the exact
-   calibration and why it's tuned the way it is, including a real case where the crop itself
-   was wrong and produced a confident false failure. On a FAIL, fix the flagged window (usually
-   `breathe()` at a bigger amplitude, or a literal device like a blinking cursor / pre-reveal
-   placeholder state) and re-render before proceeding — don't ship a render this check hasn't
-   passed.
-6. **Cover image**, locked in as a standing deliverable 2026-08-09: a `covers/Cover{id}.tsx`
-   still (frame 60, no timeline/audio), reusing the episode's own real visual assets (a real
-   set-piece from the episode, not a separate template — see `CoverCm1`/`CoverTn1`/`CoverSk1`),
-   registered as `Cover-{id}` in `Composition.tsx`, rendered via `npx remotion still` to
-   `episodes/{id}/build/{id}_cover.png`.
-7. **Platform captions**, locked in as a standing deliverable 2026-08-09: one `episodes/{id}/
-   assets/captions.md` with a separate section per posting platform (Instagram, LinkedIn,
-   YouTube as of 2026-08-09 — see `docs/posting_platforms.md` if that list changes). **Each
-   platform's copy must be written for that platform, never the same block reused three times**
-   (flagged directly after sk1's first pass just re-ran the VO script as the caption everywhere)
-   — same underlying facts/stats, different structure.
-   **Revised 2026-08-10, direct feedback after watching sd1 live** ("you copy script and use it
-   as captions, they are almost same... write caption, title description properly"): a caption
-   that closely paraphrases the VO script sentence-by-sentence still fails this rule even if the
-   wording isn't byte-identical — the standard is genuinely distinct platform-native copy, not a
-   rephrased transcript. Concretely:
-   - **Instagram**: a real hook (a question or a claim, not "here's what the video says"),
-     scannable structure, **3-6 relevant hashtags, not a dense block** — the old ~10-15 tag
-     block is retired, it reads as spammy, not searchable.
-   - **LinkedIn**: first-person practitioner narrative, real paragraph breaks, 3-5 tags
-     (unchanged, this one was already right).
-   - **YouTube**: title and description must be **genuinely SEO-considered** — real keyword
-     phrases a viewer would actually search (tool names, "vs", "pricing," the year, etc.) placed
-     early in the title and description, not just a restated video summary. Keep `#Shorts` plus
-     2-3 more targeted tags, not a long list.
-   See `episodes/3-claude-code-skills-that-turn-it-into-a-video-editor/assets/captions.md` for
-   the reference *structure* (still valid — separate sections, distinct tone per platform); the
-   hashtag-count and SEO guidance above supersedes what that specific file did.
-
-## 6. Decided 2026-08-06: visual direction, voice, content plan
+**Historical record — episodes cm1/tn1/sk1/sd1/the-karpathy-skill were all produced under the
+now-retired Remotion engine.** The component names below (`theme.ts`, `PipelineFlow.tsx`,
+`CaptionsPop.tsx`, etc.) no longer exist in this project. The DECISIONS (what shipped, why,
+what feedback drove each revision) are real history and worth keeping; the file/component
+references are not actionable anymore. `hyperframes-had-the-components-i-hand-built` (below,
+first HyperFrames-era episode) picks up where this section's last entry left off.
 
 - **Visual direction is locked**: pure black background, real recognizable (generic, unbranded)
   UI/hardware elements standing in for whatever the narration is literally about, picked
@@ -662,6 +439,29 @@ Fiber/ffmpeg/ElevenLabs, not about the old content, so they'll resurface identic
   experiment_log.md batch, since it predates that system. All content produced after this point
   follows v2.0.
 
+- **`hyperframes-had-the-components-i-hand-built` (first HyperFrames-era episode, produced
+  2026-08-12/13): `hyperframes/renders/video.mp4`, ~48.2s.** The episode that drove the engine
+  switch — see §7's production-engine retirement note for the full "why" (comparable quality,
+  meaningfully lower token cost per episode, see `hyperframes/CLAUDE.md`'s own "Orchestration
+  discipline" section for the exact lesson: ~43.7M effective tokens on this one build, most of
+  it avoidable orchestration overhead, not the framework itself). Content is a self-referential
+  case study of the HyperFrames build process (5-frame structure: hook → problem →
+  proof/HyperFrames stats → gap/lesson → close), following the `faceless-explainer` workflow.
+  Went through the same kind of real, direct-feedback revision cycle every prior episode did:
+  captions repositioned higher (too low initially, same class of issue as sk1's caption-
+  blocking-content fix), theme flipped dark→colorful-dark→light-with-colorful-accents (final
+  call: light theme, colorful accent rotation kept, "I don't mind the color preference, just
+  make sure we make best retention holding sexy video"), a literal-icon-visual fix for Frame 2
+  (was relying on text alone for named items — the same "show the real thing, not just words"
+  rule §1's Visual Retention Rule already states), a bad SFX swap (a "tick" stock cue that read
+  as an irritating clock/rhythm sound, replaced with "ui pop" — caught twice, the second time
+  because the actual bug was that the fix had only been written to `audio_meta.json` and never
+  propagated into `index.html`, the file that actually renders — a real gotcha worth remembering
+  for this engine: **always verify a fix landed in `index.html`, not just its source data file**),
+  and a background grid-texture removal (the 64px cross-hatch pattern read as "boxes in the
+  background," not desired). This episode's production log is the first real evidence this
+  channel's craft rules (§1) transfer cleanly to a different render engine.
+
 ### Posting automation (not yet built, 2026-08-09)
 
 Requested after sk1's distribution deliverables shipped: automate posting to all 3 platforms
@@ -719,11 +519,17 @@ underlying mechanism does work; the real gap was visibility into "still working"
 during the first few minutes, not a functional bug. **User's call regardless of this
 correction: stop pursuing daily automation, keep it simple, trigger episode production manually
 in a live session instead.** `Disable-ScheduledTask` was run (task definition left in place, not
-deleted) and `automation/daily_pipeline_prompt.md`/`run_daily_pipeline.ps1` are kept as-is in
-case this gets revisited later, but nothing runs on a schedule currently. If picked back up, the
-actual fix needed is probably just patience (or an early heartbeat write to the log/result file
-so "still working" is distinguishable from "stuck" within the first minute) rather than more
-stdin/output-plumbing changes — those were never the real problem.
+deleted). If picked back up, the actual fix needed is probably just patience (or an early
+heartbeat write to the log/result file so "still working" is distinguishable from "stuck"
+within the first minute) rather than more stdin/output-plumbing changes — those were never the
+real problem.
+
+**Update 2026-08-13**: `automation/daily_pipeline_prompt.md` and `run_daily_pipeline.ps1` were
+moved to the external trash folder along with the rest of the Remotion-era `automation/`
+scripts (see the production-engine retirement note in §7) — they were already disabled and
+written around the old render engine (`daily_pipeline_prompt.md` explicitly encoded a Remotion
+render step). Reviving daily automation later means rewriting this prompt around HyperFrames'
+own workflow from scratch, not resurrecting the trashed file as-is.
 
 ## 7. Strategic system: That AI PM v2.0 (2026-08-10)
 
@@ -731,13 +537,15 @@ stdin/output-plumbing changes — those were never the real problem.
 (`docs/thataipm_content_system_operating_spec_v2.md`), a formal strategy document positioning
 the channel around "AI-native product thinking" for a Product Manager audience. This
 **fully supersedes** the 2-pillar content strategy documented earlier in §6 (retirement note
-in that section). It does not touch the production engine described in §§2-5, which stays
-exactly as built.
+in that section). It did not touch the production engine (Remotion at the time, §§2-5's frozen
+record; HyperFrames now, `hyperframes/CLAUDE.md`) — this was, and still is, a strategy-layer
+change only, independent of whatever renders the video.
 
-**Architecture principle**: strategy sits ABOVE the existing production pipeline, not inside
-it. Nothing in `automation/`, `remotion/src/`, the GitHub hosting flow, or the Zernio
-scheduling flow changed or needs to change for this migration. What's new is a thin layer of
-structured planning/tracking docs the production pipeline didn't have before:
+**Architecture principle**: strategy sits ABOVE the production pipeline, not inside it. Nothing
+in the distribution-layer `automation/` scripts, the GitHub hosting flow, or the Zernio
+scheduling flow changed or needs to change for this migration, or for the later engine swap.
+What's new since v2.0 is a thin layer of structured planning/tracking docs the production
+pipeline didn't have before:
 
 ```
 STRATEGY                docs/thataipm_content_system_operating_spec_v2.md (north star)
@@ -755,7 +563,7 @@ STRATEGIC QUALITY GATE   recorded per concept inside the batch entry (see the lo
   |
 RESEARCH / FACT CHECK    unchanged discipline: live research, cited in the script file
   |
-SCRIPT -> PRODUCTION -> RENDER -> CAPTIONS -> DISTRIBUTION   unchanged, see §§2-5
+SCRIPT -> PRODUCTION -> RENDER -> CAPTIONS -> DISTRIBUTION   see hyperframes/CLAUDE.md
   |
 ANALYTICS                hybrid, see the finding below
   |
@@ -886,18 +694,41 @@ with that instinct, though three posts and zero follows anywhere is nowhere near
 evidence on its own, so this is a founder-conviction call, not a data-driven one, and is logged
 honestly as such.
 
-**What does NOT change**: the production pipeline, the visual system, the schema vocabulary,
-the quality gates (`check_static_frames.py`, the shot-list literal-device-justification rule),
-and the `@thataipm` handle (kept for now, a rename would be wasted motion before there's an
-audience to lose, revisit once there is one) are all unaffected. This is a strategy-layer
-change only, same as the original v2.0 migration was.
+**What does NOT change**: the visual system, the schema vocabulary, the quality-gate PRINCIPLE
+(a mechanical PASS/FAIL check over eyeballing — `check_static_frames.py` at the time, now
+`npx hyperframes check`, see the production-engine retirement note below), the shot-list
+literal-device-justification rule, and the `@thataipm` handle (kept for now, a rename would be
+wasted motion before there's an audience to lose, revisit once there is one) are all
+unaffected. This is a strategy-layer change only, same as the original v2.0 migration was. (The
+production ENGINE itself did later change, 2026-08-13 — see below — but that's a separate,
+production-layer event, not part of this positioning revision.)
 
 **What's explicitly deferred, per direct instruction**: monetization shape and the newsletter/
 lead-magnet buildout (spec §14-16) are parked until there's a real audience to decide them
 against, not abandoned. Full autonomy (the daily pipeline, disabled 2026-08-11, see that
-section above) and long-form YouTube are both real future goals but explicitly not being
-pursued right now either, first priority is audience building on the existing Instagram +
-YouTube Shorts format under the new positioning.
+section above) was a real future goal but explicitly not pursued right now either, first
+priority is audience building on the existing Instagram + YouTube Shorts format under the new
+positioning. **Long-form YouTube, updated 2026-08-13**: no longer indefinitely deferred — see
+the production-engine retirement note directly below, once HyperFrames is fully finalized as
+the standing production system the plan is to start producing long-form YouTube alongside the
+existing Shorts/Reels format. Not started yet as of this note; a real trigger condition (the
+finalized system + a first batch of new content through it) gates it, not a fixed date.
+
+**Production engine retired to HyperFrames, 2026-08-13.** The Remotion/React render pipeline
+(§§2-5's now-frozen historical record) was fully retired in favor of **HyperFrames**
+(`hyperframes/`) — see the top of this file for the full pointer and reasoning. This is a
+PRODUCTION-layer change only, same architectural principle as the paragraph above: strategy
+(this section, the v2.0 spec, the experiment log) is completely unaffected, only what renders
+the video changed. Direct instruction accompanying the switch: "I like this system, I want you
+to discard all old references, and keep this finalized system with hyperframes" — `remotion/`
+and its Remotion-only `automation/` scripts moved to an external trash folder (not deleted,
+recoverable if ever needed), `docs/technical_architecture.md` and this file were both updated
+to point at the new engine instead of the old one. **Repackaging intent, stated same day**: the
+user intends to eventually repackage this production system for other people to buy/use once
+it's proven out — noted here so future work (naming things, hardcoding brand specifics into
+shared docs vs. keeping them separable) can keep that eventual use case in mind, even though
+the actual generic/sellable-product restructuring is explicitly not being done yet (the user's
+own call, 2026-08-13: clean up first, split later).
 
 ## 8. Working discipline (adapted from the karpathy-skill rules, 2026-08-11)
 
@@ -909,13 +740,14 @@ doesn't fit this codebase and is deliberately NOT adopted; say why, not just wha
 
 **Goal-Driven Execution — adopt fully, already validated in practice.** "Looks right" is not a
 success criterion; a check that can print PASS/FAIL is. This is the exact mechanism that fixed
-the static-frame problem (§5b, `automation/check_static_frames.py`): the fix wasn't "try
-harder," it was turning an unverifiable feeling into a command with an exit code. Apply this
-pattern generally: before calling a subjective judgment call "done" (does this hook state the
-topic fast enough, is this motion actually visible, does this fact check out), ask whether it
-can be turned into something that can fail loudly instead of just feeling fine. Not everything
-can (hook clarity is closer to editorial judgment than a pixel diff), but default to trying
-before settling for eyeballing.
+the old Remotion pipeline's static-frame problem (`automation/check_static_frames.py`, now
+retired along with the rest of Remotion — the same discipline lives on as `npx hyperframes
+check`'s motion/layout/contrast gate): the fix wasn't "try harder," it was turning an
+unverifiable feeling into a command with an exit code. Apply this pattern generally: before
+calling a subjective judgment call "done" (does this hook state the topic fast enough, is this
+motion actually visible, does this fact check out), ask whether it can be turned into something
+that can fail loudly instead of just feeling fine. Not everything can (hook clarity is closer
+to editorial judgment than a pixel diff), but default to trying before settling for eyeballing.
 
 **Think Before Coding — adopt, with a concrete trigger.** State a visual/creative assumption
 out loud when making it, specifically anything with a magnitude nobody supplied (an animation
@@ -926,17 +758,19 @@ that gets checked.
 
 **Surgical Changes — already covered, formalizing the existing practice.** This project already
 has the equivalent rule in a narrower form (§6: once a video is posted, don't re-edit it; the
-shared-component-fix pattern used throughout this session — e.g. adding `breathe()` to
-`ComparisonCard`/`PipelineFlow`/`TerminalCard` — is fine specifically because it doesn't touch
-already-rendered output, only future renders). No behavior change, just naming the general
-version of a rule this project already follows.
+old Remotion pipeline's shared-component-fix pattern — e.g. adding `breathe()` to a shared
+stat-card component — was fine specifically because it didn't touch already-rendered output,
+only future renders; the same logic applies to HyperFrames' shared `hyperframes/frame.md`
+components now). No behavior change, just naming the general version of a rule this project
+already follows.
 
 **Simplicity First — NOT adopted as written, real conflict with this codebase.** Its own text
 says "no abstractions for single-use code," but this project deliberately builds shared,
-reusable components (`ComparisonCard`, `DisparityBar`, `PipelineFlow`, `TerminalCard`, etc.)
-from their FIRST use, because the channel's format guarantees dozens of future episodes will
-need the same visual patterns — that's a known, structural requirement here, not speculative
-gold-plating the karpathy rule is warning against in general software. Blind adoption would
-argue against this project's own working architecture. The part worth keeping: don't add
-config/flexibility/error-handling nobody asked for on top of a component — build the reusable
-shape because it's genuinely needed, not the unneeded flourishes around it.
+reusable components from their FIRST use (the old Remotion pipeline's `ComparisonCard`/
+`DisparityBar`/`PipelineFlow`/`TerminalCard`; HyperFrames' own schema-vocabulary equivalents
+now), because the channel's format guarantees dozens of future episodes will need the same
+visual patterns — that's a known, structural requirement here, not speculative gold-plating the
+karpathy rule is warning against in general software. Blind adoption would argue against this
+project's own working architecture. The part worth keeping: don't add config/flexibility/
+error-handling nobody asked for on top of a component — build the reusable shape because it's
+genuinely needed, not the unneeded flourishes around it.

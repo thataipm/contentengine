@@ -1,0 +1,392 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "EB Garamond";
+      src: url("assets/fonts/EBGaramond-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/Inter-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Inter", sans-serif;
+      color: #141413;
+    }
+
+    /* ---- background (tile ground) ---- */
+    .p03proof-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* ---- kicker-spike ---- */
+    .p03proof-kicker {
+      position: absolute;
+      top: 110px;
+      left: 72px;
+      display: flex;
+      align-items: baseline;
+      gap: 0.6cqw;
+      opacity: 0;
+    }
+    .p03proof-kicker .mark {
+      color: #1A7C9B;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 1.46cqw;
+      transform-origin: center;
+    }
+    .p03proof-kicker .text {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      font-size: 1.46cqw;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #141413;
+    }
+
+    /* ---- number-lockup (stat) ---- */
+    .p03proof-stat {
+      position: absolute;
+      top: 210px;
+      left: 0;
+      width: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .p03proof-counter-wrap {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+    .p03proof-counter {
+      font-family: "EB Garamond", Georgia, serif;
+      font-weight: 400;
+      font-size: 9.4cqw;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      font-variant-numeric: tabular-nums;
+      display: inline-block;
+      transform-origin: center center;
+      color: #1C87A8;
+    }
+    .p03proof-unit {
+      margin-top: 2.8cqw;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      font-size: 2.08cqw;
+      letter-spacing: 0.02em;
+      color: #1C87A8;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    /* ---- section rule ---- */
+    .p03proof-rule {
+      position: absolute;
+      top: 480px;
+      left: 72px;
+      width: 936px;
+      height: 1px;
+      background: rgba(20, 20, 19, 0.14);
+      opacity: 0;
+    }
+
+    /* ---- tile grid ---- */
+    .p03proof-grid {
+      position: absolute;
+      top: 620px;
+      left: 72px;
+      width: 936px;
+      height: 860px;
+      transform-origin: 50% 50%;
+    }
+    .p03proof-burst-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+    }
+    .p03proof-tile {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 301px;
+      height: 130px;
+      background: #EFE9DE;
+      border: 1px solid rgba(20, 20, 19, 0.14);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(20, 20, 19, 0.1), 0 6px 20px -4px rgba(20, 20, 19, 0.14);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      will-change: transform, filter;
+      --dof: 0px;
+      filter: blur(var(--dof));
+    }
+    .p03proof-tile .dots {
+      display: flex;
+      gap: 4px;
+    }
+    .p03proof-tile .dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(20, 20, 19, 0.28);
+    }
+    .p03proof-tile .label {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      font-size: 1.35cqw;
+      letter-spacing: 0.02em;
+      color: #141413;
+    }
+
+    .p03proof-ring {
+      position: absolute;
+      width: 309px;
+      height: 138px;
+      border: 2px solid #1F7A50;
+      border-radius: 10px;
+      box-shadow: 0 0 24px rgba(31, 122, 80, 0.35);
+      opacity: 0;
+      transform: scale(0.9);
+      transform-origin: center center;
+      pointer-events: none;
+    }
+    #p03proof-ring-countup {
+      top: 726px;
+      left: 155px;
+    }
+    #p03proof-ring-scanband {
+      top: 726px;
+      left: 472px;
+      border-color: #D97A1F;
+      box-shadow: 0 0 24px rgba(217, 122, 31, 0.35);
+    }
+
+    .p03proof-scan-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 301px;
+      height: 130px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .p03proof-scan-svg line {
+      stroke: #D97A1F;
+      stroke-width: 5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 8px rgba(217, 122, 31, 0.6));
+    }
+  </style>
+
+  <div data-hf-id="hf-lkwd" id="root" data-composition-id="03-proof" data-width="1080" data-height="1920" data-duration="13.58">
+    <div data-hf-id="hf-goku" id="p03proof-bg" class="clip p03proof-bg" data-start="0" data-duration="13.58" data-track-index="0" style="background: radial-gradient(ellipse 900px 600px at 50% 20%, rgba(28,135,168,0.10), transparent 65%), #FAF9F5; background-size: auto, auto;"></div>
+
+    <div data-hf-id="hf-f9ds" id="p03proof-content" class="clip" data-start="0" data-duration="13.58" data-track-index="1">
+      <div data-hf-id="hf-04v0" class="p03proof-kicker" id="p03proof-kicker">
+        <span data-hf-id="hf-aza2" class="mark" id="p03proof-mark">✱</span>
+        <span data-hf-id="hf-fxow" class="text">HyperFrames</span>
+      </div>
+
+      <div data-hf-id="hf-nz8u" class="p03proof-stat">
+        <div data-hf-id="hf-oor5" class="p03proof-counter-wrap">
+          <span data-hf-id="hf-68s1" class="p03proof-counter" id="p03proof-counter">0</span>
+        </div>
+        <div data-hf-id="hf-zfoc" class="p03proof-unit" id="p03proof-unit">GitHub stars</div>
+      </div>
+
+      <div data-hf-id="hf-gq9u" class="p03proof-rule" id="p03proof-rule"></div>
+
+      <div data-hf-id="hf-zz7i" class="p03proof-grid" id="p03proof-grid">
+        <div data-hf-id="hf-hixv" class="p03proof-burst-wrap">
+          <div data-hf-id="hf-m9yl" class="p03proof-tile" data-target-x="-317.5" data-target-y="-365"><div data-hf-id="hf-zx1w" class="dots"><span data-hf-id="hf-uckh"></span><span data-hf-id="hf-l73p"></span><span data-hf-id="hf-me0s"></span></div><div data-hf-id="hf-gb0o" class="label">basic</div></div>
+          <div data-hf-id="hf-ibr8" class="p03proof-tile" data-target-x="0" data-target-y="-365"><div data-hf-id="hf-2trg" class="dots"><span data-hf-id="hf-lzpr"></span><span data-hf-id="hf-n6mu"></span><span data-hf-id="hf-msbt"></span></div><div data-hf-id="hf-32ji" class="label">clear-dark</div></div>
+          <div data-hf-id="hf-sjy7" class="p03proof-tile" data-target-x="316.5" data-target-y="-365"><div data-hf-id="hf-1mud" class="dots"><span data-hf-id="hf-nz8w"></span><span data-hf-id="hf-nkxv"></span><span data-hf-id="hf-ieyi"></span></div><div data-hf-id="hf-ttra" class="label">clear-light</div></div>
+
+          <div data-hf-id="hf-m47l" class="p03proof-tile" data-target-x="-317.5" data-target-y="-219"><div data-hf-id="hf-215e" class="dots"><span data-hf-id="hf-i0nh"></span><span data-hf-id="hf-1qzj"></span><span data-hf-id="hf-25ak"></span></div><div data-hf-id="hf-ti9s" class="label">grass</div></div>
+          <div data-hf-id="hf-qf9s" class="p03proof-tile" data-target-x="0" data-target-y="-219"><div data-hf-id="hf-40oj" class="dots"><span data-hf-id="hf-0ydh"></span><span data-hf-id="hf-1coi"></span><span data-hf-id="hf-3c7n"></span></div><div data-hf-id="hf-ujql" class="label">homebrew</div></div>
+          <div data-hf-id="hf-fion" class="p03proof-tile" data-target-x="316.5" data-target-y="-219"><div data-hf-id="hf-4ezk" class="dots"><span data-hf-id="hf-3qio"></span><span data-hf-id="hf-2jll"></span><span data-hf-id="hf-2xwm"></span></div><div data-hf-id="hf-1lu2" class="label">man-page</div></div>
+
+          <div data-hf-id="hf-lptt" class="p03proof-tile" data-target-x="-317.5" data-target-y="-73"><div data-hf-id="hf-382h" class="dots"><span data-hf-id="hf-ykjb"></span><span data-hf-id="hf-yyuc"></span><span data-hf-id="hf-1les"></span></div><div data-hf-id="hf-36l0" class="label">novel</div></div>
+          <div data-hf-id="hf-rtvm" class="p03proof-tile" data-target-x="0" data-target-y="-73"><div data-hf-id="hf-3mdi" class="dots"><span data-hf-id="hf-173r"></span><span data-hf-id="hf-0ssq"></span><span data-hf-id="hf-0ehp"></span></div><div data-hf-id="hf-z95c" class="label">ocean</div></div>
+          <div data-hf-id="hf-dewn" class="p03proof-tile" data-target-x="316.5" data-target-y="-73"><div data-hf-id="hf-z907" class="dots"><span data-hf-id="hf-36mw"></span><span data-hf-id="hf-2sbv"></span><span data-hf-id="hf-2e0u"></span></div><div data-hf-id="hf-8fe1" class="label">pro</div></div>
+
+          <div data-hf-id="hf-vr60" class="p03proof-tile" data-target-x="-317.5" data-target-y="73"><div data-hf-id="hf-znb8" class="dots"><span data-hf-id="hf-1zpt"></span><span data-hf-id="hf-4rv0"></span><span data-hf-id="hf-4djz"></span></div><div data-hf-id="hf-nmyn" class="label">red-sands</div></div>
+          <div data-hf-id="hf-26k9" class="p03proof-tile" data-target-x="0" data-target-y="73"><div data-hf-id="hf-tyqc" class="dots"><span data-hf-id="hf-nhv1"></span><span data-hf-id="hf-nw62"></span><span data-hf-id="hf-oah3"></span></div><div data-hf-id="hf-r4w5" class="label">silver-aerogel</div></div>
+          <div data-hf-id="hf-gcz6" class="p03proof-tile" data-target-x="316.5" data-target-y="73"><div data-hf-id="hf-tkfb" class="dots"><span data-hf-id="hf-oos4"></span><span data-hf-id="hf-p335"></span><span data-hf-id="hf-phe6"></span></div><div data-hf-id="hf-6k1w" class="label">solid-colors</div></div>
+
+          <div data-hf-id="hf-bbz7" class="p03proof-tile" data-target-x="-158.5" data-target-y="219"><div data-hf-id="hf-t64a" class="dots"><span data-hf-id="hf-pvp7"></span><span data-hf-id="hf-qa08"></span><span data-hf-id="hf-qob9"></span></div><div data-hf-id="hf-61fu" class="label">terminal-run</div></div>
+          <div data-hf-id="hf-2pms" class="p03proof-tile" data-target-x="158.5" data-target-y="219"><div data-hf-id="hf-srt9" class="dots"><span data-hf-id="hf-r2ma"></span><span data-hf-id="hf-0236"></span><span data-hf-id="hf-zns5"></span></div><div data-hf-id="hf-wq98" class="label">simulator</div></div>
+
+          <div data-hf-id="hf-oog2" class="p03proof-tile" id="p03proof-tile-countup" data-target-x="-158.5" data-target-y="365"><div data-hf-id="hf-vjyg" class="dots"><span data-hf-id="hf-0up8"></span><span data-hf-id="hf-0ge7"></span><span data-hf-id="hf-1nba"></span></div><div data-hf-id="hf-ussh" class="label">count-up</div></div>
+          <div data-hf-id="hf-6y75" class="p03proof-tile" id="p03proof-tile-scanband" data-target-x="158.5" data-target-y="365">
+            <div data-hf-id="hf-v5nf" class="dots"><span data-hf-id="hf-1909"></span><span data-hf-id="hf-2fxc"></span><span data-hf-id="hf-21mb"></span></div>
+            <div data-hf-id="hf-5m6d" class="label">scan-band</div>
+            <svg data-hf-id="hf-35qe" class="p03proof-scan-svg" viewBox="0 0 301 130">
+              <line data-hf-id="hf-oy5e" id="p03proof-scanline" x1="24" y1="112" x2="277" y2="18" />
+            </svg>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-nchz" class="p03proof-ring" id="p03proof-ring-countup"></div>
+        <div data-hf-id="hf-g08p" class="p03proof-ring" id="p03proof-ring-scanband"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+
+      var scanline = document.getElementById("p03proof-scanline");
+      var scanLen = scanline.getTotalLength();
+      scanline.style.strokeDasharray = String(scanLen);
+      scanline.style.strokeDashoffset = String(scanLen);
+
+      var tl = gsap.timeline({ paused: true });
+
+      var COUNT_TARGET = 40680;
+      var COUNT_DUR = 1.8;
+      var COUNT_START = 0.4;
+      var COUNT_EASE = "power3.out";
+      var counterEl = document.getElementById("p03proof-counter");
+      var counterState = { value: 0 };
+      var START_SCALE = 0.55;
+
+      // ---- Scene 1 (0.0-2.8s): kicker + counting-dynamic-scale stat ----
+      tl.fromTo(
+        "#p03proof-kicker",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        0
+      );
+      tl.fromTo(
+        "#p03proof-mark",
+        { scale: 0.92, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" },
+        0
+      );
+
+      tl.to(
+        counterState,
+        {
+          value: COUNT_TARGET,
+          duration: COUNT_DUR,
+          ease: COUNT_EASE,
+          onUpdate: function () {
+            counterEl.textContent = Math.round(counterState.value).toLocaleString("en-US");
+          },
+        },
+        COUNT_START
+      );
+      tl.fromTo(
+        counterEl,
+        { scale: START_SCALE },
+        { scale: 1, duration: COUNT_DUR, ease: COUNT_EASE },
+        COUNT_START
+      );
+      tl.to(
+        "#p03proof-unit",
+        { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" },
+        COUNT_START + COUNT_DUR
+      );
+
+      // hand the frame's one coral moment off to the grid before Scene 3 begins
+      tl.to(
+        "#p03proof-counter, #p03proof-unit",
+        { color: "#141413", duration: 0.6, ease: "power1.out" },
+        5.3
+      );
+
+      // ---- Scene 2 (2.8-6.0s): section rule + 16-tile stagger-assemble ----
+      tl.to(
+        "#p03proof-rule",
+        { opacity: 1, duration: 0.4, ease: "power1.out" },
+        2.8
+      );
+
+      var tiles = gsap.utils.toArray(".p03proof-tile");
+      var ENTRY_AT = 2.9;
+      var STAGGER = 0.05;
+      var EXPAND_DUR = 1.1;
+      var START_PROGRESS = 0.6;
+      var EXPAND_EASE = "power3.out";
+
+      tiles.forEach(function (el, i) {
+        var tx = Number(el.dataset.targetX);
+        var ty = Number(el.dataset.targetY);
+        tl.fromTo(
+          el,
+          { xPercent: -50, yPercent: -50, x: tx * START_PROGRESS, y: ty * START_PROGRESS, scale: 0.6, opacity: 0 },
+          { x: tx, y: ty, scale: 1, opacity: 1, duration: EXPAND_DUR, ease: EXPAND_EASE },
+          ENTRY_AT + i * STAGGER
+        );
+      });
+
+      // ---- Scene 3 (6.0-9.5s): spotlight "count-up" ----
+      // scan-band is still just part of the crowd here — it dims with everything
+      // else and gets pulled back into focus in Scene 4 below.
+      var ctxTiles = tiles.filter(function (el) {
+        return el.id !== "p03proof-tile-countup";
+      });
+      tl.to(
+        ctxTiles,
+        { "--dof": "8px", opacity: 0.55, duration: 0.7, ease: "power2.inOut" },
+        6.0
+      );
+      tl.fromTo(
+        "#p03proof-ring-countup",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" },
+        6.0
+      );
+
+      // ---- Scene 4 (9.5-13.08s): spotlight "scan-band" + camera settle ----
+      tl.to(
+        "#p03proof-tile-scanband",
+        { "--dof": "0px", opacity: 1, duration: 0.5, ease: "power2.inOut" },
+        9.5
+      );
+      tl.fromTo(
+        "#p03proof-ring-scanband",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" },
+        9.5
+      );
+      tl.to(
+        scanline,
+        { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" },
+        9.6
+      );
+      tl.fromTo(
+        "#p03proof-grid",
+        { scale: 1.05 },
+        { scale: 1, duration: 1.2, ease: "power3.out" },
+        10.2
+      );
+
+      window.__timelines["03-proof"] = tl;
+    })();
+  </script>
+</template>

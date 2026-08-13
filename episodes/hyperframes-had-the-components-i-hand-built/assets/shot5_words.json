@@ -1,0 +1,163 @@
+[
+  {
+    "word": "This",
+    "start_seconds": 0.108,
+    "end_seconds": 0.812,
+    "start_frame": 3,
+    "end_frame": 24
+  },
+  {
+    "word": "channel",
+    "start_seconds": 0.852,
+    "end_seconds": 1.132,
+    "start_frame": 26,
+    "end_frame": 34
+  },
+  {
+    "word": "is",
+    "start_seconds": 1.212,
+    "end_seconds": 1.372,
+    "start_frame": 36,
+    "end_frame": 41
+  },
+  {
+    "word": "switching",
+    "start_seconds": 1.404,
+    "end_seconds": 1.692,
+    "start_frame": 42,
+    "end_frame": 51
+  },
+  {
+    "word": "to",
+    "start_seconds": 1.719,
+    "end_seconds": 1.772,
+    "start_frame": 52,
+    "end_frame": 53
+  },
+  {
+    "word": "it,",
+    "start_seconds": 1.852,
+    "end_seconds": 2.252,
+    "start_frame": 56,
+    "end_frame": 68
+  },
+  {
+    "word": "starting",
+    "start_seconds": 2.296,
+    "end_seconds": 2.652,
+    "start_frame": 69,
+    "end_frame": 80
+  },
+  {
+    "word": "with",
+    "start_seconds": 2.684,
+    "end_seconds": 2.812,
+    "start_frame": 81,
+    "end_frame": 84
+  },
+  {
+    "word": "this",
+    "start_seconds": 2.844,
+    "end_seconds": 2.972,
+    "start_frame": 85,
+    "end_frame": 89
+  },
+  {
+    "word": "video.",
+    "start_seconds": 3.039,
+    "end_seconds": 3.532,
+    "start_frame": 91,
+    "end_frame": 106
+  },
+  {
+    "word": "If",
+    "start_seconds": 3.745,
+    "end_seconds": 4.172,
+    "start_frame": 112,
+    "end_frame": 125
+  },
+  {
+    "word": "you're",
+    "start_seconds": 4.192,
+    "end_seconds": 4.332,
+    "start_frame": 126,
+    "end_frame": 130
+  },
+  {
+    "word": "building",
+    "start_seconds": 4.368,
+    "end_seconds": 4.652,
+    "start_frame": 131,
+    "end_frame": 140
+  },
+  {
+    "word": "your",
+    "start_seconds": 4.684,
+    "end_seconds": 4.812,
+    "start_frame": 141,
+    "end_frame": 144
+  },
+  {
+    "word": "own",
+    "start_seconds": 4.872,
+    "end_seconds": 5.052,
+    "start_frame": 146,
+    "end_frame": 152
+  },
+  {
+    "word": "AI",
+    "start_seconds": 5.132,
+    "end_seconds": 5.292,
+    "start_frame": 154,
+    "end_frame": 159
+  },
+  {
+    "word": "systems,",
+    "start_seconds": 5.362,
+    "end_seconds": 6.092,
+    "start_frame": 161,
+    "end_frame": 183
+  },
+  {
+    "word": "follow",
+    "start_seconds": 6.138,
+    "end_seconds": 6.412,
+    "start_frame": 184,
+    "end_frame": 192
+  },
+  {
+    "word": "along,",
+    "start_seconds": 6.465,
+    "end_seconds": 6.972,
+    "start_frame": 194,
+    "end_frame": 209
+  },
+  {
+    "word": "it's",
+    "start_seconds": 7.025,
+    "end_seconds": 7.292,
+    "start_frame": 211,
+    "end_frame": 219
+  },
+  {
+    "word": "happening",
+    "start_seconds": 7.308,
+    "end_seconds": 7.452,
+    "start_frame": 219,
+    "end_frame": 224
+  },
+  {
+    "word": "in",
+    "start_seconds": 7.479,
+    "end_seconds": 7.532,
+    "start_frame": 224,
+    "end_frame": 226
+  },
+  {
+    "word": "public.",
+    "start_seconds": 7.601,
+    "end_seconds": 8.172,
+    "start_frame": 228,
+    "end_frame": 245
+  }
+]

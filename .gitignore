@@ -6,16 +6,11 @@
 # Local-only reference docs (not for the public repo)
 docs/technical_architecture.md
 
-# Node / Remotion
-remotion/node_modules/
-remotion/out/
-
 # Python
 __pycache__/
 *.pyc
 
 # Build artifacts
 episodes/*/build/
-
-# Daily pipeline run logs
-automation/logs/
+hyperframes/renders/
+hyperframes/snapshots/

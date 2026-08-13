@@ -1,0 +1,9 @@
+[rushed] I wasted hours hand-building AI video components. A public registry already had three hundred eighty of them, ready to install.
+
+Every shot needed its own device. A terminal card. A counting number. A container that holds items. I coded each one from scratch, in an engine I built myself.
+
+It's called HyperFrames, forty thousand stars on GitHub. Fourteen terminal card styles. A count-up number, already built. Even the scanning light effect I invented by hand this session, already there.
+
+One thing wasn't in it either: a circular loop diagram. Even the best library has real gaps. Check first. Don't assume.
+
+This channel is switching to it, starting with this video. If you're building your own AI systems, follow along, it's happening in public.

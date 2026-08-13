@@ -1,0 +1,33 @@
+{
+  "lines": [
+    {
+      "id": "01",
+      "sfx": [
+        "whoosh",
+        "chime"
+      ]
+    },
+    {
+      "id": "02",
+      "sfx": [
+        "ui pop"
+      ]
+    },
+    {
+      "id": "03",
+      "sfx": [
+        "ui pop",
+        "chime"
+      ]
+    },
+    {
+      "id": "05",
+      "sfx": [
+        "chime"
+      ]
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  }
+}

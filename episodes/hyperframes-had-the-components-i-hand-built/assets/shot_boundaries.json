@@ -1,0 +1,42 @@
+[
+  {
+    "shot": 1,
+    "text": "[rushed] I wasted hours hand-building AI video components. A public registry already had three hundred eighty of them, ready to install.",
+    "global_start": 0.0,
+    "global_end": 7.413,
+    "duration": 7.413,
+    "duration_frames": 222
+  },
+  {
+    "shot": 2,
+    "text": "Every shot needed its own device. A terminal card. A counting number. A container that holds items. I coded each one from scratch, in an engine I built myself.",
+    "global_start": 7.413,
+    "global_end": 18.02,
+    "duration": 10.607,
+    "duration_frames": 318
+  },
+  {
+    "shot": 3,
+    "text": "It's called HyperFrames, forty thousand stars on GitHub. Fourteen terminal card styles. A count-up number, already built. Even the scanning light effect I invented by hand this session, already there.",
+    "global_start": 18.02,
+    "global_end": 31.1,
+    "duration": 13.08,
+    "duration_frames": 392
+  },
+  {
+    "shot": 4,
+    "text": "One thing wasn't in it either: a circular loop diagram. Even the best library has real gaps. Check first. Don't assume.",
+    "global_start": 31.1,
+    "global_end": 39.988,
+    "duration": 8.888,
+    "duration_frames": 267
+  },
+  {
+    "shot": 5,
+    "text": "This channel is switching to it, starting with this video. If you're building your own AI systems, follow along, it's happening in public.",
+    "global_start": 39.988,
+    "global_end": 48.46,
+    "duration": 8.472,
+    "duration_frames": 254
+  }
+]

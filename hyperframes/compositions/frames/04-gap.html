@@ -1,0 +1,349 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('assets/fonts/JetBrainsMono-400.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: none;
+      font-family: "Inter", sans-serif;
+    }
+
+    #root .gap04-bg {
+      position: absolute;
+      inset: 0;
+      background: #FAF9F5;
+    }
+
+    /* — grid (background role): Frame 3's tile field, now dimmed and static — */
+    #root .gap04-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+
+    /* Background/border/idx carry their own pre-baked alpha (matching what
+       the old container-opacity(0.5) blend produced) instead of relying on
+       .gap04-grid's own opacity to dim them — see .gap04-tile-label below
+       for why: opacity on an ancestor blends EVERY descendant, including
+       text, toward the page background, and that blend mathematically caps
+       achievable text contrast well under 4.5:1 no matter the text color
+       (max ~3.6:1 even with pure black at this dim level, confirmed by the
+       real check). Baking the dim directly into background-color/
+       border-color/idx-color (not the element's own opacity) keeps the
+       exact prior "dimmed ~50%" look for everything except the label. */
+    #root .gap04-tile {
+      position: absolute;
+      width: 213px;
+      height: 190px;
+      background: #EFE9DE;
+      border: 1px solid rgba(20, 20, 19, 0.1);
+      border-radius: 12px;
+      box-sizing: border-box;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    #root .gap04-tile-idx {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 15px;
+      letter-spacing: 0.05em;
+      color: rgba(20, 20, 19, 0.35);
+      text-transform: uppercase;
+    }
+
+    /* Real, solid gray (not an opacity-diluted ink) so the label stays at
+       4.5:1+ contrast against the tile background. rgb(90,88,85) checks to
+       ~6.1:1 against this tile's actual composited background
+       (~rgb(239,233,222)) — the same value verified via the real contrast
+       checker earlier in the project's light-theme pass. */
+    #root .gap04-tile-label {
+      font-family: "Inter", sans-serif;
+      font-size: 21px;
+      font-weight: 500;
+      color: #6C6965;
+      line-height: 1.2;
+      margin-top: 6px;
+    }
+
+    /* — the one empty slot (foreground subject): dashed outline + ghost glyph, not dimmed with the field — */
+    #root .gap04-empty {
+      position: absolute;
+      left: 317px;
+      top: 680px;
+      width: 213px;
+      height: 190px;
+    }
+
+    #root .gap04-outline {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+    }
+
+    #root .gap04-outline rect {
+      fill: none;
+      stroke: rgba(20, 20, 19, 0.75);
+      stroke-width: 2.5;
+    }
+
+    #root .gap04-ghost {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 48px;
+      height: 48px;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+
+    #root .gap04-ghost path {
+      fill: none;
+      stroke: #141413;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    #root .gap04-ghost polygon {
+      fill: #141413;
+    }
+
+    /* — closing pull-quote (supporting, appears last): alone on cream — */
+    #root .gap04-quote {
+      position: absolute;
+      left: 84px;
+      right: 84px;
+      top: 700px;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+
+    #root .gap04-quote p {
+      margin: 0;
+      max-width: 820px;
+      text-align: center;
+      font-family: "EB Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 68px;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: #141413;
+    }
+  </style>
+
+  <div data-hf-id="hf-72g6" id="root" data-composition-id="04-gap" data-width="1080" data-height="1920" data-duration="9.388">
+    <div data-hf-id="hf-r2vw" class="clip gap04-bg" data-start="0" data-duration="9.388" data-track-index="0"></div>
+
+    <div data-hf-id="hf-3elg" class="clip gap04-grid" data-start="0" data-duration="9.388" data-track-index="1">
+      <div data-hf-id="hf-7mnx" class="gap04-tile" style="left: 84px; top: 260px;">
+        <span data-hf-id="hf-jthl" class="gap04-tile-idx">01</span>
+        <span data-hf-id="hf-vm15" class="gap04-tile-label">Terminal Card</span>
+      </div>
+      <div data-hf-id="hf-bfm8" class="gap04-tile" style="left: 317px; top: 260px;">
+        <span data-hf-id="hf-l0eo" class="gap04-tile-idx">02</span>
+        <span data-hf-id="hf-g10b" class="gap04-tile-label">Count-Up Number</span>
+      </div>
+      <div data-hf-id="hf-a73j" class="gap04-tile" style="left: 550px; top: 260px;">
+        <span data-hf-id="hf-km3n" class="gap04-tile-idx">03</span>
+        <span data-hf-id="hf-cimg" class="gap04-tile-label">Scan Light</span>
+      </div>
+      <div data-hf-id="hf-b1rl" class="gap04-tile" style="left: 783px; top: 260px;">
+        <span data-hf-id="hf-imki" class="gap04-tile-idx">04</span>
+        <span data-hf-id="hf-7s3o" class="gap04-tile-label">Container</span>
+      </div>
+
+      <div data-hf-id="hf-i9ue" class="gap04-tile" style="left: 84px; top: 470px;">
+        <span data-hf-id="hf-i89h" class="gap04-tile-idx">05</span>
+        <span data-hf-id="hf-51af" class="gap04-tile-label">Progress Bar</span>
+      </div>
+      <div data-hf-id="hf-r19b" class="gap04-tile" style="left: 317px; top: 470px;">
+        <span data-hf-id="hf-jf6k" class="gap04-tile-idx">06</span>
+        <span data-hf-id="hf-x8hb" class="gap04-tile-label">Code Diff</span>
+      </div>
+      <div data-hf-id="hf-xeuk" class="gap04-tile" style="left: 550px; top: 470px;">
+        <span data-hf-id="hf-j0vj" class="gap04-tile-idx">07</span>
+        <span data-hf-id="hf-p20k" class="gap04-tile-label">Avatar Row</span>
+      </div>
+      <div data-hf-id="hf-a9z6" class="gap04-tile" style="left: 783px; top: 470px;">
+        <span data-hf-id="hf-h1ce" class="gap04-tile-idx">08</span>
+        <span data-hf-id="hf-kjge" class="gap04-tile-label">Number Lockup</span>
+      </div>
+
+      <div data-hf-id="hf-nxin" class="gap04-tile" style="left: 84px; top: 680px;">
+        <span data-hf-id="hf-gn1d" class="gap04-tile-idx">09</span>
+        <span data-hf-id="hf-4ire" class="gap04-tile-label">Pull Quote</span>
+      </div>
+      <!-- slot 10 (317, 680) intentionally empty — see .gap04-empty layer -->
+      <div data-hf-id="hf-63md" class="gap04-tile" style="left: 550px; top: 680px;">
+        <span data-hf-id="hf-ldrg" class="gap04-tile-idx">11</span>
+        <span data-hf-id="hf-yf24" class="gap04-tile-label">Status Badge</span>
+      </div>
+      <div data-hf-id="hf-qjjn" class="gap04-tile" style="left: 783px; top: 680px;">
+        <span data-hf-id="hf-k6ud" class="gap04-tile-idx">12</span>
+        <span data-hf-id="hf-xs3n" class="gap04-tile-label">Tab Switcher</span>
+      </div>
+
+      <div data-hf-id="hf-flpo" class="gap04-tile" style="left: 84px; top: 890px;">
+        <span data-hf-id="hf-kl5e" class="gap04-tile-idx">13</span>
+        <span data-hf-id="hf-hf9z" class="gap04-tile-label">Chart Line</span>
+      </div>
+      <div data-hf-id="hf-x6mt" class="gap04-tile" style="left: 317px; top: 890px;">
+        <span data-hf-id="hf-mkoj" class="gap04-tile-idx">14</span>
+        <span data-hf-id="hf-ey96" class="gap04-tile-label">Toggle Group</span>
+      </div>
+      <div data-hf-id="hf-bsby" class="gap04-tile" style="left: 550px; top: 890px;">
+        <span data-hf-id="hf-myzk" class="gap04-tile-idx">15</span>
+        <span data-hf-id="hf-muis" class="gap04-tile-label">Badge Stack</span>
+      </div>
+      <div data-hf-id="hf-qeqg" class="gap04-tile" style="left: 783px; top: 890px;">
+        <span data-hf-id="hf-ls2h" class="gap04-tile-idx">16</span>
+        <span data-hf-id="hf-zhpp" class="gap04-tile-label">Grid Overlay</span>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-jo1i" class="clip gap04-empty" data-start="0" data-duration="9.388" data-track-index="2">
+      <svg data-hf-id="hf-0smx" class="gap04-outline" viewBox="0 0 213 190" xmlns="http://www.w3.org/2000/svg">
+        <rect data-hf-id="hf-883l" id="gap04-outline-rect" x="3" y="3" width="207" height="184" rx="12" ry="12" />
+      </svg>
+      <svg data-hf-id="hf-74ha" class="gap04-ghost" id="gap04-ghost" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <path data-hf-id="hf-myxe" d="M 24 6 A 18 18 0 1 1 6 24" />
+        <polygon data-hf-id="hf-6rp3" points="24,1 31,11 17,11" />
+      </svg>
+    </div>
+
+    <div data-hf-id="hf-o9lm" class="clip gap04-quote" data-start="5.6" data-duration="3.788" data-track-index="3">
+      <p data-hf-id="hf-zfpd" id="gap04-quote-text"></p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var rect = document.getElementById("gap04-outline-rect");
+      var rectLen = rect.getTotalLength();
+      rect.style.strokeDasharray = String(rectLen);
+      rect.style.strokeDashoffset = String(rectLen);
+
+      var quoteText = document.getElementById("gap04-quote-text");
+
+      // Pull-quote reveals in two discrete beats synced to the two short
+      // imperative clauses of the voiceover ("Check first." / "Don't assume."),
+      // not a per-character typewriter — reverse-search over a sparse
+      // { t, text } sequence per the discrete-text-sequence rule.
+      var QUOTE_SEQUENCE = [
+        { t: 5.85, text: "" },
+        { t: 6.35, text: "Check first." },
+        { t: 7.55, text: "Check first. Don’t assume." },
+      ];
+      function quoteAt(time) {
+        for (var i = QUOTE_SEQUENCE.length - 1; i >= 0; i--) {
+          if (time >= QUOTE_SEQUENCE[i].t) return QUOTE_SEQUENCE[i].text;
+        }
+        return "";
+      }
+
+      var tl = gsap.timeline({ paused: true });
+
+      // Scene 1 (0.0-3.0s): grid settles into its dimmed background state;
+      // the empty slot's dashed outline draws on (svg-path-draw: measured
+      // getTotalLength -> dasharray/dashoffset), then locks into a dashed
+      // pattern once the trace completes. Camera fully static.
+      tl.fromTo(
+        ".gap04-grid",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: "power1.out" },
+        0
+      );
+
+      var drawDriver = { v: 0 };
+      tl.to(
+        drawDriver,
+        {
+          v: 1,
+          duration: 1.6,
+          ease: "power2.out",
+          onUpdate: function () {
+            if (drawDriver.v >= 1) {
+              rect.style.strokeDasharray = "10 8";
+              rect.style.strokeDashoffset = "0";
+            } else {
+              rect.style.strokeDasharray = String(rectLen);
+              rect.style.strokeDashoffset = String((1 - drawDriver.v) * rectLen);
+            }
+          },
+        },
+        0.2
+      );
+
+      tl.fromTo(
+        "#gap04-ghost",
+        { opacity: 0 },
+        { opacity: 0.16, duration: 0.6, ease: "power1.out" },
+        1.4
+      );
+
+      // Scene 2 (3.0-5.6s): the allocated stillness. Nothing new enters —
+      // no tweens placed in this window on purpose.
+
+      // Scene 3 (5.6-8.888s): grid crossfades out entirely; the line lands
+      // centered, alone on cream, and holds to the transition out (no exit
+      // authored here — the root crossfade owns the exit).
+      tl.to(
+        [".gap04-grid", ".gap04-empty"],
+        { opacity: 0, duration: 0.6, ease: "power1.out" },
+        5.6
+      );
+
+      tl.fromTo(
+        ".gap04-quote",
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power1.out" },
+        5.85
+      );
+
+      var quoteDriver = { t: 5.85 };
+      tl.to(
+        quoteDriver,
+        {
+          t: 8.888,
+          duration: 8.888 - 5.85,
+          ease: "none",
+          onUpdate: function () {
+            quoteText.textContent = quoteAt(quoteDriver.t);
+          },
+        },
+        5.85
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-gap"] = tl;
+    })();
+  </script>
+</template>
