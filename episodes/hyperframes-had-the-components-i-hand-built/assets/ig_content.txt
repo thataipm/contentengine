@@ -1,0 +1,9 @@
+I spent an entire session hand-building AI video components from scratch. Then I found a public registry that already had 380 of them.
+
+HyperFrames: 40,773 stars on GitHub. Fourteen terminal card styles. A count-up number. Even the scanning-light effect I built by hand, already there.
+
+One real gap: no circular loop diagram. So check first, don't assume the library doesn't have it, because most of the time, it already does.
+
+This channel is switching to it, starting with this video. Follow along if you're building your own AI systems, it's happening in public.
+
+#AIWorkflows #BuildInPublic #ClaudeCode #DevTools #AIAutomation

@@ -1,0 +1,7 @@
+I hand-built AI video components for an entire session, terminal cards, count-up numbers, a container device, before finding a public registry that already had 380 of them.
+
+HyperFrames: 40,773 real GitHub stars, fourteen terminal card styles, a count-up number already built, even a scanning-light effect I'd invented by hand this session. The one real gap: no circular loop diagram in the registry.
+
+This channel's production engine is switching to HyperFrames starting with this video. Follow along if you're building your own AI systems, it's happening in public.
+
+#Shorts #ClaudeCode #AIAutomation #BuildInPublic #DevTools
