@@ -5,6 +5,13 @@
 §0's revision note for the full context. Kept as v2.0 (same file, same version number) per
 explicit instruction not to fork a new document for this; the file's content is what changed,
 not its identity in the repo.
+**Revised again 2026-08-14**: replaced the single automation-building positioning with a
+formal 3-pillar experiment testing three distinct content territories head-to-head before
+committing weight to any one of them. Driven by real retention data reading flat/generic
+("every other person is making videos like us") plus a founder-conviction read that the
+automation-building/tool-spotlight space is now crowded and under-differentiated. See §0's
+2026-08-14 revision note and the new §3 for the full structure. Still v2.0, same file, same
+"edit in place" convention as the prior revision.
 
 This is the source of truth for the automated content system. It translates the That AI PM
 business strategy into rules the production pipeline follows. It **supersedes** the previous
@@ -17,6 +24,22 @@ the retirement note and migration history.
 > tools, demonstrated as they're actually made, not explained from theory.
 
 Core positioning: **building real AI automation, in public**.
+
+**Revision note, 2026-08-14**: the single positioning above is now being tested AGAINST two
+other territories, not simply superseded — see §3 for the full 3-pillar structure. Trigger:
+real retention data on published content reading flat/generic, plus a direct read that the
+automation-building/tool-spotlight lane has gotten crowded ("every other person is making
+videos like us") and no longer differentiates on its own. The specific gap identified: the
+current positioning is a **craft-appreciation** value prop (impressive to watch, useful to
+steal from) — informational, third-person, about the CREATOR's system. It was missing an
+**identity-and-stakes** value prop — content about the VIEWER's own career, income, and
+relevance, which structurally pulls a stronger emotional reason to follow (this pattern holds
+broadly: identity/stakes content outperforms craft/utility content almost everywhere it's been
+tried, e.g. personal-finance-anxiety content vs. investing tutorials). That gap is now its own
+pillar, "Navigating the AI Era" (§3) — not a wholesale positioning swap, since the crowding
+argument applies specifically to tool-spotlight content, not to explainer or build content,
+which is why this is a 3-way test rather than another full pivot. Explicit decision deferred to
+real data per §3's test structure, not decided by founder conviction alone this time.
 
 **Revision note, 2026-08-12**: this supersedes the original "AI-native product thinking"
 positioning below, which held for two days (2026-08-10 to 2026-08-12) before a direct
@@ -61,28 +84,82 @@ Every content idea should answer at least one:
 2. What should someone building with AI **use**?
 3. How does a real AI automation system actually **work**?
 4. What does building an AI automation system actually look like to **build**?
+5. **Added 2026-08-14, for the "Navigating the AI Era" pillar**: what does this mean for
+   **my own** work, career, money, relevance, or ambition — the **navigate** question. None of
+   KNOW/USE/WORK/BUILD above is about the viewer's own stakes; this is the one that is, and it's
+   the pillar 2 concepts should be scored against, not a forced fit into the other four.
 
 If an idea cannot pass at least one of these tests, reject it or reframe it.
 
-## 3. Content hierarchy
+## 3. Content hierarchy — 3-pillar experiment (2026-08-14)
 
-| Pillar | Target Share | Strategic Job | Examples |
+**Replaces the prior 4-pillar weighted mix below.** Three content territories, tested head to
+head at EQUAL weight, 10 videos each (30 total), before committing weight to any of them. This
+is a pillar-LEVEL experiment, one level above the concept-level batches already tracked in
+`docs/experiment_log.md` — see that file's new "Pillar Experiment" section for the live count
+and the decision gate.
+
+| Pillar | Target Share (test phase) | Strategic Job | Examples |
 |---|---|---|---|
-| Build in Public: The System | 35% | Differentiation/Proof | This channel's own production pipeline; real fixes and decisions (e.g. the CycleWheel/AgentSpawn motion-graphics rebuild); other real automation builds |
-| AI Tools & Agent Spotlights | 30% | Acquisition | Claude Code; real installable skills/agents/plugins; n8n; practical workflow tools, not PM-gated |
-| How AI Systems Actually Work | 20% | Authority | Agents, automation, context windows, evaluation, explained generally, not PM-specific |
-| Opinions & Trends | 15% | Personality | Contrarian AI/automation takes; where agents and automation are actually heading |
+| AI Tools & Agent Spotlights | 33% (10 videos) | Acquisition | Claude Code; real installable skills/agents/plugins; n8n; practical workflow tools, not PM-gated. Unchanged from the prior structure — this pillar is not in question, it's the known-working baseline the other two are tested against. |
+| Navigating the AI Era | 33% (10 videos) | Differentiation / emotional connection | See below — the new pillar. |
+| How AI Systems Actually Work | 33% (10 videos) | Authority | Agents, automation, context windows, evaluation, explained generally, not PM-specific. Unchanged scope from the prior structure. |
 
-These percentages are a starting hypothesis, not permanent rules, same as before the revision.
-The 90-day experiment (restarted in spirit as of 2026-08-12, see §8) determines the eventual
-mix.
+**Already-shipped tool-spotlight episodes (book-to-skill, pm-skills, the-karpathy-skill,
+hyperframes-had-the-components-i-hand-built) do not retroactively count toward the 10-per-pillar
+test counts** — same practice as the karpathy-skill legacy episode's "informal baseline, not
+counted in the batch" treatment. They're real prior evidence, just not part of this specific
+count, which starts fresh from 2026-08-14.
+
+### Pillar 2: Navigating the AI Era
+
+**Core question**: "What can a person do differently with their life, career, work, and
+ambitions now that AI exists?" Not "learn automation" as a subject — the real questions people
+carry are personal and stakes-based: will my job still matter, what should I learn now, how do
+I stay valuable, can I make more money with AI, what can I build now that wasn't possible
+before, how much of my work should I hand to AI, how do I avoid falling behind.
+
+**Posture (the actual differentiator, not the topic)**: first-person, in-progress, honestly
+uncertain. "I'm figuring out how to navigate this transition myself, experimenting with AI,
+building things, testing ideas, and sharing what I learn" — never "I have the answers." The
+topic itself ("AI and your career") is crowded; this posture is not. Most existing content in
+this space is confident-authority lecturing ("10 skills to future-proof your career"); this
+pillar is honest-in-progress documentation instead, which is the same authenticity discipline
+§0 already states as the brand's real differentiator, just applied to the creator's own life
+and choices instead of only to a production pipeline.
+
+**Build in Public: The System (the old pillar 1) folds in here, and stays DISTINCT, not
+diluted.** This channel's own production system (real fixes, real decisions, real builds) is
+this pillar's proof-of-work engine — it does not disappear or become generic career content.
+Product/PM background can still flavor the perspective without being the niche.
+
+**Emotional hook vocabulary (this pillar's actual creative engine)** — pick a register per
+concept, don't default to the same one every time, the same "reach for a literal device before
+another stat card" discipline the schema vocabulary (`hyperframes/frame.md`) already
+establishes for visuals. Grow this list the same way, when a genuinely new register earns its
+place:
+
+| Register | What it does | Example hook |
+|---|---|---|
+| Fear | Names the real stake | "What if the career you spent 10 years building disappears?" |
+| Hope | New possibility, individual leverage | "For the first time, one person can build something that used to require a company." |
+| Awe | Witnessing real capability — **this is where Build-in-Public content lives** | "I gave one AI agent a goal. It built the workflow itself." |
+| Curiosity | An open, provocative question | "What skills become more valuable when intelligence gets cheap?" |
+| Anger | Names a real, specific wrong | "We're teaching people to use AI completely backwards." |
+| Recognition | An unspoken truth the viewer already senses | "Everyone is learning AI tools. Almost nobody is learning when NOT to use them." |
+| Inspiration | Permission, agency | "You don't need permission to build anymore." |
+
+The old "Opinions & Trends" pillar (contrarian AI/automation takes) also folds into this
+pillar — Anger and Recognition are largely what that pillar already was, just without a name
+for the register.
 
 ## 4. Building-native rule
 
-**Building is the lens, not a cage.** Broad AI topics are allowed when they lead naturally into
-a real build or workflow. Tool spotlights are an acquisition engine, not the brand identity.
-When possible, ground a topic in something actually built or tested, not researched and
-narrated. Prefer useful, opinionated, experience-based framing over generic lists.
+**Building is the lens, not a cage — now specifically for Pillar 1 and Pillar 2's
+Awe/Hope/Inspiration registers.** Broad AI topics are allowed when they lead naturally into a
+real build or workflow. Tool spotlights are an acquisition engine, not the brand identity. When
+possible, ground a topic in something actually built or tested, not researched and narrated.
+Prefer useful, opinionated, experience-based framing over generic lists.
 
 **Example**:
 - Weak: "5 Claude Code skills."
@@ -148,12 +225,28 @@ Every batch must produce a decision and a learning.
 positioning itself changed (§0). Batches 1-2 (2026-08-10/11, under the original PM-specific
 positioning) stay on record as real data, not discarded, see `docs/experiment_log.md`.
 
-**Starting mix**:
-- Month 1: 10 Build in Public: The System, 10 tools/agent spotlights, 5 how-AI-works
-  explainers, 5 opinions/trends.
-- Month 2: reduce weak concepts and double down on winners.
-- Month 3: move toward roughly 50-70% build-in-public/system-native, 20-30% tools/workflows,
-  ~10% experiments.
+**Superseded 2026-08-14 — the starting mix below is replaced by the §3 3-pillar test.** Rather
+than a gradual month-by-month ratio shift, this is now a hard, explicit test: **10 videos per
+pillar (AI Tools & Agent Spotlights, Navigating the AI Era, How AI Systems Actually Work), 30
+total, equal weight, no ratio adjustment mid-test.** The decision gate comes AFTER real data
+exists for all three, not gradually across three months:
+
+1. Produce and publish 10 videos in each pillar (order can interleave, doesn't need to run
+   pillar-by-pillar).
+2. Once a pillar has enough real traffic to read signal (per §9's metrics — follows/1,000
+   views primary, saves/comments secondary), score it.
+3. Apply §10's batch decision rule AT THE PILLAR LEVEL: KEEP/SCALE the pillar(s) that show
+   real audience-quality signal, MODIFY a pillar whose hook/format is the likely problem rather
+   than its core premise, KILL a pillar only once it has genuinely sufficient evidence, not
+   after one or two weak posts.
+4. Only after this pillar-level decision does the mix stop being equal-weight — see
+   `docs/experiment_log.md`'s "Pillar Experiment" section for the live count and eventual
+   decision record.
+
+Old month-by-month mix (2026-08-12, retired 2026-08-14, kept for history): Month 1: 10 Build
+in Public: The System, 10 tools/agent spotlights, 5 how-AI-works explainers, 5 opinions/trends.
+Month 2: reduce weak concepts and double down on winners. Month 3: move toward roughly 50-70%
+build-in-public/system-native, 20-30% tools/workflows, ~10% experiments.
 
 ## 9. Content scoring
 
@@ -344,6 +437,11 @@ When generating content for That AI PM:
 12. Do not let automation decide the brand's strategy.
 13. When uncertain, prefer content that strengthens long-term positioning over content that
     merely chases short-term reach.
+14. **Added 2026-08-14**: identify which of the 3 pillars (§3) a new concept belongs to BEFORE
+    scoring it — the Quality Gate criteria differ (Pillar 2 concepts score against the
+    **navigate** question and an emotional register, not KNOW/USE/WORK/BUILD). Don't force a
+    Pillar-2-flavored idea into a Pillar-1 or Pillar-3 shape just because those are more
+    familiar to produce.
 
 ## 21. Source of truth
 

@@ -43,11 +43,19 @@ starts. A structured Markdown section is sufficient, no separate tracking file.
 
 ```
 concept:               short name for the idea
+pillar:                 which of the 3 pillars (spec §3): tools / navigate / how-it-works
+                        (added 2026-08-14 — tag every concept explicitly, don't infer it)
 pillar_fit:             pass/fail, one line why
 audience_fit:           pass/fail, one line why
 100k_test:              pass/fail against the 100K test: "if this gets 100,000 views, do we
                         want those 100,000 people?"
-pm_question:            which of KNOW / USE / WORK / BUILD it answers (name at least one)
+pm_question:            which of KNOW / USE / WORK / BUILD / NAVIGATE it answers (name at
+                        least one — NAVIGATE added 2026-08-14 for the "Navigating the AI Era"
+                        pillar, spec §2 item 5; score pillar-2 concepts against NAVIGATE, not
+                        a forced KNOW/USE/WORK/BUILD fit)
+emotional_register:     required for pillar: navigate concepts only (spec §3's vocabulary) —
+                        fear / hope / awe / curiosity / anger / recognition / inspiration.
+                        Note which register and vary it across concepts, don't default to one.
 originality:            what makes this not a generic recycled take
 payoff:                 the specific, compelling thing the viewer walks away with
 brand_value:            does this compound the brand long term, or is it a one off
@@ -97,6 +105,45 @@ YouTube's follow/watch-quality signal only ever comes through the retention-curv
 Populate `results:` with whatever `fetch_zernio_analytics.py` returns automatically, and only
 fall back to manual capture from a platform's native Insights/Studio UI for whatever the script
 still can't get once real data exists. Note in `results:` which numbers came from which source.
+
+---
+
+## Pillar Experiment: 3×10 test (opened 2026-08-14)
+
+**This is a pillar-LEVEL experiment, one level above the concept-level batches below.** See
+`docs/thataipm_content_system_operating_spec_v2.md` §3/§8 for the full rationale and structure.
+Three content territories, tested head to head at equal weight, 10 videos each (30 total),
+before committing weight to any one of them:
+
+1. **AI Tools & Agent Spotlights** — unchanged pillar, the known-working baseline.
+2. **Navigating the AI Era** — new pillar. First-person, in-progress documentation of what AI
+   means for one person's own work/career/money/ambition. Absorbs the old Build-in-Public and
+   Opinions & Trends pillars as distinct registers (see spec §3's emotional hook vocabulary),
+   not diluted into generic career content.
+3. **How AI Systems Actually Work** — unchanged pillar.
+
+**Trigger**: real retention data on published content reading flat/generic, plus a founder
+read that the tool-spotlight/automation-building lane has gotten crowded and stopped
+differentiating on its own (see spec §0's 2026-08-14 revision note).
+
+**Already-shipped episodes do not retroactively count** toward the 10-per-pillar counts below
+— book-to-skill, pm-skills, the-karpathy-skill, and hyperframes-had-the-components-i-hand-built
+are real prior tool-spotlight evidence, just not part of this specific count, which starts
+fresh from 2026-08-14 (same practice as treating the-karpathy-skill itself as an informal,
+uncounted baseline).
+
+| Pillar | Published | Remaining | Follows/1,000 views | Saves (agg.) | Status |
+|---|---|---|---|---|---|
+| AI Tools & Agent Spotlights | 0 | 10 | — | — | NOT_STARTED |
+| Navigating the AI Era | 0 | 10 | — | — | NOT_STARTED |
+| How AI Systems Actually Work | 0 | 10 | — | — | NOT_STARTED |
+
+**Decision gate**: once a pillar has enough real traffic to read signal (spec §9's metrics),
+apply spec §10's batch decision rule AT THE PILLAR LEVEL — KEEP/SCALE the pillar(s) with real
+audience-quality signal, MODIFY a pillar whose hook/format looks like the actual problem rather
+than its core premise, KILL only with genuinely sufficient evidence, not one or two weak posts.
+Update the table above as each video publishes; log the final decision here once all three
+pillars have enough data to compare.
 
 ---
 

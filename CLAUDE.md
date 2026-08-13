@@ -748,6 +748,36 @@ shared docs vs. keeping them separable) can keep that eventual use case in mind,
 the actual generic/sellable-product restructuring is explicitly not being done yet (the user's
 own call, 2026-08-13: clean up first, split later).
 
+**Strategy revised again, 2026-08-14: single automation-building positioning replaced by a
+3-pillar experiment.** Full detail in `docs/thataipm_content_system_operating_spec_v2.md` §0/§3
+and `docs/experiment_log.md`'s new "Pillar Experiment" section — this is a summary pointer, not
+the source of truth. Trigger: real retention data reading flat/generic plus a direct read that
+the tool-spotlight/automation-building lane has gotten crowded ("every other person is making
+videos like us") and stopped differentiating on its own. Three pillars now tested head to head
+at equal weight, 10 videos each (30 total), before committing weight to any one:
+
+1. **AI Tools & Agent Spotlights** (unchanged) — the known-working baseline this test is run
+   against.
+2. **Navigating the AI Era** (new) — "What can a person do differently with their life,
+   career, work, and ambitions now that AI exists?" First-person, in-progress posture ("I'm
+   figuring this out too"), explicitly not authority-lecturing — that posture, not the topic
+   itself, is the actual differentiator, since "AI and your career" as a bare topic is already
+   crowded. Absorbs the old Build-in-Public and Opinions & Trends pillars as **distinct,
+   undiluted registers** inside an emotional hook vocabulary (fear / hope / awe / curiosity /
+   anger / recognition / inspiration — spec §3 has the full table with example hooks per
+   register), rather than folding them into generic career content. Build-in-Public
+   specifically lives in the Awe/Hope/Inspiration registers as this pillar's proof-of-work
+   engine — this channel's own production system doesn't disappear, it becomes evidence inside
+   a bigger story instead of being the story itself.
+3. **How AI Systems Actually Work** (unchanged).
+
+**Already-shipped tool-spotlight episodes do not retroactively count** toward the new 10-per-
+pillar totals (book-to-skill, pm-skills, the-karpathy-skill,
+hyperframes-had-the-components-i-hand-built) — real prior evidence, just not part of this
+count, which starts fresh from 2026-08-14. Decision gate is real Instagram/YouTube data per
+pillar (follows/1,000 views primary, spec §9), not founder conviction alone this time — a
+deliberate difference from the 2026-08-12 revision, which was conviction-led on thin data.
+
 ## 8. Working discipline (adapted from the karpathy-skill rules, 2026-08-11)
 
 Direct instruction, prompted by watching this project's own actual failure modes and then
