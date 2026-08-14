@@ -1,0 +1,223 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'EB Garamond'; src: url('assets/fonts/EBGaramond-400.woff2') format('woff2'); font-weight: 400; font-display: block; }
+      @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-display: block; }
+      :root {
+      --ink: #141413;
+      --cream: #FAF9F5;
+      --tile: #EFE9DE;
+      --tile-strong: #ECE3D4;
+      --coral: #6952D6;
+      --navy: #1C1C22;
+      --navy-soft: #202027;
+      --navy-elev: #242429;
+      --cap-ink: #F5F3ED;
+      --cap-canvas: #1A1A20;
+      --cap-accent: #F0B860;
+      --cap-accent-2: #7FA8C9;
+      --font-display: "EB Garamond", system-ui, serif;
+      --font-body: "Inter", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE lifted cream card — warm cream fill, 1px hairline ink border, one soft warm
+     shadow (code-editorial's only elevation language), 12px radius, no tilt */
+  .caption-pill {
+    max-width: 78%;
+    padding: 22px 44px 26px;
+    background: var(--cap-canvas, #faf9f5);
+    border: 1px solid color-mix(in srgb, var(--cap-ink, #141413) 12%, transparent);
+    border-radius: 12px;
+    box-shadow:
+      0 1px 3px color-mix(in srgb, var(--cap-ink, #141413) 8%, transparent),
+      0 4px 16px color-mix(in srgb, var(--cap-ink, #141413) 4%, transparent);
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.12em 0.3em;
+    font-family: "EB Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(40px, 4.4vw, 56px);
+    line-height: 1.24;
+    letter-spacing: -0.02em;
+  }
+
+  /* upcoming — faint warm ink, no underline */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.02em 0.06em;
+    color: color-mix(in srgb, var(--cap-ink, #141413) 40%, var(--cap-canvas, #faf9f5));
+    border-bottom: 3px solid transparent;
+  }
+  /* current word — full ink under the coral voltage underline (the brand's signature
+     inline-link gesture; border-bottom = underline without layout shift) */
+  .caption-word.is-active {
+    color: var(--cap-ink, #141413);
+    border-bottom: 3px solid var(--cap-accent, #cc785c);
+  }
+  /* already spoken — solid warm ink, underline cleared */
+  .caption-word.is-spoken {
+    color: var(--cap-ink, #141413);
+    border-bottom: 3px solid transparent;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — the expressive EB Garamond italic */
+  .caption-word.cap-brand {
+    font-style: italic;
+    color: var(--cap-ink, #141413);
+  }
+  .caption-word.cap-brand.is-active {
+    border-bottom: 3px solid var(--cap-accent, #cc785c);
+  }
+  /* numerals / data — slightly recessed warm ink */
+  .caption-word.cap-num {
+    color: color-mix(in srgb, var(--cap-ink, #141413) 72%, var(--cap-canvas, #faf9f5));
+  }
+  /* emphasis — a persistent coral voltage underline */
+  .caption-word.cap-cta {
+    border-bottom: 3px solid var(--cap-accent-2, #b5654a);
+    color: var(--cap-ink, #141413);
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(34px, 5.4vw, 46px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="51.04"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.119,"end":0.379,"text":"If you're","words":[{"id":"caption-word-0-0","text":"If","start":0.119,"end":0.199},{"id":"caption-word-0-1","text":"you're","start":0.219,"end":0.34}]},{"id":"caption-group-1","frame":1,"start":0.379,"end":1.259,"text":"building with AI,","words":[{"id":"caption-word-1-0","text":"building","start":0.379,"end":0.639},{"id":"caption-word-1-1","text":"with","start":0.68,"end":0.819},{"id":"caption-word-1-2","text":"AI,","start":0.899,"end":1.139}]},{"id":"caption-group-2","frame":1,"start":1.599,"end":2.18,"text":"you've probably","words":[{"id":"caption-word-2-0","text":"you've","start":1.599,"end":1.74},{"id":"caption-word-2-1","text":"probably","start":1.779,"end":2.119}]},{"id":"caption-group-3","frame":1,"start":2.18,"end":2.919,"text":"noticed something.","words":[{"id":"caption-word-3-0","text":"noticed","start":2.18,"end":2.419},{"id":"caption-word-3-1","text":"something.","start":2.46,"end":2.799}]},{"id":"caption-group-4","frame":1,"start":3.439,"end":3.779,"text":"It does","words":[{"id":"caption-word-4-0","text":"It","start":3.439,"end":3.539},{"id":"caption-word-4-1","text":"does","start":3.599,"end":3.74}]},{"id":"caption-group-5","frame":1,"start":3.779,"end":4.239,"text":"the work","words":[{"id":"caption-word-5-0","text":"the","start":3.779,"end":3.879},{"id":"caption-word-5-1","text":"work","start":3.939,"end":4.119}]},{"id":"caption-group-6","frame":1,"start":4.259,"end":4.839,"text":"faster than","words":[{"id":"caption-word-6-0","text":"faster","start":4.259,"end":4.539},{"id":"caption-word-6-1","text":"than","start":4.579,"end":4.739}]},{"id":"caption-group-7","frame":1,"start":4.839,"end":5.699,"text":"you ever could.","words":[{"id":"caption-word-7-0","text":"you","start":4.839,"end":4.94},{"id":"caption-word-7-1","text":"ever","start":5.079,"end":5.219},{"id":"caption-word-7-2","text":"could.","start":5.339,"end":5.579}]},{"id":"caption-group-8","frame":1,"start":6.559,"end":6.94,"text":"So here's","words":[{"id":"caption-word-8-0","text":"So","start":6.559,"end":6.639},{"id":"caption-word-8-1","text":"here's","start":6.699,"end":6.899}]},{"id":"caption-group-9","frame":1,"start":6.94,"end":7.819,"text":"the real question:","words":[{"id":"caption-word-9-0","text":"the","start":6.94,"end":7},{"id":"caption-word-9-1","text":"real","start":7.059,"end":7.199},{"id":"caption-word-9-2","text":"question:","start":7.319,"end":7.699}]},{"id":"caption-group-10","frame":1,"start":8.46,"end":9.159,"text":"what's actually","words":[{"id":"caption-word-10-0","text":"what's","start":8.46,"end":8.639},{"id":"caption-word-10-1","text":"actually","start":8.739,"end":9.099}]},{"id":"caption-group-11","frame":1,"start":9.159,"end":9.619,"text":"left for","words":[{"id":"caption-word-11-0","text":"left","start":9.159,"end":9.34},{"id":"caption-word-11-1","text":"for","start":9.42,"end":9.5}]},{"id":"caption-group-12","frame":1,"start":9.619,"end":9.899,"text":"you to","words":[{"id":"caption-word-12-0","text":"you","start":9.619,"end":9.719},{"id":"caption-word-12-1","text":"to","start":9.779,"end":9.84}]},{"id":"caption-group-13","frame":1,"start":9.899,"end":10.559,"text":"be good at?","words":[{"id":"caption-word-13-0","text":"be","start":9.899,"end":9.979},{"id":"caption-word-13-1","text":"good","start":10.039,"end":10.159},{"id":"caption-word-13-2","text":"at?","start":10.239,"end":10.439}]},{"id":"caption-group-14","frame":2,"start":11.519,"end":11.859,"text":"It can","words":[{"id":"caption-word-14-0","text":"It","start":11.519,"end":11.599},{"id":"caption-word-14-1","text":"can","start":11.659,"end":11.759}]},{"id":"caption-group-15","frame":2,"start":11.859,"end":13.199,"text":"sound completely confident","words":[{"id":"caption-word-15-0","text":"sound","start":11.859,"end":12.119},{"id":"caption-word-15-1","text":"completely","start":12.159,"end":12.659},{"id":"caption-word-15-2","text":"confident","start":12.759,"end":13.14}]},{"id":"caption-group-16","frame":2,"start":13.199,"end":14.14,"text":"about something that's","words":[{"id":"caption-word-16-0","text":"about","start":13.199,"end":13.38},{"id":"caption-word-16-1","text":"something","start":13.439,"end":13.759},{"id":"caption-word-16-2","text":"that's","start":13.799,"end":14.02}]},{"id":"caption-group-17","frame":2,"start":14.199,"end":15.059,"text":"totally wrong.","words":[{"id":"caption-word-17-0","text":"totally","start":14.199,"end":14.5},{"id":"caption-word-17-1","text":"wrong.","start":14.599,"end":14.939}]},{"id":"caption-group-18","frame":2,"start":15.779,"end":16.26,"text":"It doesn't","words":[{"id":"caption-word-18-0","text":"It","start":15.779,"end":15.859},{"id":"caption-word-18-1","text":"doesn't","start":15.939,"end":16.219}]},{"id":"caption-group-19","frame":2,"start":16.26,"end":16.779,"text":"know true","words":[{"id":"caption-word-19-0","text":"know","start":16.26,"end":16.399},{"id":"caption-word-19-1","text":"true","start":16.52,"end":16.719}]},{"id":"caption-group-20","frame":2,"start":16.779,"end":17.72,"text":"from convincing.","words":[{"id":"caption-word-20-0","text":"from","start":16.779,"end":16.92},{"id":"caption-word-20-1","text":"convincing.","start":17,"end":17.6}]},{"id":"caption-group-21","frame":2,"start":18.359,"end":19.5,"text":"That part's still","words":[{"id":"caption-word-21-0","text":"That","start":18.359,"end":18.559},{"id":"caption-word-21-1","text":"part's","start":18.659,"end":19.179},{"id":"caption-word-21-2","text":"still","start":19.239,"end":19.439}]},{"id":"caption-group-22","frame":2,"start":19.5,"end":19.999,"text":"on you.","words":[{"id":"caption-word-22-0","text":"on","start":19.5,"end":19.6},{"id":"caption-word-22-1","text":"you.","start":19.68,"end":19.879}]},{"id":"caption-group-23","frame":3,"start":21.039,"end":21.359,"text":"It can","words":[{"id":"caption-word-23-0","text":"It","start":21.039,"end":21.1},{"id":"caption-word-23-1","text":"can","start":21.159,"end":21.299}]},{"id":"caption-group-24","frame":3,"start":21.359,"end":22.039,"text":"pass every","words":[{"id":"caption-word-24-0","text":"pass","start":21.359,"end":21.639},{"id":"caption-word-24-1","text":"every","start":21.739,"end":21.939}]},{"id":"caption-group-25","frame":3,"start":22.039,"end":22.42,"text":"check you","words":[{"id":"caption-word-25-0","text":"check","start":22.039,"end":22.219},{"id":"caption-word-25-1","text":"you","start":22.279,"end":22.359}]},{"id":"caption-group-26","frame":3,"start":22.42,"end":22.859,"text":"give it,","words":[{"id":"caption-word-26-0","text":"give","start":22.42,"end":22.559},{"id":"caption-word-26-1","text":"it,","start":22.6,"end":22.739}]},{"id":"caption-group-27","frame":3,"start":23.019,"end":23.239,"text":"and the","words":[{"id":"caption-word-27-0","text":"and","start":23.019,"end":23.1},{"id":"caption-word-27-1","text":"the","start":23.139,"end":23.18}]},{"id":"caption-group-28","frame":3,"start":23.239,"end":23.859,"text":"result can","words":[{"id":"caption-word-28-0","text":"result","start":23.239,"end":23.559},{"id":"caption-word-28-1","text":"can","start":23.619,"end":23.779}]},{"id":"caption-group-29","frame":3,"start":23.859,"end":24.939,"text":"still feel empty.","words":[{"id":"caption-word-29-0","text":"still","start":23.859,"end":24.039},{"id":"caption-word-29-1","text":"feel","start":24.18,"end":24.379},{"id":"caption-word-29-2","text":"empty.","start":24.459,"end":24.819}]},{"id":"caption-group-30","frame":3,"start":25.739,"end":26.739,"text":"Passing a test","words":[{"id":"caption-word-30-0","text":"Passing","start":25.739,"end":26.039},{"id":"caption-word-30-1","text":"a","start":26.099,"end":26.179},{"id":"caption-word-30-2","text":"test","start":26.239,"end":26.679}]},{"id":"caption-group-31","frame":3,"start":26.739,"end":27.819,"text":"and being good","words":[{"id":"caption-word-31-0","text":"and","start":26.739,"end":26.84},{"id":"caption-word-31-1","text":"being","start":26.959,"end":27.139},{"id":"caption-word-31-2","text":"good","start":27.279,"end":27.759}]},{"id":"caption-group-32","frame":3,"start":27.819,"end":28.299,"text":"were never","words":[{"id":"caption-word-32-0","text":"were","start":27.819,"end":27.959},{"id":"caption-word-32-1","text":"never","start":28.079,"end":28.26}]},{"id":"caption-group-33","frame":3,"start":28.299,"end":29.139,"text":"the same thing.","words":[{"id":"caption-word-33-0","text":"the","start":28.299,"end":28.399},{"id":"caption-word-33-1","text":"same","start":28.439,"end":28.659},{"id":"caption-word-33-2","text":"thing.","start":28.699,"end":29.019}]},{"id":"caption-group-34","frame":4,"start":30.239,"end":30.519,"text":"It can","words":[{"id":"caption-word-34-0","text":"It","start":30.239,"end":30.299},{"id":"caption-word-34-1","text":"can","start":30.359,"end":30.479}]},{"id":"caption-group-35","frame":4,"start":30.519,"end":31.139,"text":"write something","words":[{"id":"caption-word-35-0","text":"write","start":30.519,"end":30.739},{"id":"caption-word-35-1","text":"something","start":30.799,"end":31.099}]},{"id":"caption-group-36","frame":4,"start":31.139,"end":31.739,"text":"with nothing","words":[{"id":"caption-word-36-0","text":"with","start":31.139,"end":31.26},{"id":"caption-word-36-1","text":"nothing","start":31.379,"end":31.659}]},{"id":"caption-group-37","frame":4,"start":31.739,"end":32.139,"text":"wrong in","words":[{"id":"caption-word-37-0","text":"wrong","start":31.739,"end":31.959},{"id":"caption-word-37-1","text":"in","start":32,"end":32.079}]},{"id":"caption-group-38","frame":4,"start":32.139,"end":32.399,"text":"it,","words":[{"id":"caption-word-38-0","text":"it,","start":32.139,"end":32.279}]},{"id":"caption-group-39","frame":4,"start":32.599,"end":32.86,"text":"and it","words":[{"id":"caption-word-39-0","text":"and","start":32.599,"end":32.68},{"id":"caption-word-39-1","text":"it","start":32.719,"end":32.819}]},{"id":"caption-group-40","frame":4,"start":32.86,"end":33.459,"text":"still won't","words":[{"id":"caption-word-40-0","text":"still","start":32.86,"end":33.099},{"id":"caption-word-40-1","text":"won't","start":33.18,"end":33.399}]},{"id":"caption-group-41","frame":4,"start":33.459,"end":34.339,"text":"sound like you.","words":[{"id":"caption-word-41-0","text":"sound","start":33.459,"end":33.68},{"id":"caption-word-41-1","text":"like","start":33.739,"end":33.88},{"id":"caption-word-41-2","text":"you.","start":34,"end":34.219}]},{"id":"caption-group-42","frame":4,"start":35.099,"end":35.62,"text":"Correct","words":[{"id":"caption-word-42-0","text":"Correct","start":35.099,"end":35.5}]},{"id":"caption-group-43","frame":4,"start":35.84,"end":36.36,"text":"was never","words":[{"id":"caption-word-43-0","text":"was","start":35.84,"end":36.059},{"id":"caption-word-43-1","text":"never","start":36.119,"end":36.319}]},{"id":"caption-group-44","frame":4,"start":36.36,"end":36.799,"text":"the same","words":[{"id":"caption-word-44-0","text":"the","start":36.36,"end":36.459},{"id":"caption-word-44-1","text":"same","start":36.52,"end":36.739}]},{"id":"caption-group-45","frame":4,"start":36.799,"end":37.559,"text":"as yours.","words":[{"id":"caption-word-45-0","text":"as","start":36.799,"end":36.939},{"id":"caption-word-45-1","text":"yours.","start":37.02,"end":37.439}]},{"id":"caption-group-46","frame":5,"start":38.559,"end":38.799,"text":"So the","words":[{"id":"caption-word-46-0","text":"So","start":38.559,"end":38.619},{"id":"caption-word-46-1","text":"the","start":38.659,"end":38.719}]},{"id":"caption-group-47","frame":5,"start":38.799,"end":39.319,"text":"skill that","words":[{"id":"caption-word-47-0","text":"skill","start":38.799,"end":39.02},{"id":"caption-word-47-1","text":"that","start":39.059,"end":39.219}]},{"id":"caption-group-48","frame":5,"start":39.319,"end":40.559,"text":"actually matters now","words":[{"id":"caption-word-48-0","text":"actually","start":39.319,"end":39.659},{"id":"caption-word-48-1","text":"matters","start":39.719,"end":40.02},{"id":"caption-word-48-2","text":"now","start":40.099,"end":40.479}]},{"id":"caption-group-49","frame":5,"start":40.559,"end":41.48,"text":"isn't speed.","words":[{"id":"caption-word-49-0","text":"isn't","start":40.559,"end":40.84},{"id":"caption-word-49-1","text":"speed.","start":40.919,"end":41.36}]},{"id":"caption-group-50","frame":5,"start":41.899,"end":42.779,"text":"It's judgment:","words":[{"id":"caption-word-50-0","text":"It's","start":41.899,"end":42.079},{"id":"caption-word-50-1","text":"judgment:","start":42.159,"end":42.659}]},{"id":"caption-group-51","frame":5,"start":43.52,"end":44.899,"text":"knowing what's real,","words":[{"id":"caption-word-51-0","text":"knowing","start":43.52,"end":43.759},{"id":"caption-word-51-1","text":"what's","start":43.84,"end":44.059},{"id":"caption-word-51-2","text":"real,","start":44.18,"end":44.819}]},{"id":"caption-group-52","frame":5,"start":44.899,"end":45.579,"text":"what's good,","words":[{"id":"caption-word-52-0","text":"what's","start":44.899,"end":45.159},{"id":"caption-word-52-1","text":"good,","start":45.219,"end":45.459}]},{"id":"caption-group-53","frame":5,"start":45.959,"end":46.459,"text":"and what's","words":[{"id":"caption-word-53-0","text":"and","start":45.959,"end":46.099},{"id":"caption-word-53-1","text":"what's","start":46.139,"end":46.379}]},{"id":"caption-group-54","frame":5,"start":46.459,"end":47.299,"text":"actually you.","words":[{"id":"caption-word-54-0","text":"actually","start":46.459,"end":46.819},{"id":"caption-word-54-1","text":"you.","start":46.939,"end":47.179}]},{"id":"caption-group-55","frame":5,"start":48.2,"end":48.96,"text":"Follow along,","words":[{"id":"caption-word-55-0","text":"Follow","start":48.2,"end":48.419},{"id":"caption-word-55-1","text":"along,","start":48.5,"end":48.84}]},{"id":"caption-group-56","frame":5,"start":49.2,"end":49.719,"text":"I'm figuring","words":[{"id":"caption-word-56-0","text":"I'm","start":49.2,"end":49.34},{"id":"caption-word-56-1","text":"figuring","start":49.399,"end":49.68}]},{"id":"caption-group-57","frame":5,"start":49.719,"end":50.159,"text":"this out","words":[{"id":"caption-word-57-0","text":"this","start":49.719,"end":49.879},{"id":"caption-word-57-1","text":"out","start":49.939,"end":50.099}]},{"id":"caption-group-58","frame":5,"start":50.159,"end":50.559,"text":"in real","words":[{"id":"caption-word-58-0","text":"in","start":50.159,"end":50.259},{"id":"caption-word-58-1","text":"real","start":50.319,"end":50.52}]},{"id":"caption-group-59","frame":5,"start":50.559,"end":51.099,"text":"time too.","words":[{"id":"caption-word-59-0","text":"time","start":50.559,"end":50.799},{"id":"caption-word-59-1","text":"too.","start":50.84,"end":50.979}]}];
+  var DURATION = 51.04;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.98 }, { scale: 1, duration: 0.16, ease: "power1.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>
