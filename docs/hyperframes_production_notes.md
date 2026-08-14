@@ -122,11 +122,24 @@ sync with a voiceover) — functionally the same device, likely more polished, s
 The first incident's own written lesson did not survive into the second build, which is why
 this log exists as a mechanical artifact instead of a memory to carry forward by habit.
 
-**Confirmed registry gaps (checked, no match found) — none logged yet.** Every device built in
-this channel's episodes so far was built without first checking the registry, so none of them
-can honestly be logged here as a *confirmed* gap yet — see `/thataipm-registry-check` before
-the next episode's frame authoring begins, and log real entries here as gaps get confirmed
-going forward.
+### Log
+
+Structured, machine-checked format — `check_registry_usage.mjs` (wired into
+`/thataipm-assemble`'s pipeline) parses ONLY lines in this exact shape as a confirmed,
+registry-checked entry. A slug mentioned elsewhere in this file (a narrative example, a
+cautionary tale) does not count and will not pass the check — only a real logged line here
+does. One line per confirmed gap:
+
+```
+- [YYYY-MM-DD] <episode-slug>: <device> — <why no registry block covers it>
+```
+
+**Entries — none logged yet.** Every device built in this channel's episodes so far was built
+without first checking the registry, so none of them can honestly be logged here as a
+*confirmed* gap — including `hyperframes-what-skills-matter`, cited above as the cautionary
+example of skipping the check, which is the opposite of a confirmed entry. Run
+`/thataipm-registry-check` before the next episode's frame authoring begins, and add a real
+line here, in the exact format above, as gaps get genuinely confirmed going forward.
 
 **Known registry blocks directly relevant to this channel's schema vocabulary** (from the
 2026-08-14 audit, `npx hyperframes catalog`) — check these specifically before reaching for a

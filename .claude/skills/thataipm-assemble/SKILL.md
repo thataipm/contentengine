@@ -1,9 +1,9 @@
 ---
 name: thataipm-assemble
-description: "Run the full HyperFrames build chain for an @thataipm episode in one command: captions build, assemble-index, a static-gap check for the Visual Retention Rule, transitions inject, hyperframes check, optional snapshot, render, and an audio volumedetect sanity check. Use after frame edits or a thataipm-resync pass are done and it's time to produce a real MP4. Not for editing frame content or timing."
+description: "Run the full HyperFrames build chain for an @thataipm episode in one command: captions build, assemble-index, a static-gap check for the Visual Retention Rule, a registry-usage check, transitions inject, hyperframes check, optional snapshot, render, and an audio volumedetect sanity check. Use after frame edits or a thataipm-resync pass are done and it's time to produce a real MP4. Not for editing frame content or timing."
 ---
 
-# thataipm-assemble: one command instead of seven tool calls
+# thataipm-assemble: one command instead of eight tool calls
 
 ## Why this exists
 
@@ -26,9 +26,9 @@ failure report.
      --project-dir hyperframes-<episode>
    ```
    Runs, in order: captions build → assemble-index → **static-gap check** →
-   transitions inject → `npm run check` → render → `ffmpeg volumedetect`. Stops
-   immediately at the first failing step with the command and exit code, so you
-   always know exactly which stage broke.
+   **registry usage check** → transitions inject → `npm run check` → render →
+   `ffmpeg volumedetect`. Stops immediately at the first failing step with the
+   command and exit code, so you always know exactly which stage broke.
 
    Flags:
    - `--no-render` — stop after `check` passes, useful for a fast validate-only
@@ -43,6 +43,9 @@ failure report.
    - `--skip-gap-check` — only use once you've manually confirmed a flagged gap
      is a false positive (see below) and don't want to re-verify it on every
      re-run of an otherwise-unchanged frame.
+   - `--skip-registry-check` — only use on a re-run where nothing about the
+     episode's visual devices changed since the last passing run. Don't reach
+     for this just because the check is inconvenient to fix — see step 3.5.
 
 3. **If the static-gap check fails**, this is CLAUDE.md's Visual Retention Rule 1
    (no static frame longer than 2s) — and per the 2026-08-13 tightening, the fix
@@ -62,13 +65,23 @@ failure report.
      up as a covering tween. If you're closing a gap, add a real new element and
      let the tool confirm coverage as a sanity check, not as design guidance.
 
+3.5. **If the registry usage check fails**, this means the current episode has
+   zero installed registry blocks AND no logged, checked-and-confirmed entry in
+   `docs/hyperframes_production_notes.md`'s schema-vocabulary log — the exact
+   signature of never having run `/thataipm-registry-check` at all. Run it now:
+   either install a matching block with `hyperframes add <name>` and re-run this
+   pipeline, or, if a real check confirms nothing fits, add a line to that log in
+   the exact `- [YYYY-MM-DD] <episode-slug>: <device> — <why>` format before
+   re-running. Don't reach for `--skip-registry-check` to make this go away —
+   that recreates the exact failure mode the check exists to catch.
+
 4. **If `hyperframes check` fails**, fix the reported issue directly in the frame
    file (common real ones hit on this channel: a nested-positioned-ancestor
    coordinate bug, a GSAP array-target tween applying a property to the wrong
    element, an ancestor-opacity-diluted contrast failure — see
-   `hyperframes/CLAUDE.md`'s durable pitfalls list) and re-run the pipeline.
-   `data-layout-allow-overflow`/`data-layout-allow-overlap` are for genuinely
-   intentional design choices only, not a way to silence a real bug.
+   `docs/hyperframes_production_notes.md`'s durable pitfalls list) and re-run the
+   pipeline. `data-layout-allow-overflow`/`data-layout-allow-overlap` are for
+   genuinely intentional design choices only, not a way to silence a real bug.
 
 5. **Review the volumedetect output** at the end — healthy range is roughly -18 to
    -22 dB mean, max under -1 dB. Anything silent or clipped means a `/thataipm-vo`

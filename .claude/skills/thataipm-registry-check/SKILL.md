@@ -26,7 +26,14 @@ device that already existed as a polished, pre-built HyperFrames registry block:
 
 The written-down lesson from the first incident did not survive into practice on the second
 build. This skill exists to make the check itself a mechanical step, not a habit that has to
-survive being remembered session to session.
+survive being remembered session to session — and a skill that still has to be remembered to
+*invoke* is only half the fix. `scripts/check_registry_usage.mjs` closes the other half: it's
+wired directly into `/thataipm-assemble`'s pipeline as a hard, unskippable gate (step 4/8), so
+this check runs on every single episode automatically, whether or not anyone remembers to run
+this skill by name. It fails unless at least one registry block is actually installed, or the
+episode has a real, structured entry in `docs/hyperframes_production_notes.md`'s log confirming
+the registry was checked and genuinely nothing fit. See that file's "Custom devices built for
+this channel" section for the exact log format the checker parses.
 
 ## When to use this
 

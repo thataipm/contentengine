@@ -868,9 +868,13 @@ Standing production order: `/thataipm-script-review` → `/thataipm-vo` →
   the first HyperFrames episode; a full literal-word-icon system on
   `hyperframes-what-skills-matter`) that already existed as a polished `hyperframes catalog`
   registry block. Runs the real registry check plus a persistent cross-episode
-  "already-confirmed-no-match" log in `docs/hyperframes_production_notes.md`, so the check
-  survives as a mechanical step rather than a lesson that has to be remembered session to
-  session. Use before writing any frame composition's visual devices.
+  "already-confirmed-no-match" log in `docs/hyperframes_production_notes.md`. **Enforced
+  automatically, not just invokable** — `check_registry_usage.mjs` is wired into
+  `/thataipm-assemble`'s pipeline as a hard gate (step 4/8): it fails the whole render unless a
+  registry block is actually installed or the episode has a real structured log entry, so the
+  check can't be silently skipped by forgetting to run this skill by name. Use before writing
+  any frame composition's visual devices regardless — catching a gap before frames get written
+  is cheaper than catching it at assemble time.
 - **`thataipm-resync`** — after VO changes, prints every frame's real per-word timeline from
   `audio_meta.json` (the exact manual step done by hand for book-to-skill's pacing revision) and
   mechanically resets each frame's full-span `data-duration` values, leaving scene-specific
