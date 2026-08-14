@@ -438,8 +438,10 @@ concepts:
       OpenAI's March 2025 and Google DeepMind's April 2025 adoption dates corroborated across
       multiple independent secondary sources (not a single aggregator), flagged in the script
       as slightly less rigorously sourced than the three primary-source facts above.
-    episode_status: PRODUCED (hyperframes-what-is-mcp/renders/video.mp4, 76.56s, rendered
-      2026-08-14 -- not yet in episodes/ or distributed, awaiting user review)
+    episode_status: SCHEDULED (episodes/hyperframes-what-is-mcp/build/hyperframes-what-is-mcp.mp4,
+      66.83s post-speedup -- Instagram + YouTube scheduled via Zernio for 2026-08-14T17:00:00
+      Asia/Kolkata, see episodes/scheduled/hyperframes-what-is-mcp.md; LinkedIn caption drafted,
+      posted manually per standing convention)
 success_metrics: follows per 1,000 views (primary, this pillar's own baseline -- nothing to
   compare against yet since this is the pillar's first video), saves and comments (secondary),
   per spec §9
