@@ -48,13 +48,23 @@ this channel" section for the exact log format the checker parses.
 
 ## Steps
 
-1. **Run the real registry**, not memory of what it might contain:
-   ```bash
-   npx hyperframes@<pinned-version> catalog
-   ```
-   Filter by tag for a faster scan against a specific need, e.g.
-   `npx hyperframes@<pinned-version> catalog --tag data` for chart/stat devices, or
-   `--tag transition` for the 12 transition categories. Read `hyperframes-registry`'s own docs
+1. **Run the real registry**, not memory of what it might contain. Two ways in:
+   - **Per-shot candidate suggestions**, straight from the script instead of a manual scan:
+     ```bash
+     node .claude/skills/thataipm-registry-check/scripts/suggest_registry_matches.mjs \
+       --project-dir hyperframes-<episode>
+     ```
+     Reads every frame's own `Scene:` description out of `STORYBOARD.md` and runs each one
+     through `hyperframes catalog --query --json` — the CLI's real search (local word match,
+     or true meaning search if `--on-device` is set up on this machine) — printing the top
+     candidates per frame instead of requiring a manual read of 373 catalog entries. A
+     candidate surfacing here is a lead to evaluate, not an auto-pick — see step 3.
+   - **Manual browse**, for a broader look or a specific tag:
+     ```bash
+     npx hyperframes@<pinned-version> catalog
+     npx hyperframes@<pinned-version> catalog --tag data      # chart/stat devices
+     npx hyperframes@<pinned-version> catalog --tag transition # the 12 transition categories
+     ``` Read `hyperframes-registry`'s own docs
    for the full `catalog`/`add` command surface if a filter isn't obviously matching.
 
 2. **Check the persistent schema-vocabulary log** at `docs/hyperframes_production_notes.md`'s
