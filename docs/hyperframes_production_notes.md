@@ -103,6 +103,29 @@ automatically.** After any SFX/duration/audio change, either re-run the assembly
 single-value fix already diagnosed, hand-verify the corresponding `<audio>` tag in `index.html`
 directly — don't assume editing the source data was sufficient.
 
+## Durable pitfall: a registry item's file structure can look like a block even when it's a component
+
+Found 2026-08-14 on `hyperframes-what-is-mcp`: `constellation-hub` was mounted in Frame 2 via
+`data-composition-src` (the block-only mounting mechanism) even though `hyperframes add` had
+labeled its own install output `(hyperframes:component)`. It rendered nothing — no error from
+`hyperframes check` (Layout passed clean), none from `check_registry_usage.mjs` (only checks the
+file exists, not that it's wired correctly), and the earlier snapshot review missed it too. The
+user caught it directly ("From 14 sec to 22 sec there are no visuals at all"); the bug was only
+confirmed by extracting real frames from the delivered MP4 with ffmpeg and looking at the actual
+pixels, not by any mechanical check.
+
+**Why it's an easy mistake**: `constellation-hub.html`'s internal structure looks exactly like a
+self-contained block — its own `<html>` wrapper, its own `data-composition-id`, its own
+`window.__timelines[...]` registration — even though its registry CLASSIFICATION is "component."
+Components have no standalone timeline and must be pasted directly into the host composition's
+HTML/CSS/JS, with their GSAP calls merged onto the host's own timeline (see
+`~/.claude/skills/hyperframes-registry/references/wiring-components.md`); only blocks get
+`data-composition-src`. **Always check the `hyperframes add` install output's explicit
+`(hyperframes:block)` vs `(hyperframes:component)` label before wiring anything up, and read the
+matching wiring reference** — the file's own internal shape is not a reliable signal. `terminal-
+simulator` (also a component, on the same episode) was pasted in correctly from the start and
+rendered fine, confirming the mounting method — not the framework — was the actual bug.
+
 ## Custom devices built for this channel (added 2026-08-14)
 
 A running log of visual devices hand-built for an @thataipm episode specifically BECAUSE no
@@ -134,12 +157,26 @@ does. One line per confirmed gap:
 - [YYYY-MM-DD] <episode-slug>: <device> — <why no registry block covers it>
 ```
 
-**Entries — none logged yet.** Every device built in this channel's episodes so far was built
-without first checking the registry, so none of them can honestly be logged here as a
-*confirmed* gap — including `hyperframes-what-skills-matter`, cited above as the cautionary
-example of skipping the check, which is the opposite of a confirmed entry. Run
-`/thataipm-registry-check` before the next episode's frame authoring begins, and add a real
-line here, in the exact format above, as gaps get genuinely confirmed going forward.
+**Entries:**
+
+- [2026-08-14] hyperframes-what-is-mcp: literal USB-C plug/connector (Frame 1, two pieces
+  snapping together to close a circuit) — checked with two differently-phrased catalog
+  queries ("plug connecting into a port," "two pieces snapping together"), nothing in the
+  registry does a literal physical-connector snap-together device.
+- [2026-08-14] hyperframes-what-is-mcp: horizontal timeline where company logos join one at a
+  time over real calendar dates (Frame 4) — checked, nothing in the registry builds a
+  logo/milestone timeline; closest hits (hw-boil, stop-motion-cadence, separator) are
+  unrelated motion primitives, not a timeline device.
+- [2026-08-14] hyperframes-what-is-mcp: multiple company marks merging/settling into one
+  unified group (Frame 5) — checked, no registry match found; used a hand-built merge instead.
+
+This same episode also found two real matches and installed them instead of hand-building —
+the registry check isn't just a gap-logging exercise, most of the time it should find
+something: `constellation-hub` (a central hub with nodes brightening in narration order,
+settling into one lockup — an exact fit for the host/client/server hub-and-spoke shape in
+Frame 2) and `terminal-simulator` (a typed terminal window streaming log output, reframed as
+the literal request/response JSON-RPC exchange in Frame 3, more technically accurate than an
+invented chat-bubble device would have been).
 
 **Known registry blocks directly relevant to this channel's schema vocabulary** (from the
 2026-08-14 audit, `npx hyperframes catalog`) — check these specifically before reaching for a

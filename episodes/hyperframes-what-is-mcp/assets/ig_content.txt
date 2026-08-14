@@ -1,0 +1,13 @@
+Every time an AI assistant reads a file, queries a database, or posts in Slack, there's a real protocol running underneath that most people have never heard of.
+
+It's called MCP, and one detail about it surprised me. Anthropic built it completely alone, announced quietly in November 2024.
+
+Here's the actual mechanism. Your AI app never talks to your tools directly. It opens a separate connection for each one, checks what that tool can actually do, and only then sends a real request. No guessing, no assuming.
+
+The wild part is what happened after launch. OpenAI adopted it within four months. Google followed a month later. By December, Anthropic gave up sole control, handing it to a foundation it co-founded with OpenAI, backed by Google, Microsoft, and Amazon.
+
+A protocol one company built is now infrastructure its biggest competitors help run.
+
+Follow for more on how AI systems actually work under the hood.
+
+#MCP #AIExplained #ModelContextProtocol #Anthropic #HowAIWorks

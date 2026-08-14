@@ -1,0 +1,286 @@
+<template data-composition-id="04-adoption" data-duration="24.0">
+  <style>
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/Inter-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-weight: 500;
+      font-style: normal;
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+    }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      background: #000000;
+    }
+
+    .a4-bg { position: absolute; inset: 0; background: #000000; }
+
+    .a4-label {
+      position: absolute;
+      left: 0; right: 0;
+      top: 130px;
+      text-align: center;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 20px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5b9df9;
+      opacity: 0;
+    }
+
+    /* -- vertical timeline spine -- */
+    .a4-spine {
+      position: absolute;
+      left: 140px;
+      top: 320px;
+      width: 3px;
+      height: 1180px;
+      background: #262b38;
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+
+    .a4-mark {
+      position: absolute;
+      left: 140px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #000000;
+      border: 3px solid #5b9df9;
+      transform: translate(-50%, -50%) scale(0);
+    }
+    .a4-mark.gold { border-color: #f0b860; }
+
+    .a4-row {
+      position: absolute;
+      left: 190px;
+      width: 750px;
+      opacity: 0;
+    }
+    .a4-row .name {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 38px;
+      color: #f2f4f7;
+      letter-spacing: -0.01em;
+    }
+    .a4-row .date {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      color: #8890a3;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    #a4-row-anthropic { top: 300px; }
+    #a4-row-openai { top: 620px; }
+    #a4-row-google { top: 940px; }
+
+    /* -- foundation badge, forms from the three marks converging -- */
+    .a4-foundation {
+      position: absolute;
+      left: 90px;
+      top: 1220px;
+      width: 900px;
+      opacity: 0;
+    }
+    .a4-foundation-badge {
+      display: inline-block;
+      padding: 18px 32px;
+      border: 2px solid #f0b860;
+      border-radius: 12px;
+      background: rgba(240,184,96,0.08);
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 30px;
+      color: #f0b860;
+      letter-spacing: 0.02em;
+    }
+    .a4-foundation-sub {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      color: #8890a3;
+      margin-top: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .a4-supporters {
+      position: absolute;
+      left: 90px;
+      top: 1400px;
+      width: 900px;
+      display: flex;
+      gap: 20px;
+    }
+    .a4-chip {
+      padding: 12px 22px;
+      border: 1.5px solid #333a4a;
+      border-radius: 999px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 22px;
+      color: #f2f4f7;
+      opacity: 0;
+      transform: scale(0.7);
+    }
+
+    /* -- fills two real narration gaps: "By December" before the
+       foundation forms, and "co-founded with OpenAI" before the supporter
+       chips appear -- */
+    .a4-beat {
+      position: absolute;
+      left: 190px;
+      top: 1140px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5b9df9;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-adoption" data-width="1080" data-height="1920">
+    <div id="a4-bg" class="a4-bg clip" data-start="0" data-duration="24.0" data-track-index="0"></div>
+
+    <div id="a4-label" class="a4-label clip" data-start="0" data-duration="24.0" data-track-index="1">the adoption arc</div>
+
+    <div id="a4-spine" class="a4-spine clip" data-start="0" data-duration="24.0" data-track-index="2"></div>
+
+    <div id="a4-mark-anthropic" class="a4-mark clip" data-start="0" data-duration="24.0" data-track-index="3" style="top: 320px;"></div>
+    <div id="a4-row-anthropic" class="a4-row clip" data-start="0" data-duration="24.0" data-track-index="4">
+      <div class="name">Anthropic</div>
+      <div class="date">alone, Nov 2024</div>
+    </div>
+
+    <div id="a4-mark-openai" class="a4-mark clip" data-start="0" data-duration="24.0" data-track-index="5" style="top: 640px;"></div>
+    <div id="a4-row-openai" class="a4-row clip" data-start="0" data-duration="24.0" data-track-index="6">
+      <div class="name">+ OpenAI</div>
+      <div class="date">Mar 2025</div>
+    </div>
+
+    <div id="a4-mark-google" class="a4-mark clip" data-start="0" data-duration="24.0" data-track-index="7" style="top: 960px;"></div>
+    <div id="a4-row-google" class="a4-row clip" data-start="0" data-duration="24.0" data-track-index="8">
+      <div class="name">+ Google</div>
+      <div class="date">Apr 2025</div>
+    </div>
+
+    <div id="a4-beat-december" class="a4-beat clip" data-start="0" data-duration="24.0" data-track-index="9">by december</div>
+    <div id="a4-beat-cofounded" class="a4-beat clip" data-start="0" data-duration="24.0" data-track-index="10">co-founded with openai</div>
+
+    <div id="a4-foundation" class="a4-foundation clip" data-start="0" data-duration="24.0" data-track-index="11">
+      <div class="a4-foundation-badge">Agentic AI Foundation</div>
+      <div class="a4-foundation-sub">Linux Foundation, Dec 2025</div>
+    </div>
+
+    <div id="a4-supporters" class="a4-supporters clip" data-start="0" data-duration="24.0" data-track-index="12">
+      <div id="a4-chip-google" class="a4-chip">Google</div>
+      <div id="a4-chip-microsoft" class="a4-chip">Microsoft</div>
+      <div id="a4-chip-amazon" class="a4-chip">Amazon</div>
+    </div>
+
+    <!-- real, live-verified proof beat after the real VO content ends
+         (last word "Amazon." lands 19.45s) -- a genuine animated line
+         chart (mk-line-graph, installed from the registry), not a static
+         card, showing the actual MCP server count growth. -->
+    <div id="a4-chart-heading" class="a4-beat clip" data-start="0" data-duration="24.0" data-track-index="13" style="top: 260px; left: 90px; color: #8890a3;">verified live, glama.ai/mcp/servers</div>
+    <div
+      id="a4-chart"
+      data-composition-id="mk-line-graph"
+      data-composition-src="compositions/mk-line-graph.html"
+      data-start="20.2"
+      data-duration="3.7"
+      data-track-index="14"
+      data-width="1000"
+      data-height="900"
+      style="position: absolute; left: 40px; top: 340px; width: 1000px; height: 900px;"
+    ></div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    const label = document.getElementById("a4-label");
+    const spine = document.getElementById("a4-spine");
+
+    const markA = document.getElementById("a4-mark-anthropic");
+    const rowA = document.getElementById("a4-row-anthropic");
+    const markO = document.getElementById("a4-mark-openai");
+    const rowO = document.getElementById("a4-row-openai");
+    const markG = document.getElementById("a4-mark-google");
+    const rowG = document.getElementById("a4-row-google");
+
+    const foundation = document.getElementById("a4-foundation");
+    const chipGoogle = document.getElementById("a4-chip-google");
+    const chipMs = document.getElementById("a4-chip-microsoft");
+    const chipAmz = document.getElementById("a4-chip-amazon");
+    const beatDecember = document.getElementById("a4-beat-december");
+    const beatCofounded = document.getElementById("a4-beat-cofounded");
+
+    tl.fromTo(label, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.35 }, 0.2);
+    tl.to(spine, { scaleY: 1, duration: 1.0, ease: "power2.inOut" }, 0.2);
+
+    // "Anthropic built this alone," (0.39-1.59s) -- the first mark lands.
+    tl.fromTo(markA, { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 0.39);
+    tl.fromTo(rowA, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.35 }, 0.39);
+    // "November 2024." (2.29-2.89s) -- the date confirms, a small pulse.
+    tl.fromTo(markA, { scale: 1 }, { scale: 1.3, duration: 0.15, yoyo: true, repeat: 1 }, 2.29);
+
+    // "OpenAI adopted it" (4.31-5.49s) -- second mark, real 1.4s pause
+    // before this beat is load-bearing, not dead air -- it's the gap
+    // between Anthropic's launch and OpenAI's real adoption date.
+    tl.fromTo(markO, { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 4.31);
+    tl.fromTo(rowO, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.35 }, 4.31);
+    tl.fromTo(markO, { scale: 1 }, { scale: 1.3, duration: 0.15, yoyo: true, repeat: 1 }, 6.09);
+
+    // "Google's Gemini, that April." (8.11-9.75s) -- third mark.
+    tl.fromTo(markG, { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 8.11);
+    tl.fromTo(rowG, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.35 }, 8.11);
+    tl.fromTo(markG, { scale: 1 }, { scale: 1.3, duration: 0.15, yoyo: true, repeat: 1 }, 9.75);
+
+    // "By December," (10.87-11.03s) -- fills the real gap after the Google
+    // mark settles and before the foundation forms.
+    tl.fromTo(beatDecember, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 10.87);
+    tl.to(beatDecember, { opacity: 0, duration: 0.3 }, 12.57);
+
+    // "handed control to a neutral foundation," (12.57-14.29s) -- the three
+    // marks recolor gold as the foundation badge forms below them.
+    tl.to([markA, markO, markG], { borderColor: "#f0b860", duration: 0.4 }, 13.55);
+    tl.fromTo(foundation, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" }, 13.83);
+
+    // "co-founded with OpenAI," (15.35-16.15s) -- fills the real gap after
+    // the foundation forms and before the supporter chips appear.
+    tl.fromTo(beatCofounded, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 15.35);
+    tl.to(beatCofounded, { opacity: 0, duration: 0.3 }, 17.23);
+
+    // "backed by Google, Microsoft, and Amazon." (17.75-19.45s) -- three
+    // supporter chips pop in one per real name landing.
+    tl.fromTo(chipGoogle, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 17.75);
+    tl.fromTo(chipMs, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 18.39);
+    tl.fromTo(chipAmz, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 19.27);
+
+    // Real proof beat (20.2-23.9s), after the real VO content ends at
+    // 19.45s -- a genuine animated line chart, not a static card, showing
+    // the actual live server count. It occupies the same screen region the
+    // timeline/marks used (top:340-1240), so that earlier content clears
+    // out first -- a real fix, not cosmetic: without this the chart
+    // genuinely overlapped the timeline rows and foundation badge.
+    const chartHeading = document.getElementById("a4-chart-heading");
+    const clearGroup = [label, spine, markA, rowA, markO, rowO, markG, rowG, foundation];
+    tl.to(clearGroup, { opacity: 0, duration: 0.4, ease: "power2.in" }, 19.7);
+    tl.fromTo(chartHeading, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 20.2);
+
+    window.__timelines["04-adoption"] = tl;
+  </script>
+</template>

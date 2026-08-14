@@ -1,0 +1,7 @@
+MCP is the standard letting AI assistants actually connect to your files, databases, and apps, and almost nobody outside of AI engineering knows how it actually works.
+
+This short breaks down the real mechanism: how an AI app opens a connection per tool, checks what that tool can do before ever using it, and calls it with real arguments. Then it covers the part most explainers skip entirely, how a protocol one company built alone in November 2024 ended up governed by a neutral foundation backed by its own biggest competitors just over a year later.
+
+Part of an ongoing series breaking down how AI systems actually work, mechanism by mechanism, not just surface-level explanations.
+
+#Shorts #MCP #AIExplained #ModelContextProtocol #HowAIWorks

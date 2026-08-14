@@ -1,0 +1,233 @@
+<template data-composition-id="05-close" data-duration="16.051">
+  <style>
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400;
+      font-style: normal;
+      src: url("assets/fonts/Inter-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-weight: 500;
+      font-style: normal;
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+    }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      background: #000000;
+    }
+
+    .c5-bg { position: absolute; inset: 0; background: #000000; }
+
+    .c5-glow {
+      position: absolute;
+      left: 340px;
+      top: 320px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: #f0b860;
+      filter: blur(140px);
+      opacity: 0;
+    }
+
+    /* -- four entity chips, scattered, that converge into one group -- */
+    .c5-chip {
+      position: absolute;
+      padding: 14px 26px;
+      border: 1.5px solid #5b9df9;
+      border-radius: 999px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 24px;
+      color: #f2f4f7;
+      background: #0f1420;
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    #c5-chip-a { left: 140px; top: 420px; }
+    #c5-chip-o { left: 640px; top: 380px; }
+    #c5-chip-g { left: 200px; top: 620px; }
+    #c5-chip-f { left: 560px; top: 640px; }
+
+    .c5-caption {
+      position: absolute;
+      left: 90px; right: 90px;
+      top: 900px;
+      text-align: center;
+      font-family: "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 46px;
+      line-height: 1.3;
+      color: #f2f4f7;
+      opacity: 0;
+    }
+    .c5-caption .accent { color: #f0b860; }
+
+    .c5-follow-wrap {
+      position: absolute;
+      left: 340px;
+      top: 1280px;
+      width: 400px;
+      height: 400px;
+      opacity: 0;
+    }
+    .c5-follow-wrap svg { width: 100%; height: 100%; overflow: visible; }
+    .c5-follow-ring {
+      stroke-dasharray: 720;
+      stroke-dashoffset: 720;
+      transform-origin: 200px 200px;
+    }
+    .c5-follow-pulse {
+      transform-origin: 200px 200px;
+      opacity: 0;
+    }
+    .c5-follow-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 40px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f2f4f7;
+      opacity: 0;
+    }
+
+    /* -- fills the real gap between the four chips settling and their
+       convergence: "became infrastructure its competitors" has no visual
+       otherwise -- */
+    .c5-beat {
+      position: absolute;
+      left: 0; right: 0;
+      top: 800px;
+      text-align: center;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5b9df9;
+      opacity: 0;
+    }
+
+    /* -- a real new element during the caption's hold: "actually works."
+       lands with nothing else changing on screen otherwise -- */
+    .c5-check {
+      position: absolute;
+      left: 0; right: 0;
+      top: 1080px;
+      text-align: center;
+      opacity: 0;
+    }
+    .c5-check svg { width: 56px; height: 56px; }
+  </style>
+
+  <div id="root" data-composition-id="05-close" data-width="1080" data-height="1920">
+    <div id="c5-bg" class="c5-bg clip" data-start="0" data-duration="16.051" data-track-index="0"></div>
+    <div id="c5-glow" class="c5-glow clip" data-start="0" data-duration="16.051" data-track-index="1"></div>
+
+    <!-- the four chips deliberately converge and overlap at 5.69s -- that
+         IS the literal visual of "competitors now govern together," not a
+         layout bug -- marked accordingly rather than "fixed" away. -->
+    <div id="c5-chip-a" class="c5-chip clip" data-start="0" data-duration="16.051" data-track-index="2" data-layout-allow-overlap data-layout-allow-occlusion>Anthropic</div>
+    <div id="c5-chip-o" class="c5-chip clip" data-start="0" data-duration="16.051" data-track-index="3" data-layout-allow-overlap data-layout-allow-occlusion>OpenAI</div>
+    <div id="c5-chip-g" class="c5-chip clip" data-start="0" data-duration="16.051" data-track-index="4" data-layout-allow-overlap data-layout-allow-occlusion>Google</div>
+    <div id="c5-chip-f" class="c5-chip clip" data-start="0" data-duration="16.051" data-track-index="5" data-layout-allow-overlap data-layout-allow-occlusion>Foundation</div>
+
+    <div id="c5-beat-infra" class="c5-beat clip" data-start="0" data-duration="16.051" data-track-index="6">became infrastructure</div>
+
+    <div id="c5-caption" class="c5-caption clip" data-start="0" data-duration="16.051" data-track-index="7">
+      That's what it looks like when a <span class="accent">standard actually works.</span>
+    </div>
+
+    <div id="c5-check" class="c5-check clip" data-start="0" data-duration="16.051" data-track-index="8">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6,21 L15,30 L34,10" stroke="#f0b860" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div id="c5-follow-wrap" class="c5-follow-wrap clip" data-start="0" data-duration="16.051" data-track-index="9">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle id="c5-follow-pulse" class="c5-follow-pulse" cx="200" cy="200" r="150" stroke="#f0b860" stroke-width="2"/>
+        <circle id="c5-follow-ring" class="c5-follow-ring" cx="200" cy="200" r="115" stroke="#f0b860" stroke-width="4" transform="rotate(-90 200 200)"/>
+      </svg>
+      <div id="c5-follow-label" class="c5-follow-label">Follow</div>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    const glow = document.getElementById("c5-glow");
+    const chipA = document.getElementById("c5-chip-a");
+    const chipO = document.getElementById("c5-chip-o");
+    const chipG = document.getElementById("c5-chip-g");
+    const chipF = document.getElementById("c5-chip-f");
+    const caption = document.getElementById("c5-caption");
+    const beatInfra = document.getElementById("c5-beat-infra");
+    const check = document.getElementById("c5-check");
+
+    const followWrap = document.getElementById("c5-follow-wrap");
+    const followRing = document.getElementById("c5-follow-ring");
+    const followLabel = document.getElementById("c5-follow-label");
+    const followPulse = document.getElementById("c5-follow-pulse");
+
+    // "A protocol one company built" (0.53-2.21s) -- the four chips appear
+    // scattered, carrying over the adoption arc from the previous frame.
+    tl.fromTo(chipA, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 0.53);
+    tl.fromTo(chipO, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 0.78);
+    tl.fromTo(chipG, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 1.03);
+    tl.fromTo(chipF, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 1.28);
+
+    // "became infrastructure" (2.95-3.41s) -- fills the real gap between
+    // the last chip settling and the convergence beat.
+    tl.fromTo(beatInfra, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.95);
+    tl.to(beatInfra, { opacity: 0, duration: 0.3 }, 5.2);
+
+    // "now govern together." (5.69-6.47s) -- the four chips converge to a
+    // single central point, the literal payoff of the sentence. Animated
+    // via transform (x/y), not left/top -- left/top snaps to integer
+    // device pixels during layout and stutters under frame-seek capture,
+    // transforms interpolate smoothly at any speed. Deltas computed from
+    // each chip's own CSS position to the shared convergence point
+    // (left:440, top:500).
+    tl.to(chipA, { x: 300, y: 80, scale: 0.6, duration: 0.6, ease: "power2.inOut" }, 5.69);
+    tl.to(chipO, { x: -200, y: 120, scale: 0.6, duration: 0.6, ease: "power2.inOut" }, 5.69);
+    tl.to(chipG, { x: 240, y: -120, scale: 0.6, duration: 0.6, ease: "power2.inOut" }, 5.69);
+    tl.to(chipF, { x: -120, y: -140, scale: 0.6, duration: 0.6, ease: "power2.inOut" }, 5.69);
+    tl.to(glow, { opacity: 0.25, duration: 0.6 }, 5.69);
+
+    // "That's what it looks like when a standard actually works." (8.21-11.21s)
+    tl.fromTo(caption, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 8.21);
+
+    // "standard" (9.89s) -- a genuinely new element (not a pulse on the
+    // caption) lands mid-sentence, closing the real gap before the follow
+    // ring's own beat begins.
+    tl.fromTo(check, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 9.89);
+    // "actually works." (10.71-11.21s) -- a second beat on the same
+    // element, right as the payoff word lands.
+    tl.fromTo(check, { scale: 1 }, { scale: 1.3, duration: 0.2, yoyo: true, repeat: 1 }, 11.21);
+
+    // "Follow" (12.83s onward) -- the same follow-ring device established in
+    // What Skills Matter, kept consistent across pillars rather than
+    // inventing a new CTA device per episode.
+    tl.to(followWrap, { opacity: 1, duration: 0.2 }, 12.83);
+    tl.to(followRing, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, 12.83);
+    tl.to(followLabel, { opacity: 1, duration: 0.4, ease: "power2.out" }, 13.13);
+
+    // "for more on how AI systems actually work." (13.13-15.73s) -- ring
+    // pulses keep producing new motion through the close.
+    tl.fromTo(followPulse, { scale: 1, opacity: 0.6 }, { scale: 1.18, opacity: 0, duration: 0.6, ease: "power2.out" }, 14.29);
+    tl.fromTo(followPulse, { scale: 1, opacity: 0.6 }, { scale: 1.18, opacity: 0, duration: 0.6, ease: "power2.out" }, 15.25);
+
+    window.__timelines["05-close"] = tl;
+  </script>
+</template>

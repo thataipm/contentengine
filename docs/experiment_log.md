@@ -388,3 +388,128 @@ Notes: topic surfaced via live web research (GitHub trending signals, not a pre-
 cross-checked against 2-3 other real trending candidates (claude-video-vision, oh-my-pi,
 n8n-flavored tools) before the user confirmed this one, per the spec's human-owns-topic-
 approval boundary.
+
+## Batch 4
+
+```
+batch_id: BATCH-004
+date_started: 2026-08-14
+pillar: How AI Systems Actually Work
+series: none
+hypothesis: The first video in this pillar's 3x10 pillar experiment (0/10 published as of
+  2026-08-14) -- a mechanically accurate, primary-source-verified explainer of a real, current
+  AI infrastructure standard (MCP) -- establishes a real baseline for this pillar's
+  follows/1,000-views against the other two pillars, none of which have published yet either.
+target_audience: Curious builders and general AI-interested viewers who want to understand a
+  system they've heard the name of but not the mechanism -- zero assumed technical background,
+  per this channel's original channel-brief audience definition (still valid craft rule).
+concepts:
+  - concept: "MCP: the USB-C standard for AI (host/client/server, tools/list -> tools/call, and
+    how one company's protocol became an industry standard co-governed by its former
+    competitors in about a year)"
+    pillar: how-it-works
+    pillar_fit: PASS -- direct fit, this pillar's entire mandate is mechanism-first explainers
+    audience_fit: PASS -- MCP is now genuinely relevant (broad ecosystem adoption, real
+      builder relevance) but under-explained mechanically for a general audience
+    100k_test: PASS -- 100K viewers who now understand what MCP actually does is exactly this
+      pillar's target audience, not a mismatch
+    pm_question: KNOW (what MCP is and how the request/response mechanism actually works)
+    originality: leads with Anthropic's own "USB-C for AI" analogy (real, from the primary
+      source, not invented) but earns it by then showing the real host/client/server mechanism
+      and the tools/list -> tools/call exchange, not just repeating the metaphor; closes on a
+      verified, compelling adoption-timeline arc most explainers of MCP skip
+    payoff: viewer understands the actual mechanism (not just "it connects AI to tools") and
+      leaves with one real, checkable governance fact (Anthropic donated MCP to a neutral
+      foundation co-founded with OpenAI, Dec 2025) that most surface-level MCP content omits
+    brand_value: this pillar's first real entry -- sets the mechanical-accuracy bar the other
+      9 videos in this pillar get measured against
+    worth_producing: PASS
+    gate_result: PASS
+    sources: all fetched directly this session, not from memory or aggregator summaries --
+      https://www.anthropic.com/news/model-context-protocol (announcement, Nov 25 2024,
+      creators David Soria Parra & Justin Spahr-Summers, early adopters Block/Apollo),
+      https://modelcontextprotocol.io/introduction and
+      https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture (host/client/server
+      architecture, JSON-RPC 2.0 data layer, tools/resources/prompts primitives, the
+      tools/list -> tools/call example flow), and
+      https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation
+      (Dec 9 2025 donation to the Agentic AI Foundation under the Linux Foundation, co-founded
+      by Anthropic/Block/OpenAI, supported by Google/Microsoft/AWS/Cloudflare/Bloomberg).
+      OpenAI's March 2025 and Google DeepMind's April 2025 adoption dates corroborated across
+      multiple independent secondary sources (not a single aggregator), flagged in the script
+      as slightly less rigorously sourced than the three primary-source facts above.
+    episode_status: PRODUCED (hyperframes-what-is-mcp/renders/video.mp4, 76.56s, rendered
+      2026-08-14 -- not yet in episodes/ or distributed, awaiting user review)
+success_metrics: follows per 1,000 views (primary, this pillar's own baseline -- nothing to
+  compare against yet since this is the pillar's first video), saves and comments (secondary),
+  per spec §9
+status: IN_PRODUCTION
+results:
+learning: Real single-take VO ran 76.56s against a 53.4s word-count estimate (2.9wps
+  heuristic) -- the natural pauses around dates/emphasis in a fact-dense script (frame 4's
+  adoption timeline alone ran 20.4s) blow past the linter's estimate more than a typical
+  narrative script does. Worth a wider target range for date/stat-heavy scripts specifically.
+  Also: this episode was the first real test of /thataipm-registry-check's mechanical gate --
+  found 2 real registry matches (constellation-hub, terminal-simulator) and confirmed 3 genuine
+  gaps (logged in docs/hyperframes_production_notes.md), and separately surfaced two new
+  static-gap-checker blind spots (GSAP repeat/yoyo duration under-counted; cross-file
+  sub-composition timelines invisible to the checker) beyond the already-known loop-var one.
+decision:
+next_action: Rendered, then revised three times on direct feedback: (1) all 5 frames'
+  background swapped from near-black (#0b0d12) to pure #000000, accents kept colorful; (2) a
+  real animated line chart (mk-line-graph, a second registry block) added as a silent proof
+  beat appended to Frame 4 (24.0s, up from the real VO length 20.439s) -- three live-verified
+  MCP server counts (100 launch/19,831 Mar 2026/72,300 today, glama.ai/mcp/servers, fetched
+  live this session) plotted as a real draw-on chart, not asserted in text, after direct
+  feedback that the video had "no animated graphs or motion graphics"; a real content-overlap
+  bug this introduced (the chart's new position collided with the foundation badge) was caught
+  by hyperframes check and fixed by clearing the earlier timeline content before the chart
+  takes that screen region, not by silencing the check; (3) whoosh SFX added at every frame
+  transition (previously only used for in-frame emphasis). Total on-screen duration now 80.06s
+  (76.56s real VO + 3.5s silent chart beat). Final render sped up 1.2x via ffmpeg (video
+  setpts + audio atempo together) -- 80.12s down to 66.83s, delivered as
+  renders/video_rushed.mp4, audio re-verified after speed-up (-20.1dB mean, -0.6dB max).
+  Awaiting user review before /thataipm-distribute (cover, platform captions, Zernio
+  scheduling) -- note the cover-still timestamp and STORYBOARD.md's timing notes reference the
+  pre-speedup cut if distribution proceeds from here.
+
+  (4) Critical bug caught by the user after the third render: "From 14 sec to 22 sec there are
+  no visuals at all" (Frame 2, the host/client/server architecture beat). Root cause, confirmed
+  by reading compositions/frames/02-architecture.html directly rather than guessing: Frame 2
+  mounted constellation-hub via data-composition-src, the mounting mechanism for a registry
+  BLOCK (a standalone sub-composition with its own timeline). constellation-hub is registry-
+  classified as a COMPONENT (confirmed from the original `hyperframes add` install output:
+  "(hyperframes:component)") -- components have no standalone timeline and must be pasted
+  directly into the host composition's HTML/CSS/JS and merged onto the host's own GSAP
+  timeline (see ~/.claude/skills/hyperframes-registry/references/wiring-components.md).
+  Mounted the wrong way, it silently renders nothing -- no error from `hyperframes check`
+  (Layout passed clean), no error from check_registry_usage.mjs (only checks the file exists,
+  not that it's wired correctly), and the earlier snapshot review also missed it. Only caught
+  by extracting real frames from the delivered MP4 with ffmpeg and looking at the actual
+  pixels. Frame 3's terminal-simulator (also a component) was unaffected -- it was pasted in
+  correctly from the start, confirmed by the same frame-extraction method.
+
+  Fix: rewrote Frame 2 to paste constellation-hub's markup/CSS/JS directly into its own
+  composition, hardcoding the values that would have been getVariables() reads (hub_label "AI
+  App", nodes Filesystem/Database/Slack, cues 10.11/11.21/12.13 synced to real word timing,
+  accent blue) and merging its GSAP calls onto Frame 2's own `tl`. While in there, also
+  unrolled two other real static-gap-checker blind spots into explicit literal-time tweens
+  instead of leaning on the documented exception: a forEach loop using a loop variable as the
+  tween position (unresolvable to the checker), and a yoyo/repeat tween whose real duration
+  the checker's regex undercounts (does not multiply by repeat+1) -- both in Frame 2's own new
+  code and, for consistency and real certainty rather than assumed correctness, in Frame 5's
+  pre-existing chip-entrance and follow-pulse loops too. Frame 4's chart still trips the
+  checker's one remaining known blind spot (cross-file sub-composition timelines are invisible
+  to it) -- that one was left as a documented skip since mk-line-graph is a confirmed genuine
+  block, not a component, and was re-verified correct by direct frame extraction after this
+  render, not assumed from the earlier snapshot review alone. Re-rendered, re-sped-up
+  (renders/video_rushed.mp4, 80.1s -> 66.83s, audio -20.1dB mean/-0.1dB max), and every claim
+  above re-checked against real extracted frames (t=12/15/17/18/19/20/21s and t=52/55s on the
+  sped-up cut) before delivery, not asserted from the code alone.
+```
+
+Notes: this is the first video in the "How AI Systems Actually Work" pillar under the
+2026-08-14 pillar experiment (spec §3/§8) -- 0/10 published in this pillar before this batch.
+Topic assigned directly by the user, not sourced from a candidate list this session; the
+Quality Gate above was still run in full against the assigned topic rather than skipped, per
+the spec's own requirement that every concept carries this block before production starts.
