@@ -1,18 +1,26 @@
 # Video Production Engine
 
-**Production engine, 2026-08-13: HyperFrames.** The render engine is now **HyperFrames**
-(`hyperframes/`) — HTML compositions + GSAP timelines, rendered headlessly to MP4. It replaced
-the Remotion/React pipeline this file originally documented, after `hyperframes-had-the-
-components-i-hand-built` shipped a full episode at a comparable quality bar with a simpler
-toolchain and lower per-episode token cost. **`hyperframes/CLAUDE.md` is now the canonical
-production-engine doc** — standing visual defaults, orchestration/token-cost discipline, the
-render/check/snapshot workflow all live there, not here. `remotion/` and its Remotion-only
-`automation/` scripts were moved to an external trash folder (not deleted outright, same
-never-hard-delete practice already used for content below) — nothing in this project still
-depends on them. See the retirement note at the end of §7 for the full "why" and what changed.
-Sections §§2-5 below are kept as a **frozen historical record** of the old engine (useful if
-old episode source is ever revisited), not current instructions — skip straight to
-`hyperframes/CLAUDE.md` for anything production-related.
+**Production engine, 2026-08-13: HyperFrames.** The render engine is now **HyperFrames** — an
+npm package (`npx hyperframes@<pinned-version> ...`), never vendored into this repo, so there is
+no single project-wide "engine folder." Each episode gets its own working project at
+`hyperframes-<slug>/` at the repo root (HTML compositions + GSAP timelines, rendered headlessly
+to MP4); it replaced the Remotion/React pipeline this file originally documented, after
+`hyperframes-had-the-components-i-hand-built` shipped a full episode at a comparable quality bar
+with a simpler toolchain and lower per-episode token cost. **`docs/hyperframes_production_notes.md`
+is now the canonical cross-episode production doc** — standing visual defaults,
+orchestration/token-cost discipline, and durable pitfalls all live there, not here. (That
+content originally lived at `hyperframes/CLAUDE.md` — a folder literally named `hyperframes/`
+instead of following the `hyperframes-<slug>/` convention, which read as "the engine's own
+folder" and got archived along with the rest of that episode's source once it shipped; rescued
+2026-08-14 into `docs/` specifically so cross-episode content can't get buried inside a
+disposable per-episode folder again — see that file's own folder-structure-convention note.)
+`remotion/` and its Remotion-only `automation/` scripts were moved to an external trash folder
+(not deleted outright, same never-hard-delete practice already used for content below) —
+nothing in this project still depends on them. See the retirement note at the end of §7 for the
+full "why" and what changed. Sections §§2-5 below are kept as a **frozen historical record** of
+the old engine (useful if old episode source is ever revisited), not current instructions — skip
+straight to `docs/hyperframes_production_notes.md` for standing production rules, and the live
+`hyperframes-<slug>/` project's own scaffolded docs (or `npx hyperframes docs`) for engine usage.
 
 **Current strategic system, 2026-08-10, revised 2026-08-12**: content strategy for this channel
 (still the same `@thataipm` handle) is governed by **That AI PM: Content System Operating Spec
@@ -733,8 +741,9 @@ existing Shorts/Reels format. Not started yet as of this note; a real trigger co
 finalized system + a first batch of new content through it) gates it, not a fixed date.
 
 **Production engine retired to HyperFrames, 2026-08-13.** The Remotion/React render pipeline
-(§§2-5's now-frozen historical record) was fully retired in favor of **HyperFrames**
-(`hyperframes/`) — see the top of this file for the full pointer and reasoning. This is a
+(§§2-5's now-frozen historical record) was fully retired in favor of **HyperFrames** (per-episode
+`hyperframes-<slug>/` project folders) — see the top of this file for the full pointer and
+reasoning. This is a
 PRODUCTION-layer change only, same architectural principle as the paragraph above: strategy
 (this section, the v2.0 spec, the experiment log) is completely unaffected, only what renders
 the video changed. Direct instruction accompanying the switch: "I like this system, I want you
