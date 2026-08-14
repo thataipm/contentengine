@@ -145,10 +145,18 @@ the list every time a genuinely new device gets built.**
 no longer exist in this project — `remotion/` was retired, see the top of this file) — kept as
 a reference for the DEVICE TYPES themselves (trend line, pipeline build, bar comparison,
 count-up, disparity bar, comparison pair, terminal/CLI, real screenshot), not as literal code
-to reuse. HyperFrames' own equivalent catalog lives in `hyperframes/frame.md` and grows the
-same way — check there first, and add a new entry every time a genuinely new device gets built
-for this project (only 3 exist there so far: an icon-card literal-visualization, a count-up
-stat, and a 16-tile schema-device grid, from the first HyperFrames episode).
+to reuse. **Under HyperFrames, check twice, in order, before hand-building anything**: (1) the
+real component registry, `npx hyperframes@<pinned-version> catalog` — 150+ pre-built blocks
+(charts, transitions, lower-thirds, kinetic type, 3D/depth, shader backgrounds) that cover most
+of what this list describes and more; (2) the persistent "Custom devices built for this
+channel" log in `docs/hyperframes_production_notes.md`, which records devices already
+confirmed to have no registry match, so that gap doesn't get re-investigated every episode.
+**This replaced the old `hyperframes/frame.md` pointer** — a per-episode `frame.md` lives
+inside each `hyperframes-<slug>/` working folder and gets archived along with it once the
+episode ships, so it can't serve as a channel-wide growing catalog; `docs/` is the only
+location that survives that archival. `/thataipm-registry-check` runs both checks in order —
+use it before writing any new frame composition's visual devices, not just when eyeballing
+feels insufficient.
 
 - `TrendChart` — a single line that draws itself (SVG `strokeDasharray`), up or down, with a
   glowing marker riding the tip. For "this metric moved."
@@ -817,9 +825,9 @@ that gets checked.
 has the equivalent rule in a narrower form (§6: once a video is posted, don't re-edit it; the
 old Remotion pipeline's shared-component-fix pattern — e.g. adding `breathe()` to a shared
 stat-card component — was fine specifically because it didn't touch already-rendered output,
-only future renders; the same logic applies to HyperFrames' shared `hyperframes/frame.md`
-components now). No behavior change, just naming the general version of a rule this project
-already follows.
+only future renders; the same logic applies to HyperFrames' registry blocks and the shared
+device log in `docs/hyperframes_production_notes.md` now). No behavior change, just naming the
+general version of a rule this project already follows.
 
 **Simplicity First — NOT adopted as written, real conflict with this codebase.** Its own text
 says "no abstractions for single-use code," but this project deliberately builds shared,
@@ -832,16 +840,17 @@ project's own working architecture. The part worth keeping: don't add config/fle
 error-handling nobody asked for on top of a component — build the reusable shape because it's
 genuinely needed, not the unneeded flourishes around it.
 
-## 9. Production-process skills (added 2026-08-13)
+## 9. Production-process skills (added 2026-08-13, extended 2026-08-14)
 
-Five project-scoped skills in `.claude/skills/` encode this channel's own hard-won production
+Six project-scoped skills in `.claude/skills/` encode this channel's own hard-won production
 conventions on top of the generic global HyperFrames skills — built after the book-to-skill
 episode's VO-model mismatch and manual frame-timing resync cost real rework. Each is invokable
 directly (`/thataipm-vo`, etc.) and independently improvable; add findings/fixes to the
 relevant skill's `SKILL.md` rather than re-discovering the same gotcha in a future session.
 
-Standing production order: `/thataipm-script-review` → `/thataipm-vo` → (if VO changed after
-frames already existed) `/thataipm-resync` → `/thataipm-assemble` → `/thataipm-distribute`.
+Standing production order: `/thataipm-script-review` → `/thataipm-vo` →
+`/thataipm-registry-check` → (frame authoring) → (if VO changed after frames already existed)
+`/thataipm-resync` → `/thataipm-assemble` → `/thataipm-distribute`.
 
 - **`thataipm-vo`** — generates VO on the correct `eleven_v3` model (the shared `media-use`
   engine's Python path hardcodes `eleven_multilingual_v2`, the exact bug that shipped
@@ -854,6 +863,14 @@ frames already existed) `/thataipm-resync` → `/thataipm-assemble` → `/thatai
   estimate calibrated against real measured episodes, staccato-fragment-run detection) plus a
   manual proper-terms-restoration check, so a script gets reviewed against everything at once
   instead of three separate user-feedback rounds.
+- **`thataipm-registry-check`** — added 2026-08-14 after this exact mistake shipped twice:
+  hand-building a visual device (terminal cards, a count-up number, a scanning-light effect on
+  the first HyperFrames episode; a full literal-word-icon system on
+  `hyperframes-what-skills-matter`) that already existed as a polished `hyperframes catalog`
+  registry block. Runs the real registry check plus a persistent cross-episode
+  "already-confirmed-no-match" log in `docs/hyperframes_production_notes.md`, so the check
+  survives as a mechanical step rather than a lesson that has to be remembered session to
+  session. Use before writing any frame composition's visual devices.
 - **`thataipm-resync`** — after VO changes, prints every frame's real per-word timeline from
   `audio_meta.json` (the exact manual step done by hand for book-to-skill's pacing revision) and
   mechanically resets each frame's full-span `data-duration` values, leaving scene-specific
