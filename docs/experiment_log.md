@@ -132,11 +132,25 @@ are real prior tool-spotlight evidence, just not part of this specific count, wh
 fresh from 2026-08-14 (same practice as treating the-karpathy-skill itself as an informal,
 uncounted baseline).
 
-| Pillar | Published | Remaining | Follows/1,000 views | Saves (agg.) | Status |
-|---|---|---|---|---|---|
-| AI Tools & Agent Spotlights | 0 | 10 | — | — | NOT_STARTED |
-| Navigating the AI Era | 0 | 10 | — | — | NOT_STARTED |
-| How AI Systems Actually Work | 0 | 10 | — | — | NOT_STARTED |
+| Pillar | Published | Scheduled (not yet published) | Remaining | Follows/1,000 views | Saves (agg.) | Status |
+|---|---|---|---|---|---|---|
+| AI Tools & Agent Spotlights | 0 | 1 | 9 | — | — | IN_PROGRESS |
+| Navigating the AI Era | 0 | 2 | 8 | — | — | IN_PROGRESS |
+| How AI Systems Actually Work | 0 | 1 | 9 | — | — | IN_PROGRESS |
+
+**Real per-episode pillar tagging (checked against `episodes/scheduled/*.md` and git history,
+2026-08-15)** — none of these are confirmed `published` by Zernio yet, all are `scheduled`
+(or, for the newest one, not yet scheduled at all):
+
+- `hyperframes-what-skills-matter` ("What Skills Matter When Intelligence Gets Cheap?"),
+  2026-08-14 → **Navigating the AI Era** (career/skills-implications framing).
+- `hyperframes-what-is-mcp` ("MCP: The Standard That Lets AI Actually Touch Your Tools and
+  Data"), 2026-08-14 → **How AI Systems Actually Work** (technical protocol explainer).
+- `continuous-claude-v3`, 2026-08-15 → **AI Tools & Agent Spotlights** (tool spotlight).
+- `5-ways-to-make-money-with-ai`, scheduled 2026-08-16T09:00 Asia/Kolkata → **Navigating the
+  AI Era**, direct instruction. Scheduled for real via Zernio (IG post
+  `6a80ac7bb078353c96fa12d3`, YouTube post `6a80ac7bb078353c96fa1318`), verified via
+  `GET /v1/posts?status=scheduled`. See `episodes/scheduled/5-ways-to-make-money-with-ai.md`.
 
 **Decision gate**: once a pillar has enough real traffic to read signal (spec §9's metrics),
 apply spec §10's batch decision rule AT THE PILLAR LEVEL — KEEP/SCALE the pillar(s) with real
@@ -515,3 +529,117 @@ Notes: this is the first video in the "How AI Systems Actually Work" pillar unde
 Topic assigned directly by the user, not sourced from a candidate list this session; the
 Quality Gate above was still run in full against the assigned topic rather than skipped, per
 the spec's own requirement that every concept carries this block before production starts.
+
+## Batch 5
+
+```
+batch_id: BATCH-005
+date_started: 2026-08-14
+pillar: AI Tools & Agent Spotlights
+series: none
+hypothesis: First test of the new registry-first visual template acquired 2026-08-14 from a
+  real competitor reference video (see docs/hyperframes_production_notes.md's "Tools & Skills
+  episode format" section) -- browser-device-stage, caption-kinetic-slam,
+  caption-editorial-emphasis, simulated-cursor, press-ripple, whip-pan-cut. Also the first
+  episode produced under the newly-tightened per-frame registry hard rule and the locked
+  7-beat creator-voice script structure, both same-day additions.
+target_audience: Claude Code / AI-agent users already burning real token budget, who want a
+  concrete, verified fix rather than a vague "use fewer tokens" tip.
+concepts:
+  - concept: "Caveman: the 98k-star Claude Code skill that makes agents answer in caveman-speak
+    to cut real, benchmarked token usage, then goes further with an input-side proxy layer"
+    pillar: tool-spotlight
+    pillar_fit: PASS -- direct fit, a real, currently-trending tool with a concrete before/after
+    audience_fit: PASS -- token cost is a live, named concern (user's own: "token usage is going
+      alot"), not a hypothetical pain point
+    100k_test: PASS -- 100K viewers who install a tool that measurably cuts their own AI costs
+      is a strong, self-interested payoff, not just curiosity
+    pm_question: DO (install and use a specific tool to cut a specific, measurable cost)
+    originality: leads with the tool's own real before/after example (69 -> 19 tokens) rather
+      than a generic "it saves tokens" claim, and includes the escalation beat (input-side
+      proxy, 33.2% fewer input tokens, 54-run benchmark) most surface coverage of this tool
+      skips; also self-referential -- this channel installed and is using the tool itself,
+      not narrating a tool it never touched
+    payoff: viewer gets one real, installable fix for a cost problem they likely already have,
+      plus two distinct verified numbers (65% output-token cut per the tool's own 10-task
+      benchmark; 33.2% input-token cut per its own 54-run proxy benchmark) instead of one
+      vague stat
+    brand_value: first real test of the new visual template and the new voice structure
+      together -- the result is the actual baseline for whether both hold up outside the
+      episode that established them
+    worth_producing: PASS
+    gate_result: PASS
+    sources: fetched directly this session, not from memory or a search snippet alone --
+      https://api.github.com/repos/JuliusBrussee/caveman (real star count, 98,135 at fetch
+      time) and https://raw.githubusercontent.com/JuliusBrussee/caveman/main/README.md (the
+      69/19 token example, the 10-task benchmark table averaging 65% output-token savings,
+      the 54-run Proxy benchmark at 33.2% fewer input tokens passing all 18 exact-answer
+      checks). Note: GitHub's own search-result description snippet for this repo claimed
+      "cuts 65% of tokens" as a blanket figure -- the actual README states 65% is an
+      OUTPUT-token benchmark average specifically, with its own "honest number warning" that
+      whole-session savings run smaller; the script keeps this distinction (says "response,"
+      not "session" or "total") rather than repeating the flattened search-snippet framing.
+    episode_status: PRODUCED (hyperframes-the-caveman-skill/renders/video_rushed.mp4, 72.93s
+      post-speedup, rendered 2026-08-14 -- not yet in episodes/ or distributed, awaiting user
+      review)
+success_metrics: follows per 1,000 views (primary), saves and comments (secondary), per spec §9
+status: IN_PRODUCTION
+results:
+learning: First full build under both the tightened per-frame registry hard rule and the new
+  7-beat voice, together. Two real integration bugs caught by direct frame extraction (not by
+  any mechanical check) after the first render: (1) terminal-simulator's markup was pasted into
+  Frame 2 without its own <style> block, so the whole terminal rendered invisible except a
+  custom-added blinking cursor floating with no visible container -- fixed by pasting the
+  component's CSS, which had simply been forgotten, not a wiring-method error this time. (2)
+  caption-editorial-emphasis's text in Frame 4 was positioned inside the standard caption
+  band's real screen area, producing visible duplicate text (the custom caption and the
+  standard word-by-word caption showing the same phrase in the same region at once) -- fixed by
+  moving it well clear of the band.
+
+  Second, more serious round after user feedback ("Very bad, you broke so many rules... I am
+  hating this now"): the first delivered render had zero SFX (nothing in the pipeline gated
+  this -- fixed by adding a real sfx-presence check to thataipm-assemble's pipeline.mjs), no
+  1.2x post-render speed-up (established convention from hyperframes-what-is-mcp, simply not
+  applied), and long real-screenshot holds built as "settle in, then a barely-visible camera
+  drift" -- this passed check_static_gaps.mjs and a ~15-timestamp spot-check cleanly but read
+  as static to an actual viewer. A dense self-review (a real frame every 2s across the FULL
+  render, not hand-picked moments) confirmed it immediately. Fixed by replacing every hand-
+  rolled drift with the registry's own `yt-camera-move` component (ytCameraMove/ytCameraReset/
+  ytDefocusPulse helpers) for genuine punch-ins and crop-cuts to different real details, per
+  direct instruction to use registry components rather than hand-coded motion. Full writeup in
+  docs/hyperframes_production_notes.md's "settle and hold with a subtle drift" durable pitfall.
+  Third round, escalated user feedback ("use fucking distinct visuals from hyperframes...
+  I will destroy this pipeline if you don't get it this time"): the yt-camera-move fix solved
+  motion but not the real complaint -- every real-screenshot frame still used the same
+  `browser-device-stage` component, only re-cropped/zoomed differently. Same failure class as
+  [[feedback_vary_composition_not_just_motion]], one level up (device TYPE repetition, not
+  position/motion repetition). Fixed by searching the registry for genuinely different devices
+  per frame: Frame 2 swapped to `before-after-wipe` (real wipe-reveal comparing the actual
+  quoted 69-token vs 19-token text); Frame 3 attempted the registry's `data-chart` block first
+  (mounted correctly, real data substituted, three real fix attempts for a
+  `sub_timeline_readiness_timeout` blank-render bug) but it stayed genuinely broken across 4
+  verified re-renders, so the same bar-chart visual was hand-built directly in the frame's own
+  file instead -- logged as a legitimate hard-rule exception, not a shortcut, in
+  docs/hyperframes_production_notes.md. Final static-gap-checker finding on the hand-built
+  chart (a 5.18s-10.20s bridging beat with position-arg unroll issues) required unrolling all
+  20 bar/value tweens into literal per-call timeline entries before the checker could verify
+  coverage, plus a mid-hold pulse tween to close the last gap.
+decision:
+next_action: Full pipeline passed clean on the final round (static-gap check zero real gaps
+  outside the one already-accepted yt-camera-move blind spot on Frame 4, registry usage check
+  with every frame accounted for, hyperframes check, render, 1.2x speedup, audio sanity, sfx-
+  presence gate). Every claimed visual verified by direct ffmpeg frame extraction across three
+  full passes now -- an initial spot-check (caught 2 integration bugs), a dense every-2s pass
+  after round two (caught the same-device-type problem itself, since a "not static" render can
+  still look repetitive), and a final dense every-2s pass across the full 73s runtime after the
+  device-variety fix (confirmed all 5 frames now use genuinely distinct devices, chart renders
+  correctly, no static holds, two apparent caption "glitches" investigated frame-by-frame and
+  confirmed to be normal karaoke-caption crossfades, not bugs). Delivered to user via
+  SendUserFile 2026-08-14; awaiting review before proceeding to /thataipm-distribute.
+```
+
+Notes: topic approved directly by the user in this session, following on from the reference-style
+acquisition work earlier in the same day. The `caveman` skill was also installed into this
+project itself via Claude Code's own plugin manager (`claude plugin marketplace add
+JuliusBrussee/caveman && claude plugin install caveman@caveman`), per direct request -- separate
+from, but the reason for, this episode.
