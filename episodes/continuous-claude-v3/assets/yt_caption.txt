@@ -1,0 +1,7 @@
+Claude Code has a context problem: it compacts your conversation and loses the thread. Continuous Claude fixes it with a 5-layer code analysis engine that cuts raw file reads from ~23,000 tokens to ~1,200, a real, measured 95% reduction, not a marketing number.
+
+109 skills. 32 agents. 30 hooks. One learning loop instead of a cold start every session.
+
+Link and full setup in the comments. Comment CONTINUOUS and I'll send it your way.
+
+#ClaudeCode #AIAgents #DeveloperTools #ContextEngineering #AITools

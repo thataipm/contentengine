@@ -1,0 +1,9 @@
+Claude Code compacts your context and loses the thread. This fixes that.
+
+Continuous Claude (3,884 stars) runs a 5-layer code analysis stack instead of dumping raw files into context. Real number: ~23,000 tokens for a raw read vs ~1,200 tokens through their stack. 95% fewer tokens, same understanding.
+
+109 skills, 32 agents, 30 hooks, all wired into one learning loop instead of starting cold every session.
+
+Compound, don't compact.
+
+Comment CONTINUOUS and I'll send the install link.
