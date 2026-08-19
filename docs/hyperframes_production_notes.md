@@ -545,6 +545,62 @@ Shorts monetization thresholds, Frame 4). Before ever using `mk-specs-list` in a
 test it in isolation first (a throwaway single-frame project), same standing advice as the
 `data-chart`/`mk-progress-stat` entries above.
 
+## Durable pitfall: `npx hyperframes render` has no audio-only mode — an audio-only tweak still recaptures every visual frame
+
+Found 2026-08-20, forensic token-usage pass on `hyperframes-claude-code-auto-memory`'s
+production session (both the-usage-explainer skill's real transcript analysis and a manual
+tool-invocation count). Real numbers: across the episode's full build (frame authoring through
+distribution), `npm run render` ran 7 times, `ffmpeg` ran 31 times, `npm run check` ran 26
+times, `hyperframes snapshot` ran 38 times, and 54 separate image reads (snapshot stills) were
+pulled into the agent's context. Weighted effective-token breakdown of the session: 55.5%
+"no-tool" (the amortized cost of re-reading an ever-growing context every turn — this is what
+compaction exists for), 22.0% raw Bash tool output (render progress traces + ffmpeg encoder
+stats + check/snapshot logs), 10.9% Edit/Write, 5.3% Read, 2.8% image/snapshot reads.
+
+**The concrete, fixable part**: at the end of this episode's build, two separate user-requested
+SFX swaps (glitch-1 -> whoosh, then key-press -> typing) each triggered a FULL `npm run render`
+— a complete 1560-frame headless-Chrome recapture plus re-encode (~75-80s each) — even though
+neither composition HTML file had changed at all, only `audio_meta.json`'s `sfx[]` array.
+Checked `npx hyperframes render --help` directly: there is no `--audio-only`, no incremental
+mode, no flag that skips frame capture when only audio changed. This is a real HyperFrames CLI
+capability gap, not a mistake in how it was invoked.
+
+**The fix, built and verified same day**: `.claude/skills/thataipm-assemble/scripts/
+remux_audio.mjs` — reads `audio_meta.json` directly (voices[] in frame order gives cumulative
+absolute start times via `duration_s`; `sfx[].offset_s` is relative to that cue's own frame,
+matching how frame compositions author their GSAP cue times; `bgm`, if present, spans the full
+timeline), rebuilds the exact same mix HyperFrames' own assemble step would produce via a single
+`ffmpeg -filter_complex` (`adelay` per source at its real absolute-ms offset, `amix` across all
+sources), then remuxes it onto the video-only stream extracted from any prior known-good render
+(`ffmpeg -an -c:v copy`) with `-c:v copy` (no video re-encode either). **Real, load-bearing
+gotcha**: `amix`'s default `normalize=1` scales every input down by `1/N`, which measured
+-34.3dB mean on a real A/B against this episode's actual audio (should be -21.0dB) — pass
+`normalize=0` or the mix comes out audibly quieter than the real pipeline's output. With
+`normalize=0`, a real test against this episode's own final `audio_meta.json` and a first-pass
+video-only stream reproduced the real render's volumedetect numbers exactly (-21.0dB mean,
+-1.7dB max, bit-for-bit match on both figures, not just "close").
+
+**When to use it vs. a real render**: only when the composition HTML (frame files, index.html)
+genuinely hasn't changed since the last render — any visual edit still needs a real
+`npm run render`. Usage: `node .claude/skills/thataipm-assemble/scripts/remux_audio.mjs
+--project-dir <episode> --source-video <path to any prior render with the current visuals>
+--out <path>`.
+
+**Secondary fix, same finding**: raw Bash tool output (render progress traces, ffmpeg's full
+libx264/aac encoder stats block, verbose `npm run check` lint dumps) was the single largest
+concrete token category after the structural context-carry cost. `npx hyperframes render`
+supports a real `--quiet` flag (suppresses verbose output) — use it once a render is expected to
+succeed cleanly (i.e., not the first render of a new frame, where full output helps debug a
+failure). For `ffmpeg`, prefer `-loglevel error` over piping the full stats block through `tail
+-N` when the call is a known-good re-encode, not a first attempt.
+
+**Standing rule going forward**: batch known fixes into one edit pass before re-running
+`npm run check` or a `hyperframes snapshot` sweep, rather than a single-issue check-fix-check
+loop (the caption garble fix, the contrast fix, and the overflow fix in this same episode were
+each checked separately when they could have been batched). Reserve a full multi-timestamp dense
+snapshot sweep for pre-render final verification; a narrow 2-4 frame targeted snapshot is enough
+to confirm a single just-fixed region.
+
 ## Custom devices built for this channel (added 2026-08-14)
 
 A running log of visual devices hand-built for an @thataipm episode specifically BECAUSE no
@@ -667,6 +723,39 @@ frame count must appear somewhere in this slug's bullet line(s), tagged one way 
   `press-ripple` was installed and evaluated but not used -- `simulated-cursor` alone covered
   every cursor beat this episode needed without press-ripple's extra built-in target-pill
   machinery, which this episode's screenshots-and-captions shot list didn't call for.
+- [2026-08-19] hyperframes-claude-code-auto-memory: Frame 1 hand-built(`matrix-decode` pasted
+  structure, real "REMEMBERS" scramble-to-word reveal) — registry(`matrix-decode`), JS fallback
+  bug fixed in the installed copy (empty-string default replaced with the real declared
+  default); Frame 2 registry(`notification-pileup`); Frame 3 registry(`browser-device-stage`,
+  `yt-camera-move`) — real screenshot of `code.claude.com/docs/en/memory`, camera punch-in +
+  edge-defocus pulse added after review caught it installed-but-unused; Frame 4
+  registry(`terminal-simulator`) —
+  rebuilt mid-episode after first draft hand-built a lookalike terminal instead of using the
+  real installed component's markup/classes, corrected before assemble; Frame 5
+  registry(`constellation-hub`) — real MEMORY.md node labels (Decisions, Bugs Fixed,
+  Preferences, Style Rules), mount box corrected once for a caption-band overlap; Frame 6
+  registry(`code-terminal-run`) — real `cat memory/feedback_no_em_dashes.md` content, swapped
+  in after `code-snippet-dark-2026` and `code-diff` were both installed and rejected as legacy
+  fixed-1920x1080-landscape blocks (same risk class as previously-confirmed-broken
+  `data-chart`/`mk-progress-stat`/`grid-card-assemble`); Frame 7 registry(`cta-close`). New
+  standing rule this episode (see root `CLAUDE.md` memory `feedback-visuals-not-word-for-word`):
+  visuals no longer need to illustrate narration word-for-word, and no frame may go empty even
+  for a microsecond — every frame here uses one continuous ambient-glow `tl.fromTo` spanning
+  nearly the full frame duration to guarantee both `check_static_gaps.mjs` coverage and genuine
+  always-on motion. **Revised same day after direct feedback ("old subtitle format... leverage
+  high quality elements from hyperframe"):** the channel's own `captions.mjs`/
+  `thataipm-caption-skin.html` dark-box karaoke captions were replaced (this episode) with the
+  real installed `caption-pill-karaoke` registry component's actual algorithm (canvas-measured
+  per-group font sizing, natural-pause + 4-word grouping, 2-line wrap, instant opacity SET at
+  group boundaries instead of a crossfade tween) rebuilt into `compositions/captions.html` fed
+  with this episode's real word timeline, portrait-adapted (900px pill width, this channel's
+  existing 68%-84% safe-zone band kept) — genuinely fixes a real overlapping-caption garble bug
+  the old crossfade-tween skin had at group boundaries (confirmed in this episode's own
+  dense-verification pass, e.g. two adjacent groups both partially opaque at t=9.5s), not just
+  a style swap. Also wired `yt-camera-move` (installed earlier this episode but left completely
+  unused, a real gap, not a false negative) onto Frame 3's static screenshot mount for a genuine
+  camera punch-in + edge-defocus pulse, replacing what had been a flat static mount with only an
+  ambient glow covering it.
 
 **Entries (pre-2026-08-14 tightening, narrative format — kept as history, not retroactively
 reformatted; the paragraph below each episode's bulleted gaps also documents that episode's
