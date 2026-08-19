@@ -1,0 +1,9 @@
+Claude Code used to forget everything the second your session ended. Not anymore.
+
+It's called auto-memory, straight from Anthropic's own docs. You correct something once, say never use em dashes, and it gets written to a real markdown file on its own. No manual save command. Next session, before you've said a word, that file is already loaded back in.
+
+It's not just style rules either. It tracks why a decision got made, what broke last time, even how you like feedback delivered, and links related memories to each other automatically.
+
+The part that gets me: it's not a chat log. It's a real file you can open and edit yourself.
+
+Comment MEMORY and I'll send you exactly how it's structured.

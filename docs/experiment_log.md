@@ -136,7 +136,7 @@ uncounted baseline).
 |---|---|---|---|---|---|---|
 | AI Tools & Agent Spotlights | 0 | 1 | 9 | — | — | IN_PROGRESS |
 | Navigating the AI Era | 0 | 2 | 8 | — | — | IN_PROGRESS |
-| How AI Systems Actually Work | 0 | 1 | 9 | — | — | IN_PROGRESS |
+| How AI Systems Actually Work | 0 | 2 | 8 | — | — | IN_PROGRESS |
 
 **Real per-episode pillar tagging (checked against `episodes/scheduled/*.md` and git history,
 2026-08-15)** — none of these are confirmed `published` by Zernio yet, all are `scheduled`
@@ -151,6 +151,11 @@ uncounted baseline).
   AI Era**, direct instruction. Scheduled for real via Zernio (IG post
   `6a80ac7bb078353c96fa12d3`, YouTube post `6a80ac7bb078353c96fa1318`), verified via
   `GET /v1/posts?status=scheduled`. See `episodes/scheduled/5-ways-to-make-money-with-ai.md`.
+- `claude-code-auto-memory` ("Claude Code Has Real Memory Now"), scheduled 2026-08-20T10:00
+  Asia/Kolkata → **How AI Systems Actually Work** (real mechanism explainer, same register as
+  `hyperframes-what-is-mcp`). Scheduled for real via Zernio (IG post
+  `6a86035b3a904242ba1fa546`, YouTube post `6a86035c3a904242ba1fa594`), verified via
+  `GET /v1/posts?status=scheduled`. See `episodes/scheduled/claude-code-auto-memory.md`.
 
 **Decision gate**: once a pillar has enough real traffic to read signal (spec §9's metrics),
 apply spec §10's batch decision rule AT THE PILLAR LEVEL — KEEP/SCALE the pillar(s) with real

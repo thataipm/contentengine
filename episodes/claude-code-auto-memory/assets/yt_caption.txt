@@ -1,0 +1,7 @@
+Claude Code has a real memory system now, and it's not what you'd expect. Correct it once, say never use em dashes or always check X before Y, and it writes that to an actual markdown file automatically, no save command needed. Open a new session and that file is already loaded before you type a word.
+
+It goes beyond style rules too: it tracks why decisions got made, what broke previously, how you like feedback, and links related memories together on its own. And unlike a chat log, it's a real file sitting on disk that you can open and edit yourself, straight from Anthropic's own documentation.
+
+Comment MEMORY and I'll send you exactly how it's structured.
+
+#ClaudeCode #AIMemory #Anthropic #AICodingAssistant #DevTools
