@@ -1,0 +1,9 @@
+If your Claude Code sessions are burning through tokens faster than they used to, there's a skill built specifically to fix that. It's called Caveman, sitting at 98k+ stars on GitHub, and yeah, it makes your agent talk like a caveman.
+
+I installed it on our own system before scripting this. Ask for a React re-render fix the normal way, you get 69 tokens of full sentences. With Caveman on, the same fix comes back in 19 tokens flat.
+
+And it's not one lucky example. Their own benchmark ran it against 10 real coding tasks, debugging, docker builds, security reviews, and it's cutting the response down by 65% on average, same fixes, way fewer words.
+
+It doesn't stop there either. A proxy layer shrinks what the model reads too, not just what it says, cutting 33% of input tokens in a real 54-run benchmark while still passing every single accuracy check.
+
+Comment CAVEMAN and I'll send you the install link.

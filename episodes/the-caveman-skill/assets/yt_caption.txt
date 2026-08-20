@@ -1,0 +1,9 @@
+Claude Code token usage climbing? There's a real skill for that, 98,000+ stars on GitHub, called Caveman. It makes your agent answer tersely instead of padding every reply with full sentences.
+
+Real test: ask for a React re-render bug fix normally and you get 69 tokens back. Turn Caveman on and the identical fix comes back in 19 tokens. That's not cherry-picked either, their own benchmark across 10 real coding tasks (debugging, Docker builds, security reviews) shows a 65% average cut in response length, same correctness, far fewer words.
+
+There's a second layer too: a local proxy that trims what the model reads, not just what it writes. Across a real 54-run benchmark it cut 33% of input tokens while still passing every accuracy check.
+
+Comment CAVEMAN below and I'll send you the install link.
+
+#ClaudeCode #TokenEfficiency #AIAgents #DevTools #ClaudeCodeSkills
