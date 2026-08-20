@@ -134,7 +134,7 @@ uncounted baseline).
 
 | Pillar | Published | Scheduled (not yet published) | Remaining | Follows/1,000 views | Saves (agg.) | Status |
 |---|---|---|---|---|---|---|
-| AI Tools & Agent Spotlights | 0 | 1 | 9 | — | — | IN_PROGRESS |
+| AI Tools & Agent Spotlights | 0 | 2 | 8 | — | — | IN_PROGRESS |
 | Navigating the AI Era | 0 | 2 | 8 | — | — | IN_PROGRESS |
 | How AI Systems Actually Work | 0 | 2 | 8 | — | — | IN_PROGRESS |
 
@@ -156,6 +156,20 @@ uncounted baseline).
   `hyperframes-what-is-mcp`). Scheduled for real via Zernio (IG post
   `6a86035b3a904242ba1fa546`, YouTube post `6a86035c3a904242ba1fa594`), verified via
   `GET /v1/posts?status=scheduled`. See `episodes/scheduled/claude-code-auto-memory.md`.
+- `the-caveman-skill` ("The Caveman Skill: 98k-Star Claude Code Token Saver"), produced
+  2026-08-14 (same day this pillar experiment opened, counted toward the fresh tally per that
+  date's own boundary, not "already-shipped before 2026-08-14"), scheduled 2026-08-21T08:00
+  Asia/Kolkata → **AI Tools & Agent Spotlights** (tool spotlight, same register as
+  `continuous-claude-v3`). Sat as PRODUCED-but-undistributed for six days before this session
+  finished it: real screenshots, a real repo README benchmark, real 98k+ star count at
+  production time (99,494 live at scheduling time, kept the video's own stated "98k" figure
+  rather than updating it, since narration and on-screen text must match). Two stat-callout
+  visuals (the 65% and 33% kinetic-slam overlays) were fixed same day after direct feedback
+  they looked cheap (flat text, no depth) — see `docs/hyperframes_production_notes.md` if a
+  similar caption-kinetic-slam callout needs the same shadow/backdrop treatment elsewhere.
+  Scheduled for real via Zernio (IG post `6a87438977576229e2987705`, YouTube post
+  `6a87438a77576229e29877c8`), verified via `GET /v1/posts?status=scheduled`. See
+  `episodes/scheduled/the-caveman-skill.md`.
 
 **Decision gate**: once a pillar has enough real traffic to read signal (spec §9's metrics),
 apply spec §10's batch decision rule AT THE PILLAR LEVEL — KEEP/SCALE the pillar(s) with real
