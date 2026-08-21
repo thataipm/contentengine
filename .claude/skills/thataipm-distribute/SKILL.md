@@ -23,14 +23,34 @@ not implied by an earlier general approval — confirm per episode.
    pattern is video approval first, distribution second, as two separate gated
    steps.
 
-2. **Render a cover still.** Pick a timestamp that lands on a clean visual (not
-   mid-sentence caption text, not mid-transition):
-   ```bash
-   npx hyperframes@<pinned-version> snapshot hyperframes-<episode> --at <seconds> -o hyperframes-<episode>/renders/cover_candidates
-   ```
-   Review the candidates, pick the best one, save it as
-   `episodes/<slug>/build/<slug>_cover.png` (or re-render at exactly the chosen
-   timestamp for full resolution if the snapshot crop isn't final-quality).
+2. **Design a real cover composition — never just grab a timeline frame.**
+   (Standing rule, locked 2026-08-15, direct instruction: "enforce designing a
+   creative cover for videos.") A frame lifted from the timeline is built to
+   read as part of a moving sequence, not as a still — it's usually a mid-word
+   caption, a half-landed reveal, or an otherwise arbitrary instant, and it
+   never earns its own composition the way a real title card does.
+
+   Build a dedicated, purpose-designed cover instead: real episode title
+   (large, bold, one word accented in the episode's palette), a kicker line,
+   real brand/product logos relevant to the episode content laid out in
+   glowing bordered tiles (not a generic icon), and the comment-keyword CTA —
+   composed as its own static beat, not sampled from motion. Concretely:
+   1. Back up the project's `index.html` (it's the source for the real
+      shipped video, don't lose it): `cp index.html index.html.bak`.
+   2. Temporarily replace `index.html` with a small standalone composition
+      (own `#root`, own `data-duration` ~1.5s, no `<template>` wrapper — see
+      `hyperframes-core`'s standalone-root form) containing the real designed
+      cover markup.
+   3. Snapshot it: `npx hyperframes@<pinned-version> snapshot <project> --at 0.7 -o <project>/renders/cover_candidates --no-end`.
+   4. Restore the real `index.html`: `mv index.html.bak index.html` —
+      **always restore before doing anything else**, this file is the actual
+      video's source of truth.
+   5. Save the result as `episodes/<slug>/build/<slug>_cover.png`.
+
+   This only touches `index.html` locally and briefly; the already-rendered
+   `build/*.mp4` is unaffected either way. See
+   `hyperframes-5-ways-to-make-money-with-ai`'s cover for a reference
+   implementation (title + 5 real platform logo tiles + CTA).
 
 3. **Write platform captions.** Three genuinely distinct sections in
    `episodes/<slug>/assets/captions.md` (`## Instagram`, `## LinkedIn`,

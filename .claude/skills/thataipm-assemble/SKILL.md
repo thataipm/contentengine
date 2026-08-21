@@ -1,6 +1,6 @@
 ---
 name: thataipm-assemble
-description: "Run the full HyperFrames build chain for an @thataipm episode in one command: captions build, assemble-index, a static-gap check for the Visual Retention Rule, a registry-usage check, an SFX-presence check, transitions inject, hyperframes check, optional snapshot, render, and an audio volumedetect sanity check. Use after frame edits or a thataipm-resync pass are done and it's time to produce a real MP4. Not for editing frame content or timing."
+description: "Run the full HyperFrames build chain for an @thataipm episode in one command: captions build, assemble-index, a static-gap check for the Visual Retention Rule, a registry-usage check, an SFX-presence check, transitions inject, hyperframes check, optional snapshot, render, an audio volumedetect sanity check, and a mandatory /watch pass on the real rendered MP4 before it's considered done. Use after frame edits or a thataipm-resync pass are done and it's time to produce a real MP4. Not for editing frame content or timing."
 ---
 
 # thataipm-assemble: one command instead of eight tool calls
@@ -121,6 +121,23 @@ failure report.
    the real render's volumedetect numbers exactly on a real A/B. Only valid when
    the composition HTML genuinely hasn't changed; any visual edit still needs a
    real render.
+
+5.6. **Run `/watch` on the actual rendered MP4 before considering the render done — hard rule,
+   added 2026-08-21, direct instruction.** Not optional, not replaced by `hyperframes snapshot`
+   or `hyperframes check`: both passed clean on `hyperframes-lead-gen-sales-agent` while it still
+   shipped a component rendering 3-4x its authored size and off-canvas, and a two-screenshot
+   crossfade that read as an unreadable double-exposure — both invisible to every mechanical
+   check and only caught by reading real extracted frames from the real MP4 at native
+   resolution. `/watch` also gets you the real transcript alongside the visuals in one pass,
+   which spot-checking with ad hoc `ffmpeg -frames:v 1` pulls doesn't.
+   ```bash
+   python3 "${SKILL_DIR}/scripts/watch.py" "renders/<episode>_<timestamp>_rushed.mp4" --detail balanced
+   ```
+   (On Windows, `python3` resolves to the Store stub — use the `py` launcher instead: `py
+   "${SKILL_DIR}/scripts/watch.py" ...`.) Read every returned frame path, not a sample of them —
+   this is the same "dense verification, not spot-check" discipline as everywhere else on this
+   channel. If anything looks wrong, fix it in the frame file and go back to step 2, not just
+   step 5.5's remux (a real visual bug needs a real re-render, not an audio-only remux).
 
 6. **Hand off to `/thataipm-distribute`** once the render looks right.
 

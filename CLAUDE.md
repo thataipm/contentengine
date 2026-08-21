@@ -83,6 +83,40 @@ only when a shot genuinely needs it, don't pre-build speculatively): gauge/donut
 reveal comparison table, chronological before/after timeline. Real data only — a chart TYPE is a
 container, it doesn't excuse inventing the numbers inside it.
 
+### Standing visual system v2 (adopted 2026-08-21, direct instruction — "apply it globally,
+### keep this as standard moving forward always")
+
+**Supersedes** the 2026-08-13 cream/no-grid palette default in
+`docs/hyperframes_production_notes.md`'s Standing visual defaults section — that section now
+carries a 2026-08-21 entry marking the change; this is the live default for every new episode,
+same override precedent as that section's own 2026-08-13 dark→light reversal.
+
+**Palette**: plain black ground (`#0A0A0A` — flipped from off-white 2026-08-21 same day as the
+first validation episode shipped, direct instruction: "use black background color as standard to
+maintain consistency between all videos," do not reintroduce the light ground), sage green
+(device chrome), red (accent/transitions), off-white text and UI cards floating on the black
+ground. **Typography**: mixed serif/sans for kinetic reveals. **Motion**: soft drop-shadow
+3D-on-2D depth, red radial-burst scene-transitions. On black, dark UI elements (a badge, a card)
+need their own light ring/border for definition — a drop-shadow alone won't separate them from
+the ground the way it did on the old light palette.
+
+**Screenshots and real UI over generic icons/mock UI**: whenever a frame shows a real product's
+interface, capture real screenshots of the actual product (headless-browser CLI capture works
+when the interactive Browser pane isn't available — see `docs/hyperframes_production_notes.md`)
+rather than hand-building a lookalike mock. For a beat that isn't a specific product screenshot,
+reach for a real UI device (a system notification banner, a toggle switch, a status pill) before
+a generic icon-in-a-square — pick the device whose real-world meaning matches the line, not
+whichever shape is closest to hand (a lightning bolt does not mean "slow"). Standing rule as of
+2026-08-21.
+
+Four hand-built devices (registry-checked, no match — full search log in the "Custom devices"
+log in `docs/hyperframes_production_notes.md`) live in `hyperframes-visual-system-v2/
+compositions/components/`: `grid-background`, `sketch-icon-square`, `glossy-circle-badge`,
+`radial-burst`. Copy the needed file(s) into a new episode's own `compositions/components/`
+(same per-project copy convention as every other hand-built device on this channel — no shared
+library folder) before wiring them into frames. Still registry-first: check `hyperframes catalog`
+and the Custom devices log before hand-building anything new even within this system.
+
 ## 2-6. Retired production history (Remotion engine, episodes cm1 through hyperframes-had-the-
 components-i-hand-built) — collapsed, full text in git history
 
