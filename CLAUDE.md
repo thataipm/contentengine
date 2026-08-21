@@ -191,9 +191,19 @@ pillar totals.
 - **Data-removal practice**: every episode's rendered `build/*.mp4` + cover PNG get force-added
   to git despite `.gitignore`'s `episodes/*/build/` rule (Zernio needs a real public GitHub raw
   URL to fetch from at publish time). Once a scheduled post's Zernio status reads `published`
-  (checked directly via the API, never assumed from time passing), untrack that episode's
-  `build/*.mp4` and cover (`git rm --cached`, never a plain `rm` — the local file stays on disk).
-  Do NOT untrack before a post is confirmed published.
+  **and stays published for 2 full days** (added 2026-08-21, direct instruction — the 2-day
+  grace window covers late edits/re-approvals before untracking; checked directly via the API,
+  never assumed from time passing), untrack that episode's `build/*.mp4` and cover (`git rm
+  --cached`, never a plain `rm` — the local file stays on disk). Do NOT untrack before a post is
+  confirmed published. This is now automated: `automation/untrack_published_episodes.py` runs
+  daily via a scheduled task (`untrack-published-episodes`, 3:08am local) and does exactly this
+  check-and-untrack step, nothing more — it does not touch script/render/distribute stages, per
+  this project's own "no autonomous production automation" carve-out (the carve-out is about
+  content production, not git housekeeping). **Untracking alone does not shrink `.git`** — the
+  old blob stays reachable in history. Reclaiming that space needs an actual history rewrite
+  (`git filter-repo --path episodes/<slug>/build --invert-paths`, then `git push --force`),
+  which stays a deliberate, occasional MANUAL operation (first run 2026-08-21, .git 216M → 112M)
+  — never automated, since it rewrites every commit hash and force-pushes every time it runs.
 - **`episodes/scheduled/` index**: one manifest file per episode with at least one platform post
   still `scheduled` (not `published`) in Zernio. An index, not storage — episode folders never
   move here. Delete an episode's file from here once every platform shows `published`. See
