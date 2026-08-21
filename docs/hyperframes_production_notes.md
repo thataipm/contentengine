@@ -176,50 +176,66 @@ forward, learned from what actually happened on that build:
    was in the fix/reconciliation rounds after the builds, which are NOT subject to that
    constraint and should default to direct edits.
 
-## Standing visual defaults (2026-08-13, locked as the core system going forward)
+## Standing visual defaults (2026-08-21, v2 system — current)
 
-**This project is now the standing production system for @thataipm** — not an experiment, the
-default for every new episode. Two corrections apply to every future build, not just the first:
+**Retired**: the 2026-08-13 cream-ground/no-grid palette (light theme, purple/green/orange/blue
+accent rotation, "no grid texture" rule). Fully replaced 2026-08-21 by direct instruction ("apply
+it globally... keep this as standard moving forward always") — do not fall back to it. Full text
+in git history (`git log -p -- docs/hyperframes_production_notes.md`) if a past episode's exact
+old-palette values are ever needed for reference. The caption-band-height correction from that
+section still applies unchanged (platform chrome geometry, not palette) — repeated below.
 
-- **Caption band sits too low by default.** `captionBand()` in the framework's own
-  `lib/dimensions.mjs` reserves the bottom 16.67% of the canvas purely from height — it has no
-  concept of a specific platform's own UI chrome. On this project's 1080x1920 canvas that gives
-  `--cap-band-top: 1600px`, but this channel's established Instagram safe zone (same constant as
-  the Remotion pipeline's `SAFE_Y1`) reserves roughly the bottom 300px (~y=1650+) for IG's own
-  overlay buttons — so the band's bottom edge, and the text centered in it, lands inside that
-  reserved zone. **After every `captions.mjs build` run, raise `--cap-band-top` to ~1300px**
-  (keeps the full band's bottom at/above y≈1620, clear of the platform chrome with margin) —
-  check both the generated `compositions/captions.html` and, if it's ever regenerated, reapply.
-- **Light theme (warm cream ground), colorful accents on top, is the standing palette —
-  reversed from the dark-theme note this section originally shipped with, same day
-  (2026-08-13).** Direct instruction after watching the dark-theme render: "if video looks
-  good, use light theme, I don't mind the color preference, just make sure we make best
-  retention holding sexy video" — the actual bar is retention/visual quality, not a specific
-  palette, and light theme is the confirmed pick. Ground is `frame.md`'s `cream` (`#FAF9F5`),
-  voice is `ink` (`#141413`), the multi-accent rotation stays (purple/green/orange/blue) but
-  each accent is a DARKENED, light-ground-safe variant when used as text/stroke/border color
-  (e.g. `#6952D6` not `#8C7CFF`) — the brighter un-darkened hue is still fine as a FILL with
-  dark text on top (a CTA pill), since contrast there comes from the text, not the fill. The
-  **code/terminal surface stays dark** (`navy` token) even on a light page — a real terminal
-  is dark regardless of the surrounding theme, this is a deliberate exception, not an
-  inconsistency. See `frame.md`'s `colors:` block for the full current token set and the
-  reasoning comment above it. Don't default back to the dark-ground remix this note originally
-  described — that was a same-day intermediate step, not the final call.
+**Current standing palette**: plain black ground (`#0A0A0A`), no grid lines. The
+`grid-background` component went through two revisions the same day, 2026-08-21: shipped WITH a
+grid overlay at first adoption, grid removed after the first validation episode's feedback round,
+then its ground color itself flipped from off-white to black in a THIRD revision the same day
+("use black background color as standard to maintain consistency between all videos," direct
+instruction) — do not reintroduce either the grid or the light ground. Sage green for device
+chrome, red for accents and transitions, off-white text and UI cards floating on the black
+ground. **Typography**: mixed serif/sans for kinetic reveals. **Motion**: soft drop-shadow
+3D-on-2D depth, red radial-burst scene-transitions. **Black-ground contrast note**: any dark
+element (a badge, a card) that read fine via drop-shadow alone on the retired light ground needs
+its own light ring/border on black — a shadow doesn't separate a dark shape from a dark backdrop.
+Full design rationale and the registry-search log behind each device: see the "Custom devices"
+entry below and `hyperframes-visual-system-v2/` itself (the source project — copy components
+from its `compositions/components/` into a new episode, no shared library folder, same
+per-project convention as every other hand-built device here). Note: the sandbox project's own
+palette wasn't flipped to black in this pass (out of scope, no episode currently validating
+against it) — flip it too before the next episode starts from it, so the source project and the
+live standard don't drift apart.
 
-  **Note added 2026-08-14**: `hyperframes-what-skills-matter` (the first "Navigating the AI
-  Era" pillar episode) shipped on a dark palette instead (`#101014` ground), per direct
-  instruction for that specific episode's tone. This standing default is a per-episode starting
-  point, not an unconditional rule — override it when the episode brief calls for a different
-  palette, same as this note's own light-vs-dark reversal above shows the default itself has
-  moved before.
-- **Clean background, no grid texture, added 2026-08-13** (direct feedback: "instead of showing
-  those boxes in background, have a clean background without grid"). Every frame's `.xxx-bg`
-  ground had picked up a subtle 64px cross-hatch `linear-gradient` grid pattern during an
-  earlier "make it look more finished" pass — read as visible "boxes" on a real render, not the
-  intended subtle texture. Removed from all 5 frames; ground is now just the solid cream +
-  ambient radial-gradient color glow, no grid lines. Don't reintroduce a grid pattern as a
-  default "make it look more complete" move — if a shot genuinely feels empty, reach for a
-  literal device (per the schema vocabulary) or the ambient glow, not a texture layer.
+This is the default for every new episode going forward, same "standing, not per-episode"
+status the retired section held — override only on explicit per-episode instruction, and log the
+override the same way `hyperframes-what-skills-matter`'s dark-palette exception was logged
+against the old default.
+
+**Three more standing requirements, added 2026-08-21 after the first validation episode's
+feedback round:**
+- **Real screenshots, not hand-built mock UI, whenever a frame depicts a real product.**
+  `hyperframes-lead-gen-sales-agent` Frame 4 originally hand-built a Slack/Gmail/Calendar mock
+  for its `browser-device-stage` screen slot — flagged directly ("you have not used any
+  screenshots, gather visual assets, make it standard"). Fixed by capturing real screenshots of
+  the actual product site. See the durable-pitfall entry below for how to capture them when the
+  interactive Browser pane isn't displaying (a real, recurring session constraint, not a one-off).
+- **Any device mounted inside a frame that also carries captions must clear the caption band
+  (y 1305.6-1613.28 on a 1920-tall canvas) with real margin**, not just avoid a hard `check`
+  error. The same episode's Frame 4 mounted `browser-device-stage` at `top:260px;height:1200px`
+  (bottom edge 1460px) — inside the band, invisible to `hyperframes check`'s layout pass (which
+  checks containment/overflow, not band clearance) and only caught by reading real extracted
+  frames from the final render.
+- **Caption pills must be fully opaque, never translucent**, for the same reason noted in the
+  durable-pitfall entry below — a translucent pill's effective contrast depends on whatever v2
+  backdrop sits behind it.
+
+- **Caption band sits too low by default** (unchanged from the retired section — platform-chrome
+  geometry, not palette). `captionBand()` in the framework's own `lib/dimensions.mjs` reserves
+  the bottom 16.67% of the canvas purely from height, with no concept of a specific platform's
+  own UI chrome. On a 1080x1920 canvas that gives `--cap-band-top: 1600px`, but this channel's
+  established Instagram safe zone reserves roughly the bottom 300px (~y=1650+) for IG's own
+  overlay buttons, so the band's bottom edge lands inside that reserved zone. **After every
+  `captions.mjs build` run, raise `--cap-band-top` to ~1300px** (keeps the full band's bottom
+  at/above y≈1620, clear of platform chrome with margin) — check both the generated
+  `compositions/captions.html` and, if it's ever regenerated, reapply.
 
 ## Tools & Skills episode format (locked 2026-08-14, reference-acquired)
 
@@ -466,6 +482,67 @@ full, including the `data-variable-values` (values, keyed by id) vs `data-compos
 (the schema, an array) distinction — easy to confuse, confirmed in that reference doc's own
 "Two JSON Shapes" section.
 
+## Durable pitfall: a mismatched host `data-composition-id` (vs. the mounted file's own internal id) breaks `cqw`/`cqh` sizing, not just variable passing
+
+Found 2026-08-21 on `hyperframes-lead-gen-sales-agent` Frame 5, caught only via `/watch` on the
+real render (not `hyperframes snapshot`, not `hyperframes check` — both passed clean). Two
+`glossy-circle-badge` mounts in one frame need unique host `data-composition-id`s to satisfy the
+`duplicate_composition_id` lint rule (see the entry below), so they were given
+`glossy-circle-badge-a`/`-b` on the HOST div while both still pointed `data-composition-src` at
+the SAME unmodified `glossy-circle-badge.html` (whose own internal `data-composition-id` is the
+literal `glossy-circle-badge`, unchanged). Real effect: the badge rendered 3-4x its authored
+340px size, off-position, arcing off-canvas — `60cqw` was resolving against something far larger
+than the 340x340 host box, even with correct `data-width="340" data-height="340"` explicitly set
+on the host. `hyperframes check`'s layout pass didn't catch it (no overflow/containment error
+logged), and an earlier `hyperframes snapshot` pass on this exact frame region was apparently
+sampled at moments that didn't expose it clearly enough to notice at a glance — only reading real
+extracted frames from the actual render at native resolution made it obvious. Fix: same pattern
+as the `headline-slam`/`sketch-icon-square` forks elsewhere in this episode — when a component
+needs 2+ simultaneous or sequential instances in one frame, fork the FILE itself with a matching
+internal `data-composition-id` (`glossy-circle-badge-a.html` declaring
+`data-composition-id="glossy-circle-badge-a"` internally, not just on the host wrapper), don't
+just rename the host wrapper's id while leaving the file's own internal id mismatched. **The
+`duplicate_composition_id` lint fix (make the host id unique) and this sizing bug are two
+different problems that look like the same fix but aren't** — renaming only the host side
+satisfies the linter while silently breaking the mounted component's own container-query basis.
+
+**Standing rule, direct instruction 2026-08-21: run `/watch` on the actual rendered file before
+presenting any render as final**, not just `hyperframes snapshot`/`check`. Both of the real bugs
+in this section (this one, and the crossfade double-exposure below) passed every mechanical
+check and an earlier snapshot pass clean — `/watch`'s frame extraction against the real MP4 at
+native resolution was what actually surfaced them. Added to `/thataipm-assemble`'s own
+"review the render" step.
+
+## Durable pitfall: reusing a mounted component's file for a second instance without forking it corrupts BOTH instances, not just the unforked one
+
+Found 2026-08-21 on `hyperframes-lead-gen-sales-agent` Frame 4, caught only via `/watch` on the
+real render after a user report ("that checkmark is bleeding off the canvas") — `hyperframes
+check` and an earlier `/watch` pass both missed it (the dedup/uniform frame sampling happened to
+skip the exact ~0.3s window where it was visible, twice). Two `sketch-icon-square-check` mounts
+in one frame: the first used the base file unmodified (`data-composition-id="sketch-icon-square-
+check"`, matching the file's own internal id — the "correct" half of the pattern in the entry
+above), the second pointed the SAME base file with only the host's `data-composition-id` renamed
+to `-2` (the "wrong" half). Real effect: the FIRST instance — the one with matching ids — rendered
+oversized and off-canvas, not the second. Two mounts referencing one file, one with a mismatched
+id, corrupts the shared registration for both, not just the mismatched one. Fix: same as the
+entry above — fork the file itself (`sketch-icon-square-check-2.html`, internal id and
+`window.__timelines[...]` key both changed to match) before reusing it a second time in one
+frame, never just rename the host.
+
+## Durable pitfall: classes/position placed directly on a `data-composition-src` host div don't reliably survive the mount — position via a plain wrapper div instead
+
+Found 2026-08-21 on the same Frame 4 bug above, discovered while root-causing it: after properly
+forking `sketch-icon-square-check-2.html` (fixing the sizing), all four icon mounts in the frame
+still rendered at the SAME position regardless of distinct `left` values set via modifier classes
+(`.f4-icon-mount--1` through `--5`) applied directly on each `data-composition-src` host div. The
+host's own class list does not reliably survive whatever the runtime does when it mounts a sub-
+composition into that div — the position rules were syntactically correct CSS and passed
+`hyperframes check`, but never took effect. Fix: never put positioning (or any styling meant to
+persist) directly on a sub-composition host div's `class`/inline style — wrap it in a plain,
+non-host `<div>` that owns the `position: absolute; left/top` and give the host div itself only
+`inset: 0` to fill that wrapper. This is now the standing pattern for any frame mounting the same
+component more than once at different canvas positions.
+
 ## Durable pitfall: `data-variable-values` does not reliably reach a "video primitive" mounted two levels deep (index -> frame -> component)
 
 Found 2026-08-15 on `hyperframes-5-ways-to-make-money-with-ai`, confirmed via real snapshot
@@ -499,6 +576,69 @@ capture issue). Re-verify with a fresh snapshot after these default-edits — if
 custom text still shows, that's consistent with either explanation and doesn't need further
 root-causing (the fix covers both cases). Worth reporting upstream if confirmed as a real
 2-level-nesting limitation the next time this comes up.
+
+**Re-confirmed 2026-08-20 on `hyperframes-ask-ai-to-think-first`, now definitely not transient.**
+`chat-thread`, `constellation-hub`, and `cta-close` ALL rendered their own default demo content
+(a fake "what r u using for the launch video??" text thread, "Product"/"Capture,Compose,Render,
+Share", "Make it happen"/"Start now") instead of the real `data-variable-values` supplied on
+each mount — caught only because a full-episode snapshot review showed 3 of 7 frames were
+literally the wrong content, not a styling issue. This is the exact same failure on three
+different components across two separate episodes now (five components total: `cta-close`,
+`grid-card-assemble`, `trust-strip`, `chart-story`, `headline-slam`, `browser-device-stage` on
+2026-08-15; `chat-thread`, `constellation-hub`, `cta-close` again on 2026-08-20) — treat this as
+a confirmed, permanent characteristic of `data-composition-src` + `data-variable-values` at
+2-level nesting, not a one-off. **The fix above is now the mandatory first step for every
+video-primitive mount, not a fallback to try after something looks wrong**: after installing
+any component of this type, immediately edit its own declared JSON default AND JS fallback
+constant to the real content before ever mounting it, then verify with a real snapshot. Don't
+trust `data-variable-values` alone at this nesting depth on any future episode.
+
+**Second, distinct bug found the same day on `chat-thread`**: its message-arrival pacing math
+uses a hardcoded `var duration = 12` (matching its own `data-composition-duration="12"` demo
+default) to decide when to compress the stagger schedule — completely independent of the host
+mount's real `data-duration`. Mounted at 18.269s with 4 messages, the component's OWN internal
+compression logic squeezed everything to land by ~10.4s regardless, leaving a real ~8s dead tail
+even though `class="clip"` visibility itself wasn't the problem this time (unlike
+`constellation-hub`'s duration bug below, `#root` here carries no `clip` class, so the DOM stayed
+visible — the bug was in the pacing math, not visibility). **Same fix as `constellation-hub`'s
+duration bug**: edit the installed copy's `data-composition-duration`, its `#root data-duration`,
+and the internal `var duration = 12` constant to the real mount duration. Any video-primitive
+component with its own internal pacing/compression math tied to a hardcoded duration constant is
+now a suspect by default — grep the installed file for a bare numeric duration literal before
+trusting its pacing at a non-default mount length.
+
+**Re-confirmed 2026-08-21 on `hyperframes-lead-gen-sales-agent`, Frame 4** — `browser-device-stage`
+(already on the 2026-08-15 list above) was freshly mounted at 16.221s and went through the exact
+same failure the log already described: its own `#root data-duration="5"` and inner
+`.bds-clip data-duration="5"` stayed at the authored default, so the envelope's HOLD math
+computed against 5s, not the real 16.221s mount. Visible symptom differed from the 2026-08-15
+write-up (that one was wrong CONTENT; this one was the device visibly SHRINKING then vanishing
+entirely partway through its real 16s on-screen window, confirmed via the studio's
+`/api/projects/<slug>/thumbnail/index.html?t=<seconds>&format=png` endpoint at several
+timestamps, not just `hyperframes snapshot`) but same root cause, same fix: patched
+`data-composition-duration`, `#root data-duration`, and the inner clip's own `data-duration` to
+16.221 directly in the installed file. **Real process lapse worth naming**: this frame was
+authored without checking this durable-pitfall log first, even though `browser-device-stage`
+was already named in it from 2026-08-15 — the registry-first hard rule covers checking the
+catalog before hand-building, but there's no equivalent forcing function for checking THIS log
+before mounting a component that's already a known repeat offender. Until that's automated,
+treat any component named in this log as needing the duration-patch applied on sight, before
+first mount, not after something looks wrong.
+
+**Separate finding, same debugging pass**: template-slot content (`<template data-slot="...">`
+supplying a video-primitive's screen/body content, per `browser-device-stage`'s own slot API)
+cannot be choreographed by the HOST FRAME's own `<script>` via `document.getElementById()` —
+those nodes are inert inside the `<template>` tag until the sub-component's own mount script
+clones them into the live DOM, which runs after the frame's outer script already executed, so
+the lookup always returns `null`. Any `tl.fromTo(el, {opacity:0}, {opacity:1}, ...)` guarded by
+`if (el)` silently never fires, and if the slot content's CSS default is `opacity:0` it stays
+invisible for the entire mount — a third, distinct way this same "outer script runs before inner
+content exists" class of bug can manifest (blank content, not blank device). Fix: don't animate
+slot content from the host frame's script at all; give it a plain visible-by-default style and
+let the sub-component's own entrance (settle/fade on the whole device) carry it on screen as one
+unit. A MutationObserver-based workaround was considered and rejected — it isn't seek-safe
+against this framework's deterministic-render requirement (a paused GSAP timeline scrubbed to an
+arbitrary timestamp, forward or backward, must always produce the same frame).
 
 ## Durable pitfall: `grid-card-assemble` (registry component) renders blank in this pipeline's actual final render — 3rd confirmed case
 
@@ -544,6 +684,76 @@ mount risk pattern) was used instead for the frame that would have used it (real
 Shorts monetization thresholds, Frame 4). Before ever using `mk-specs-list` in a real episode,
 test it in isolation first (a throwaway single-frame project), same standing advice as the
 `data-chart`/`mk-progress-stat` entries above.
+
+## Durable pitfall: the interactive Browser pane's `screenshot`/`computer` tools can silently be unable to composite frames — use headless Chrome CLI capture instead
+
+Found repeatedly on `hyperframes-lead-gen-sales-agent` (2026-08-21): `mcp__Claude_Browser__computer{action:"screenshot"}` failed with "the Browser pane is not displayed, so the page is not compositing frames" every time it was tried this session, on multiple different pages, regardless of `preview_start`/`navigate`/`tabs_select` order — this is a client-side display state the agent cannot force open. Don't burn retries on it. Real fix: `hyperframes`'s own render pipeline already downloads a real headless Chrome build to `~/.cache/hyperframes/chrome/chrome-headless-shell/<version>/chrome-headless-shell-win64/chrome-headless-shell.exe` (or the equivalent path on other platforms) — call it directly:
+```bash
+"<path-to>/chrome-headless-shell.exe" --headless --disable-gpu --window-size=1400,2400 \
+  --hide-scrollbars --screenshot="out.png" "https://example.com/page"
+```
+This produces a real, full-page PNG with no interactive-pane dependency. Crop the region you need with `ffmpeg -vf "crop=W:H:X:Y" -update 1`. Used successfully to capture real Lindy product-UI screenshots for `hyperframes-lead-gen-sales-agent` Frame 4 after the interactive pane wouldn't composite. This is now the standing fallback whenever a real screenshot is needed and the Browser pane won't display — don't fall back to a hand-built mock UI just because the interactive route failed.
+
+## Durable pitfall: `assemble-index.mjs` (faceless-explainer's step 2/8) regenerates `index.html` from scratch and silently drops a hand-authored persistent backdrop layer
+
+Found 2026-08-21 on `hyperframes-lead-gen-sales-agent`, caught only by dense real-render
+frame extraction (a 25-frame contact sheet built from the actual final MP4 via ffmpeg
+`fps=1/2,tile=5x5`, not `hyperframes snapshot`) — the entire video rendered on a plain black
+background instead of the v2 system's off-white grid, even though `hyperframes snapshot` and
+the studio dev-server thumbnail endpoint both showed the grid correctly right before the
+assemble pipeline ran. Root cause: `index.html` had a hand-added `el-grid` mount (the
+`grid-background` sub-composition, track-index 0, spanning the full episode) wired in
+BEFORE running `/thataipm-assemble`. Step 2/8 (`assemble-index.mjs`) rebuilds `index.html`
+from `STORYBOARD.md` + `audio_meta.json` alone — it has no concept of a persistent backdrop
+layer (not part of the faceless-explainer schema this script was written for), so it silently
+produced a fresh `index.html` with only the 7 frame scenes, captions, voice, and sfx tracks,
+and the hand-added grid mount was gone without any warning, error, or log line. Fix applied:
+re-added the `el-grid` div (track-index 0, `data-composition-src="compositions/components/
+grid-background.html"`, full 54.8s span) to `index.html` by hand AFTER running the pipeline,
+then re-rendered directly (`npm run render`) rather than re-running the full 8-step pipeline,
+since a second full run would just drop it again. **Same failure class, same fix pattern, as
+the `compositions/captions.html`-gets-clobbered pitfall this skill's own SKILL.md already
+documents for hand-edited captions** (`--skip-captions-build`) — except there's currently no
+equivalent `--skip-assemble-index` flag, so any future full pipeline re-run on a v2-system
+episode needs the grid layer manually re-added to `index.html` afterward every time, until
+`assemble-index.mjs` itself learns about a backdrop-layer concept. Any v2-system episode with
+a persistent backdrop should re-check `index.html` for the `el-grid` mount after every
+`/thataipm-assemble` run, not just the first one.
+
+**Related, same debugging pass**: the standard caption skin's `.caption-group` pill background
+(`rgba(0, 0, 0, 0.72)`, translucent) composites against whatever sits behind it — against the
+channel's old dark-page default this read as effectively near-black regardless, but against the
+v2 system's off-white grid it composites to a visibly lighter gray, which drags the karaoke
+dim-word state (`rgba(255,255,255,0.55)`) below WCAG AA at the moments `hyperframes check`
+samples (mostly the ~0.12-0.18s group fade-in/out windows, a brief transitional dip, not a
+steady-state legibility problem). Fixed by making the pill background fully opaque (`#0a0a0a`)
+instead of translucent, so its effective color no longer depends on the backdrop. This is now
+the standing caption-skin requirement for any v2-system episode — opaque pill, not translucent.
+
+## Durable pitfall: `check_static_gaps.mjs` cannot see motion inside a `data-composition-src`-mounted sub-composition, only inline tweens in the frame's own `<script>`
+
+Found 2026-08-21 on `hyperframes-lead-gen-sales-agent`, the first episode built almost entirely
+from v2-system sub-mounted devices (`headline-slam`, `sketch-icon-square`, `glossy-circle-badge`,
+`radial-burst`, `browser-device-stage`) rather than hand-coded inline GSAP tweens. Every frame
+failed the static-gap check with a single giant "gap" spanning the frame's ENTIRE duration
+(`0.00s -> 6.48s`, etc.) — the checker parses only the frame file's own `<script>` block for
+`tl.to`/`tl.fromTo` calls, so a frame whose only motion comes from sub-mounted components (each
+with its own separate `<script>` in its own file, invisible to a per-frame-file static scan) has
+zero visible coverage even when the actual rendered output is continuously changing. Confirmed a
+false positive by direct evidence, not assumption: real CLI snapshots (`hyperframes snapshot`,
+not the studio preview) at multiple timestamps per frame showed icons/badges/bursts/device swaps
+all firing exactly on schedule throughout. Frame 5 illustrates the partial-visibility version of
+the same gap: its one inline tween (a hand-built toggle-card entrance + knob flick, not a
+sub-mount) WAS correctly seen and covered `0->3.65s`; everything after that point is sub-mounted
+device motion (`glossy-circle-badge`, `sketch-icon-square`, `radial-burst`) and reads as one
+8.74s gap despite being fully covered in the real render. **This is now a second confirmed blind
+spot alongside the tool's own documented non-literal-position-arg limitation** — any episode
+built primarily from sub-mounted v2-system devices should expect every frame to fail this check
+by default, verify coverage with real `hyperframes snapshot` evidence instead, and pass
+`--skip-gap-check` to `pipeline.mjs` with that verification noted (not skipped blind). This
+doesn't retire the check for hand-coded-motion episodes (older frames, non-v2 episodes) — it's
+specifically the v2 system's sub-mount-heavy authoring style that falls outside what the checker
+can see.
 
 ## Durable pitfall: `npx hyperframes render` has no audio-only mode — an audio-only tweak still recaptures every visual frame
 
@@ -646,6 +856,60 @@ frame count must appear somewhere in this slug's bullet line(s), tagged one way 
 — the checker fails and names the exact missing frame numbers otherwise.
 
 **Entries (post-tightening, full per-frame format):**
+
+- [2026-08-21] hyperframes-lead-gen-sales-agent: the first real validation episode for the v2
+  visual system, see "Standing visual defaults" above. **Superseded 2026-08-21, second direct
+  feedback round** ("that badge is of no fucking use... scour hyperframes library") — every
+  `glossy-circle-badge` mount (Frames 1, 5, 6) dropped from the episode entirely and the now-
+  unused files (`glossy-circle-badge.html` + `-a`/`-b`/`-f6` forks) deleted, replaced by a
+  fresh 10+-query registry scour and a designer-approved plan, approved before implementation.
+  **Final shipped device accounting** (per-frame, replaces the entry below it): Frame 1
+  registry(`headline-slam` forked as `headline-slam-hook`, `native-notification-pop` forked as
+  `native-notification-pop-f1`, `radial-burst`, `badge-pop` paste-in); hand-built(`.f1-lead-card`
+  + `.f1-lead-stamp` — lead-intake card with a checkmark stamp, literal for "finds your leads,
+  qualifies them"). Frame 2 registry(`native-notification-pop` forked as
+  `native-notification-pop-f2`, `mk-usage-arc` paste-in, `radial-burst`); hand-built(`.f2-wait-
+  pill` — "Still unanswered, 3 days later"); dropped `sketch-icon-square-bolt`/`-star` (a
+  lightning bolt reads as FAST, backwards for a "too slow" beat — swapped for the real
+  notification + wait pill instead). Frame 3 registry(`headline-slam` forked as `headline-slam-
+  name`, `radial-burst`); hand-built(`.f3-code-card` — code brackets + a red strike-through SVG,
+  literal for "without writing a single line of code"); dropped `sketch-icon-square-agent`.
+  Frame 4 hand-built(real-screenshot card mount, now a 3-way sequential swap — alert, digest,
+  AND a third card, the live pipeline dashboard, all captured from lindy.ai/use-cases/sales via
+  the headless-chrome CLI method in the durable-pitfall entry above; added the third card and
+  the `yt-camera-move` tail punch-in on it after "use more visuals" feedback); registry
+  (`sketch-icon-square-check` x2 — the second instance properly forked to `sketch-icon-square-
+  check-2.html` with a matching internal id, `sketch-icon-square-arrow`, `sketch-icon-square-
+  star`), all four now positioned via a plain `.f4-icon-wrap` wrapper div rather than classes on
+  the sub-composition host itself — see the durable-pitfall entry below on why; hand-built
+  (`.f4-sort-pill` — WARM/COLD flip). Frame 5 hand-built(`.f5-toggle-card` — approval toggle
+  switch, "Outside impact waits for you"; `.f5-flag-tag` — "Flagged for review", added to bridge
+  a ~6s dead-black gap between the toggle card and the approve card, caught only via `/watch` on
+  the real render, not `hyperframes check`; `.f5-approve-card` — real two-button Approve/Reject
+  request card, literal for "waits for you to approve it first"); registry(`mk-usage-arc` paste-
+  in — Control gauge, `radial-burst`); dropped `glossy-circle-badge` x2 and `sketch-icon-square-
+  check`. Frame 6 registry(`headline-slam` forked as `headline-slam-reflection`, `radial-
+  burst`); hand-built(`.f6-id-card` — a real ID/employee-badge card, "Lindy · SALES REP", literal
+  for "hiring your first sales rep"); dropped `glossy-circle-badge-f6`. Frame 7
+  registry(`cta-close`), unchanged throughout. `headline-slam`, `native-notification-pop`, and
+  `sketch-icon-square` each forked into per-instance-content copies (unique composition-id/
+  timeline-key, hardcoded text/icon defaults) rather than relying on `data-variable-values` at
+  2-level nesting, per the existing durable pitfall above.
+
+- [2026-08-21] hyperframes-visual-system-v2 (device-library build, not an episode — see
+  "Standing visual defaults" above): `grid-background` — query "grid paper background subtle
+  graph lines", results stop-motion-cadence/spiral-galaxy/camera-dolly-zoom, none relevant;
+  `sketch-icon-square` — query "hand drawn sketch line art icon reveal", results
+  color-grading-adjacent/native-notification-pop/social-proof-card/iris-reveal, none relevant;
+  `radial-burst` — queries "radial burst explosion pulse ring shockwave" and "shockwave ring
+  impact expanding circle", results logo-sting/yt-circle-pointer/success-check/icon-morph-beat/
+  yt-camera-move/mk-background, no exact match (borrows `logo-sting`'s accent-ring-on-impact
+  technique as a base); `glossy-circle-badge` — query "glossy 3D circular icon badge glass
+  sphere", results grid-card-assemble/facet-morph/chat-thread, none relevant. All 4 hand-built,
+  `hyperframes check` clean (0 errors/warnings), snapshot-verified. Source files:
+  `hyperframes-visual-system-v2/compositions/components/{grid-background,sketch-icon-square,
+  radial-burst,glossy-circle-badge}.html` — copy into a new episode's own
+  `compositions/components/` before use, same convention as every other entry below.
 
 - [2026-08-15] hyperframes-5-ways-to-make-money-with-ai: Frame 1 registry(`headline-slam`,
   `caption-kinetic-slam`) — real hook title card, first use of the newer "video primitive"
@@ -756,6 +1020,28 @@ frame count must appear somewhere in this slug's bullet line(s), tagged one way 
   unused, a real gap, not a false negative) onto Frame 3's static screenshot mount for a genuine
   camera punch-in + edge-defocus pulse, replacing what had been a flat static mount with only an
   ambient glow covering it.
+- [2026-08-20] hyperframes-ask-ai-to-think-first: Frame 1 registry(`matrix-decode`,
+  `yt-camera-move`) — word "WRONG" scramble-to-reveal, real script hook, plus real ChatGPT/Claude
+  name pills and a camera punch-in added after direct feedback ("very less visuals... did not
+  apply visual change after every 2 sec rule") caught a real ~5.75s stretch covered only by the
+  ambient glow, not a genuinely new element; Frame 2 registry(caption-kinetic-slam technique,
+  ported to Inter since Anton has no @font-face declaration in this project) — word "NOTHING."
+  slam plus a hand-built X/check mark pair (checked, no registry match for a simple two-icon
+  wrong/right comparison); Frame 3 registry(`matrix-decode`) — word "REASONING"; Frame 4
+  registry(`chat-thread`, `yt-camera-move`) — real illustrative exchange of the web-verified
+  "strawberry" R-count failure mode (verified via search before scripting, not assumed; not
+  claimed as a literal screenshot, an honest chat-UI depiction of a real, documented behavior),
+  extended to 7 messages plus a closing camera punch-in after the same feedback caught a real
+  ~10s gap once the 4-message version finished landing; Frame 5 registry(`constellation-hub`,
+  `yt-camera-move`) — same duration-clip and hub-width/font-size fixes from the prior episode
+  reapplied preemptively on this project's fresh install, confirmed still necessary (each
+  project's copy is independent, per the standing durable-pitfall note), plus a camera punch-in
+  added to cover a real ~5s post-settle gap; Frame 6 registry(caption-kinetic-slam technique) —
+  word "EASIEST." plus an added underline-draw beat closing a borderline 2.4s gap; Frame 7
+  registry(`cta-close`). This episode also reused the prior episode's `caption-pill-karaoke`-
+  based captions.html directly (same real algorithm, this episode's own word timing) rather than
+  re-deriving it. See the durable-pitfall entry below for the real `chat-thread` bug this episode
+  found (hardcoded internal duration silently capped message pacing regardless of mount length).
 
 **Entries (pre-2026-08-14 tightening, narrative format — kept as history, not retroactively
 reformatted; the paragraph below each episode's bulleted gaps also documents that episode's
