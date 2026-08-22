@@ -593,6 +593,26 @@ any component of this type, immediately edit its own declared JSON default AND J
 constant to the real content before ever mounting it, then verify with a real snapshot. Don't
 trust `data-variable-values` alone at this nesting depth on any future episode.
 
+**New durable pitfall (2026-08-23): a live `data-composition-src` mount held on screen past
+~5s reliably renders as SOLID BLACK, unrelated to anything above.** Found on
+`hyperframes-ai-took-over-my-browser` Frame 4's `browser-device-stage` mount (a 10.95s hold) —
+confirmed the break point tracks the mount's OWN start time (~5s after `data-start`, not a
+fixed absolute video timestamp) by shifting `data-start` and watching the break point move with
+it. Root cause NOT found despite exhausting the obvious suspects one at a time: ruled out 3D
+transforms on an ancestor, a sibling's opaque background, the defocus overlay, the camera-move
+zoom, `container-type: size` on the mount's own `#root`, a continuous keep-alive opacity pulse
+on the held element itself, and the pinned engine version (reproduced identically on both
+0.7.107 and 0.8.10). **Working fix, not a root-cause fix**: cap the live mount's
+`data-duration` well before the ~5s mark, snapshot the same screen once via `hyperframes
+snapshot --zoom <selector>` at the cutoff moment, and lay a plain `<img class="clip">` at the
+same position/size/track-index to take over for the rest of the intended hold — a static image
+can't suffer this bug since it isn't a live nested composited mount. Any camera-move/transform
+on the wrapper still applies correctly to the static image too, since it's a sibling under the
+same transformed wrapper div. **Any future episode holding a registry-mounted primitive on
+screen for more than ~4-5 seconds should snapshot-verify the full hold range at full resolution
+before considering the frame done** — this class of bug is otherwise invisible until someone
+actually watches the render.
+
 **Second, distinct bug found the same day on `chat-thread`**: its message-arrival pacing math
 uses a hardcoded `var duration = 12` (matching its own `data-composition-duration="12"` demo
 default) to decide when to compress the stagger schedule — completely independent of the host
