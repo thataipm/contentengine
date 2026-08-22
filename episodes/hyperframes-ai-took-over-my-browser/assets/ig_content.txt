@@ -1,0 +1,13 @@
+Every AI tool I'd used before could only talk. It couldn't actually go do anything on a real website for me.
+
+Then I tried Playwright MCP, an open source server from Microsoft that lets an AI agent actually drive a real browser.
+
+Here's the flow. I give my agent a task in plain English, and it opens Chrome, reads the actual page, and finds the right button. It fills out forms, clicks submit, and scrolls to check the result, all without me touching the mouse.
+
+The part that actually got me was watching it work through a real login flow by itself, no scripted clicks, no hardcoded selectors, just the page and the instruction.
+
+It's a strange feeling watching a browser drive itself.
+
+Follow for more real AI tools worth knowing about.
+
+#PlaywrightMCP #AIAgents #BrowserAutomation #Microsoft #AITools

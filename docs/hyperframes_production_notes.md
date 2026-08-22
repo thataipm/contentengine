@@ -857,6 +857,38 @@ frame count must appear somewhere in this slug's bullet line(s), tagged one way 
 
 **Entries (post-tightening, full per-frame format):**
 
+- [2026-08-22] hyperframes-ai-took-over-my-browser: Frame 1 registry(`toggle-flip`,
+  `char-slam-explode`, `simulated-cursor` paste-in); hand-built(`radial-burst`) — established v2
+  visual-system custom device (registry-checked gap already confirmed and logged under
+  "Custom devices built for this channel" above), reused as-is, no new search needed.
+  **Revised 2026-08-22, retry after device-variety FAIL**: Frame 1 originally used
+  `browser-device-stage` here too, duplicating its Frame 4 content-carrying use (the
+  persistent walkthrough screen) — swapped for `toggle-flip` (an "Agent Access" toggle
+  flipping OFF→ON, synced so the flip lands on the word "control" at 1.639s), a genuinely
+  different registry device that's a literal fit for "I gave an AI agent full control of my
+  Chrome browser" as a hand-off/permission-grant beat, distinct from Frame 4's own device;
+  Frame 2
+  registry(`chat-message`, `strikethrough-replace` paste-in); hand-built(`radial-burst`) — same
+  reused device; Frame 3 registry(`matrix-decode` paste-in);
+  hand-built(`radial-burst`, real Playwright logo + attribution row) — the logo/text row was
+  originally `trust-strip` (registry). **Revised 2026-08-22, direct feedback**: swapped for a
+  hand-built row using the real Playwright logo (captured from playwright.dev, same
+  headless-chrome CLI method as this doc's durable-pitfall entry) because two separate direct
+  CSS overrides on `trust-strip`'s `--ts-tone` never actually took effect (confirmed via
+  `/watch` — text stayed dim both times), a real gap in this project's CSS-custom-property
+  inheritance into registry-mounted sub-compositions that going hand-built sidesteps entirely
+  rather than a third override attempt; also fixed the same feedback's "very small text" —
+  subtitle 26px→40px, attribution text 34px (trust-strip's own text had rendered notably
+  small). Frame 4 registry(`typed-prompt`,
+  `browser-device-stage`, `onboarding-stepper-flow` paste-in, `press-ripple`, `simulated-cursor`
+  paste-in, `yt-camera-move` paste-in helpers); Frame 5 registry(`signup-flow` paste-in,
+  `typewriter` paste-in, `touch-indicator`, `ui-focus-zoom`); Frame 6 registry(`oversized-cursor`);
+  hand-built(single-word "STRANGE." slam) — reuses `caption-kinetic-slam`'s fit-canvas +
+  back.out landing mechanic by hand instead of mounting the registry component directly, since
+  that component ships in Anton (no `@font-face` declared in this project, same substitution
+  already used on prior episodes) and this beat needed a single word in portrait/Inter to match
+  the rest of the episode; Frame 7 registry(`cta-close`).
+
 - [2026-08-21] hyperframes-lead-gen-sales-agent: the first real validation episode for the v2
   visual system, see "Standing visual defaults" above. **Superseded 2026-08-21, second direct
   feedback round** ("that badge is of no fucking use... scour hyperframes library") — every
