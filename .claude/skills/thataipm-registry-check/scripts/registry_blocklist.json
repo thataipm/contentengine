@@ -1,0 +1,59 @@
+{
+  "_purpose": "Mechanical memory for components already proven broken or risky on this channel, so a new episode can't re-ship the same failure just because nobody remembered to read docs/hyperframes_production_notes.md first. Parsed by check_registry_blocklist.mjs, wired as a hard gate in pipeline.mjs. Edit this file the moment a new confirmed case is logged in the durable-pitfalls doc -- that doc is still the full narrative record, this file is only the machine-checkable summary of it.",
+
+  "blocked": [
+    {
+      "component": "data-chart",
+      "mount": "data-composition-src",
+      "reason": "Renders blank across 4 separate full re-renders on hyperframes-the-caveman-skill (2026-08-14), each with a reproducible sub_timeline_readiness_timeout. Three distinct fix attempts (font link removal, duration-mismatch fix, hidden-series removal) did not resolve it. No known working fix -- do not mount this way."
+    },
+    {
+      "component": "mk-progress-stat",
+      "mount": "data-composition-src",
+      "reason": "Renders blank across 2 separate full re-renders on hyperframes-continuous-claude-v3 (2026-08-15), verified from both the raw and sped-up render. Unlike data-chart, hyperframes check and the render log show no error or warning at all -- silent failure. No known working fix -- do not mount this way."
+    },
+    {
+      "component": "constellation-hub",
+      "mount": "data-composition-src",
+      "reason": "Confirmed on hyperframes-your-agent-cant-do-anything (2026-08-24): mounted two composition-src levels deep in Frame 4, only the first node (of 4) and its connector ever painted in the real render -- hub badge and the other 3 nodes never appeared, static across the whole mount window (not a timing issue). An isolated standalone harness with the identical host box size and variable values proved the component's own code is correct (all 4 nodes position and render fine outside a nested mount) -- this is the render engine failing to fully composite a nested sub-mount, same failure class as data-chart/mk-progress-stat above, not a code bug in the component. Was already on this file's data_variable_values_unreliable_at_nested_mount list (below) for a different, narrower reason (variables not reaching it); this entry is broader -- do not mount this way at all, even with defaults already matching the desired content. Replaced with a hand-built equivalent (plain divs + SVG connectors on the frame's own timeline, no nested mount) using the same real logo assets as Frame 1."
+    }
+  ],
+
+  "elevated_risk": [
+    {
+      "component": "mk-specs-list",
+      "mount": "data-composition-src",
+      "reason": "Same mount class as the two confirmed-blank blocks above, plus legacy fixed-1920x1080 CSS that mismatches this project's portrait canvas. Never actually render-tested -- avoided on past episodes rather than confirmed safe. Snapshot at the real timestamp before trusting it in a render."
+    },
+    {
+      "component": "grid-card-assemble",
+      "mount": "data-composition-src",
+      "reason": "Confirmed blank in the real final render 3 separate times (most recently hyperframes-5-ways-to-make-money-with-ai, 2026-08-15), despite passing hyperframes check and even an earlier snapshot pass clean. Only a dense post-render frame read caught it every time. If used, verify with a real snapshot at its exact active window, not just hyperframes check."
+    }
+  ],
+
+  "needs_manual_patch_before_use": [
+    {
+      "component": "browser-device-stage",
+      "reason": "Hardcoded internal pacing (a literal `var duration = N` in the installed component) ignores the real host mount duration, leaving a dead tail. Shipped this exact bug TWICE -- 2026-08-15, then again 2026-08-21 on a different episode -- the second time specifically because the frame was authored without checking this list first. Before wiring: open the installed component file and patch its duration constant to match the real mount window."
+    },
+    {
+      "component": "chat-thread",
+      "reason": "Same hardcoded-duration failure mode as browser-device-stage, found 2026-08-24. Patch its internal duration constant to the real mount window before use."
+    }
+  ],
+
+  "data_variable_values_unreliable_at_nested_mount": {
+    "reason": "data-variable-values does not reliably reach a component mounted two levels deep (a data-composition-src component mounted inside another data-composition-src component) -- confirmed on 9 components across 2 separate episodes, all of which rendered their default demo content instead of the supplied values. Treat this as a permanent characteristic of the current render engine, not a one-off. Mandatory first step for anything on this list: edit the installed component's own JSON default + JS fallback constant directly, don't rely on data-variable-values passthrough when mounted this way.",
+    "components": [
+      "cta-close",
+      "grid-card-assemble",
+      "trust-strip",
+      "chart-story",
+      "headline-slam",
+      "browser-device-stage",
+      "chat-thread",
+      "constellation-hub"
+    ]
+  }
+}

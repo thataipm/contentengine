@@ -2,20 +2,32 @@
 // thataipm-assemble: chains the full HyperFrames build pipeline into one invocation
 // instead of 20+ separate tool calls, stopping at the first failure with a clear report.
 //
-// Stage order: registry blocklist -> VO model -> caption skin -> captions build ->
-// caption pill-format + safe-zone -> assemble-index -> transition idempotency ->
-// static-gap -> paste-in wiring -> registry usage -> device variety -> registry ratio ->
-// sfx presence -> transitions inject -> hyperframes check -> [snapshot] -> [render] ->
-// render freeze check -> volumedetect -> [speedup] -> [speedup verify].
+// Stage order: registry blocklist -> logo-asset nudge -> VO model -> [VO audio level] ->
+// caption skin -> captions build -> caption pill-format + safe-zone -> caption-band
+// collision -> assemble-index -> transition idempotency -> static-gap -> paste-in wiring ->
+// duration-envelope -> dynamic-SVG mount risk -> registry usage -> device variety ->
+// registry ratio -> sfx presence -> transitions inject -> hyperframes check -> [snapshot] ->
+// [render] -> render freeze check -> volumedetect -> [speedup] -> [speedup verify].
 //
 // Revised 2026-08-24 after a full architecture/bug-history audit found the two checks that
 // actually catch this project's most common real failures (a component rendering blank/
 // black/frozen while `hyperframes check` reports clean; a render shipped at the wrong speed
 // or not sped up at all) existed only as manual steps or in a disconnected orchestrator
-// (CC-Agent) that no episode had ever actually run through. Every check below either already
-// existed and is now wired in, or is new and targets a bug class with a documented, real,
-// repeat-shipped incident in docs/hyperframes_production_notes.md -- see that file and the
-// CC-Agent/README.md note on what got archived and why.
+// (CC-Agent) that no episode had ever actually run through.
+//
+// Revised again 2026-08-25 after hyperframes-your-agent-cant-do-anything shipped (and the
+// user caught by eye, twice) two more bug classes nothing in this pipeline mechanically
+// checked: a hand-positioned frame element sitting inside the auto-caption band (garbles
+// against live word captions), and a nested data-composition-src sub-mount silently
+// dropping most of its own subtree in the real render while an isolated same-size harness
+// proved the component's own code was correct. Four new stages below turn what was a manual
+// native-resolution frame-by-frame catch into mechanical PASS/FAIL/WARN gates -- see each
+// stage's own script header for the full incident this is built from.
+//
+// Every check below either already existed and is now wired in, or is new and targets a bug
+// class with a documented, real, repeat-shipped incident in
+// docs/hyperframes_production_notes.md -- see that file and the CC-Agent/README.md note on
+// what got archived and why.
 //
 // Usage:
 //   node pipeline.mjs --project-dir hyperframes-<episode> [flags]
@@ -28,15 +40,19 @@
 //   --skip-gap-check                  static-gap check
 //   --skip-registry-check             registry usage accounting
 //   --skip-sfx-check                  SFX-presence check
-//   --skip-caption-skin               caption skin staging
+//   --skip-caption-skin                caption skin staging
 //   --skip-caption-format-check       caption pill-format + safe-zone checks
+//   --skip-caption-band-check         caption-band collision check
 //   --skip-captions-build             captions.mjs build (use when captions.html is hand-built)
 //   --skip-blocklist-check            registry blocklist (known-broken component/mount combos)
 //   --skip-vo-model-check             VO model recorded in audio_meta.json
 //   --skip-transition-idempotency-check  pre-inject double-extension check
 //   --skip-paste-in-check             paste-in CSS/windowing shape lint
+//   --skip-duration-envelope-check    sub-mount held past native duration check
+//   --skip-svg-mount-risk-scan        dynamic-SVG nested-mount risk scan (warn-only)
+//   --skip-logo-nudge                 logo-asset nudge (warn-only)
 //   --skip-device-variety-check       same content device reused across frames
-//   --skip-registry-ratio-check       95% registry / 5% hand-built budget
+//   --skip-registry-ratio-check       90% registry / 10% hand-built budget
 //   --skip-freeze-check               post-render whole-frame freeze detection
 //   --skip-speedup                    skip the automated 1.1x speedup step entirely
 //   --speedup-factor <n>              override the speedup factor (default 1.1, this channel's convention)
@@ -57,6 +73,10 @@ const REGISTRY_CHECK_SCRIPT = path.resolve(SELF_DIR, "..", "..", "thataipm-regis
 const REGISTRY_BLOCKLIST_SCRIPT = path.resolve(SELF_DIR, "..", "..", "thataipm-registry-check", "scripts", "check_registry_blocklist.mjs");
 const PASTE_IN_CHECK_SCRIPT = path.resolve(SELF_DIR, "..", "..", "thataipm-visual-plan", "scripts", "check_paste_in_wiring.mjs");
 const RENDER_FREEZE_CHECK_SCRIPT = path.join(SELF_DIR, "check_render_freeze.mjs");
+const CAPTION_BAND_CHECK_SCRIPT = path.join(SELF_DIR, "check_caption_band_collision.mjs");
+const DURATION_ENVELOPE_CHECK_SCRIPT = path.join(SELF_DIR, "check_duration_envelope.mjs");
+const SVG_MOUNT_RISK_SCRIPT = path.join(SELF_DIR, "check_dynamic_svg_mount_risk.mjs");
+const LOGO_NUDGE_SCRIPT = path.join(SELF_DIR, "check_logo_asset_nudge.mjs");
 const CC_AGENT_CHECKS = path.join(REPO_ROOT, "CC-Agent", "checks");
 const CAPTION_SKIN_TEMPLATE = path.join(REPO_ROOT, "docs", "templates", "thataipm-caption-skin.html");
 
@@ -70,11 +90,15 @@ function parseArgs(argv) {
     sfxCheck: true,
     captionSkin: true,
     captionFormatCheck: true,
+    captionBandCheck: true,
     captionsBuild: true,
     blocklistCheck: true,
     voModelCheck: true,
     transitionIdempotencyCheck: true,
     pasteInCheck: true,
+    durationEnvelopeCheck: true,
+    svgMountRiskScan: true,
+    logoNudge: true,
     deviceVarietyCheck: true,
     registryRatioCheck: true,
     freezeCheck: true,
@@ -92,11 +116,15 @@ function parseArgs(argv) {
     else if (a === "--skip-sfx-check") out.sfxCheck = false;
     else if (a === "--skip-caption-skin") out.captionSkin = false;
     else if (a === "--skip-caption-format-check") out.captionFormatCheck = false;
+    else if (a === "--skip-caption-band-check") out.captionBandCheck = false;
     else if (a === "--skip-captions-build") out.captionsBuild = false;
     else if (a === "--skip-blocklist-check") out.blocklistCheck = false;
     else if (a === "--skip-vo-model-check") out.voModelCheck = false;
     else if (a === "--skip-transition-idempotency-check") out.transitionIdempotencyCheck = false;
     else if (a === "--skip-paste-in-check") out.pasteInCheck = false;
+    else if (a === "--skip-duration-envelope-check") out.durationEnvelopeCheck = false;
+    else if (a === "--skip-svg-mount-risk-scan") out.svgMountRiskScan = false;
+    else if (a === "--skip-logo-nudge") out.logoNudge = false;
     else if (a === "--skip-device-variety-check") out.deviceVarietyCheck = false;
     else if (a === "--skip-registry-ratio-check") out.registryRatioCheck = false;
     else if (a === "--skip-freeze-check") out.freezeCheck = false;
@@ -156,9 +184,20 @@ function main() {
     // because the frame was authored without checking that log first. See
     // registry_blocklist.json for the machine-checkable summary of every confirmed-broken
     // component/mount combo on this channel.
-    run("1/20 registry blocklist check", "node", [REGISTRY_BLOCKLIST_SCRIPT, "--project-dir", pd], pd);
+    run("1/24 registry blocklist check", "node", [REGISTRY_BLOCKLIST_SCRIPT, "--project-dir", pd], pd);
   } else {
-    console.log("\n○ 1/20 registry blocklist check skipped (--skip-blocklist-check passed)");
+    console.log("\n○ 1/24 registry blocklist check skipped (--skip-blocklist-check passed)");
+  }
+
+  if (args.logoNudge) {
+    // WARN-only, added 2026-08-25 after the user asked for real logos on an already-shipped
+    // episode -- both CLAUDE.md's "real screenshots/UI over generic" rule and Rule 1's "favor
+    // real brand logos" line already existed in writing when that episode's Frame 1 shipped
+    // with text wordmarks instead. This surfaces the gap before frame authoring locks in,
+    // it doesn't replace /thataipm-visual-plan's own judgment call.
+    run("2/24 logo-asset nudge", "node", [LOGO_NUDGE_SCRIPT, "--project-dir", pd], pd, { optional: true });
+  } else {
+    console.log("\n○ 2/24 logo-asset nudge skipped (--skip-logo-nudge passed)");
   }
 
   if (args.voModelCheck) {
@@ -167,13 +206,13 @@ function main() {
     // that mismatch shipped once already before anyone checked audio_meta.json's own
     // recorded model_id. Cheap, catches drift at the one place that's always read anyway.
     run(
-      "2/20 VO model check",
+      "3/24 VO model check",
       "node",
       [path.join(CC_AGENT_CHECKS, "check_vo_model.mjs"), "--project-dir", pd, "--docs-root", REPO_ROOT],
       pd
     );
   } else {
-    console.log("\n○ 2/20 VO model check skipped (--skip-vo-model-check passed)");
+    console.log("\n○ 3/24 VO model check skipped (--skip-vo-model-check passed)");
   }
 
   {
@@ -186,9 +225,9 @@ function main() {
     // the skip flag, which defeats the point. Kept as a loud, non-blocking signal instead.
     const fullTakePath = path.join(pd, "assets", "voice", "full-take.wav");
     if (existsSync(fullTakePath)) {
-      run("2.5/20 VO audio level check (informational)", "node", [path.join(CC_AGENT_CHECKS, "check_audio_levels.mjs"), "--project-dir", pd, "--docs-root", REPO_ROOT], pd, { optional: true });
+      run("3.5/24 VO audio level check (informational)", "node", [path.join(CC_AGENT_CHECKS, "check_audio_levels.mjs"), "--project-dir", pd, "--docs-root", REPO_ROOT], pd, { optional: true });
     } else {
-      console.log("\n○ 2.5/20 VO audio level check skipped -- no assets/voice/full-take.wav found");
+      console.log("\n○ 3.5/24 VO audio level check skipped -- no assets/voice/full-take.wav found");
     }
   }
 
@@ -203,41 +242,52 @@ function main() {
     const hiddenSkinPath = path.join(hiddenSkinDir, "caption-skin.html");
     const legacySkinPath = path.join(pd, "caption-skin.html");
     if (existsSync(hiddenSkinPath) || existsSync(legacySkinPath)) {
-      console.log(`\n○ 3/20 caption skin stage skipped -- project already has its own caption skin`);
+      console.log(`\n○ 4/24 caption skin stage skipped -- project already has its own caption skin`);
     } else if (!existsSync(CAPTION_SKIN_TEMPLATE)) {
-      console.log(`\n○ 3/20 caption skin stage skipped -- template not found at ${CAPTION_SKIN_TEMPLATE}`);
+      console.log(`\n○ 4/24 caption skin stage skipped -- template not found at ${CAPTION_SKIN_TEMPLATE}`);
     } else {
       mkdirSync(hiddenSkinDir, { recursive: true });
       copyFileSync(CAPTION_SKIN_TEMPLATE, hiddenSkinPath);
-      console.log(`\n▶ 3/20 caption skin stage`);
-      console.log(`✓ 3/20 caption skin stage done -- staged thataipm-caption-skin.html to .hyperframes/caption-skin.html`);
+      console.log(`\n▶ 4/24 caption skin stage`);
+      console.log(`✓ 4/24 caption skin stage done -- staged thataipm-caption-skin.html to .hyperframes/caption-skin.html`);
     }
   } else {
-    console.log("\n○ 3/20 caption skin stage skipped (--skip-caption-skin passed)");
+    console.log("\n○ 4/24 caption skin stage skipped (--skip-caption-skin passed)");
   }
 
   if (args.captionsBuild) {
     run(
-      "4/20 captions build",
+      "5/24 captions build",
       "node",
       [path.join(FE_SCRIPTS, "captions.mjs"), "build", "--storyboard", "STORYBOARD.md", "--audio-meta", "audio_meta.json", "--hyperframes", "."],
       pd
     );
   } else {
-    console.log("\n○ 4/20 captions build skipped (--skip-captions-build passed) -- compositions/captions.html left as-is");
+    console.log("\n○ 5/24 captions build skipped (--skip-captions-build passed) -- compositions/captions.html left as-is");
   }
 
   if (args.captionFormatCheck) {
     // Real gates for Rules 2 & 3 -- read the actual BUILT compositions/captions.html
     // (whatever produced it: this skin, a different one, or the engine default), so
     // they validate outcomes, not just that the skin-staging step above ran.
-    run("5/20 caption pill-format check", "node", [path.join(CC_AGENT_CHECKS, "check_caption_pill_format.mjs"), "--project-dir", pd], pd);
-    run("6/20 caption safe-zone check", "node", [path.join(CC_AGENT_CHECKS, "check_caption_safe_zone.mjs"), "--project-dir", pd], pd);
+    run("6/24 caption pill-format check", "node", [path.join(CC_AGENT_CHECKS, "check_caption_pill_format.mjs"), "--project-dir", pd], pd);
+    run("7/24 caption safe-zone check", "node", [path.join(CC_AGENT_CHECKS, "check_caption_safe_zone.mjs"), "--project-dir", pd], pd);
   } else {
-    console.log("\n○ 5/20-6/20 caption format/safe-zone checks skipped (--skip-caption-format-check passed)");
+    console.log("\n○ 6/24-7/24 caption format/safe-zone checks skipped (--skip-caption-format-check passed)");
   }
 
-  run("7/20 assemble-index", "node", [path.join(FE_SCRIPTS, "assemble-index.mjs")], pd);
+  if (args.captionBandCheck) {
+    // Added 2026-08-25 after two separate frames (Frame 3's kicker/wordmark, Frame 5's tag)
+    // on hyperframes-your-agent-cant-do-anything shipped inside the live caption band and
+    // garbled against real word captions -- caught only by the user watching the actual
+    // video and a native-resolution ffmpeg pull, nothing else in this pipeline saw it.
+    // Static CSS geometry check against every frame's own declared top/height/bottom.
+    run("8/24 caption-band collision check", "node", [CAPTION_BAND_CHECK_SCRIPT, "--project-dir", pd], pd);
+  } else {
+    console.log("\n○ 8/24 caption-band collision check skipped (--skip-caption-band-check passed)");
+  }
+
+  run("9/24 assemble-index", "node", [path.join(FE_SCRIPTS, "assemble-index.mjs")], pd);
 
   if (args.transitionIdempotencyCheck) {
     // Runs BEFORE inject, catching a frame that already carries a prior transition
@@ -245,22 +295,22 @@ function main() {
     // injecting again on top of that double-extends it. Skips cleanly on SCRIPT.md-only
     // projects with no STORYBOARD.md to compare against.
     run(
-      "8/20 transition idempotency check",
+      "10/24 transition idempotency check",
       "node",
       [path.join(CC_AGENT_CHECKS, "check_transition_idempotency.mjs"), "--project-dir", pd, "--docs-root", REPO_ROOT],
       pd
     );
   } else {
-    console.log("\n○ 8/20 transition idempotency check skipped (--skip-transition-idempotency-check passed)");
+    console.log("\n○ 10/24 transition idempotency check skipped (--skip-transition-idempotency-check passed)");
   }
 
   if (args.gapCheck) {
     // Runs BEFORE transitions inject, against each frame's true (pre-extension)
     // duration -- the Visual Retention Rule gate (CLAUDE.md rule 1). hyperframes
     // check's own Motion section does not catch long static holds at all.
-    run("9/20 static-gap check", "node", [path.join(SELF_DIR, "check_static_gaps.mjs"), "--frames", "compositions/frames/*.html"], pd);
+    run("11/24 static-gap check", "node", [path.join(SELF_DIR, "check_static_gaps.mjs"), "--frames", "compositions/frames/*.html"], pd);
   } else {
-    console.log("\n○ 9/20 static-gap check skipped (--skip-gap-check passed)");
+    console.log("\n○ 11/24 static-gap check skipped (--skip-gap-check passed)");
   }
 
   if (args.pasteInCheck) {
@@ -268,9 +318,32 @@ function main() {
     // windowing on the wrong element) before render. A clean pass does not prove content
     // is visible -- that's still the dense /watch pass's job -- but a failing pass is
     // real signal worth stopping for.
-    run("10/20 paste-in wiring check", "node", [PASTE_IN_CHECK_SCRIPT, "--project-dir", pd], pd);
+    run("12/24 paste-in wiring check", "node", [PASTE_IN_CHECK_SCRIPT, "--project-dir", pd], pd);
   } else {
-    console.log("\n○ 10/20 paste-in wiring check skipped (--skip-paste-in-check passed)");
+    console.log("\n○ 12/24 paste-in wiring check skipped (--skip-paste-in-check passed)");
+  }
+
+  if (args.durationEnvelopeCheck) {
+    // Added 2026-08-25: mechanizes "read the component's own <script> for
+    // root.dataset.duration usage before trusting a longer-than-native mount" -- the
+    // durable-pitfall entry this project already wrote by hand after trust-strip shipped
+    // blank past its native 3.5s envelope. Hard gate: a FIXED-envelope component held past
+    // its own native data-composition-duration is a confirmed bug class on this channel,
+    // not a maybe.
+    run("13/24 duration-envelope check", "node", [DURATION_ENVELOPE_CHECK_SCRIPT, "--project-dir", pd], pd);
+  } else {
+    console.log("\n○ 13/24 duration-envelope check skipped (--skip-duration-envelope-check passed)");
+  }
+
+  if (args.svgMountRiskScan) {
+    // WARN-only, added 2026-08-25 after constellation-hub's confirmed nested-mount render
+    // failure (see docs/hyperframes_production_notes.md). Flags the one structural trait
+    // that distinguished it from this project's several working sub-mounts: dynamic SVG
+    // element creation plus a synchronous getTotalLength() call. A heuristic, not proof --
+    // elevated_risk tier, same as registry_blocklist.json's own elevated_risk list.
+    run("14/24 dynamic-SVG mount risk scan", "node", [SVG_MOUNT_RISK_SCRIPT, "--project-dir", pd, "--docs-root", REPO_ROOT], pd, { optional: true });
+  } else {
+    console.log("\n○ 14/24 dynamic-SVG mount risk scan skipped (--skip-svg-mount-risk-scan passed)");
   }
 
   if (args.registryCheck) {
@@ -278,9 +351,9 @@ function main() {
     // or this episode's slug is logged in docs/hyperframes_production_notes.md as a
     // checked-and-confirmed gap. A skill someone has to remember to invoke is exactly
     // the failure mode that already shipped the hand-built-vs-registry mistake twice.
-    run("11/20 registry usage check", "node", [REGISTRY_CHECK_SCRIPT, "--project-dir", pd], pd);
+    run("15/24 registry usage check", "node", [REGISTRY_CHECK_SCRIPT, "--project-dir", pd], pd);
   } else {
-    console.log("\n○ 11/20 registry usage check skipped (--skip-registry-check passed)");
+    console.log("\n○ 15/24 registry usage check skipped (--skip-registry-check passed)");
   }
 
   if (args.deviceVarietyCheck) {
@@ -289,28 +362,28 @@ function main() {
     // content differing, and nothing else in this pipeline checks for that. Depends on the
     // registry-usage Log entry the previous step just verified exists.
     run(
-      "12/20 device variety check",
+      "16/24 device variety check",
       "node",
       [path.join(CC_AGENT_CHECKS, "check_device_variety.mjs"), "--project-dir", pd, "--docs-root", REPO_ROOT],
       pd
     );
   } else {
-    console.log("\n○ 12/20 device variety check skipped (--skip-device-variety-check passed)");
+    console.log("\n○ 16/24 device variety check skipped (--skip-device-variety-check passed)");
   }
 
   if (args.registryRatioCheck) {
     // Direct instruction (2026-08-15): "Enforce 95% hyperframes components, leverage all
     // library for entire video." check_registry_usage.mjs already forces every frame to be
-    // individually accounted for; this adds the numeric 95%-registry / 5%-hand-built budget
-    // on top of that same accounting.
+    // individually accounted for; this adds the numeric 90%-registry / 10%-hand-built budget
+    // on top of that same accounting (lowered from 95%, see Rule 1's 2026-08-24 revision).
     run(
-      "13/20 registry ratio check",
+      "17/24 registry ratio check",
       "node",
       [path.join(CC_AGENT_CHECKS, "check_registry_ratio.mjs"), "--project-dir", pd, "--docs-root", REPO_ROOT],
       pd
     );
   } else {
-    console.log("\n○ 13/20 registry ratio check skipped (--skip-registry-ratio-check passed)");
+    console.log("\n○ 17/24 registry ratio check skipped (--skip-registry-ratio-check passed)");
   }
 
   if (args.sfxCheck) {
@@ -329,11 +402,11 @@ function main() {
         // malformed audio_meta.json surfaces later in assemble-index, not here
       }
     }
-    console.log(`\n▶ 14/20 sfx check`);
+    console.log(`\n▶ 18/24 sfx check`);
     if (sfxCount > 0) {
-      console.log(`✓ 14/20 sfx check done -- ${sfxCount} cue(s) in audio_meta.json`);
+      console.log(`✓ 18/24 sfx check done -- ${sfxCount} cue(s) in audio_meta.json`);
     } else {
-      console.error(`\n✗ FAILED at: 14/20 sfx check -- audio_meta.json has zero sfx cues.`);
+      console.error(`\n✗ FAILED at: 18/24 sfx check -- audio_meta.json has zero sfx cues.`);
       console.error(`  This channel's standing convention is real whoosh/ui-pop/chime cues on`);
       console.error(`  transitions and reveals (established since sk1). If this episode`);
       console.error(`  genuinely needs none, re-run with --skip-sfx-check and say why in the`);
@@ -341,30 +414,30 @@ function main() {
       process.exit(1);
     }
   } else {
-    console.log("\n○ 14/20 sfx check skipped (--skip-sfx-check passed)");
+    console.log("\n○ 18/24 sfx check skipped (--skip-sfx-check passed)");
   }
 
   if (args.transitions) {
     run(
-      "15/20 transitions inject",
+      "19/24 transitions inject",
       "node",
       [path.join(FE_SCRIPTS, "transitions.mjs"), "inject", "--index", "index.html", "--storyboard", "STORYBOARD.md"],
       pd
     );
   } else {
-    console.log("\n○ 15/20 transitions skipped (--skip-transitions passed -- re-running inject on already-extended durations would double-extend them)");
+    console.log("\n○ 19/24 transitions skipped (--skip-transitions passed -- re-running inject on already-extended durations would double-extend them)");
   }
 
-  run("16/20 hyperframes check", "npm", ["run", "check"], pd);
+  run("20/24 hyperframes check", "npm", ["run", "check"], pd);
 
   if (args.snapshot) {
-    run("17/20 hyperframes snapshot", "npm", ["run", "snapshot"], pd);
+    run("21/24 hyperframes snapshot", "npm", ["run", "snapshot"], pd);
   } else {
-    console.log("\n○ 17/20 snapshot skipped (pass --snapshot to run it)");
+    console.log("\n○ 21/24 snapshot skipped (pass --snapshot to run it)");
   }
 
   if (args.render) {
-    run("18/20 render", "npm", ["run", "render", "--", "--skill=faceless-explainer", "--quality", "high", "--output", "renders/video.mp4"], pd);
+    run("22/24 render", "npm", ["run", "render", "--", "--skill=faceless-explainer", "--quality", "high", "--output", "renders/video.mp4"], pd);
 
     const outPath = path.join(pd, "renders", "video.mp4");
     if (existsSync(outPath)) {
@@ -380,9 +453,9 @@ function main() {
         // reports clean) directly on rendered pixels, via ffmpeg's freezedetect. See
         // check_render_freeze.mjs's own header for what it does and does not catch --
         // it does not replace the dense /watch pass, it makes that pass faster.
-        run("19/20 render freeze check", "node", [RENDER_FREEZE_CHECK_SCRIPT, "--video", outPath], pd);
+        run("23/24 render freeze check", "node", [RENDER_FREEZE_CHECK_SCRIPT, "--video", outPath], pd);
       } else {
-        console.log("\n○ 19/20 render freeze check skipped (--skip-freeze-check passed)");
+        console.log("\n○ 23/24 render freeze check skipped (--skip-freeze-check passed)");
       }
 
       if (args.speedup) {
@@ -394,23 +467,23 @@ function main() {
         const rushedPath = path.join(pd, "renders", "video_rushed.mp4");
         const filterComplex = `[0:v]setpts=PTS/${args.speedupFactor}[v];[0:a]atempo=${args.speedupFactor}[a]`;
         run(
-          "20/20 speedup",
+          "24/24 speedup",
           "ffmpeg",
           ["-y", "-i", outPath, "-filter_complex", filterComplex, "-map", "[v]", "-map", "[a]", rushedPath],
           pd
         );
         run(
-          "20/20 speedup verify",
+          "24/24 speedup verify",
           "node",
           [path.join(CC_AGENT_CHECKS, "check_speedup_applied.mjs"), "--project-dir", pd, "--docs-root", REPO_ROOT, "--expected-factor", String(args.speedupFactor)],
           pd
         );
       } else {
-        console.log("\n○ 20/20 speedup skipped (--skip-speedup passed) -- renders/video_rushed.mp4 not produced");
+        console.log("\n○ 24/24 speedup skipped (--skip-speedup passed) -- renders/video_rushed.mp4 not produced");
       }
     }
   } else {
-    console.log("\n○ 18/20-20/20 render, freeze check, and speedup skipped (--no-render passed)");
+    console.log("\n○ 22/24-24/24 render, freeze check, and speedup skipped (--no-render passed)");
   }
 
   console.log("\n✓ pipeline complete");

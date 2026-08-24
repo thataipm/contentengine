@@ -1,0 +1,87 @@
+<template data-composition-id="02-stakes" data-duration="8.67">
+  <style>
+    #root {
+      width: 1080px; height: 1920px; position: relative; overflow: hidden;
+      font-family: "Inter", system-ui, sans-serif; background: #0A0A0A;
+      --bg: #0A0A0A; --fg: #F7F5EF; --surface: #16160f; --border: rgba(247,245,239,0.35);
+      --brand: #8FA888; --accent: #E23B32; --accent-2: #E23B32; --radius: 20px;
+    }
+    .f2-bg { position: absolute; inset: 0; background: #0A0A0A; }
+    /* halftone-field's real internal canvas is a fixed 1920x1080 (landscape).
+       Mounting it with data-width/height set to this frame's own 1080x1920
+       (portrait) left the bottom ~44% of the canvas solid black -- the block
+       was never built to reflow to a different aspect, it just renders at its
+       native ratio inside whatever box it's given. Fix: mount it at its OWN
+       native 1920x1080 size, then scale the whole mount up (1920/1080=1.778x)
+       centered inside an overflow:hidden clip so it covers the full portrait
+       frame the same way CSS background-size:cover would, cropping the sides
+       instead of leaving a dead gap. */
+    .f2-field-clip { position: absolute; inset: 0; overflow: hidden; }
+    .f2-field-host {
+      position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+      transform: translate(-50%, -50%) scale(1.778); opacity: 0;
+    }
+    .f2-veil { position: absolute; inset: 0; background: #0A0A0A; opacity: 0.55; }
+    .f2-label {
+      position: absolute; left: 90px; right: 90px; top: 300px; text-align: center;
+      color: #b9b9b0; font-family: "JetBrains Mono", monospace; font-size: 30px;
+      font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0;
+    }
+    .f2-kinetic {
+      position: absolute; left: 60px; right: 60px; top: 860px; text-align: center;
+      color: #F7F5EF; font-size: 92px; font-weight: 900; letter-spacing: -0.03em; line-height: 1;
+      opacity: 0;
+    }
+    .f2-kinetic .accent { color: #E23B32; }
+    .f2-sub {
+      position: absolute; left: 100px; right: 100px; top: 1140px; text-align: center;
+      color: #8FA888; font-family: "JetBrains Mono", monospace; font-size: 34px; line-height: 1.5;
+      opacity: 0;
+    }
+  </style>
+  <div id="root" data-composition-id="02-stakes" data-width="1080" data-height="1920" data-start="0">
+    <div id="f2-bg" class="f2-bg clip" data-start="0" data-duration="8.67" data-track-index="0"></div>
+
+    <div class="f2-field-clip">
+      <div
+        class="f2-field-host clip"
+        id="f2-field-host"
+        data-composition-src="compositions/halftone-field.html"
+        data-composition-id="02-field"
+        data-variable-values='{"palette1":"#8FA888","palette2":"#F7F5EF","palette3":"#E23B32","palette4":"#0A0A0A","background":"#0A0A0A","frequency":2.4,"speed":3,"cellSize":40,"gamma":10}'
+        data-start="0"
+        data-duration="8.67"
+        data-track-index="1"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+    </div>
+    <div class="f2-veil" id="f2-veil"></div>
+
+    <div class="f2-label" id="f2-label">Behind every demo</div>
+    <div class="f2-kinetic" id="f2-kinetic">the part<br />nobody<span class="accent"> shows.</span></div>
+    <div class="f2-sub" id="f2-sub">the setup, the auth, the plumbing</div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    const fieldHost = document.getElementById("f2-field-host");
+    tl.fromTo(fieldHost, { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "power2.out" }, 0);
+
+    const veil = document.getElementById("f2-veil");
+    tl.fromTo(veil, { opacity: 0.75 }, { opacity: 0.5, duration: 3.0, ease: "sine.inOut" }, 0.6);
+    tl.to(veil, { opacity: 0.62, duration: 4.5, ease: "sine.inOut" }, 4.0);
+
+    const label = document.getElementById("f2-label");
+    tl.fromTo(label, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35 }, 0.5);
+
+    const kinetic = document.getElementById("f2-kinetic");
+    tl.fromTo(kinetic, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.4);
+
+    const sub = document.getElementById("f2-sub");
+    tl.fromTo(sub, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 }, 5.4);
+
+    window.__timelines["02-stakes"] = tl;
+  </script>
+</template>

@@ -1,0 +1,62 @@
+<template data-composition-id="07-cta" data-duration="2.481">
+  <style>
+    #root {
+      width: 1080px; height: 1920px; position: relative; overflow: hidden;
+      font-family: "Inter", system-ui, sans-serif; background: #0A0A0A;
+      --bg: #0A0A0A; --fg: #F7F5EF; --surface: #16160f; --border: rgba(247,245,239,0.35);
+      --brand: #8FA888; --accent: #E23B32; --accent-2: #E23B32; --radius: 20px;
+    }
+    .f7-bg { position: absolute; inset: 0; background: #0A0A0A; }
+    .f7-glow {
+      position: absolute; left: 50%; top: 960px; width: 900px; height: 900px;
+      margin-left: -450px; border-radius: 50%; background: #8FA888; filter: blur(230px); opacity: 0.1;
+    }
+    .f7-lockup { position: absolute; left: 60px; right: 60px; top: 780px; text-align: center; opacity: 0; }
+    .f7-action {
+      margin: 0; color: #F7F5EF; font-family: "Inter", system-ui, sans-serif;
+      font-size: 78px; font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+    }
+    .f7-action .kw { color: #8FA888; }
+    .f7-button {
+      margin: 32px auto 0; display: flex; align-items: center; justify-content: center; gap: 14px;
+      padding: 22px 40px; border: 0; border-radius: 999px; width: fit-content;
+      background: #8FA888; color: #0A0A0A; font-family: "Inter", system-ui, sans-serif;
+      font-size: 34px; font-weight: 700; line-height: 1;
+    }
+    .f7-button svg { width: 30px; height: 30px; }
+  </style>
+
+  <div id="root" data-composition-id="07-cta" data-width="1080" data-height="1920" data-start="0">
+    <div id="f7-bg" class="f7-bg clip" data-start="0" data-duration="2.481" data-track-index="0"></div>
+    <div id="f7-glow" class="f7-glow clip" data-start="0" data-duration="2.481" data-track-index="1"></div>
+
+    <!-- hand-built flat lockup, same proven pattern as cta-close on
+         hyperframes-ai-cant-grade-its-own-homework: the paste-in's nested
+         wrapper structure renders permanently invisible in real capture
+         regardless of content -- flattened to plain direct children of
+         #root, tweened on this frame's own proven-working outer tl. -->
+    <div class="f7-lockup" id="f7-lockup">
+      <p class="f7-action">Comment <span class="kw">COMPOSIO</span></p>
+      <button class="f7-button" type="button" tabindex="-1">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        I'll send you the link
+      </button>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+
+    const tl = gsap.timeline({ paused: true });
+    const glow = document.getElementById("f7-glow");
+    tl.fromTo(glow, { opacity: 0.06 }, { opacity: 0.16, duration: 2.3 }, 0.1);
+
+    const lockup = document.getElementById("f7-lockup");
+    const button = document.getElementById("f7-button") || lockup.querySelector(".f7-button");
+    gsap.set(button, { scale: 0.85 });
+    tl.fromTo(lockup, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.58, ease: "power3.out" }, 0.06);
+    tl.to(button, { scale: 1, duration: 0.55, ease: "back.out(1.5)" }, 0.68);
+
+    window.__timelines["07-cta"] = tl;
+  </script>
+</template>

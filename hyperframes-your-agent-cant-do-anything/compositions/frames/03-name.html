@@ -1,0 +1,73 @@
+<template data-composition-id="03-name" data-duration="8.69">
+  <style>
+    #root {
+      width: 1080px; height: 1920px; position: relative; overflow: hidden;
+      font-family: "Inter", system-ui, sans-serif; background: #0A0A0A;
+      --bg: #0A0A0A; --fg: #F7F5EF; --surface: #16160f; --border: rgba(247,245,239,0.35);
+      --brand: #8FA888; --accent: #E23B32; --accent-2: #E23B32; --radius: 20px;
+    }
+    .f3-bg { position: absolute; inset: 0; background: #0A0A0A; }
+    /* Shrunk from height:1100/top:1470-1550 kicker+wordmark -- the auto-caption
+       band occupies 68%-84% of frame height (1305-1613px at 1920) and the
+       remaining 16% below it is Instagram's own bottom UI chrome, not usable
+       either. The original layout put the kicker/wordmark INSIDE the caption
+       band, confirmed via real full-resolution frame extraction showing
+       "THE TOOL THAT DID IT" garbled directly under/through the live word
+       captions. Fixed by shrinking the hero shot and moving both text
+       elements to sit fully above the band (wordmark bottom ~1270, well
+       clear of the 1305.6 band top). */
+    .f3-shot-wrap {
+      position: absolute; left: 50%; top: 260px; width: 940px; height: 680px;
+      margin-left: -470px; border-radius: 22px; overflow: hidden;
+      border: 1.5px solid rgba(247,245,239,0.22); box-shadow: 0 50px 110px rgba(0,0,0,0.55);
+      opacity: 0;
+    }
+    .f3-shot-wrap img { position: absolute; left: 0; top: 0; width: 1600px; height: auto; display: block; }
+    .f3-kicker {
+      position: absolute; left: 90px; right: 90px; top: 1050px; text-align: center;
+      color: #8FA888; font-family: "JetBrains Mono", monospace; font-size: 32px;
+      font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0;
+    }
+    .f3-wordmark {
+      position: absolute; left: 60px; right: 60px; top: 1140px; text-align: center;
+      color: #F7F5EF; font-size: 118px; font-weight: 900; letter-spacing: -0.03em; opacity: 0;
+    }
+    .f3-wordmark .dot { color: #E23B32; }
+  </style>
+  <div id="root" data-composition-id="03-name" data-width="1080" data-height="1920" data-start="0">
+    <div id="f3-bg" class="f3-bg clip" data-start="0" data-duration="8.69" data-track-index="0"></div>
+    <div class="f3-shot-wrap" id="f3-shot-wrap">
+      <img id="f3-shot" src="assets/screenshots/composio_homepage.png" alt="Composio real homepage" />
+    </div>
+    <div class="f3-kicker" id="f3-kicker">The tool that did it</div>
+    <div class="f3-wordmark" id="f3-wordmark">Composio<span class="dot">.</span></div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    // Pan bounds: real image is 1600x2000, wrapper clip box is 940x680 (shrunk
+    // from 940x1100 to clear the caption band -- see .f3-shot-wrap comment), so
+    // the image's left/top edge (x/y below) must stay within [940-1600, 0] =
+    // [-660, 0] and [680-2000, 0] = [-1320, 0] respectively -- go past either and
+    // the image's far edge pulls inside the wrapper, exposing plain black dead
+    // space where the rounded card still draws its border. The shorter wrapper
+    // only widens the safe y range, so the existing offsets below stay valid.
+    const wrap = document.getElementById("f3-shot-wrap");
+    const shot = document.getElementById("f3-shot");
+    tl.fromTo(wrap, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, 0);
+    gsap.set(shot, { x: -330, y: -40 });
+    tl.to(shot, { x: -600, y: -280, duration: 5.2, ease: "sine.inOut" }, 0.4);
+
+    const kicker = document.getElementById("f3-kicker");
+    tl.fromTo(kicker, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35 }, 1.1);
+
+    const wordmark = document.getElementById("f3-wordmark");
+    tl.fromTo(wordmark, { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, 1.5);
+
+    tl.to(wrap, { y: -60, scale: 1.05, duration: 0.7, ease: "power2.inOut" }, 5.8);
+    tl.to(shot, { x: -650, y: -330, duration: 2.2, ease: "sine.inOut" }, 5.8);
+
+    window.__timelines["03-name"] = tl;
+  </script>
+</template>

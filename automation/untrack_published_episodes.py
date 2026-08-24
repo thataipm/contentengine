@@ -31,9 +31,13 @@ from pathlib import Path
 
 import urllib.request
 
+from dotenv import load_dotenv
+
 BASE = "https://zernio.com/api/v1"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GRACE_DAYS = 2
+
+load_dotenv(REPO_ROOT / ".env")
 
 
 def zernio_get(path, api_key):

@@ -1,0 +1,76 @@
+<template data-composition-id="05-escalation" data-duration="8.82">
+  <style>
+    #root {
+      width: 1080px; height: 1920px; position: relative; overflow: hidden;
+      font-family: "Inter", system-ui, sans-serif; background: #0A0A0A;
+      --bg: #0A0A0A; --fg: #F7F5EF; --surface: #16160f; --border: rgba(247,245,239,0.35);
+      --brand: #8FA888; --accent: #E23B32; --accent-2: #E23B32; --radius: 20px;
+    }
+    .f5-bg { position: absolute; inset: 0; background: #0A0A0A; }
+    .f5-glow {
+      position: absolute; left: 50%; top: 860px; width: 960px; height: 960px;
+      margin-left: -480px; border-radius: 50%; background: #8FA888; filter: blur(250px); opacity: 0.1;
+    }
+    .f5-kicker {
+      position: absolute; left: 90px; right: 90px; top: 320px; text-align: center;
+      color: #F7F5EF; font-size: 66px; font-weight: 800; letter-spacing: -0.02em; opacity: 0;
+    }
+    .f5-kicker .strike { text-decoration: line-through; text-decoration-color: #E23B32; text-decoration-thickness: 5px; }
+    <!-- Moved from top:700 -- count-up's own centered figure renders well
+         below this box's nominal position (confirmed via real frame
+         extraction: the "1,000+" glyphs land around y1500-1770, not
+         centered in 700-1220), dipping into the ~1613-1920 zone reserved for
+         Instagram's own bottom UI chrome (see captions.html's cap-band
+         comment). Shifted up so the real rendered glyphs land clear of both
+         the caption band and the chrome zone. -->
+    .f5-count-host { position: absolute; left: 60px; right: 60px; top: 150px; height: 520px; opacity: 0; }
+    /* Moved from top:1360 (inside the 1305.6-1613 auto-caption band) -- confirmed
+       via real full-resolution frame extraction showing this tag overlapping
+       and garbling with live word captions. 1230 puts the tag's bottom edge
+       (~1289) clear above the band top with margin. */
+    .f5-tag {
+      position: absolute; left: 50%; top: 1230px; transform: translateX(-50%);
+      padding: 14px 32px; border-radius: 999px; border: 1.5px solid rgba(143,168,136,0.5);
+      background: rgba(143,168,136,0.12); color: #8FA888; font-family: "JetBrains Mono", monospace;
+      font-size: 26px; font-weight: 700; letter-spacing: 0.04em; opacity: 0;
+    }
+  </style>
+  <div id="root" data-composition-id="05-escalation" data-width="1080" data-height="1920" data-start="0">
+    <div id="f5-bg" class="f5-bg clip" data-start="0" data-duration="8.82" data-track-index="0"></div>
+    <div id="f5-glow" class="f5-glow clip" data-start="0" data-duration="8.82" data-track-index="1"></div>
+
+    <div class="f5-kicker" id="f5-kicker">Not just the <span class="strike">big five.</span></div>
+
+    <div
+      class="f5-count-host clip"
+      id="f5-count-host"
+      data-composition-src="compositions/components/count-up.html"
+      data-composition-id="05-count"
+      data-variable-values='{"start":0,"end":1000,"prefix":"","suffix":"+","accent":"green","glow":true,"exit":"none"}'
+      data-start="1.5"
+      data-duration="7.32"
+      data-track-index="2"
+    ></div>
+
+    <div class="f5-tag" id="f5-tag">real integration count, composio.dev</div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    const glow = document.getElementById("f5-glow");
+    tl.fromTo(glow, { opacity: 0.06 }, { opacity: 0.15, duration: 8.6 }, 0.1);
+
+    const kicker = document.getElementById("f5-kicker");
+    tl.fromTo(kicker, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.1);
+    tl.to(kicker, { opacity: 0, y: -16, duration: 0.4 }, 1.4);
+
+    const countHost = document.getElementById("f5-count-host");
+    tl.fromTo(countHost, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }, 1.5);
+
+    const tag = document.getElementById("f5-tag");
+    tl.fromTo(tag, { opacity: 0, y: 16, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(2)" }, 3.6);
+    tl.to(tag, { scale: 1.05, duration: 0.3, yoyo: true, repeat: 1 }, 4.1);
+
+    window.__timelines["05-escalation"] = tl;
+  </script>
+</template>

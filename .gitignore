@@ -15,6 +15,7 @@ episodes/*/build/
 hyperframes-*/renders/
 hyperframes-*/snapshots/
 hyperframes-*/scratch/
+hyperframes-*/.hyperframes/
 
 # CC-Agent runtime state (per-episode manifests are generated, not source)
 CC-Agent/manifests/

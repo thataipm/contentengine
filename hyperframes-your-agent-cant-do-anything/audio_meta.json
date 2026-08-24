@@ -1,0 +1,1030 @@
+{
+  "bgm": null,
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 9.102222,
+      "words": [
+        {
+          "text": "Gmail.",
+          "start": 0.179,
+          "end": 0.62
+        },
+        {
+          "text": "Slack.",
+          "start": 1.179,
+          "end": 1.579
+        },
+        {
+          "text": "GitHub.",
+          "start": 2.119,
+          "end": 2.559
+        },
+        {
+          "text": "Notion.",
+          "start": 2.98,
+          "end": 3.439
+        },
+        {
+          "text": "My",
+          "start": 4.099,
+          "end": 4.299
+        },
+        {
+          "text": "AI",
+          "start": 4.38,
+          "end": 4.559
+        },
+        {
+          "text": "agent",
+          "start": 4.719,
+          "end": 4.94
+        },
+        {
+          "text": "can",
+          "start": 5.019,
+          "end": 5.179
+        },
+        {
+          "text": "use",
+          "start": 5.299,
+          "end": 5.579
+        },
+        {
+          "text": "all",
+          "start": 5.699,
+          "end": 5.799
+        },
+        {
+          "text": "of",
+          "start": 5.839,
+          "end": 5.94
+        },
+        {
+          "text": "them",
+          "start": 5.98,
+          "end": 6.099
+        },
+        {
+          "text": "now,",
+          "start": 6.199,
+          "end": 6.339
+        },
+        {
+          "text": "and",
+          "start": 6.659,
+          "end": 6.739
+        },
+        {
+          "text": "I",
+          "start": 6.799,
+          "end": 6.879
+        },
+        {
+          "text": "didn't",
+          "start": 6.94,
+          "end": 7.139
+        },
+        {
+          "text": "have",
+          "start": 7.219,
+          "end": 7.339
+        },
+        {
+          "text": "to",
+          "start": 7.359,
+          "end": 7.48
+        },
+        {
+          "text": "build",
+          "start": 7.519,
+          "end": 7.699
+        },
+        {
+          "text": "anything",
+          "start": 7.839,
+          "end": 8.179
+        },
+        {
+          "text": "myself.",
+          "start": 8.22,
+          "end": 8.699
+        }
+      ]
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 8.637823,
+      "words": [
+        {
+          "text": "That's",
+          "start": 0.361,
+          "end": 0.559
+        },
+        {
+          "text": "usually",
+          "start": 0.62,
+          "end": 0.919
+        },
+        {
+          "text": "the",
+          "start": 0.96,
+          "end": 1.079
+        },
+        {
+          "text": "part",
+          "start": 1.14,
+          "end": 1.361
+        },
+        {
+          "text": "nobody",
+          "start": 1.56,
+          "end": 1.821
+        },
+        {
+          "text": "shows",
+          "start": 1.941,
+          "end": 2.14
+        },
+        {
+          "text": "you.",
+          "start": 2.2,
+          "end": 2.38
+        },
+        {
+          "text": "The",
+          "start": 2.659,
+          "end": 2.741
+        },
+        {
+          "text": "demo",
+          "start": 2.8,
+          "end": 3.06
+        },
+        {
+          "text": "always",
+          "start": 3.14,
+          "end": 3.46
+        },
+        {
+          "text": "skips",
+          "start": 3.52,
+          "end": 3.861
+        },
+        {
+          "text": "straight",
+          "start": 4.02,
+          "end": 4.24
+        },
+        {
+          "text": "to",
+          "start": 4.281,
+          "end": 4.361
+        },
+        {
+          "text": "the",
+          "start": 4.401,
+          "end": 4.48
+        },
+        {
+          "text": "agent",
+          "start": 4.579,
+          "end": 4.88
+        },
+        {
+          "text": "working,",
+          "start": 4.96,
+          "end": 5.321
+        },
+        {
+          "text": "never",
+          "start": 5.839,
+          "end": 6.02
+        },
+        {
+          "text": "the",
+          "start": 6.06,
+          "end": 6.159
+        },
+        {
+          "text": "messy",
+          "start": 6.24,
+          "end": 6.48
+        },
+        {
+          "text": "setup",
+          "start": 6.579,
+          "end": 6.861
+        },
+        {
+          "text": "that",
+          "start": 6.901,
+          "end": 7.02
+        },
+        {
+          "text": "normally",
+          "start": 7.121,
+          "end": 7.419
+        },
+        {
+          "text": "sits",
+          "start": 7.52,
+          "end": 7.74
+        },
+        {
+          "text": "behind",
+          "start": 7.781,
+          "end": 8.079
+        },
+        {
+          "text": "it.",
+          "start": 8.14,
+          "end": 8.3
+        }
+      ]
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 8.730703,
+      "words": [
+        {
+          "text": "The",
+          "start": 0.37,
+          "end": 0.47
+        },
+        {
+          "text": "tool",
+          "start": 0.531,
+          "end": 0.71
+        },
+        {
+          "text": "that",
+          "start": 0.749,
+          "end": 0.87
+        },
+        {
+          "text": "did",
+          "start": 0.929,
+          "end": 1.049
+        },
+        {
+          "text": "it",
+          "start": 1.089,
+          "end": 1.191
+        },
+        {
+          "text": "is",
+          "start": 1.249,
+          "end": 1.349
+        },
+        {
+          "text": "called",
+          "start": 1.45,
+          "end": 1.63
+        },
+        {
+          "text": "Composio.",
+          "start": 1.709,
+          "end": 2.29
+        },
+        {
+          "text": "It",
+          "start": 2.709,
+          "end": 2.81
+        },
+        {
+          "text": "connects",
+          "start": 2.871,
+          "end": 3.149
+        },
+        {
+          "text": "your",
+          "start": 3.229,
+          "end": 3.31
+        },
+        {
+          "text": "AI",
+          "start": 3.47,
+          "end": 3.61
+        },
+        {
+          "text": "agent",
+          "start": 3.77,
+          "end": 4.189
+        },
+        {
+          "text": "to",
+          "start": 4.229,
+          "end": 4.329
+        },
+        {
+          "text": "over",
+          "start": 4.429,
+          "end": 4.61
+        },
+        {
+          "text": "a",
+          "start": 4.669,
+          "end": 4.729
+        },
+        {
+          "text": "thousand",
+          "start": 4.81,
+          "end": 5.169
+        },
+        {
+          "text": "real",
+          "start": 5.229,
+          "end": 5.449
+        },
+        {
+          "text": "apps",
+          "start": 5.549,
+          "end": 5.77
+        },
+        {
+          "text": "you",
+          "start": 5.929,
+          "end": 6.009
+        },
+        {
+          "text": "probably",
+          "start": 6.069,
+          "end": 6.449
+        },
+        {
+          "text": "already",
+          "start": 6.509,
+          "end": 6.789
+        },
+        {
+          "text": "use,",
+          "start": 6.95,
+          "end": 7.191
+        },
+        {
+          "text": "already",
+          "start": 7.589,
+          "end": 7.929
+        },
+        {
+          "text": "logged",
+          "start": 7.99,
+          "end": 8.209
+        },
+        {
+          "text": "in.",
+          "start": 8.27,
+          "end": 8.429
+        }
+      ]
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 14.396372,
+      "words": [
+        {
+          "text": "Here's",
+          "start": 0.261,
+          "end": 0.46
+        },
+        {
+          "text": "how",
+          "start": 0.501,
+          "end": 0.68
+        },
+        {
+          "text": "easy",
+          "start": 0.761,
+          "end": 1.04
+        },
+        {
+          "text": "it",
+          "start": 1.099,
+          "end": 1.18
+        },
+        {
+          "text": "actually",
+          "start": 1.261,
+          "end": 1.581
+        },
+        {
+          "text": "is.",
+          "start": 1.64,
+          "end": 1.96
+        },
+        {
+          "text": "You",
+          "start": 2.399,
+          "end": 2.46
+        },
+        {
+          "text": "install",
+          "start": 2.52,
+          "end": 2.86
+        },
+        {
+          "text": "it",
+          "start": 2.921,
+          "end": 3.04
+        },
+        {
+          "text": "with",
+          "start": 3.081,
+          "end": 3.239
+        },
+        {
+          "text": "one",
+          "start": 3.3,
+          "end": 3.501
+        },
+        {
+          "text": "simple",
+          "start": 3.56,
+          "end": 3.84
+        },
+        {
+          "text": "command,",
+          "start": 3.88,
+          "end": 4.22
+        },
+        {
+          "text": "connect",
+          "start": 4.56,
+          "end": 4.82
+        },
+        {
+          "text": "the",
+          "start": 4.86,
+          "end": 4.96
+        },
+        {
+          "text": "apps",
+          "start": 5.04,
+          "end": 5.24
+        },
+        {
+          "text": "you",
+          "start": 5.3,
+          "end": 5.38
+        },
+        {
+          "text": "want",
+          "start": 5.44,
+          "end": 5.639
+        },
+        {
+          "text": "your",
+          "start": 5.7,
+          "end": 5.8
+        },
+        {
+          "text": "agent",
+          "start": 5.88,
+          "end": 6.139
+        },
+        {
+          "text": "to",
+          "start": 6.179,
+          "end": 6.281
+        },
+        {
+          "text": "use,",
+          "start": 6.38,
+          "end": 6.621
+        },
+        {
+          "text": "and",
+          "start": 6.86,
+          "end": 6.961
+        },
+        {
+          "text": "that's",
+          "start": 6.999,
+          "end": 7.2
+        },
+        {
+          "text": "it.",
+          "start": 7.261,
+          "end": 7.48
+        },
+        {
+          "text": "No",
+          "start": 7.98,
+          "end": 8.101
+        },
+        {
+          "text": "separate",
+          "start": 8.2,
+          "end": 8.499
+        },
+        {
+          "text": "logins",
+          "start": 8.581,
+          "end": 8.88
+        },
+        {
+          "text": "to",
+          "start": 8.921,
+          "end": 8.98
+        },
+        {
+          "text": "build,",
+          "start": 9.06,
+          "end": 9.3
+        },
+        {
+          "text": "no",
+          "start": 9.639,
+          "end": 9.761
+        },
+        {
+          "text": "setup",
+          "start": 9.84,
+          "end": 10.121
+        },
+        {
+          "text": "screens",
+          "start": 10.2,
+          "end": 10.499
+        },
+        {
+          "text": "to",
+          "start": 10.54,
+          "end": 10.601
+        },
+        {
+          "text": "design",
+          "start": 10.679,
+          "end": 10.961
+        },
+        {
+          "text": "yourself,",
+          "start": 10.999,
+          "end": 11.459
+        },
+        {
+          "text": "your",
+          "start": 11.86,
+          "end": 12.04
+        },
+        {
+          "text": "agent",
+          "start": 12.16,
+          "end": 12.54
+        },
+        {
+          "text": "just",
+          "start": 12.66,
+          "end": 12.88
+        },
+        {
+          "text": "gets",
+          "start": 12.941,
+          "end": 13.24
+        },
+        {
+          "text": "real",
+          "start": 13.36,
+          "end": 13.56
+        },
+        {
+          "text": "access.",
+          "start": 13.639,
+          "end": 14.2
+        }
+      ]
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 8.823583,
+      "words": [
+        {
+          "text": "And",
+          "start": 0.23,
+          "end": 0.29
+        },
+        {
+          "text": "it's",
+          "start": 0.331,
+          "end": 0.47
+        },
+        {
+          "text": "not",
+          "start": 0.53,
+          "end": 0.671
+        },
+        {
+          "text": "just",
+          "start": 0.73,
+          "end": 0.87
+        },
+        {
+          "text": "the",
+          "start": 0.93,
+          "end": 1.011
+        },
+        {
+          "text": "big",
+          "start": 1.09,
+          "end": 1.31
+        },
+        {
+          "text": "five",
+          "start": 1.37,
+          "end": 1.63
+        },
+        {
+          "text": "apps.",
+          "start": 1.73,
+          "end": 2.05
+        },
+        {
+          "text": "It's",
+          "start": 2.25,
+          "end": 2.39
+        },
+        {
+          "text": "over",
+          "start": 2.45,
+          "end": 2.61
+        },
+        {
+          "text": "a",
+          "start": 2.671,
+          "end": 2.73
+        },
+        {
+          "text": "thousand,",
+          "start": 2.79,
+          "end": 3.23
+        },
+        {
+          "text": "from",
+          "start": 3.37,
+          "end": 3.511
+        },
+        {
+          "text": "the",
+          "start": 3.55,
+          "end": 3.63
+        },
+        {
+          "text": "ones",
+          "start": 3.71,
+          "end": 3.99
+        },
+        {
+          "text": "everyone",
+          "start": 4.09,
+          "end": 4.47
+        },
+        {
+          "text": "uses",
+          "start": 4.59,
+          "end": 5.11
+        },
+        {
+          "text": "to",
+          "start": 5.151,
+          "end": 5.21
+        },
+        {
+          "text": "the",
+          "start": 5.25,
+          "end": 5.351
+        },
+        {
+          "text": "smaller",
+          "start": 5.41,
+          "end": 5.79
+        },
+        {
+          "text": "tools",
+          "start": 5.851,
+          "end": 6.17
+        },
+        {
+          "text": "most",
+          "start": 6.351,
+          "end": 6.57
+        },
+        {
+          "text": "integrations",
+          "start": 6.651,
+          "end": 7.39
+        },
+        {
+          "text": "never",
+          "start": 7.45,
+          "end": 7.671
+        },
+        {
+          "text": "bother",
+          "start": 7.73,
+          "end": 7.991
+        },
+        {
+          "text": "covering.",
+          "start": 8.05,
+          "end": 8.43
+        }
+      ]
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 5.758549,
+      "words": [
+        {
+          "text": "Watching",
+          "start": 0.39,
+          "end": 0.65
+        },
+        {
+          "text": "an",
+          "start": 0.71,
+          "end": 0.831
+        },
+        {
+          "text": "agent",
+          "start": 0.93,
+          "end": 1.35
+        },
+        {
+          "text": "just",
+          "start": 1.41,
+          "end": 1.65
+        },
+        {
+          "text": "use",
+          "start": 1.75,
+          "end": 1.87
+        },
+        {
+          "text": "Slack,",
+          "start": 1.93,
+          "end": 2.29
+        },
+        {
+          "text": "with",
+          "start": 2.511,
+          "end": 2.65
+        },
+        {
+          "text": "nothing",
+          "start": 2.73,
+          "end": 3.011
+        },
+        {
+          "text": "else",
+          "start": 3.07,
+          "end": 3.23
+        },
+        {
+          "text": "set",
+          "start": 3.27,
+          "end": 3.45
+        },
+        {
+          "text": "up,",
+          "start": 3.49,
+          "end": 3.69
+        },
+        {
+          "text": "still",
+          "start": 3.99,
+          "end": 4.21
+        },
+        {
+          "text": "doesn't",
+          "start": 4.27,
+          "end": 4.511
+        },
+        {
+          "text": "feel",
+          "start": 4.57,
+          "end": 4.75
+        },
+        {
+          "text": "normal",
+          "start": 4.81,
+          "end": 5.07
+        },
+        {
+          "text": "to",
+          "start": 5.11,
+          "end": 5.171
+        },
+        {
+          "text": "me.",
+          "start": 5.23,
+          "end": 5.37
+        }
+      ]
+    },
+    {
+      "frame": 7,
+      "path": "assets/voice/07.wav",
+      "duration_s": 2.390748,
+      "words": [
+        {
+          "text": "Comment",
+          "start": 0.321,
+          "end": 0.641
+        },
+        {
+          "text": "COMPOSIO",
+          "start": 0.739,
+          "end": 1.4
+        },
+        {
+          "text": "and",
+          "start": 1.44,
+          "end": 1.52
+        },
+        {
+          "text": "I'll",
+          "start": 1.58,
+          "end": 1.72
+        },
+        {
+          "text": "send",
+          "start": 1.78,
+          "end": 1.92
+        },
+        {
+          "text": "you",
+          "start": 1.96,
+          "end": 2.02
+        },
+        {
+          "text": "the",
+          "start": 2.06,
+          "end": 2.141
+        },
+        {
+          "text": "link.",
+          "start": 2.2,
+          "end": 2.44
+        }
+      ]
+    }
+  ],
+  "sfx": [
+    {
+      "frame": 1,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 0.15,
+      "duration_s": 0.312,
+      "volume": 0.32
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 0.85,
+      "duration_s": 0.312,
+      "volume": 0.32
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 1.55,
+      "duration_s": 0.312,
+      "volume": 0.32
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 2.25,
+      "duration_s": 0.312,
+      "volume": 0.32
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/whoosh-short.mp3",
+      "offset_s": 3.6,
+      "duration_s": 1.285,
+      "volume": 0.32
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/whoosh-short.mp3",
+      "offset_s": 2.4,
+      "duration_s": 1.285,
+      "volume": 0.32
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 0,
+      "duration_s": 0.264,
+      "volume": 0.32
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 1.5,
+      "duration_s": 0.72,
+      "volume": 0.32
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 0.4,
+      "duration_s": 0.264,
+      "volume": 0.32
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 2.1,
+      "duration_s": 0.312,
+      "volume": 0.32
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 5,
+      "duration_s": 1.58,
+      "volume": 0.32
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 5.3,
+      "duration_s": 0.24,
+      "volume": 0.32
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 5.65,
+      "duration_s": 0.24,
+      "volume": 0.32
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 6,
+      "duration_s": 0.24,
+      "volume": 0.32
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 6.35,
+      "duration_s": 0.24,
+      "volume": 0.32
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 0.1,
+      "duration_s": 0.264,
+      "volume": 0.32
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/ping.mp3",
+      "offset_s": 3.22,
+      "duration_s": 1.2,
+      "volume": 0.32
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 3.6,
+      "duration_s": 0.264,
+      "volume": 0.32
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/notification.mp3",
+      "offset_s": 0.4,
+      "duration_s": 1.4,
+      "volume": 0.32
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 0.06,
+      "duration_s": 0.312,
+      "volume": 0.32
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 0.68,
+      "duration_s": 0.24,
+      "volume": 0.32
+    }
+  ],
+  "model_id": "eleven_v3"
+}

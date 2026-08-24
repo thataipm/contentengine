@@ -16,8 +16,12 @@
 //
 // PASS only if every frame file in compositions/frames/*.html is mentioned by number in
 // this episode's docs/hyperframes_production_notes.md log entry -- e.g. "Frame 3" appears
-// somewhere in a bullet line for this slug, tagged registry(<item>) or hand-built(<device>)
-// -- <why>. FAIL lists exactly which frame numbers are missing.
+// somewhere in a bullet line for this slug, tagged one of: registry(<item>),
+// screenshot(<real source>), hand-built(<device>) -- <why>, or
+// hand-built-bug-workaround(<item>) -- <durable-pitfall ref>. Any of the four counts as
+// "accounted for" here -- this script only checks coverage, not device-tier budget (that's
+// check_registry_ratio.mjs's job, which DOES treat the four tags differently). FAIL lists
+// exactly which frame numbers are missing.
 //
 // Usage:
 //   node check_registry_usage.mjs --project-dir hyperframes-<episode> --docs-root <repo-root>

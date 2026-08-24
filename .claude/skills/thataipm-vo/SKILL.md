@@ -19,7 +19,24 @@ Three real bugs/gaps shipped VO that had to be redone this channel's history:
    sidecar (`audio_engine_meta.json`) as ITS OWN merge base for `audio_meta.json`. If
    you hand-edit `audio_meta.json` directly and later run the wrapper's `fetch-sfx`,
    it merges from the stale sidecar and silently overwrites your hand-added word
-   timing.
+   timing. **Confirmed the same way a second time, worse (2026-08-25,
+   `hyperframes-your-agent-cant-do-anything`): this project's `audio_meta.json` was
+   written entirely by `generate_vo_single_take.mjs` (this script), which never
+   touches the sidecar at all — so no `audio_engine_meta.json` existed yet. Running
+   `fetch-sfx` for the first time on such a project doesn't merge from a stale
+   sidecar, it creates a brand-new EMPTY one (no voices) and overwrites
+   `audio_meta.json` with that — wiping all 7 frames' real word timing in one call,
+   with no warning.** Before running `fetch-sfx` on ANY project, confirm
+   `audio_engine_meta.json` already exists and has a real `voices` array — if it
+   doesn't (true for every project whose VO came from this script and never had SFX
+   fetched before), `fetch-sfx` will destroy the voices data. Recovery, if this
+   happens: `assets/voice/full-take.wav` and the per-frame `NN.wav` files are
+   untouched by `fetch-sfx` (it never writes to `assets/voice/`) — re-run forced
+   alignment against the existing `full-take.wav` (no re-synthesis, so the actual
+   voice take doesn't change) using the same `lines.json` text, recompute the same
+   silence-midpoint boundaries, and write `voices[]` back using each frame's real
+   existing `.wav` file duration. Deterministic alignment on unchanged audio
+   reproduces near-identical word timestamps to the original.
 3. **Per-line take inconsistency.** Generating each frame's line as an independent
    ElevenLabs call (the original method) can produce audible take-to-take drift in
    pacing/energy/texture across frames — flagged directly on the first

@@ -1,0 +1,204 @@
+<template data-composition-id="04-walkthrough" data-duration="14.43">
+  <style>
+    #root {
+      width: 1080px; height: 1920px; position: relative; overflow: hidden;
+      font-family: "Inter", system-ui, sans-serif; background: #0A0A0A;
+      --bg: #0A0A0A; --fg: #F7F5EF; --surface: #16160f; --border: rgba(247,245,239,0.35);
+      --brand: #8FA888; --accent: #E23B32; --accent-2: #E23B32; --radius: 20px;
+    }
+    .f4-bg { position: absolute; inset: 0; background: #0A0A0A; }
+    .f4-glow {
+      position: absolute; left: 50%; top: 900px; width: 940px; height: 940px;
+      margin-left: -470px; border-radius: 50%; background: #8FA888; filter: blur(240px); opacity: 0.08;
+    }
+    .f4-label {
+      position: absolute; left: 90px; right: 90px; top: 260px; text-align: center;
+      color: #93938a; font-family: "JetBrains Mono", monospace; font-size: 30px;
+      font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0;
+    }
+    .f4-shot-frame {
+      position: absolute; left: 50%; top: 420px; width: 700px; height: 372px;
+      margin-left: -350px; border-radius: 18px; border: 1.5px solid rgba(247,245,239,0.22);
+      overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,0.5); opacity: 0;
+    }
+    .f4-shot-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .f4-check {
+      position: absolute; left: 50%; top: 840px; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 14px; padding: 16px 30px;
+      border-radius: 999px; border: 1.5px solid rgba(143,168,136,0.5);
+      background: rgba(143,168,136,0.12); opacity: 0;
+    }
+    .f4-check-dot { width: 20px; height: 20px; border-radius: 50%; background: #8FA888; }
+    .f4-check-text { color: #F7F5EF; font-family: "JetBrains Mono", monospace; font-size: 28px; font-weight: 700; }
+    /* Real, confirmed render-engine bug: constellation-hub is on this project's
+       own registry_blocklist.json under data_variable_values_unreliable_at_nested_mount
+       (mounted two composition-src levels deep from index.html). An isolated
+       harness with the exact same host box + variables proved the component's
+       OWN code is correct (all 4 nodes render fine standalone) -- but the real
+       render only ever painted the top node and its connector, hub and the
+       other 3 nodes never appeared, confirmed via native full-resolution frame
+       extraction across the whole mount window (not a timing issue -- static
+       across every sampled frame). Same failure class as this project's other
+       blocked nested sub-mounts (data-chart, mk-progress-stat: "no known
+       working fix"). Replaced with a hand-built equivalent: same hub+4-node
+       cross layout and connector-draw motion, built as plain divs/SVG on this
+       frame's own timeline -- no nested mount, no container-query sizing, so
+       the whole render-engine failure class doesn't apply. Uses the same real
+       logo assets as Frame 1 instead of text labels. */
+    /* Host box shrunk (780px tall -> 600px) and moved up (top:1020 -> top:640):
+       the original box's bottom half sat inside the 1306-1613px caption band --
+       the right/left nodes landed dead center in it (abs y~1410) and visibly
+       overlapped the live caption pill, confirmed by check_caption_band_collision.mjs
+       and cross-checked against the real render. Repositioned so the whole cross
+       (including the bottom node) stays above 1306px with margin. */
+    .f4-hub-wrap { position: absolute; left: 90px; right: 90px; top: 640px; height: 600px; opacity: 0; }
+    .f4-hub-connectors { position: absolute; inset: 0; }
+    .f4-hub-connectors line { stroke: #8FA888; stroke-width: 3; stroke-linecap: round; opacity: 0.7; }
+    .f4-hub-badge {
+      position: absolute; left: 450px; top: 300px; transform: translate(-50%, -50%);
+      width: 210px; height: 100px; border-radius: 20px; border: 2px solid #8FA888;
+      background: #16160f; display: flex; align-items: center; justify-content: center;
+      color: #F7F5EF; font-size: 34px; font-weight: 800; letter-spacing: -0.02em;
+      box-shadow: 0 0 60px rgba(143,168,136,0.28); opacity: 0;
+    }
+    .f4-hub-node {
+      position: absolute; width: 128px; height: 128px; border-radius: 28px;
+      background: #F7F5EF; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4); opacity: 0;
+    }
+    .f4-hub-node img { width: 74%; height: 74%; object-fit: contain; }
+    .f4-hub-node-top { left: 450px; top: 80px; transform: translate(-50%, -50%); }
+    .f4-hub-node-right { left: 780px; top: 300px; transform: translate(-50%, -50%); }
+    .f4-hub-node-bottom { left: 450px; top: 520px; transform: translate(-50%, -50%); }
+    .f4-hub-node-left { left: 120px; top: 300px; transform: translate(-50%, -50%); }
+    .f4-caption {
+      position: absolute; left: 80px; right: 80px; top: 300px; text-align: center;
+      color: #F7F5EF; font-size: 58px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+      opacity: 0;
+    }
+    /* Real, confirmed render-engine bug (matches the "held past ~5s renders
+       invisible" durable pitfall, 2026-08-23): constellation-hub mounted here
+       at 9.53s went completely invisible ~4.7s into its own mount, verified
+       via full-resolution ffmpeg frame extraction, not just /watch. Fix: cap
+       the live sub-mount well under that threshold and hand the remaining
+       runway to a plain hand-tweened checklist instead of a second risky
+       sub-mount -- also a more literal fit for "your agent just gets real
+       access" than a longer hold on the same hub visual would have been. */
+    .f4-checklist {
+      position: absolute; left: 140px; right: 140px; top: 920px; display: flex;
+      flex-direction: column; gap: 34px;
+    }
+    .f4-check-row {
+      display: flex; align-items: center; gap: 22px; opacity: 0;
+    }
+    .f4-check-badge {
+      flex: 0 0 auto; width: 56px; height: 56px; border-radius: 50%;
+      background: #8FA888; display: grid; place-items: center;
+    }
+    .f4-check-badge svg { width: 28px; height: 28px; }
+    .f4-check-row-label {
+      color: #F7F5EF; font-family: "JetBrains Mono", monospace; font-size: 40px; font-weight: 700;
+    }
+  </style>
+  <div id="root" data-composition-id="04-walkthrough" data-width="1080" data-height="1920" data-start="0">
+    <div id="f4-bg" class="f4-bg clip" data-start="0" data-duration="14.43" data-track-index="0"></div>
+    <div id="f4-glow" class="f4-glow clip" data-start="0" data-duration="14.43" data-track-index="1"></div>
+
+    <div class="f4-label" id="f4-label">Connect the apps</div>
+    <div class="f4-shot-frame" id="f4-shot">
+      <img src="assets/screenshots/composio_connections_panel.png" alt="Composio real Slack OAuth connection" />
+    </div>
+    <div class="f4-check" id="f4-check">
+      <div class="f4-check-dot"></div>
+      <div class="f4-check-text">Connected. No setup screen.</div>
+    </div>
+
+    <div class="f4-caption" id="f4-caption">Your agent just gets real access.</div>
+    <div class="f4-hub-wrap" id="f4-hub-wrap">
+      <svg class="f4-hub-connectors" id="f4-hub-connectors" viewBox="0 0 900 600">
+        <line id="f4-hub-line-0" x1="450" y1="300" x2="450" y2="80" />
+        <line id="f4-hub-line-1" x1="450" y1="300" x2="780" y2="300" />
+        <line id="f4-hub-line-2" x1="450" y1="300" x2="450" y2="520" />
+        <line id="f4-hub-line-3" x1="450" y1="300" x2="120" y2="300" />
+      </svg>
+      <div class="f4-hub-badge" id="f4-hub-badge">Composio</div>
+      <div class="f4-hub-node f4-hub-node-top" id="f4-hub-node-0"><img src="assets/logos/gmail.png" alt="Gmail" /></div>
+      <div class="f4-hub-node f4-hub-node-right" id="f4-hub-node-1"><img src="assets/logos/slack.png" alt="Slack" /></div>
+      <div class="f4-hub-node f4-hub-node-bottom" id="f4-hub-node-2"><img src="assets/logos/github.png" alt="GitHub" /></div>
+      <div class="f4-hub-node f4-hub-node-left" id="f4-hub-node-3"><img src="assets/logos/notion.png" alt="Notion" /></div>
+    </div>
+    <div class="f4-checklist" id="f4-checklist">
+      <div class="f4-check-row" id="f4-check-row-0">
+        <div class="f4-check-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="f4-check-row-label">Gmail</div>
+      </div>
+      <div class="f4-check-row" id="f4-check-row-1">
+        <div class="f4-check-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="f4-check-row-label">Slack</div>
+      </div>
+      <div class="f4-check-row" id="f4-check-row-2">
+        <div class="f4-check-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="f4-check-row-label">GitHub</div>
+      </div>
+      <div class="f4-check-row" id="f4-check-row-3">
+        <div class="f4-check-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="f4-check-row-label">Notion. Connected.</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    const glow = document.getElementById("f4-glow");
+    tl.fromTo(glow, { opacity: 0.05 }, { opacity: 0.14, duration: 14.2 }, 0.1);
+
+    const label = document.getElementById("f4-label");
+    tl.fromTo(label, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35 }, 0.15);
+
+    const shot = document.getElementById("f4-shot");
+    tl.fromTo(shot, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" }, 0.4);
+    tl.to(shot, { scale: 1.06, duration: 3.8, ease: "sine.inOut" }, 1.0);
+
+    const check = document.getElementById("f4-check");
+    tl.fromTo(check, { opacity: 0, y: 16, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(2)" }, 2.1);
+    tl.to(check, { scale: 1.06, duration: 0.35, yoyo: true, repeat: 1 }, 2.6);
+
+    tl.to(shot, { opacity: 0, y: -30, duration: 0.5, ease: "power2.in" }, 4.5);
+    tl.to(check, { opacity: 0, y: -30, duration: 0.5, ease: "power2.in" }, 4.5);
+    tl.to(label, { opacity: 0, duration: 0.4 }, 4.5);
+
+    const caption = document.getElementById("f4-caption");
+    tl.fromTo(caption, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 5.0);
+
+    const hubWrap = document.getElementById("f4-hub-wrap");
+    tl.set(hubWrap, { opacity: 1 }, 5.0);
+    const hubBadge = document.getElementById("f4-hub-badge");
+    tl.fromTo(hubBadge, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 5.0);
+
+    [0, 1, 2, 3].forEach(function (i) {
+      const line = document.getElementById("f4-hub-line-" + i);
+      const length = line.getTotalLength();
+      line.style.strokeDasharray = length + " " + length;
+      line.style.strokeDashoffset = String(length);
+      const node = document.getElementById("f4-hub-node-" + i);
+      gsap.set(node, { scale: 0.6, y: 10 });
+      const at = 5.3 + i * 0.35;
+      tl.to(line, { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" }, at);
+      tl.to(node, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(1.9)" }, at + 0.15);
+    });
+
+    tl.to(hubWrap, { opacity: 0, duration: 0.4, ease: "power2.in" }, 8.7);
+
+    tl.to(caption, { opacity: 0, y: -16, duration: 0.5 }, 9.2);
+
+    const rows = [0, 1, 2, 3].map((i) => document.getElementById("f4-check-row-" + i));
+    rows.forEach(function (row, i) {
+      const at = 9.5 + i * 0.85;
+      tl.fromTo(row, { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.4, ease: "back.out(1.8)" }, at);
+      const badge = row.querySelector(".f4-check-badge");
+      tl.fromTo(badge, { scale: 0.6 }, { scale: 1, duration: 0.3, ease: "back.out(2.4)" }, at + 0.05);
+    });
+
+    window.__timelines["04-walkthrough"] = tl;
+  </script>
+</template>

@@ -21,23 +21,57 @@ you to enforce subtitle format that we used in this video - episodes/the-ai-pm-p
 3. Enforce strict instagram framing rule so you know where to show what, subtitles are very
 low right now." All three are standing, effective immediately, every future episode.
 
-### Rule 1: 95% registry / 5% genuine hand-built
+### Rule 1: registry-first, three device tiers (revised 2026-08-24)
 
-Target ratio across a whole episode's frames: 95% built from real `npx hyperframes catalog`
-registry blocks, 5% ceiling for hand-built content — and that 5% must be a genuine real item
-(a real screenshot, a real brand/product logo), not an invented graphic. This tightens
-`thataipm-registry-check`'s existing per-frame accounting (every frame already must be tagged
-`registry(...)` or `hand-built(...) — <why>`, see §9 of the root `CLAUDE.md`) into a real
-numeric budget, not just a per-frame justification. A hand-built entry is only allowed onto
-that 5% after a real, logged registry search finds no match — same discipline as before, now
-with a ceiling on how much of the episode that's allowed to cover. **`continuous-claude-v3`
-itself blew past this**: Frame 4's three stat cards and Frame 5's CTA ring were both
-hand-built after real registry attempts failed (`mk-progress-stat` confirmed blank-rendering,
-see the durable pitfall entry below) — that's a legitimate exception under the "no match
-after a real search" clause, but going forward, a failed registry block should trigger a
-second attempt at a *different* registry block before falling back to hand-built, not an
-immediate fallback. Favor real brand/product logos over invented iconography whenever the 5%
-allowance is used to represent a named tool, company, or product.
+**Revised after a real production run (`hyperframes-your-agent-cant-do-anything`) hit a real
+conflict**: the original 95%/5% rule counted real product screenshots as ordinary hand-built,
+so an episode that correctly followed the OTHER standing rule (real screenshots at beats where
+showing the actual product is the point — CLAUDE.md's "screenshots and real UI over generic
+icons/mock UI") got penalized by the ratio gate for following it. Direct correction: "our
+engine is registry heavy, we should use real screenshots only where its logically
+applicable." Three tiers now, not two:
+
+1. **`registry(...)`** — the default. This engine is registry-heavy on purpose (373+ catalog
+   items); reach for it first, every time, per `thataipm-registry-check`'s full-catalog-read
+   discovery.
+2. **`screenshot(...)`** — a real captured product screenshot, used ONLY at a beat where
+   showing the actual UI is the literal point (a tool intro, a real workflow step) — not a
+   default, not a substitute for a registry search elsewhere in the same episode. Typically
+   1-2 beats per episode, not most of them. Exempt from the ratio target below entirely — it's
+   a different, deliberate device choice, not an "avoided the registry" gap.
+3. **`hand-built(...) — <why>`** — genuine fallback, only after a real, logged registry search
+   (see Rule 1's discovery discipline above) finds no match. This is what the ratio target
+   below actually measures.
+
+A fourth tag, **`hand-built-bug-workaround(<item>) — <durable-pitfall reference>`**, covers the
+case where a registry item was installed and tried but a CONFIRMED, LOGGED render-engine bug
+makes it non-functional (e.g. the nested-paste-in-wrapper-invisible bug, hit 3+ times on this
+channel — `cta-close` needs this treatment every time). Also exempt from the ratio — the
+registry WAS checked and used, it just doesn't render.
+
+A fifth tag, **`hand-built-real-asset(<item>) — <why>`** (added 2026-08-24, direct instruction
+"use actual logo for tools we say out loud"), covers a hand-built device assembled FROM real
+captured brand/product imagery (a row of real official app logos, e.g.) where the registry has
+no matching device shape — checked and confirmed on `hyperframes-your-agent-cant-do-anything`:
+`trust-strip` only does text wordmarks, and `logo-wall`'s own file explicitly states it uses
+placeholder lettermarks "WITHOUT using real brand assets." This is the same category as
+`screenshot(...)` (real, non-fabricated content, not an avoidable hand-build) and the original
+2026-08-15 instruction itself says "use brand logos wherever possible" in the same breath as the
+95%/90% target — also exempt from the ratio. Reserve it for devices built from real captured
+imagery, not as a general escape hatch for any hand-build.
+
+**Target ratio**: 90% `registry(...)` / 10% ceiling for plain `hand-built(...)`, computed only
+from tiers 1 and 3 above (tiers 2, 4, and 5 are exempt, see `check_registry_ratio.mjs`'s own
+comment for the exact math). Lowered from the original 95% after this same production run
+showed a single confirmed-bug hand-built entry (see the durable-pitfall list) shouldn't
+disproportionately sink an otherwise registry-first episode.
+
+Favor real brand/product logos over invented iconography whenever a screenshot or hand-built
+slot is used to represent a named tool, company, or product. **`continuous-claude-v3`** hit the
+"failed registry attempt" case directly (Frame 4's stat cards, Frame 5's CTA ring, both
+hand-built after `mk-progress-stat` confirmed blank-rendering) — a failed registry block should
+still trigger a second attempt at a *different* registry block before falling back to
+hand-built, not an immediate fallback.
 
 ### Rule 2: standard subtitle format (reference: `episodes/the-ai-pm-pay-gap/build/`)
 
@@ -923,6 +957,132 @@ None of this replaces the mandatory dense `/watch` pass — every new pixel-leve
 honestly in its own header as catching a specific, common bug shape, not a substitute for
 actually reading the rendered frames.
 
+## Durable pitfall: `/watch`'s auto-scaled frame extraction can miss full-canvas geometry bugs that native-resolution ffmpeg extraction catches immediately (2026-08-24)
+
+On `hyperframes-your-agent-cant-do-anything`, a dense `/watch` pass at `--detail token-burner
+--resolution 1080` on the sped-up render reported nothing wrong. Direct `ffmpeg -ss <t>
+-frames:v 1` extraction at native 1080x1920 from the RAW (pre-speedup) `renders/video.mp4` then
+found, in a single follow-up pass: a sub-mount going blank for its final ~1s (held past its own
+declared `data-composition-duration`), a landscape-native device leaving ~44% of a portrait
+frame solid black, a real screenshot panned far enough to expose dead space inside its own
+rounded-card border, and text sitting directly inside the live caption band, garbling with real
+word captions. None of these are subtle — every one is a full-canvas, easily-visible defect —
+yet `/watch`'s own auto-scaling/compression pipeline read as clean. **Root cause not fully
+diagnosed, but the practical rule going forward**: after `/watch` passes clean on a render with
+ANY sub-composition mount (`data-composition-src`), a real screenshot, or hand-positioned text
+near the frame edges/bands, do at least one native-resolution ffmpeg spot-check per frame
+(`ffmpeg -y -ss <mid-frame-timestamp> -i renders/video.mp4 -frames:v 1 -q:v 1 out.png`, then
+`Read` it) before calling the render done. A 2-second-interval sweep across the whole runtime is
+cheap and catches problems a single mid-frame check would miss.
+
+## Durable pitfall: hand-built frame elements must independently clear the caption band, not just the caption system itself
+
+Rule 3 above (`check_caption_safe_zone.mjs`) verifies the CAPTION BOX itself sits in Instagram's
+safe zone — it does not, and cannot, know that a frame's own hand-built element (a stat tag, a
+kicker line, a wordmark) happens to sit at the same y-coordinates the caption band occupies
+(68%-84% of frame height, i.e. `y≈1306-1613` at 1080x1920 per `captions.html`'s own
+`--cap-band-top`/`--cap-band-height` tokens). On `hyperframes-your-agent-cant-do-anything`, THREE
+separate hand-built elements across two frames (`03-name.html`'s kicker + wordmark,
+`05-escalation.html`'s stat-tag pill) were positioned inside that exact band, producing a
+double-exposure garble with the live word captions for as long as both were on screen — not a
+transient crossfade blend, a real multi-second collision. **Standing rule going forward: when
+placing any frame-owned text/pill/badge below roughly `y=1300` at 1080x1920, check it against the
+caption band's real bounds (`1920 * 0.68` to `1920 * 0.84`) and keep it clear, same as the
+existing top/bottom/right IG-chrome exclusions above** — this is a 4th exclusion zone (the
+caption band itself, whenever captions are live for that frame, which is effectively always on
+this channel) that Rule 3 doesn't cover because it only inspects the caption renderer's own
+position, not everything else sharing the canvas. No mechanical gate exists for this yet; a
+future `check_caption_safe_zone.mjs` extension that also scans each frame's own hand-built
+element positions against the band would close this gap for good.
+
+## Durable pitfall: a `data-composition-src` mount's own `place-items:center`-driven content does not reliably land inside its host div's declared CSS box, and `data-width`/`data-height` on the host div do not fix it
+
+Two mounts on `hyperframes-your-agent-cant-do-anything` (`count-up.html` inside a `700px`-top/
+`520px`-tall host box; `native-notification-pop.html` inside a `0`-top/`900px`-tall host box)
+both rendered their internally-centered content dozens to hundreds of pixels away from where the
+host div's own CSS box would put it — confirmed via precise grid-overlay frame extraction, not
+guesswork (count-up's "1,000+" landed at `y≈1500-1770` against a nominal `700-1220` box;
+native-notification-pop's decorative card landed at `y≈710-1205` against a nominal `0-900` box).
+**Explicitly adding matching `data-width`/`data-height` attributes to the host mount div had
+ZERO effect on either** (tested: re-rendered, re-measured, pixel-identical to before) — this is
+NOT the same fix that worked for `halftone-field` in Rule-adjacent pitfalls elsewhere in this
+doc, because that component explicitly reads `root.dataset.width`/`height` in its own JS to size
+a canvas/WebGL context, while `count-up` and `native-notification-pop` rely purely on CSS
+`container-type:size` + `place-items:center`, and something in this pipeline's mount chain
+breaks that containment for at least these two components in a way `data-width`/`data-height`
+attributes don't touch. **Root cause not diagnosed. Practical fix that DOES work**: don't trust
+the host div's declared box to predict where content lands — render once, measure the real pixel
+position via a grid-overlay ffmpeg extraction (`drawgrid` + `drawtext` filters, see this
+session's technique), then adjust the host div's `top`/`height` by the empirically observed
+offset and re-measure. Treat every new `place-items:center`-style mount on this channel as
+suspect until measured this way at least once.
+
+## Durable pitfall: a `data-composition-src` mount held past its own declared `data-composition-duration` goes blank for a FIXED-envelope component, but scales gracefully for an ELASTIC-HOLD component — read the component's own script before assuming either
+
+Two components hit the "mounted longer than native duration" bug this episode with different
+outcomes: `trust-strip` (native `data-composition-duration="3.5"`, mounted `4.3s`) went
+completely blank past `3.5s` — its script authors a FIXED-length reveal sequence with nothing
+scheduled after it ends, so GSAP simply holds the timeline's last authored state, which happens
+to already be faded/empty by then. `count-up` and `native-notification-pop`, by contrast, both
+explicitly read `root.dataset.duration` and compute `HOLD = duration - IN - OUT`, filling that
+entire span with either continued drift (`count-up`) or a deliberately static settle
+(`native-notification-pop`) — mounting either one 2-2.5x past its own "native" `3`-second default
+(as this episode did, `7.32s` and `5.691s` respectively) is by design and renders correctly the
+whole time. **Before assuming a long mount duration is either safe or broken, read the
+component's own `<script>` for `root.dataset.duration` usage**: if it's read and used to scale an
+elastic `HOLD` span, longer-than-native mounting is fine; if the component's timeline is a fixed
+sequence with no such read, cap the mount at (or under) its declared
+`data-composition-duration` and hand any remaining runway to something else, per the existing
+`constellation-hub` entry elsewhere in this doc.
+
+## Durable pitfall: `constellation-hub`, mounted two composition-src levels deep, only ever paints its first node — a real nested-mount compositing failure, not a timing or variable-passthrough issue (2026-08-25)
+
+Found on `hyperframes-your-agent-cant-do-anything` Frame 4, flagged directly by the user watching
+the real delivered video ("that workflow is showing half only"). The prior fix for this same
+component (capping the mount under its native duration, see the entry above, plus editing its
+`hub_label`/`nodes` defaults directly per `data_variable_values_unreliable_at_nested_mount`) was
+necessary but not sufficient — even correctly capped and with matching defaults, a real
+full-resolution ffmpeg extraction across the ENTIRE mount window showed only the first node
+(the one at the "top" angle) and its connector line ever painted. The hub badge and the other 3
+nodes never appeared, and the frame looked identical at every sampled timestamp across the whole
+window — ruling out a reveal-in-progress read (this isn't "caught mid-animation," nothing after
+node 1 ever rendered).
+
+**What isn't the bug**: built a standalone test harness — the component's own template + script,
+extracted verbatim, dropped into a plain page with a host `<div>` sized to the exact same 900×780
+px box as the real mount, `window.__hyperframes.getVariables` stubbed to return the exact same
+variable values, `root.dataset.duration` set to the exact same `4.2`. Ran the real GSAP timeline
+to `progress(0.6)` and read `getBoundingClientRect()` on every node: all 4 positioned correctly
+in a cross layout around the hub, all `opacity: 1`. The component's OWN code is correct in
+isolation — this only breaks under the real render pipeline's actual nested-mount compositing
+(`index.html` → `04-walkthrough.html` → `constellation-hub.html`, two `data-composition-src`
+levels deep), the same mount depth every other confirmed-blank component on this project's
+blocklist shares (`data-chart`, `mk-progress-stat`). Root cause inside the render engine itself
+is still unknown — this project's tooling can't instrument the actual headless-capture pass to
+say more than "some subtree work past the first painted element doesn't make it into the
+captured frame."
+
+**Fix**: stop mounting `constellation-hub` as a nested `data-composition-src` sub-composition at
+all — moved from this project's `data_variable_values_unreliable_at_nested_mount` list (a
+narrower "variables don't reach it" characterization) to the hard `blocked` list in
+`registry_blocklist.json`, same tier as `data-chart`/`mk-progress-stat` ("no known working fix
+-- do not mount this way"). Replaced with a hand-built equivalent: the identical hub+4-node cross
+layout and connector-draw motion, built as plain positioned `<div>`s and an inline `<svg>` with
+`getTotalLength()`-driven line draws, tweened directly on the frame's own outer timeline — no
+sub-mount, no container-query sizing, so this entire render-engine failure class doesn't apply.
+Logged as `hand-built-bug-workaround(constellation-hub)`, exempt from the registry ratio per
+Rule 1's existing fourth tier.
+
+**Takeaway for any future hub/spoke, radial, or multi-node registry device**: a component that
+renders correctly in an isolated same-size harness but only partially in the real nested render
+is a DIFFERENT failure than a timing or variable-passthrough bug, and capping duration or fixing
+variable defaults will not fix it. If a registry component needs a hub/spoke or multi-element
+radial layout, check whether it's mountable as a DIRECT frame-level sub-composition (one level
+deep) before reaching for a nested one — or default to hand-building that specific shape from the
+start, since this project now has two independently-confirmed cases (this one, plus the general
+`data-chart`/`mk-progress-stat` pattern) of nested mounts silently dropping most of their own
+subtree in the real render.
+
 ## Custom devices built for this channel (added 2026-08-14)
 
 A running log of visual devices hand-built for an @thataipm episode specifically BECAUSE no
@@ -958,14 +1118,21 @@ ever checking them used to pass this gate — it no longer does.
 by number:
 
 ```
-- [YYYY-MM-DD] <episode-slug>: Frame 1 registry(`item-name`); Frame 2 hand-built(<device>) — <why no registry block covers it>; Frame 3 registry(`item-name`); ...
+- [YYYY-MM-DD] <episode-slug>: Frame 1 registry(`item-name`); Frame 2 hand-built(<device>) — <why no registry block covers it>; Frame 3 screenshot(<real source>); Frame 4 hand-built-bug-workaround(`item-name`) — <durable-pitfall reference>; ...
 ```
 
+Four tags, see Rule 1 above for the full reasoning on why there are four, not two:
 `registry(...)` for a frame that installs and uses a real catalog item — name the item.
-`hand-built(...) — <why>` for a frame where a real, documented registry search (state which
-queries were tried) confirmed nothing fits. Every frame number from 1 to the episode's total
-frame count must appear somewhere in this slug's bullet line(s), tagged one way or the other
-— the checker fails and names the exact missing frame numbers otherwise.
+`screenshot(...)` for a real captured product screenshot at a beat where showing the actual UI
+is the point — name the real source (e.g. a URL or "composio.dev homepage"). `hand-built(...)
+— <why>` for a frame where a real, documented registry search (state which queries were tried)
+confirmed nothing fits. `hand-built-bug-workaround(...) — <durable-pitfall reference>` for a
+frame where a real registry item was installed and tried, but a confirmed, already-logged
+render-engine bug makes it non-functional — point at the exact durable-pitfall entry. Every
+frame number from 1 to the episode's total frame count must appear somewhere in this slug's
+bullet line(s), tagged one of the four — the checker fails and names the exact missing frame
+numbers otherwise. Only `registry(...)` and plain `hand-built(...)` compete for Rule 1's ratio
+target — `screenshot(...)` and `hand-built-bug-workaround(...)` are exempt from it.
 
 **Entries (post-tightening, full per-frame format):**
 
@@ -1204,6 +1371,80 @@ frame count must appear somewhere in this slug's bullet line(s), tagged one way 
   based captions.html directly (same real algorithm, this episode's own word timing) rather than
   re-deriving it. See the durable-pitfall entry below for the real `chat-thread` bug this episode
   found (hardcoded internal duration silently capped message pacing regardless of mount length).
+
+- [2026-08-24] hyperframes-your-agent-cant-do-anything: **Revised same day** after the first
+  pass (5 hand-built real-screenshot slots) correctly failed the registry-ratio gate at 37.5%
+  — see Rule 1's 2026-08-24 revision above for the resulting three-tier tag model this entry
+  now uses. Frame 1 **revised 2026-08-24, direct instruction "use actual logo for tools we
+  say out loud"**: replaced `registry(trust-strip)`'s text wordmarks with
+  hand-built-real-asset(logo row) — a row of 4 real official app icons (Gmail, Slack, GitHub,
+  Notion) fading in in sync with each name's own spoken timestamp; registry checked first
+  (`hyperframes catalog`), no match — `trust-strip` is text-wordmarks only, `logo-wall`'s own
+  file states it uses placeholder lettermarks "WITHOUT using real brand assets." Logos captured
+  via headless-Chrome from each product's official Google Play listing (github.com/logos for
+  GitHub) into `assets/logos/`, same real-asset-capture technique as this episode's real
+  screenshots, not fabricated icons. See Rule 1's 2026-08-24 fifth-tag addition for why this is
+  ratio-exempt. Frame 2 registry(`halftone-field`) — shader noise field
+  (recolored to the v2 palette via its own real color variables) as an ambient "hidden
+  complexity" backdrop under a kinetic "the part nobody shows" line; `code-typing` and
+  `code-snippet-flight` were checked first and rejected (zero `data-composition-variables`,
+  fully hardcoded per-character token demo content, no real substitution path), and
+  `flowchart-vertical` was checked and rejected too — its installed demo content is a
+  "should you learn to code" decision tree (Yes/Not sure/Python/No-code/Website/Course), a
+  real, unrelated topic that would visibly confuse this episode's narration, not just an
+  abstract stand-in. Frame 3 screenshot(composio.dev real homepage, camera-push zoom into the
+  hero + "1,000+ integrations" line) — the one beat where showing the actual product is the
+  literal point (naming the tool), direct instruction. Frame 4 **revised 2026-08-24/25**:
+  screenshot(composio.dev real Slack OAuth 2.0 connection panel) for the opening beat, the
+  second and last logically-applicable screenshot slot this episode (direct instruction: "cut
+  it back to 1-2 real-screenshot beats"). Hub visual was `registry(constellation-hub)` with
+  the `data_variable_values_unreliable_at_nested_mount` workaround applied (`hub_label`/`nodes`
+  defaults edited directly) — that fixed the variable-passthrough concern but NOT the actual
+  render: a real full-resolution frame extraction across the whole mount window showed only the
+  first node and its connector ever painted, hub and the other 3 nodes never appeared, static
+  the whole window (not a timing issue). An isolated standalone harness with the identical host
+  box and variables proved the component's own code is correct — this is the render engine
+  failing to fully composite this nested sub-mount, same failure class as `data-chart`/
+  `mk-progress-stat`. Now hand-built-bug-workaround(`constellation-hub`) — see the durable
+  pitfall entry below and `registry_blocklist.json`'s new `blocked` entry for it. Replaced with
+  a hand-built hub+4-node cross layout (plain divs, SVG line connectors, GSAP on the frame's own
+  timeline, no nested mount) using the same real Gmail/Slack/GitHub/Notion logo assets as Frame
+  1 instead of text labels. Frame 5
+  registry(`count-up`) — 0 to 1,000+ count, literal match for "over a thousand"; `logo-wall`
+  was checked and rejected on purpose: its own installed file states "Use when: a scene needs
+  a compact trusted-by beat WITHOUT using real brand assets" — placeholder lettermark logos,
+  wrong tier entirely for a real-product episode. Frame 6 registry(`native-notification-pop`)
+  — a real Slack-style OS notification banner, literal match for "watching an agent just use
+  Slack, with nothing else set up." Frame 7 hand-built-bug-workaround(`cta-close`) — see the
+  "nested paste-in wrapper subtree invisible" durable pitfall (2026-08-24 entry, this same
+  file) — same confirmed bug as this project's prior episode, same proven fix (plain direct
+  children of `#root`, tweened on the frame's own outer `tl`, no nested wrapper); content
+  changed from "Follow for more" to "Comment COMPOSIO," this episode's own approved CTA
+  reversal (see `feedback_follow_only_cta_until_followers.md`). Final tally (post-logo-swap,
+  post-constellation-hub-swap): 3 registry, 2 screenshot (exempt), 2 hand-built-bug-workaround
+  (exempt: `cta-close`, `constellation-hub`), 1 hand-built-real-asset (exempt), 0 plain
+  hand-built — 3/3 = 100% of the ratio-eligible slots, which is the exact outcome the
+  2026-08-24 rule revisions above were meant to produce: a registry-first episode that also
+  uses real screenshots and real brand logos where logically applicable, and has to work
+  around two confirmed engine bugs, should not be penalized by the ratio gate for any of that.
+
+  **Post-render QA addendum, same day**: a full pipeline pass and a dense `/watch` pass both
+  read clean, but a direct user frame-by-frame review found 6 real geometry/collision bugs
+  `/watch` missed entirely — see the three new durable-pitfall entries above (native-resolution
+  extraction gap, caption-band collisions, `place-items:center` mount-position drift, fixed vs.
+  elastic mount-duration envelopes) for the mechanics. Fixed on this same episode before
+  shipping: Frame 1 `trust-strip` mount capped to its native `3.5s` (was `4.3s`, went blank past
+  it); Frame 2 `halftone-field` mounted at native `1920x1080` + scaled via CSS transform instead
+  of a mismatched portrait box (was leaving ~44% of the frame solid black); Frame 3's real
+  screenshot pan bounds recalculated (was exposing dead space inside the card), and its kicker/
+  wordmark moved out of the caption band (was garbling with live captions); Frame 4
+  `constellation-hub` mount capped to `4.2s` (was `9.53s`, went blank past ~4.7s); Frame 5's
+  stat-tag pill moved out of the caption band, and `count-up`'s host box repositioned after its
+  real rendered position was measured via grid-overlay extraction (was landing ~800px lower than
+  its nominal box, dipping into Instagram's bottom chrome zone); Frame 6's reflection line moved
+  into the real clear gap between the notification banner and its background card (was
+  overlapping the card's placeholder skeleton). All six verified via native-resolution ffmpeg
+  frame extraction after a real re-render, not by inspection of source alone.
 
 **Entries (pre-2026-08-14 tightening, narrative format — kept as history, not retroactively
 reformatted; the paragraph below each episode's bulleted gaps also documents that episode's

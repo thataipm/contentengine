@@ -1,0 +1,20 @@
+{
+  "lines": [
+    {
+      "id": "01",
+      "sfx": [
+        "pop",
+        "whoosh-short",
+        "click-soft",
+        "chime",
+        "whoosh",
+        "ping",
+        "notification",
+        "click"
+      ]
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  }
+}

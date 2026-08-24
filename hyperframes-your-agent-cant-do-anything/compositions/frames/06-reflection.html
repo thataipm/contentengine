@@ -1,0 +1,66 @@
+<template data-composition-id="06-reflection" data-duration="5.691">
+  <style>
+    #root {
+      width: 1080px; height: 1920px; position: relative; overflow: hidden;
+      font-family: "Inter", system-ui, sans-serif; background: #0A0A0A;
+      --bg: #0A0A0A; --fg: #F7F5EF; --surface: #16160f; --border: rgba(247,245,239,0.35);
+      --brand: #8FA888; --accent: #E23B32; --accent-2: #E23B32; --radius: 20px;
+    }
+    .f6-bg { position: absolute; inset: 0; background: #0A0A0A; }
+    .f6-glow {
+      position: absolute; left: 50%; top: 700px; width: 900px; height: 900px;
+      margin-left: -450px; border-radius: 50%; background: #8FA888; filter: blur(230px); opacity: 0.08;
+    }
+    .f6-notif-host { position: absolute; left: 0; right: 0; top: 0; height: 900px; opacity: 0; }
+    /* Moved from top:1080 (inside the notification card's ~710-1205 real
+       footprint -- see .f6-notif-host comment) into the real clear gap
+       between the top banner (ends ~250) and the card (starts ~710). */
+    .f6-reflect {
+      position: absolute; left: 90px; right: 90px; top: 380px; text-align: center;
+      color: #F7F5EF; font-size: 62px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15;
+      opacity: 0;
+    }
+    .f6-reflect .soft { color: #93938a; font-weight: 600; }
+  </style>
+  <div id="root" data-composition-id="06-reflection" data-width="1080" data-height="1920" data-start="0">
+    <div id="f6-bg" class="f6-bg clip" data-start="0" data-duration="5.691" data-track-index="0"></div>
+    <div id="f6-glow" class="f6-glow clip" data-start="0" data-duration="5.691" data-track-index="1"></div>
+
+    <!-- native-notification-pop's decorative background card centers itself
+         against the outer frame's full 1080x1920 canvas regardless of this
+         host div's own smaller box (confirmed real via frame extraction: the
+         card renders at ~y710-1205, not centered in this div's declared
+         0-900 -- data-width/data-height on the host div do not change this,
+         only halftone-field's own explicit-dimension + transform pattern
+         does, and that component reads those values itself in JS rather than
+         relying on the CSS box). Given the card's position is effectively
+         fixed, f6-reflect below is placed in the real gap above it instead. -->
+    <div
+      class="f6-notif-host clip"
+      id="f6-notif-host"
+      data-composition-src="compositions/components/native-notification-pop.html"
+      data-composition-id="06-notif"
+      data-variable-values='{"title":"Slack","body":"Agent posted in #general","app_label":"Composio","os":"ios","accent":"green","at":0.4,"exit":"none"}'
+      data-start="0"
+      data-duration="5.691"
+      data-track-index="2"
+    ></div>
+
+    <div class="f6-reflect" id="f6-reflect"><span class="soft">Still doesn't</span><br />feel normal.</div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    const glow = document.getElementById("f6-glow");
+    tl.fromTo(glow, { opacity: 0.05 }, { opacity: 0.13, duration: 5.5 }, 0.1);
+
+    const notifHost = document.getElementById("f6-notif-host");
+    tl.fromTo(notifHost, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0);
+
+    const reflect = document.getElementById("f6-reflect");
+    tl.fromTo(reflect, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.6);
+    tl.to(reflect, { y: -6, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, 3.8);
+
+    window.__timelines["06-reflection"] = tl;
+  </script>
+</template>
