@@ -75,11 +75,22 @@ below.
 - The moment a shot needs a device type not already used elsewhere in the current episode (a
   chart, a new transition, a lower-third, a kinetic-type effect, anything beyond reusing an
   already-checked pattern).
-- Standing production order: `/thataipm-script-review` → `/thataipm-vo` →
-  **`/thataipm-registry-check`** → (frame authoring) → `/thataipm-resync` (if VO changed after
-  frames already exist) → `/thataipm-assemble` → `/thataipm-distribute`.
+- Standing production order: see `CLAUDE.md` §9 for the full chain — this skill runs at
+  frame-authoring time, after `/thataipm-visual-plan` and `/thataipm-vo`, before
+  `/thataipm-assemble`. (Fixed 2026-08-24: this line used to restate the full order and had
+  drifted a full stage behind `CLAUDE.md` — it predated `/thataipm-visual-plan`'s addition
+  and never got updated. Pointing here instead of restating means it can't drift again.)
 
 ## Steps
+
+0. **Before picking devices, check what this channel has already leaned on too hard.**
+   ```bash
+   node .claude/skills/thataipm-registry-check/scripts/report_catalog_breadth.mjs --docs-root .
+   ```
+   Advisory, not a gate — prints every registry item's real use count across the whole
+   channel history (currently ~12% of the 373-item catalog has ever been installed at all)
+   and flags anything used 3+ times. Read it before step 1 so the variety bias below has a
+   real number behind it, not just a feeling that "we've used this a lot."
 
 1. **Read the real script, then read the WHOLE catalog — this is the primary discovery method,
    not a query.**

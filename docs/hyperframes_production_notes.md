@@ -613,6 +613,34 @@ screen for more than ~4-5 seconds should snapshot-verify the full hold range at 
 before considering the frame done** — this class of bug is otherwise invisible until someone
 actually watches the render.
 
+**New durable pitfall (2026-08-24): a paste-in component windowed to a NON-ZERO offset within a
+longer frame renders completely invisible if the time-offset lives only on the inner clip, not
+the paste-in's own outer wrapper.** Found on `hyperframes-ai-cant-grade-its-own-homework` Frame
+4's `code-terminal-run` mount: it needed to appear only from frame-relative 2.0s-6.3s inside a
+16.11s frame, so the pasted markup was edited to `data-start="2.0"` on the INNER
+`#code-terminal-run-clip` while the OUTER `#f4-ctr-root` (the element carrying
+`data-composition-id`) kept no `class="clip"` and no `data-start`/`data-duration` of its own —
+this mirrors how every zero-offset paste-in in this same episode is structured (root has no
+timing, inner clip spans the full local duration from 0), which is exactly why it looked
+correct by inspection. The engine never revealed the inner clip at all; the whole terminal card
+stayed invisible for the entire frame, confirmed via a real `hyperframes snapshot --at` capture
+(not just `/watch`) and cross-checked against a live GSAP-timeline probe showing
+`window.__timelines['code-terminal-run'].progress()` stuck at 0. This is a DIFFERENT bug from
+the `container-type: size` omission pitfall (that one made a correctly-windowed mount render
+mis-sized/invisible; this one is about WHERE the time-window itself lives) — both can look
+identical from a `/watch` frame (nothing there), so don't stop investigating after fixing one.
+**Fix**: for a paste-in mounted at a non-zero offset within a longer frame, put the windowing
+(`class="clip"`, `data-start`, `data-duration`, `data-track-index`) on the OUTER element that
+carries `data-composition-id` — exactly the same convention a real `data-composition-src` mount
+already uses (see `oscilloscope-trace`'s `#f4-osc` in the same file: `data-start`/`data-duration`
+live on the one mounting element). Reset the paste-in's OWN inner clip back to `data-start="0"`
+spanning its full local duration (matching the original registry source), and give it a distinct
+`data-track-index` from the outer wrapper's — reusing the same index collides and
+`assemble-index.mjs` fails loudly (a same-track time-overlap error), which is a useful tripwire
+if this fix is applied correctly. Any future non-zero-offset paste-in should default to windowing
+the outer element first, not the inner clip, regardless of how the zero-offset paste-ins
+elsewhere in the same episode are structured.
+
 **Second, distinct bug found the same day on `chat-thread`**: its message-arrival pacing math
 uses a hardcoded `var duration = 12` (matching its own `data-composition-duration="12"` demo
 default) to decide when to compress the stagger schedule — completely independent of the host
@@ -831,6 +859,70 @@ each checked separately when they could have been batched). Reserve a full multi
 snapshot sweep for pre-render final verification; a narrow 2-4 frame targeted snapshot is enough
 to confirm a single just-fixed region.
 
+## Standing rule, 2026-08-24: pipeline hardening after a full architecture/bug-history audit
+
+Direct instruction after a full review of every durable pitfall in this file: "fix everything
+that's important... full authority... including removal of dead items." The audit's own finding:
+`pipeline.mjs`'s original 6 hard gates were sound, but the two things that actually catch this
+channel's most common real bugs — a component rendering blank/black/frozen while `hyperframes
+check` reports clean (the dominant failure class in this whole file, ~17 of the ~21 pitfalls
+above), and a render shipped at the wrong speed or not sped up at all (shipped twice) — lived
+only as manual steps, or in a disconnected orchestrator (`CC-Agent`) that no real episode had
+ever actually run through.
+
+**What changed, mechanically:**
+
+- **`check_render_freeze.mjs`** (new) — `ffmpeg freezedetect` directly on the real rendered
+  video, catches a whole-frame hold >2s on actual pixels. `blackdetect` was tried first and
+  dropped after a real test: this channel's own standing visual system (dominant black
+  negative space, small centered devices) makes >95%-black frames the DESIGN on a correctly-
+  rendered frame, not a bug signal — it flagged 7.6s of an already-fixed, `/watch`-verified
+  frame as a false failure. `freezedetect` at ffmpeg's own default noise floor (-60dB) tested
+  clean against that same verified-good render down to a 1.0s hold, so that's what's wired in.
+  Honest scope: catches a whole-frame-static bug, not a single dead device next to an
+  otherwise-moving caption — `/watch` (below) still catches that narrower case.
+- **`registry_blocklist.json` + `check_registry_blocklist.mjs`** (new) — every component named
+  in this file as confirmed broken (`data-chart`, `mk-progress-stat` via `data-composition-src`),
+  elevated-risk (`mk-specs-list`, `grid-card-assemble`), needing a known manual patch
+  (`browser-device-stage`, `chat-thread`'s hardcoded-duration bug), or unreliable with
+  `data-variable-values` at a nested mount (the 8 components in that pitfall above) is now a
+  hard, checked list instead of something someone has to remember to re-read here.
+  `browser-device-stage`'s duration bug shipped a SECOND time specifically because the frame was
+  authored without checking this log first — this closes that exact gap.
+- **Automated 1.1x speedup** (`pipeline.mjs` stage 20/20) — the manual `ffmpeg setpts/atempo`
+  step that shipped at the wrong factor once (1.2 instead of the real 1.1x convention) and was
+  skipped entirely once is now part of the pipeline itself, always producing
+  `renders/video_rushed.mp4` at a verified-correct factor. No manual step left to get wrong.
+- **`check_vo_model.mjs`, `check_audio_levels.mjs`, `check_transition_idempotency.mjs`,
+  `check_device_variety.mjs`, `check_registry_ratio.mjs`, `check_paste_in_wiring.mjs`,
+  `check_raw_urls.mjs`** — all pre-existed (most in the now-archived `CC-Agent` orchestrator,
+  never wired to anything real) or were skill-manual steps; all now run directly from
+  `pipeline.mjs` (or, for `check_raw_urls.mjs`, from `/thataipm-distribute`'s own steps).
+  `check_transition_idempotency.mjs`'s STORYBOARD.md duration regex required a trailing "s" that
+  this episode's own real STORYBOARD.md didn't have — a real false-FAIL caught by testing against
+  live data before trusting it as a gate, fixed to make the suffix optional.
+- **`report_catalog_breadth.mjs`** (new, advisory) — direct instruction, "make sure we leverage
+  hyper frame entire library." Counts real registry-item usage across every logged episode
+  against the full ~373-item catalog (currently ~12%) so "use more of the library" is something
+  checkable before picking devices, not just a remembered bias.
+- **`CC-Agent` archived down to its working checks.** It had grown two things at once: real,
+  individually-correct check scripts, and an orchestrator (state machine, stage-agent contracts,
+  approval tokens, manifests) that git history shows no real episode ever ran through. A
+  half-built parallel QA system sitting unreferenced is worse than not building it — it looks
+  like coverage that isn't there. The orchestrator, its agent contracts, schemas, manifests, the
+  full `rules.json` registry, and the token-based approval gates (built for an *unattended*
+  dispatcher this project doesn't run — see the "Daily/autonomous production automation" note
+  above) moved to `archive/CC-Agent-orchestrator/`, not deleted. See `CC-Agent/README.md` for the
+  full accounting of what moved and why.
+- **Production-order drift fixed**: `thataipm-registry-check/SKILL.md` restated the standing
+  production order and had gone stale by a full stage (missing `/thataipm-visual-plan`, added
+  2026-08-24) since nobody updates six copies of the same list. It now points at `CLAUDE.md` §9
+  instead of restating it.
+
+None of this replaces the mandatory dense `/watch` pass — every new pixel-level check is scoped
+honestly in its own header as catching a specific, common bug shape, not a substitute for
+actually reading the rendered frames.
+
 ## Custom devices built for this channel (added 2026-08-14)
 
 A running log of visual devices hand-built for an @thataipm episode specifically BECAUSE no
@@ -908,6 +1000,24 @@ frame count must appear somewhere in this slug's bullet line(s), tagged one way 
   that component ships in Anton (no `@font-face` declared in this project, same substitution
   already used on prior episodes) and this beat needed a single word in portrait/Inter to match
   the rest of the episode; Frame 7 registry(`cta-close`).
+
+- [2026-08-23] hyperframes-ai-cant-grade-its-own-homework: full-catalog read against all 7
+  script lines before authoring (per the 2026-08-21 discovery rewrite), zero hand-built devices
+  needed. Frame 1 registry(`state-chip-rail`) — literal fit for "every stage lied," a pipeline
+  status rail; Frame 2 registry(`chat-message`) — literal fit for "ask an agent... it will tell
+  you yes," a received bubble replying yes; Frame 3 registry(`ticker-takeover`) — name-reveal
+  beat, ticker locks on "INDEPENDENT VERIFICATION" and promotes to full-frame headline; Frame 4
+  registry(`code-terminal-run`, `oscilloscope-trace`, `success-check`) — three distinct devices
+  for the three real examples (a source-check terminal command, a literal audio-waveform
+  clipping trace, a checkmark that gets struck through as false); Frame 5
+  registry(`camera-scan-gate`) — literal fit for "the supervisor... checked the real files
+  itself," a scan/verify gesture; Frame 6 registry(`titlecard-calm`) — restrained single-line
+  reflection beat; Frame 7 registry(`cta-close`) — reused from a prior episode's Frame 7 (same
+  literal end-card concept, not a variety violation). **`cta-close` has a confirmed pitfall
+  logged above** (renders its own default demo content instead of supplied
+  `data-variable-values` at this nesting depth) — edited its own declared JSON default AND JS
+  fallback constant to the real "Follow for more real AI agent breakdowns" text before ever
+  mounting it, per that entry's mandatory-first-step fix, then verified with a real snapshot.
 
 - [2026-08-21] hyperframes-lead-gen-sales-agent: the first real validation episode for the v2
   visual system, see "Standing visual defaults" above. **Superseded 2026-08-21, second direct

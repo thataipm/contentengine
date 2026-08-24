@@ -1,0 +1,11 @@
+{
+  "utility_devices": [
+    "caption-kinetic-slam",
+    "caption-editorial-emphasis",
+    "simulated-cursor",
+    "yt-camera-move",
+    "press-ripple",
+    "whip-pan-cut"
+  ],
+  "note": "Devices in this list are cross-cutting overlays, camera-move helpers, or transitions -- legitimately reused every frame by design, same as they were in hyperframes-the-caveman-skill. Anything NOT in this list is treated as a content-carrying device (the thing the frame is actually about, e.g. browser-device-stage, terminal-simulator, before-after-wipe, data-chart) and must not repeat across two or more frames in the same episode. Edit this list per real, confirmed cases -- do not add an item here just to make a FAIL go away without checking whether it's genuinely a cross-cutting utility."
+}

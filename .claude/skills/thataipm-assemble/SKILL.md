@@ -1,18 +1,27 @@
 ---
 name: thataipm-assemble
-description: "Run the full HyperFrames build chain for an @thataipm episode in one command: captions build, assemble-index, a static-gap check for the Visual Retention Rule, a registry-usage check, an SFX-presence check, transitions inject, hyperframes check, optional snapshot, render, an audio volumedetect sanity check, and a mandatory /watch pass on the real rendered MP4 before it's considered done. Use after frame edits or a thataipm-resync pass are done and it's time to produce a real MP4. Not for editing frame content or timing."
+description: "Run the full HyperFrames build chain for an @thataipm episode in one command: 20 stages covering a registry blocklist, VO model/level checks, captions build + format checks, assemble-index, transition idempotency, the static-gap check, paste-in wiring, registry usage/variety/ratio checks, SFX presence, transitions inject, hyperframes check, optional snapshot, render, a whole-frame freeze check on the real rendered pixels, volumedetect, and an automated 1.1x speedup with its own verification — plus a mandatory /watch pass on the real rendered MP4 before it's considered done. Use after frame edits or a thataipm-resync pass are done and it's time to produce a real MP4. Not for editing frame content or timing."
 ---
 
-# thataipm-assemble: one command instead of eight tool calls
+# thataipm-assemble: one command instead of twenty tool calls
 
 ## Why this exists
 
 Every episode build ends with the same sequence run by hand: rebuild captions from
 current word timing, reassemble `index.html`, inject transitions, run the
 lint/runtime/layout/motion/contrast check, fix whatever the check finds, snapshot
-if wanted, render, then a manual `ffmpeg volumedetect` to confirm audio levels are
-healthy. This skill chains it into one invocation with a clear stop-on-first-
-failure report.
+if wanted, render, speed it up, then a manual `ffmpeg volumedetect` to confirm audio
+levels are healthy. This skill chains it into one invocation with a clear stop-on-
+first-failure report.
+
+**Rebuilt 2026-08-24** after a full architecture/bug-history audit found this
+pipeline's six original hard gates were sound, but the two things that actually
+catch this channel's most common real bugs — a component rendering blank while
+`hyperframes check` reports clean, and a render shipped at the wrong speed or not
+sped up at all — lived only as manual steps or in a disconnected orchestrator
+(`CC-Agent`) that no episode had ever run through. Every new stage below closes a
+gap with a real, documented, repeat-shipped incident behind it — see
+`docs/hyperframes_production_notes.md` and `CC-Agent/README.md`.
 
 ## Steps
 
@@ -25,42 +34,54 @@ failure report.
    node .claude/skills/thataipm-assemble/scripts/pipeline.mjs \
      --project-dir hyperframes-<episode>
    ```
-   Runs, in order: captions build → assemble-index → **static-gap check** →
-   **registry usage check** → **SFX-presence check** → transitions inject →
-   `npm run check` → render → `ffmpeg volumedetect`. Stops immediately at the
-   first failing step with the command and exit code, so you always know
-   exactly which stage broke.
+   Runs, in order (see `pipeline.mjs`'s own header comment for the full numbered
+   list): **registry blocklist check** → **VO model check** → **VO audio level
+   check** (informational) → caption skin → captions build → caption format/safe-
+   zone checks → assemble-index → **transition idempotency check** → **static-gap
+   check** → **paste-in wiring check** → **registry usage check** → **device
+   variety check** → **registry ratio check** → SFX-presence check → transitions
+   inject → `npm run check` → optional snapshot → render → **render freeze check**
+   → `ffmpeg volumedetect` → **automated 1.1x speedup** → **speedup verification**.
+   Stops immediately at the first failing step with the command and exit code, so
+   you always know exactly which stage broke.
 
-   Flags:
-   - `--no-render` — stop after `check` passes, useful for a fast validate-only
-     loop while iterating on a layout/contrast fix.
-   - `--snapshot` — also run `npm run snapshot` for visual review before
-     rendering.
+   Every new stage above has its own `--skip-*` flag (listed in full in
+   `pipeline.mjs`'s header) for the same reason the original ones do — a real,
+   named exception, not a blanket escape hatch. Two worth knowing up front:
    - `--skip-transitions` — **only** use this on a re-run where timing hasn't
      changed since the last successful transitions inject (e.g. re-rendering
      after a pure visual/color fix). Re-running `transitions inject` on
      already-extended durations double-extends them — if timing changed at all,
-     run `/thataipm-resync` first instead of skipping this step.
-   - `--skip-gap-check` — only use once you've manually confirmed a flagged gap
-     is a false positive (see below) and don't want to re-verify it on every
-     re-run of an otherwise-unchanged frame.
-   - `--skip-registry-check` — only use on a re-run where nothing about the
-     episode's visual devices changed since the last passing run. Don't reach
-     for this just because the check is inconvenient to fix — see step 3.5.
+     run `/thataipm-resync` first instead of skipping this step. (The new
+     transition-idempotency check catches this automatically now, one stage
+     earlier — see below.)
    - `--skip-captions-build` — **use whenever `compositions/captions.html` was hand-built or
      hand-edited** (a custom caption system swapped in from the registry, a manual fix) rather
-     than generated by the channel's default skin template. Without this flag, step 1/8 always
+     than generated by the channel's default skin template. Without this flag, this stage always
      regenerates `captions.html` from scratch and silently overwrites any hand-built version —
      confirmed real: this clobbered an already-scheduled episode's real caption file during an
      unrelated pipeline test (2026-08-20). There's no auto-detection for "this file was hand-
      edited," so it's on you to pass this flag on any re-run of a pipeline whose captions aren't
      the default skin.
-   - `--skip-sfx-check` — only use when an episode genuinely needs zero SFX
-     (rare — this channel's standing convention since sk1 is real whoosh/
-     ui-pop/chime cues on transitions and reveals), and say why in
-     STORYBOARD.md's own notes. Added 2026-08-14 after a full episode
-     (`hyperframes-the-caveman-skill`) rendered and was sent to the user with
-     zero SFX because nothing in the pipeline checked for it.
+
+2.2. **If the registry blocklist check fails**, a component already confirmed broken (or
+   needing a manual patch, or unreliable when passed `data-variable-values` at a nested
+   mount) is wired into a frame. Read the FAIL output — it names the exact file and quotes
+   the real reason from `.claude/skills/thataipm-registry-check/scripts/registry_blocklist.json`.
+   Swap the component for a different registry item, or apply the documented patch, before
+   re-running — don't `--skip-blocklist-check` just to move past it.
+
+2.4. **If the transition idempotency check fails**, a frame's on-disk duration is already
+   extended well beyond one plausible transition — almost always because VO changed and
+   `/thataipm-resync`'s `reset_frame_duration.mjs` wasn't run before this pipeline's own
+   transitions-inject stage ran again. Run resync first, then re-run this pipeline.
+
+2.6. **If the paste-in wiring check fails**, it's flagging the shape of one of the two most
+   common real wiring bugs on this channel (missing base CSS on a paste-in, or windowing
+   placed on the inner clip instead of the outer wrapper) — see the check's own output for
+   which. A clean pass here does NOT prove the content is actually visible, only that
+   neither known bad shape is present — step 5.6's `/watch` pass is still mandatory either
+   way.
 
 3. **If the static-gap check fails**, this is CLAUDE.md's Visual Retention Rule 1
    (no static frame longer than 2s) — and per the 2026-08-13 tightening, the fix
@@ -100,7 +121,19 @@ failure report.
 
 5. **Review the volumedetect output** at the end — healthy range is roughly -18 to
    -22 dB mean, max under -1 dB. Anything silent or clipped means a `/thataipm-vo`
-   line needs redoing.
+   line needs redoing. (A separate, earlier informational check at stage 2.5 already
+   ran this same threshold against the pre-mix VO take alone — this one's against
+   the final mixed video, expect it to differ.)
+
+5.1. **If the render freeze check fails** (right after render, before volumedetect),
+   `ffmpeg freezedetect` found a whole-frame hold longer than 2s on the ACTUAL
+   rendered pixels — the real signature of this channel's most common bug class
+   (a component rendering blank while `hyperframes check` reported clean; see
+   `check_render_freeze.mjs`'s own header for the full list of confirmed real
+   incidents this targets and its honest scope limits). Snapshot the flagged
+   timestamp on the raw composition and confirm by eye whether real content is
+   missing. This does not replace step 5.6's `/watch` pass — it makes that pass
+   faster by catching the common full-blank case automatically first.
 
 5.5. **If only `audio_meta.json` changed since the last render (an SFX swap, a
    volume/offset tweak — no frame HTML edited), skip the full pipeline and use
@@ -122,22 +155,35 @@ failure report.
    the composition HTML genuinely hasn't changed; any visual edit still needs a
    real render.
 
-5.6. **Run `/watch` on the actual rendered MP4 before considering the render done — hard rule,
-   added 2026-08-21, direct instruction.** Not optional, not replaced by `hyperframes snapshot`
-   or `hyperframes check`: both passed clean on `hyperframes-lead-gen-sales-agent` while it still
-   shipped a component rendering 3-4x its authored size and off-canvas, and a two-screenshot
-   crossfade that read as an unreadable double-exposure — both invisible to every mechanical
-   check and only caught by reading real extracted frames from the real MP4 at native
-   resolution. `/watch` also gets you the real transcript alongside the visuals in one pass,
-   which spot-checking with ad hoc `ffmpeg -frames:v 1` pulls doesn't.
+5.7. **Speedup is now automatic.** Stage 20/20 runs the channel's standing 1.1x
+   `setpts`/`atempo` speedup itself right after render, always producing
+   `renders/video_rushed.mp4`, then immediately re-verifies the real ffprobe
+   duration ratio against 1.1x. This closes the exact bug that shipped twice
+   before: a render delivered at its original un-sped length once, and sped up at
+   the wrong factor (1.2 instead of 1.1) once — both were manual-step mistakes
+   that no longer have a manual step to get wrong. Only reach for `--skip-speedup`
+   if an episode genuinely needs a different or no speedup, and say why.
+
+5.8. **Run `/watch` on the actual rendered MP4 before considering the render done — hard rule,
+   added 2026-08-21, direct instruction.** Not optional, not replaced by `hyperframes snapshot`,
+   `hyperframes check`, or the new render-freeze check above: `hyperframes check`/`snapshot`
+   passed clean on `hyperframes-lead-gen-sales-agent` while it still shipped a component
+   rendering 3-4x its authored size and off-canvas, and a two-screenshot crossfade that read as
+   an unreadable double-exposure — both invisible to every mechanical check and only caught by
+   reading real extracted frames from the real MP4 at native resolution. The render-freeze check
+   closes the "renders totally blank" gap specifically; it does not catch a wrong-size or
+   off-canvas component, or a device silently dead next to an otherwise-moving caption — this
+   step still catches everything else. `/watch` also gets you the real transcript alongside the
+   visuals in one pass, which spot-checking with ad hoc `ffmpeg -frames:v 1` pulls doesn't.
    ```bash
-   python3 "${SKILL_DIR}/scripts/watch.py" "renders/<episode>_<timestamp>_rushed.mp4" --detail balanced
+   py "${SKILL_DIR}/scripts/watch.py" "renders/video_rushed.mp4" --detail balanced
    ```
-   (On Windows, `python3` resolves to the Store stub — use the `py` launcher instead: `py
-   "${SKILL_DIR}/scripts/watch.py" ...`.) Read every returned frame path, not a sample of them —
-   this is the same "dense verification, not spot-check" discipline as everywhere else on this
-   channel. If anything looks wrong, fix it in the frame file and go back to step 2, not just
-   step 5.5's remux (a real visual bug needs a real re-render, not an audio-only remux).
+   (`renders/video_rushed.mp4` is now always the exact output filename — stage 20/20 above
+   produces it deterministically, no timestamp guessing. On Windows, `python3` resolves to the
+   Store stub — use the `py` launcher as shown.) Read every returned frame path, not a sample of
+   them — this is the same "dense verification, not spot-check" discipline as everywhere else on
+   this channel. If anything looks wrong, fix it in the frame file and go back to step 2, not
+   just step 5.5's remux (a real visual bug needs a real re-render, not an audio-only remux).
 
 6. **Hand off to `/thataipm-distribute`** once the render looks right.
 

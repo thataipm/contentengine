@@ -260,9 +260,9 @@ on top of the generic global HyperFrames skills. Each is invokable directly (`/t
 etc.) and independently improvable — add findings/fixes to the relevant skill's `SKILL.md` rather
 than re-discovering the same gotcha in a future session.
 
-**Standing production order**: `/thataipm-script-review` → `/thataipm-vo` →
-`/thataipm-registry-check` → (frame authoring) → (if VO changed after frames already existed)
-`/thataipm-resync` → `/thataipm-assemble` → `/thataipm-distribute`.
+**Standing production order**: `/thataipm-script-review` → `/thataipm-visual-plan` →
+`/thataipm-vo` → `/thataipm-registry-check` → (frame authoring) → (if VO changed after frames
+already existed) `/thataipm-resync` → `/thataipm-assemble` → `/thataipm-distribute`.
 
 - **`thataipm-vo`** — generates VO on the correct `eleven_v3` model via a direct ElevenLabs API
   call (the shared `media-use` engine's Python path hardcodes an older model), runs real
@@ -271,23 +271,48 @@ than re-discovering the same gotcha in a future session.
 - **`thataipm-script-review`** — chains `/humanizer`'s draft-audit-final loop with this channel's
   own mechanical gates (zero em/en dashes, runtime estimate, staccato-fragment-run detection)
   plus a proper-terms-restoration check.
+- **`thataipm-visual-plan`** (added 2026-08-24, direct instruction) — runs right after the script
+  passes review, before VO or any frame HTML exists: reads every beat, reads the full registry
+  catalog, and assigns one real device per beat up front, biased toward variety over reusing the
+  same two or three devices out of habit. Exists because a full episode shipped once with roughly
+  half its runtime showing nothing but a caption on bare black — every device had a plausible
+  registry choice, but coverage and wiring were never checked until the user watched the actual
+  video. Also carries the mechanical `check_paste_in_wiring.mjs` lint for the two real wiring bugs
+  that shipped invisible that session (missing base CSS on a paste-in; mount-offset windowing on
+  the wrong element) — a clean pass on that lint is not a substitute for a real dense `/watch`
+  pass, which stays mandatory.
 - **`thataipm-registry-check`** — **hard rule, no exceptions**: build every visual device from
   the registry by default; hand-building is only permitted after a real, logged, per-frame
   registry search confirms no match. `check_registry_usage.mjs` is wired into
   `/thataipm-assemble` as a hard gate — every single frame must be individually accounted for
   (`registry(...)` or `hand-built(...) — <why>`), not just "the episode has one registry item
-  somewhere in it."
+  somewhere in it." `check_registry_ratio.mjs` (95% registry / 5% hand-built budget) and
+  `check_device_variety.mjs` (no content-carrying device repeated across frames) are also
+  wired in as hard gates. `registry_blocklist.json` + `check_registry_blocklist.mjs` remember
+  every component already proven broken (or needing a known manual patch) so the same bug
+  can't ship a third time just because nobody re-read the durable-pitfalls log — also a hard
+  gate. `report_catalog_breadth.mjs` (advisory, run before picking devices) tracks real usage
+  across every episode against the full ~373-item catalog — currently ~12%, per direct
+  instruction to leverage the whole library, not the same handful of devices out of habit.
 - **`thataipm-resync`** — after VO changes, prints every frame's real per-word timeline from
   `audio_meta.json` and mechanically resets each frame's full-span `data-duration` values.
-- **`thataipm-assemble`** — chains captions build → assemble-index → transitions inject →
-  `hyperframes check` → optional snapshot → render → `ffmpeg volumedetect` into one command. **If
-  only `audio_meta.json` changed since the last render** (an SFX swap, no frame HTML edited), use
-  `scripts/remux_audio.mjs` instead of a full render — `npx hyperframes render` has no
-  audio-only mode and recaptures every frame regardless; the remux script rebuilds the mix
+- **`thataipm-assemble`** — a 20-stage pipeline (rebuilt 2026-08-24 after a full architecture
+  audit): a registry blocklist check, VO model/level checks, captions build + format checks,
+  assemble-index, transition idempotency, the static-gap check, paste-in wiring, registry
+  usage/variety/ratio checks, SFX presence, transitions inject, `hyperframes check`, optional
+  snapshot, render, a whole-frame freeze check on the real rendered pixels (`ffmpeg
+  freezedetect` — catches the "component renders blank while every other check passes clean"
+  bug class directly, see `check_render_freeze.mjs`), `ffmpeg volumedetect`, and an automated
+  1.1x speedup with its own verification — no manual ffmpeg speedup step left to get wrong.
+  **If only `audio_meta.json` changed since the last render** (an SFX swap, no frame HTML
+  edited), use `scripts/remux_audio.mjs` instead of a full render — `npx hyperframes render` has
+  no audio-only mode and recaptures every frame regardless; the remux script rebuilds the mix
   directly from `audio_meta.json` and remuxes it onto the existing video with `-c:v copy`, no
   recapture. See `docs/hyperframes_production_notes.md`'s durable-pitfall entry for the real
-  numbers that motivated this.
+  numbers that motivated this. None of the new pixel-level checks replace the mandatory
+  `/watch` pass below — they make it faster by catching the common full-blank case first.
 - **`thataipm-distribute`** — cover still, platform captions with a mechanical distinctness
-  check, git push + URL verification, Zernio scheduling. **Preserves the hard
-  publish-confirmation gate** — states the full post plan and waits for explicit per-episode
-  confirmation before the actual schedule call.
+  check, git push + URL verification (`check_raw_urls.mjs` — real HEAD requests against both
+  raw GitHub URLs, not an ad hoc curl anyone has to remember to run), Zernio scheduling.
+  **Preserves the hard publish-confirmation gate** — states the full post plan and waits for
+  explicit per-episode confirmation before the actual schedule call.

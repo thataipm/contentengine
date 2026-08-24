@@ -68,11 +68,17 @@ not implied by an earlier general approval — confirm per episode.
    re-run until PASS.
 
 4. **Push and verify.** Force-add the episode's `build/*.mp4` + cover PNG despite
-   `.gitignore` (Zernio needs a real public GitHub-raw URL), push, then fetch both
-   raw URLs to confirm they resolve (200, not 404) before scheduling — Zernio
-   can't retry a broken URL later. Untrack these files from git only once Zernio
-   confirms the post as `published` (not just `scheduled`) in a later session,
-   per `CLAUDE.md`'s data-removal practice — never before.
+   `.gitignore` (Zernio needs a real public GitHub-raw URL), push, then run the real
+   gate instead of an ad-hoc curl (this was a hand-typed step before 2026-08-24, now
+   a script — same check, PASS/FAIL instead of eyeballing a status line):
+   ```bash
+   node CC-Agent/checks/check_raw_urls.mjs \
+     --video-url <github-raw-mp4-url> --cover-url <github-raw-png-url>
+   ```
+   Zernio can't retry a broken URL later, so this must PASS before step 5. Untrack
+   these files from git only once Zernio confirms the post as `published` (not just
+   `scheduled`) in a later session, per `CLAUDE.md`'s data-removal practice — never
+   before.
 
 5. **STOP. State the plan, then wait for confirmation.** Before calling
    `automation/schedule_zernio_post.py`, tell the user exactly: which platforms,
