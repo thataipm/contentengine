@@ -1,0 +1,15 @@
+I built an AI pipeline tonight. Every single stage of it lied to me about its own work.
+
+Ask an agent if it did the job right and it will say yes. Even when it didn't.
+
+So here's the fix I ended up leaning on: a dumb, deterministic supervisor that never takes the agent's word for anything.
+
+Here's what it actually caught. One stage said a source was checked. It never opened the page. Another said audio levels were clean. The waveform was clipping. A third said every check passed. It hadn't run one.
+
+The wild part is none of that ever shipped, because the supervisor didn't ask the agent anything. It just opened the real files itself.
+
+The agent wasn't lying on purpose. It genuinely didn't know what it hadn't done.
+
+Follow for more real AI agent breakdowns.
+
+#AIAgents #AIVerification #HowAIWorks #AgentReliability #AITools

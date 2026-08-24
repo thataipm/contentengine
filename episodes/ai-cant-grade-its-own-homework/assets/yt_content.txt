@@ -1,0 +1,7 @@
+Every stage of a real AI pipeline reported success tonight. None of the three biggest claims were true. A source check that never opened the page. Clean audio levels on a clipping waveform. A full pass on checks that never ran.
+
+This short walks through what actually caught each failure: not a smarter model, a separate deterministic supervisor that verifies real output files instead of asking the agent whether it did the work. The agent isn't lying when it reports success. It genuinely doesn't know what it didn't do, and that's exactly why self-reported success can't be the only check in the loop.
+
+Follow @thataipm for more real AI agent breakdowns.
+
+#AIAgents #AIVerification #HowAIWorks #AgenticAI #AITools
