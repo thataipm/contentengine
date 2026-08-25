@@ -29,31 +29,39 @@
 // docs/hyperframes_production_notes.md -- see that file and the CC-Agent/README.md note on
 // what got archived and why.
 //
+// Revised again 2026-08-25, same day: --skip-sfx-check itself got reached for casually
+// mid-session to speed up iteration, and nearly shipped the episode with zero SFX because
+// nothing forced a written reason at the moment the flag was used. Every quality/safety
+// --skip-* flag below (not the routine operational ones) now requires a matching
+// "skip-reason: <tag>: <why>" line in STORYBOARD.md, checked before ANY stage runs --
+// see checkSkipAccountability(). A skip with no recorded reason fails immediately.
+//
 // Usage:
 //   node pipeline.mjs --project-dir hyperframes-<episode> [flags]
 //
 // Flags (each --skip-* has a real reason to exist -- see that stage's own comment below,
-// not a blanket escape hatch):
+// not a blanket escape hatch). Flags marked (accountable) additionally require a
+// "skip-reason: <tag>: <why>" line in STORYBOARD.md or the pipeline refuses to start:
 //   --no-render                       stop after hyperframes check passes
 //   --snapshot                        also run `npm run snapshot`
 //   --skip-transitions                re-run without re-injecting (timing unchanged since last inject)
-//   --skip-gap-check                  static-gap check
-//   --skip-registry-check             registry usage accounting
-//   --skip-sfx-check                  SFX-presence check
+//   --skip-gap-check                  (accountable, tag: gap-check) static-gap check
+//   --skip-registry-check             (accountable, tag: registry-check) registry usage accounting
+//   --skip-sfx-check                  (accountable, tag: sfx-check) SFX-presence check
 //   --skip-caption-skin                caption skin staging
-//   --skip-caption-format-check       caption pill-format + safe-zone checks
-//   --skip-caption-band-check         caption-band collision check
-//   --skip-captions-build             captions.mjs build (use when captions.html is hand-built)
-//   --skip-blocklist-check            registry blocklist (known-broken component/mount combos)
-//   --skip-vo-model-check             VO model recorded in audio_meta.json
-//   --skip-transition-idempotency-check  pre-inject double-extension check
-//   --skip-paste-in-check             paste-in CSS/windowing shape lint
-//   --skip-duration-envelope-check    sub-mount held past native duration check
-//   --skip-svg-mount-risk-scan        dynamic-SVG nested-mount risk scan (warn-only)
-//   --skip-logo-nudge                 logo-asset nudge (warn-only)
-//   --skip-device-variety-check       same content device reused across frames
-//   --skip-registry-ratio-check       90% registry / 10% hand-built budget
-//   --skip-freeze-check               post-render whole-frame freeze detection
+//   --skip-caption-format-check       (accountable, tag: caption-format-check) caption pill-format + safe-zone checks
+//   --skip-caption-band-check         (accountable, tag: caption-band-check) caption-band collision check
+//   --skip-captions-build             (accountable, tag: captions-build) captions.mjs build (use when captions.html is hand-built)
+//   --skip-blocklist-check            (accountable, tag: blocklist-check) registry blocklist (known-broken component/mount combos)
+//   --skip-vo-model-check             (accountable, tag: vo-model-check) VO model recorded in audio_meta.json
+//   --skip-transition-idempotency-check  (accountable, tag: transition-idempotency-check) pre-inject double-extension check
+//   --skip-paste-in-check             (accountable, tag: paste-in-check) paste-in CSS/windowing shape lint
+//   --skip-duration-envelope-check    (accountable, tag: duration-envelope-check) sub-mount held past native duration check
+//   --skip-svg-mount-risk-scan        (accountable, tag: svg-mount-risk-scan) dynamic-SVG nested-mount risk scan (warn-only)
+//   --skip-logo-nudge                 (accountable, tag: logo-nudge) logo-asset nudge (warn-only)
+//   --skip-device-variety-check       (accountable, tag: device-variety-check) same content device reused across frames
+//   --skip-registry-ratio-check       (accountable, tag: registry-ratio-check) 90% registry / 10% hand-built budget
+//   --skip-freeze-check               (accountable, tag: freeze-check) post-render whole-frame freeze detection
 //   --skip-speedup                    skip the automated 1.1x speedup step entirely
 //   --speedup-factor <n>              override the speedup factor (default 1.1, this channel's convention)
 //
@@ -170,12 +178,66 @@ function run(label, cmd, args, cwd, { optional = false } = {}) {
   return true;
 }
 
+// Real incident, 2026-08-25 (hyperframes-your-agent-cant-do-anything): --skip-sfx-check
+// got reached for mid-session, casually, to speed up an iteration loop -- and the episode
+// nearly shipped with zero SFX because nothing forced a WRITTEN reason at the moment the
+// flag was used, only a comment telling a human to remember to write one. The sfx-check
+// stage's own error message already asked for a STORYBOARD.md note; nothing ever checked
+// that note actually existed. This closes that exact loophole for every quality/safety
+// gate in this pipeline, not just SFX: any --skip-* flag on this list requires a matching
+// "skip-reason: <tag>: <why>" line somewhere in STORYBOARD.md, checked BEFORE any stage
+// runs, so a missing reason fails fast instead of quietly shipping a gap. Routine
+// operational flags that don't skip a quality check (--skip-transitions' legitimate
+// re-run case, --skip-speedup, --no-render, --snapshot) are deliberately exempt --
+// accountability is for skipping a SAFETY NET, not for a normal pipeline shape choice.
+const ACCOUNTABLE_SKIPS = [
+  { argKey: "gapCheck", flag: "--skip-gap-check", tag: "gap-check" },
+  { argKey: "registryCheck", flag: "--skip-registry-check", tag: "registry-check" },
+  { argKey: "sfxCheck", flag: "--skip-sfx-check", tag: "sfx-check" },
+  { argKey: "captionFormatCheck", flag: "--skip-caption-format-check", tag: "caption-format-check" },
+  { argKey: "captionBandCheck", flag: "--skip-caption-band-check", tag: "caption-band-check" },
+  { argKey: "captionsBuild", flag: "--skip-captions-build", tag: "captions-build" },
+  { argKey: "blocklistCheck", flag: "--skip-blocklist-check", tag: "blocklist-check" },
+  { argKey: "voModelCheck", flag: "--skip-vo-model-check", tag: "vo-model-check" },
+  { argKey: "transitionIdempotencyCheck", flag: "--skip-transition-idempotency-check", tag: "transition-idempotency-check" },
+  { argKey: "pasteInCheck", flag: "--skip-paste-in-check", tag: "paste-in-check" },
+  { argKey: "durationEnvelopeCheck", flag: "--skip-duration-envelope-check", tag: "duration-envelope-check" },
+  { argKey: "svgMountRiskScan", flag: "--skip-svg-mount-risk-scan", tag: "svg-mount-risk-scan" },
+  { argKey: "logoNudge", flag: "--skip-logo-nudge", tag: "logo-nudge" },
+  { argKey: "deviceVarietyCheck", flag: "--skip-device-variety-check", tag: "device-variety-check" },
+  { argKey: "registryRatioCheck", flag: "--skip-registry-ratio-check", tag: "registry-ratio-check" },
+  { argKey: "freezeCheck", flag: "--skip-freeze-check", tag: "freeze-check" },
+];
+
+function checkSkipAccountability(args, storyboardText) {
+  const missing = [];
+  for (const { argKey, flag, tag } of ACCOUNTABLE_SKIPS) {
+    if (args[argKey] !== false) continue; // not skipped
+    const re = new RegExp(`skip-reason:\\s*${tag}\\s*:`, "i");
+    if (!re.test(storyboardText)) missing.push({ flag, tag });
+  }
+  return missing;
+}
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const pd = args.projectDir;
 
   if (!existsSync(path.join(pd, "STORYBOARD.md"))) {
     throw new Error(`${pd} doesn't look like a faceless-explainer project (no STORYBOARD.md)`);
+  }
+
+  const storyboardText = readFileSync(path.join(pd, "STORYBOARD.md"), "utf-8");
+  const missingReasons = checkSkipAccountability(args, storyboardText);
+  if (missingReasons.length > 0) {
+    console.error(`\n✗ FAILED before running anything -- ${missingReasons.length} skip flag(s) passed with no written reason:`);
+    for (const { flag, tag } of missingReasons) {
+      console.error(`    ${flag} -- needs a line in STORYBOARD.md matching: skip-reason: ${tag}: <why>`);
+    }
+    console.error(`\n  Add the reason line(s) to STORYBOARD.md (anywhere in the file) and re-run. This`);
+    console.error(`  isn't extra process for its own sake -- a skipped quality gate with no recorded`);
+    console.error(`  reason is exactly how this channel's real SFX gap shipped once already.`);
+    process.exit(1);
   }
 
   if (args.blocklistCheck) {
@@ -409,8 +471,9 @@ function main() {
       console.error(`\n✗ FAILED at: 18/24 sfx check -- audio_meta.json has zero sfx cues.`);
       console.error(`  This channel's standing convention is real whoosh/ui-pop/chime cues on`);
       console.error(`  transitions and reveals (established since sk1). If this episode`);
-      console.error(`  genuinely needs none, re-run with --skip-sfx-check and say why in the`);
-      console.error(`  episode's STORYBOARD.md notes -- don't let this go silently missing.`);
+      console.error(`  genuinely needs none, add "skip-reason: sfx-check: <why>" to STORYBOARD.md`);
+      console.error(`  and re-run with --skip-sfx-check (the pipeline checks that line exists`);
+      console.error(`  before running anything -- see checkSkipAccountability above).`);
       process.exit(1);
     }
   } else {
