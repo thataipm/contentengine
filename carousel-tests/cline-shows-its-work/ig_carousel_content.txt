@@ -1,0 +1,11 @@
+Most AI coding agents just edit your files and hope you notice before something breaks.
+
+This one asks first. Swipe through, it's called Cline, and it's sitting at 5 million real installs on the VS Code Marketplace.
+
+Every command it wants to run shows up as a real approval prompt. Every file edit shows up as a diff you can undo from your own editor's timeline. It works in VS Code, JetBrains, or your terminal, and it's not locked to one model.
+
+Free. Open source. No permission it doesn't ask for first.
+
+Comment CLINE and I'll send you the link.
+
+#AIAgents #Cline #AICodingAgent #OpenSource #DeveloperTools
