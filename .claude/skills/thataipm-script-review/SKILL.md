@@ -56,6 +56,35 @@ wording):
    tool's real documented behavior directly instead ("it does X", "the workflow
    handles Y") rather than inventing a fake first-person anecdote to fit the old
    shape.
+
+   **Locked concrete walkthrough shape, 2026-08-27** (fourth reference transcript, a
+   Claude "dynamic workflows" promo, direct instruction "save this format as a standard
+   practice"): default beat 4 to this more specific shape rather than a generic
+   mechanism description —
+   (a) name it plainly right after the hook,
+   (b) an explicit transition line ("Here's what it means in practice"),
+   (c) ONE concrete named scenario, not an abstract description ("Say you need to
+   migrate a codebase from React to Next.js" / "Say you're hunting a bug in a codebase
+   you've never seen"),
+   (d) an explicit old-way-vs-new-way contrast in the same beat (state the old cost
+   plainly — time, single point of failure — then the new mechanism),
+   (e) one line generalizing to other real use cases,
+   (f) a real, VERIFIED practical how-to (exact invocation phrasing or UI steps) — check
+   the actual product/repo for the real activation method before writing this line;
+   don't invent plausible-sounding syntax. This is also where a stat is most likely to
+   get contaminated from a sibling feature (a real incident: a "~60% smaller context"
+   figure that belonged to a different part of the same tool got nearly used for a
+   feature whose own README explicitly disclaims a universal rate — always re-confirm
+   a stat is attributed to the SPECIFIC thing beat 4 is naming, not just the product it
+   ships inside).
+   Still closes on this channel's own locked comment-keyword CTA regardless of what the
+   reference clip itself does.
+
+   **Hook nuance reconfirmed same round**: naming the subject in word one isn't enough
+   if the actual PROBLEM lands in a later clause of the same sentence — front-load the
+   problem into the hook's first clause itself ("Claude Code crams everything into one
+   conversation," not "Claude Code makes one agent do everything, and that's why...").
+
 5. **A second escalation beat mid-script** ("it doesn't stop there", "but that's not
    even the impressive part", "this is where it gets crazy") that resets attention
    before the biggest reveal, instead of one flat build to a single climax.

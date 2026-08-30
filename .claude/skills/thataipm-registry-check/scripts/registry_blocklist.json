@@ -53,7 +53,12 @@
       "headline-slam",
       "browser-device-stage",
       "chat-thread",
-      "constellation-hub"
+      "constellation-hub",
+      "radial-surround",
+      "state-chip-rail",
+      "typed-prompt",
+      "cta-lockup",
+      "text-shimmer"
     ]
   }
 }

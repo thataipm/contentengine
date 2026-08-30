@@ -1,0 +1,15 @@
+Claude Code cramming everything into one giant conversation was never going to scale, and apparently someone finally fixed it.
+
+There's a skill called cavecrew that splits Claude Code into three separate agents. One just hunts for the bug. One just makes the fix. One just reviews it. None of them will touch the other's job.
+
+Say you're chasing a bug in code you've never opened before. Normally Claude Code reads a dozen files trying to find it, and every one of those files sits in your context whether you needed it or not.
+
+Hand that search to the investigator instead and it comes back with only the file and the line number that actually matters.
+
+Same story for the fix. The builder makes a small, one or two file change and flat out refuses if the scope creeps past that. The reviewer only reviews, flags what it finds by how bad it is, and never edits a single line.
+
+Best part, you don't even need a slash command. Just say "use cavecrew" or "delegate to subagent" in plain English and Claude Code spins up the right one for the job.
+
+Comment CREW and I'll send you the link.
+
+#ClaudeCode #AIAgents #DeveloperTools #AICoding #BuildInPublic

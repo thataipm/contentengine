@@ -1083,6 +1083,203 @@ start, since this project now has two independently-confirmed cases (this one, p
 `data-chart`/`mk-progress-stat` pattern) of nested mounts silently dropping most of their own
 subtree in the real render.
 
+## Durable pitfall: this channel's caption-band/safe-zone rules are Instagram-vertical-specific, not general -- skip them (with a logged reason) on a landscape episode, don't force-fit the math
+
+Found 2026-08-26 building `hyperframes-7-skills-claude-code-wasnt-enough`, this channel's
+first landscape (1920x1080) episode, built for YouTube long-form. Both
+`check_caption_band_collision.mjs`'s 68-84% band and `check_caption_safe_zone.mjs`'s
+bottom-margin math exist specifically because Instagram Reels overlay real UI chrome
+(caption/username/audio row, the right-edge like/comment/share/save icon column) on top of
+the bottom ~300px of a 1080x1920 vertical video. A 1920x1080 YouTube video has no
+equivalent overlay in that position -- there's no platform chrome sitting on top of the
+frame the same way. Running either check against a landscape episode would be testing the
+video against a constraint from a completely different platform's UI, not a real
+constraint of the format actually being produced for.
+
+**Fix**: use the skip-reason accountability gate (`pipeline.mjs`'s
+`checkSkipAccountability`) to skip both checks on a landscape episode, with the reason
+written into STORYBOARD.md, same as `hyperframes-7-skills-claude-code-wasnt-enough` does.
+Do not attempt to "port" the 68-84%/bottom-margin math to landscape dimensions -- there is
+no real YouTube-chrome-overlay constraint to port it to. If a landscape-specific safe-zone
+concern ever does surface (e.g. YouTube's own end-screen element placement in the last
+5-20s, which DOES occupy real screen space), that would be a genuinely new check built for
+that real constraint, not a reuse of the Instagram one.
+
+## Durable pitfall: multiple paste-in components in one frame need ONE consolidated `<script>` tag, not one per component, or `check_static_gaps.mjs` silently checks the wrong one (2026-08-26)
+
+Real bug on `hyperframes-7-skills-claude-code-wasnt-enough`: pasting a registry component's full
+snippet (its own `<script src="gsap">` + `<script>(iife)</script>` pair, copied verbatim from the
+standalone registry file) directly into a frame produces a file with MULTIPLE `<script>` tags —
+one pair per paste-in, plus the frame's own outer script. `check_static_gaps.mjs`'s frame-duration
+match is `text.match(/<script>([\s\S]*?)<\/script>/)` with **no `/g` flag**, so it only ever reads
+the FIRST `<script>...</script>` in the file — the first pasted-in component's own internal
+timeline, not the frame's own outer `tl`. Every one of the frame's own (fully literal, real,
+already-correct) caption/tag tweens were invisible to the checker; it reported one giant
+0-to-full-duration gap on 7 of 9 frames, indistinguishable at a glance from a genuinely broken
+frame. Two-frame control group (03-humanizer, 08-office-skills — no paste-ins, one script tag)
+reported real, specific, actionable per-gap output immediately, which is what made the pattern
+obvious.
+
+**Fix**: strip every paste-in's own `<script src="...">` tag (the mount runtime already provides
+a global `gsap` — confirmed by every real reference frame using this convention already never
+including a src tag), and merge ALL inline script bodies — every paste-in's own IIFE plus the
+frame's own outer script — into ONE `<script>` tag per frame, in document order. Each paste-in's
+IIFE is already function-scoped, so simple concatenation is safe: no shared top-level
+`const`/`let`/`var` collides across them. This is also the shape every already-working reference
+frame from other episodes used (e.g. `hyperframes-ai-cant-grade-its-own-homework`'s `01-hook.html`
+paste-in) — the multi-script-tag shape only ever appeared when copying a component's ENTIRE
+original file verbatim instead of just its logic.
+
+## Durable pitfall: paste-in windowing (`class="clip" data-start/data-track-index`) belongs on the element carrying `data-composition-id`, not its inner `-clip` descendant (2026-08-26)
+
+`check_paste_in_wiring.mjs`'s own "Check 2" names this directly, but it's easy to get backwards
+by analogy with `assemble-index.mjs`'s flat-timeline model: EVERY `class="clip"` element in a
+frame — regardless of DOM nesting depth — shares ONE flat, frame-absolute time/track space for
+overlap-checking purposes (confirmed real: a paste-in's own internal `-clip` div left at its
+original relative `data-start="0"`/`data-track-index="0"` collides with the frame's own full-span
+background layer, which also legitimately owns track 0 from time 0). The instinctive fix — move
+the real absolute `data-start`/`data-track-index` onto that inner `-clip` div, since it's the one
+whose class literally is `clip` — is exactly backwards. The correct shape: add
+`class="clip" data-start="<absolute>" data-track-index="<free lane>"` to the OUTER element that
+carries `data-composition-id` (the mount root itself, e.g. `#f2-ctr-root`), and reset the inner
+`-clip` descendant back to `data-start="0"` on a different free track (still needs its OWN
+distinct track if multiple paste-ins share a frame, so their local-zero windows don't collide
+with each other or the frame's own literal-time elements sitting at t=0). Get this backwards and
+`check_paste_in_wiring.mjs` fails with the exact message quoting which element and where to move
+it — read that message literally, it names the correct target.
+
+## Durable pitfall: a plain-object GSAP tween target (`gsap.to({value:0}, {...})`) trips `hyperframes check`'s `unscoped_gsap_selector` rule under a generic, non-diagnostic label (2026-08-26)
+
+Real, reproducible on THIS channel's install of `decline-chart` and `mk-usage-arc` (both official
+registry components, unmodified until this fix): each drives a derived value (a chart's progress,
+an arc's percentage) via the common GSAP pattern `var proxy = {value: 0}; tl.to(proxy, {value: 1,
+onUpdate: () => /* write proxy.value into several real DOM properties */})`. `hyperframes check`'s
+lint flags this as `unscoped_gsap_selector`, quoting a synthetic, non-literal label (`"dwell/hold"`
+seen twice, `"proxy → style.opacity"` seen once) that does NOT appear anywhere in the source —
+confirmed by exhaustive grep across the raw file, the assembled `index.html`, and the original
+registry source. The label is the tool's own internal placeholder for "a tween target that isn't a
+DOM element or a CSS-selector string," not a real selector it found; the fix hint ("scope the
+selector") is nonsensical for a plain-object target, another tell that this is a heuristic
+misclassification, not a real cross-composition-bleed risk (closures already keep these targets
+private — the underlying concern the rule exists for doesn't actually apply here).
+
+**Real fix, applied to both `decline-chart.html` and `mk-usage-arc.html`'s installed copies**:
+replace `var proxy = {value: 0}; tl.to(proxy, {value: end, onUpdate: () => useProxy(proxy.value)})`
+with a tween that targets a REAL DOM element already in scope (e.g. the value-display element
+itself) and reads the tween's own eased position via `this.progress()` inside a plain `function` —
+never an arrow function, which doesn't bind `this` — onUpdate: `tl.to(realElement, {duration, ease,
+onUpdate: function () { useValue(this.progress() * end); }})`. Same visual result, zero behavior
+change, and the lint clears. `code-terminal-run`'s caret-blink (`var blink = {p:0}; tl.to(blink,
+{p: ..., onUpdate: () => caretEl.style.opacity = Math.sin(blink.p) >= 0 ? "1" : "0"})`) hit the
+same rule and was fixed the same family of way (a deterministic `tl.set` loop landing hard on/off
+opacity values at each half-period, no proxy object at all) — but ALSO independently flagged
+`gsap.set(outputElements, {opacity: 0})` (an ARRAY of real DOM nodes passed directly as a GSAP
+target) under the identical rule; converting that one line to `outputElements.forEach(el =>
+gsap.set(el, {...}))` did not clear it, and after a full source audit found no further plain-object
+or array targets anywhere in the component, this specific instance was left unresolved and the
+component was swapped out of the episode entirely instead of continuing to guess against an
+opaque, non-literal-backed heuristic — see the schema-vocabulary log's 2026-08-26 entry for
+`hyperframes-7-skills-claude-code-wasnt-enough`. If a future episode hits the exact same message on
+`code-terminal-run` again, treat it as a known open case, not a new bug to re-diagnose from
+scratch.
+
+## Durable pitfall: a frame file with sibling `<template data-slot="...">` tags for a paste-in's custom slot content can make `hyperframes check`'s sub-composition validity check misidentify the frame's own root — remove the slot templates rather than debug the parser (2026-08-26)
+
+`browser-device-stage`'s own documented slot convention (`<template data-slot="browser-device-
+stage-screen">`, placed at "host document level" per its own header comment) produced a real,
+reproducible `root_missing_composition_id` + `root_missing_dimensions` error pair from `hyperframes
+check` when two such slot templates sat as siblings inside the frame's own outer `<template
+data-composition-id="...">` wrapper — even though the frame's own `#root` div, with fully correct
+`data-composition-id`/`data-width`/`data-height`, was right there as a normal sibling after them.
+Confirmed NOT about nesting depth, NOT about the paste-in's own `class="clip"` windowing attributes
+(both were independently ruled out by direct test), and NOT reproducible with a control file that
+had the same two elements as plain non-`<template>` divs with identical content — only reappeared
+once they were genuine `<template>` tags again. The tool's internal `checkSubCompositionUsability`
+re-wraps and re-parses the frame's inner content through its own lightweight HTML parser twice
+(`compDoc.querySelector("template")` → `.innerHTML` → re-parse), and something in that double
+round-trip loses track of `data-composition-id` specifically when the content contains additional
+sibling `<template>` elements — root cause not fully isolated within a reasonable time budget, but
+the trigger (sibling slot `<template>` tags) is now confirmed and reproducible. **Practical fix**:
+don't use the custom-slot-content mechanism for `browser-device-stage` (or any component with the
+same "caller templates at host document level" convention) inside a `hyperframes-<slug>` episode
+frame — let it render its own default token-styled skeleton screens (still a real, working device,
+just without the caller's custom screen content) rather than risk this failure mode. If a future
+episode genuinely needs the custom-slot content badly enough to be worth more investigation time,
+start by bisecting whether ANY sibling `<template>` (not just `data-slot`-flavored ones) triggers
+it, using a minimal reproduction file outside a real episode.
+
+## Durable pitfall: a full-length, many-paste-in render can genuinely exceed `hyperframes render`'s default 45s per-composition player-ready timeout under real multi-worker load — raise `--player-ready-timeout`, don't assume a content bug (2026-08-26)
+
+Real, confirmed on `hyperframes-7-skills-claude-code-wasnt-enough` (this channel's first full-
+length episode, ~40+ real paste-in/registry mounts across 9 frames, 5 parallel Chrome capture
+workers): two consecutive full renders both completed with `[WARN] ... warningCodes:
+["sub_timeline_readiness_timeout"]` / `Sub-composition timelines did not become ready within
+45000ms`, and specific compositions (`mk-usage-arc`, `number-wheel`, `browser-device-stage`)
+visibly mis-rendered in the ACTUAL video — `mk-usage-arc`'s gauge rendered pinned to the
+top-left corner instead of its real inline-styled position, `number-wheel`'s ticker rendered
+completely invisible, `browser-device-stage`'s entire device chrome vanished ~9s into a 27s
+mount with only the `simulated-cursor` overlay surviving. All three looked like real content
+bugs (missing CSS, bad positioning) and `mk-usage-arc`'s CSS genuinely WAS missing at first —
+but after fixing that, the SAME top-left-corner mis-position persisted in a THIRD full render.
+The decisive test: `npx hyperframes snapshot . --at <timestamp> --timeout 60000` (a single
+synchronous page load, no parallel-worker race) rendered the exact same composition PERFECTLY
+positioned and styled — proving the content/CSS was correct and the bug was a genuine capture-
+time race under multi-worker load, not fixable by editing HTML/CSS at all.
+
+**Real fix**: `hyperframes render` has a dedicated flag for exactly this —
+`--player-ready-timeout <ms>` (default 45000; env `PRODUCER_PLAYER_READY_TIMEOUT_MS`) — "Timeout
+in ms for the composition player to become ready. Increase for complex compositions on slow
+hardware." A full-length episode with dozens of real registry mounts competing for capture
+resources across parallel workers is exactly the "complex composition" case this flag exists
+for. Bump it (this episode used 180000, 4x default) and re-render before spending any more time
+debugging positioning/visibility on a component whose snapshot already proves it renders
+correctly in isolation. Two adjacent flags exist for the same class of "heavy composition on this
+machine" problem and are worth knowing: `--browser-timeout` (Puppeteer's page.goto navigation
+timeout, default 60s — a DIFFERENT budget than player-ready) and `--protocol-timeout` (CDP
+protocol timeout, default 5 min). **Diagnostic order for a "component X isn't rendering right in
+the real render" bug going forward**: (1) re-read the component's actual embedded CSS/markup for
+a real content bug first (this DID catch a genuine missing-CSS bug here), (2) if content looks
+correct, snapshot that exact timestamp in isolation before assuming the content fix didn't work —
+a snapshot mismatch against the full render is the tell that this is a render-timing issue, not a
+content one.
+
+## Known unresolved issue, shipped anyway per direct instruction: `browser-device-stage`'s device chrome vanishes ~9s into a 27s mount and never returns (2026-08-26)
+
+Confirmed real and NOT a capture race (a `hyperframes snapshot` at the exact timestamp, single
+synchronous load, shows the same empty result) across three full render attempts on
+`hyperframes-7-skills-claude-code-wasnt-enough` Frame 6, even after `--player-ready-timeout
+180000` (4x default) — the SAME `sub_timeline_readiness_timeout` warning fired at the SAME
+elapsed-wait length every time, meaning something is never signaling ready at all, not just
+slow. Real symptom: the browser chrome (settled in correctly, confirmed via snapshot at
+mount-relative ~3s) is completely gone by mount-relative ~9s and stays gone through the
+19.46s `swap_at` and to the end of the 27.2s mount — narration, captions, and the
+`simulated-cursor` overlay (a separate paste-in riding the SAME host timeline) keep running
+normally throughout, so this is specific to `browser-device-stage`'s own internal timeline/DOM,
+not a frame-wide failure. Working theory, NOT confirmed: this is the longest single paste-in
+mount duration used anywhere on this channel to date (27.2s vs. a ~10.83s prior max for
+count-up) and the render engine's own readiness-retry logic may re-run the component's mount
+IIFE a second time after deciding the first attempt didn't signal ready fast enough — since
+`browser-device-stage`'s init does a synchronous `gsap.set(stage, {opacity: 0, ...})` OUTSIDE
+its own `tl` (matching the exact "runs immediately, not on a timeline seek" pattern that would
+explain a one-way, permanent hide with no error and no visual glitch), a second real IIFE
+execution would silently re-hide the stage while the original (visually working) timeline
+reference is orphaned. Not verified — the fix this implies (split one long mount into several
+shorter ones, all under roughly the same duration ceiling every other working paste-in on this
+channel has stayed under) was NOT attempted this session per direct instruction ("ship as-is,
+fix later" — the cost of another ~20-25 min render cycle to test an unconfirmed theory wasn't
+judged worth it against an already very long session). **If revisiting**: try the split-mount
+approach first; if that doesn't reproduce the failure, the duration theory holds and the fix is
+mechanical (duplicate the paste-in block, unique composition-id/timeline-key/track per instance
+per the collision durable-pitfall above, cut instead of `swap_at` between them).
+
+Also confirmed same session: `mk-usage-arc`'s percentage counter (`.mk-arc-num`) stays frozen
+at its initial value through its whole mount, even after switching from an `onUpdate +
+this.progress()` read to the same deterministic `tl.set`-per-frame-step technique that fixed
+`count-up`'s identical symptom — root cause not found in the time available (structure and
+selector both checked correct). Minor in practice: the surrounding caption already states the
+real percentage in text, so the number is redundant, not the only place the fact appears — left
+as a known cosmetic gap rather than chasing a second unconfirmed theory in the same session.
+
 ## Custom devices built for this channel (added 2026-08-14)
 
 A running log of visual devices hand-built for an @thataipm episode specifically BECAUSE no
@@ -1136,6 +1333,112 @@ target — `screenshot(...)` and `hand-built-bug-workaround(...)` are exempt fro
 
 **Entries (post-tightening, full per-frame format):**
 
+- [2026-08-27] hyperframes-cavecrew-subagents: portrait short (60s, 7 lines). Full catalog read
+  (372 items) against all 7 script beats before picking, biased toward variety per the standing
+  bias -- no registry item repeated across frames (the one intra-frame repeat, Frame 5's two
+  typed-prompt mounts, is the explicitly-fine same-literal-concept case, two real trigger
+  phrases). Frame 1 registry(`radial-surround`) -- "one agent" center card with 3 chips
+  (Investigator/Builder/Reviewer) assembling and converging, literal fit for "splits one agent
+  into three." Frame 2 registry(`code-scroll`) -- fixed 1920x1080 block, fit-scaled (not
+  cover-cropped, unlike halftone-field's use elsewhere -- cropping a code editor's sides would
+  cut real text) to a 1080x608 device card for "reads a dozen files hunting a bug." Frame 3
+  registry(`code-highlight`) -- same fit-scale mount, highlight band for "just the file and line
+  numbers that matter." Frame 4 registry(`code-diff`) for the builder's surgical edit (same
+  fit-scale block pattern) plus registry(`state-chip-rail`) for the reviewer's severity flags
+  (Low/Medium/High chips, badge on High) -- two distinct devices in one frame for two distinct
+  sub-beats (builder, then reviewer), not a repeat. Frame 5 registry(`typed-prompt`) x2 -- "use
+  cavecrew" and "delegate to subagent," the real verified trigger phrases (no slash command
+  exists; confirmed against the actual cavecrew README before writing this beat, alongside
+  catching a contaminated 60%-context stat that belongs to a sibling caveman feature, not
+  cavecrew -- excluded). Frame 6 registry(`text-shimmer`) -- single specular sweep on the closing
+  reflection line. Frame 7 registry(`cta-lockup`) -- canonical action-line + capsule + microcopy
+  CTA lockup, comment-keyword close. `grid-card-assemble` was the first candidate for Frame 1 (3
+  cards from one) but is on `registry_blocklist.json`'s elevated_risk list (confirmed blank in 3
+  real renders) -- swapped to `radial-surround` before wiring, per the blocklist's own
+  landmine-avoidance purpose. code-scroll/code-highlight/code-diff are untested on this channel's
+  pipeline (not yet on the blocklist either way) -- flagged here for whoever hits them next: if
+  any renders blank, log it to `registry_blocklist.json` immediately, don't just fix it locally.
+  **Real bug hit and fixed this episode, add to the
+  data_variable_values_unreliable_at_nested_mount list**: every one of the 5 elastic components
+  above (`radial-surround`, `state-chip-rail`, `typed-prompt` x2, `text-shimmer`, `cta-lockup`)
+  is mounted TWO levels deep (index.html -> frame file -> component file) -- exactly the
+  known-broken depth. A real snapshot at t=3.33s on Frame 1 confirmed it directly:
+  `radial-surround` rendered its stock demo content ("Your team" /
+  Docs,Tickets,Dashboards,Inbox,Chat,Sheets) despite a correct `data-variable-values` attribute
+  on the host. Fixed the way the list's own note prescribes -- edited each installed component
+  file's own JSON schema default AND JS fallback constant directly instead of relying on the
+  attribute. Since two `typed-prompt` mounts in Frame 5 need DIFFERENT baked text ("use
+  cavecrew" vs "delegate to subagent") and baking defaults into one shared file would make both
+  mounts show the same string, forked a second copy
+  (`compositions/components/typed-prompt-2.html`, distinct internal `data-composition-id` too)
+  rather than fighting the passthrough bug further. Verified with real snapshots (not just the
+  check's informational overflow note) at representative timestamps across all 7 frames -- every
+  baked default now shows correctly. Add `radial-surround`, `state-chip-rail`, `typed-prompt`,
+  `cta-lockup`, `text-shimmer` to the affected-components list below; this confirms the bug is a
+  real two-level-nesting engine characteristic, not specific to the 8 components already logged.
+
+- [2026-08-26] hyperframes-7-skills-claude-code-wasnt-enough: this channel's first landscape
+  (1920x1080) full-length (7-8 min) episode — "full treatment" visual density (every registry
+  device paired with hand-built connective beats so no >2s static hold survives the frames'
+  33-83s real durations, per direct instruction). Frame 1 registry(`radial-surround`) — Claude
+  Code center card with 4 real-gap chips cued to real word timestamps, close-in convergence —
+  plus registry(`count-up`) for the "Seven of them" reveal, plus hand-built(gap-fix-ship 3-node
+  pipeline) for the "someone builds the fix" escalation — catalog checked, no pipeline/flow item
+  matched this specific 3-beat "hit a wall / fix built / shipped free" shape as well as a plain
+  hand-built node row. Frame 2 registry(`number-wheel`) — rolling token-cost ticker;
+  registry(`mk-usage-arc`) — 65% tokens-cut gauge; registry(`decline-chart`) — 33% fewer input
+  tokens decline; hand-built(bordered kinetic name card) for the "caveman" skill-name reveal —
+  originally `code-terminal-run` (a real, checked, working registry component), swapped out
+  same day after it (and, independently, `mk-usage-arc`'s `mkArcIn` helper and `decline-chart`'s
+  own progress-object tween) tripped `hyperframes check`'s `unscoped_gsap_selector` rule on a
+  plain-object GSAP tween target every one of them used internally; the `mk-usage-arc`/
+  `decline-chart` instances were fixed in place (tween a real DOM element and read
+  `this.progress()` in `onUpdate` instead of a plain `{value: 0}` proxy object — see both
+  files' own source, already patched this episode), but `code-terminal-run` kept tripping the
+  same rule under a generic, non-diagnostic "dwell/hold" label pointing at no resolvable literal
+  source text even after the same class of fix and a full source audit; swapped to a hand-built
+  card (same visual pattern as Frame 4's skill-creator name reveal) rather than keep guessing at
+  a tool-internal heuristic. Plus
+  registry(`count-up`) for the 101,000-star reveal. Frame 3 registry(`before-after-wipe`) — AI
+  commit message vs. humanized commit message comparison, real wipe-reveal. Frame 4
+  registry-block(`hw-pipeline`, data-composition-src, relabeled its hardcoded node text from the
+  block's own generic "Idea/Record/Shine!" demo copy to "Trigger/Structure/Skill!" to match the
+  skill-creator scaffold narrative — the file is this project's own local copy, not shared, so
+  editing its CONFIG in place is safe), surrounded by this channel's standard plain-caption
+  connective narration (not counted as a separate device — same convention as every prior
+  episode's captions, not a chart/pipeline/terminal-class device the registry-first rule targets).
+  Frame 5 registry(`tracing-beam`) — names the three cavecrew
+  subagents (Investigator/Editor/Reviewer) — swapped in for `constellation-hub`, which the
+  blocklist below already confirms hard-broken for nested mounts; plus hand-built(context-bar
+  fill/drain + file-tile pile) for the "12 files dumped into context" vs. "just 2 file:line refs"
+  contrast beat — catalog checked, nothing in the data-viz category models a context-window
+  fill/drain metaphor as directly as a plain bar. Frame 6 registry(`browser-device-stage`) with
+  a custom login-form screen slot + success-screen swap (`swap_at`), plus registry
+  (`simulated-cursor`) overlay choreographed to navigate/click/type/submit — the actual
+  Playwright MCP demo beat. Frame 7 registry(`beat-timeline`) — Planning/Architecture/
+  Implementation phase reveal; plus registry(`count-up`) again for the 52,000-star reveal (same
+  literal GitHub-star-count concept as Frame 2/Frame 1's "seven", not a habit-reuse — see Rule
+  1's variety bias, which explicitly allows this). Frame 8 hand-built(3 file-format cards:
+  Word/PowerPoint/Excel, real product colors) — catalog checked (`document file type icons
+  reveal grid word excel powerpoint export`), closest hits were generic reveal transitions
+  (`stagger-lattice`, `caption-clip-wipe`, etc.), none built for content-specific format icons;
+  `mk-specs-list` was considered and explicitly rejected for this frame instead of Frame 8's
+  original plan — see the blocklist note below, this avoids the same confirmed-risky
+  data-composition-src mount class as two already-blank blocks rather than gambling an
+  untested case on a first-of-its-kind full-length render. Frame 9 registry(`count-up`) a third
+  time — deliberate bookend to Frame 1's opening "Seven of them," 0->7 again over "Seven real
+  problems, seven real people" — plus registry(`cta-lockup`) for the closing comment-keyword CTA.
+  Registry blocklist checked before wiring (2026-08-26): `constellation-hub` (hard-blocked,
+  confirmed nested-mount failure) and `grid-card-assemble` (elevated-risk, blank 3x) were both in
+  the original device plan and swapped out — `tracing-beam` and (for the ORIGINAL Frame 8 plan)
+  `mk-specs-list` respectively — before any wiring happened. `mk-specs-list` was then itself
+  dropped from the final plan (see Frame 8 above) once its blocklist entry was reread closely:
+  "same mount class as the two confirmed-blank blocks above... never actually render-tested" is
+  a real risk on a first-of-its-kind long-form render, not worth gambling one frame's own
+  render just to avoid a quick hand-built fallback. `browser-device-stage`'s blocklist entry
+  (claims a hardcoded `var duration` constant) was checked against the actually-installed file,
+  which already reads `root.dataset.duration` correctly — concluded fixed upstream since the
+  entry was written, used as planned.
 - [2026-08-22] hyperframes-ai-took-over-my-browser: Frame 1 registry(`toggle-flip`,
   `char-slam-explode`, `simulated-cursor` paste-in); hand-built(`radial-burst`) — established v2
   visual-system custom device (registry-checked gap already confirmed and logged under

@@ -1,0 +1,5 @@
+cavecrew turns Claude Code into a real team: an investigator that only locates bugs (file and line, nothing more), a builder that only makes small scoped edits and refuses anything bigger, and a reviewer that only flags issues by severity and never touches the code. No slash command needed, just say "use cavecrew" and it routes the work itself.
+
+Comment CREW and I'll send you the link.
+
+#ClaudeCode #AIAgents #Cavecrew #Coding #AIAutomation
