@@ -210,7 +210,14 @@ forward, learned from what actually happened on that build:
    was in the fix/reconciliation rounds after the builds, which are NOT subject to that
    constraint and should default to direct edits.
 
-## Standing visual defaults (2026-08-21, v2 system — current)
+## Standing visual defaults (2026-08-21, v2 system — RETIRED 2026-08-31)
+
+**Superseded 2026-08-31 by visual system v3 "Assembly"** (direct instruction, after a real
+3-direction bake-off in `hyperframes-visual-directions/`) — see `CLAUDE.md`'s "Standing visual
+system v3" section for the current live palette (single electric-blue accent `#3AD1FF`, bold
+geometric sans + JetBrains Mono, status-pill motif, full black ground with no grid). This
+section's v2 detail stays below as historical record, same "kept for history" treatment v2 itself
+gave the 2026-08-13 palette it replaced. Do not build a new episode against the v2 detail below.
 
 **Retired**: the 2026-08-13 cream-ground/no-grid palette (light theme, purple/green/orange/blue
 accent rotation, "no grid texture" rule). Fully replaced 2026-08-21 by direct instruction ("apply
@@ -646,6 +653,116 @@ same transformed wrapper div. **Any future episode holding a registry-mounted pr
 screen for more than ~4-5 seconds should snapshot-verify the full hold range at full resolution
 before considering the frame done** — this class of bug is otherwise invisible until someone
 actually watches the render.
+
+**Third confirmed instance (2026-08-30), tighter threshold than previously observed:**
+`hyperframes-notes-into-a-podcast` Frame 3's `comparison-split` mount (originally 8.0s) went
+fully invisible 3.8-4.2s after its own `data-start`, confirmed via a real dense snapshot sweep
+(visible and correct at 12.5-15.0s absolute, gone by 15.6s, well before its own scripted
+`OUT_BASE` fade which shouldn't start until ~7.5s local time). This is the SAME break point
+tracking the mount's own start time, same working fix (cap the mount short, hand-build the
+remainder) as the `browser-device-stage` case above — but confirms the real safe threshold is
+narrower than "~4-5s," closer to ~3.5s. **Revise the rule of thumb: cap any live nested mount at
+3.5s, not 4-5s, unless a fresh snapshot sweep on that specific component confirms it holds
+longer.** Fixed here by capping the mount to 3.5s and hand-building a plain-CSS continuation
+(two avatar circles + an animated waveform, no nested mount) for the remaining runway.
+
+**Fourth confirmed instance (2026-08-31), caught by real-frame verification before shipping:**
+same episode's Frame 6 `spring-pop` mount, authored at 4.55s (5.4s to the frame's 9.95s end) went
+fully invisible (a plain black box, no badge/dot/text) by real frame pull at 9.011s local time --
+3.611s into the mount, again just past 3.5s. Found via dense `ffmpeg -ss` frame extraction
+directly from the real rendered MP4 across the whole 47.2s episode (not `hyperframes snapshot`),
+per this episode's own standing rule. Fixed the same way: capped the mount to 3.5s (5.4-8.9s) and
+hand-built a static plain-CSS pill (dot + label, matching `spring-pop`'s settled look) for the
+final 1.05s. Re-render and re-verify required after this class of fix -- it is not visible in
+`hyperframes check`, the registry-ratio/usage checks, or `hyperframes snapshot`.
+
+## Durable pitfall: baking a JS fallback default alone is NOT enough — the real render pipeline can resolve an unset variable to the component's SCHEMA-declared `default` (not null/undefined), silently bypassing the JS fallback entirely; edit BOTH or ship wrong content (2026-08-30)
+
+**Real, confirmed, and shipped once already before being caught.** Every "baked default" fix
+this channel has used since cavecrew (edit the installed component's JS fallback constant, e.g.
+`vars.text == null ? "my real value" : ...`) was verified via `hyperframes snapshot`, which
+apparently does NOT reproduce this bug. It IS reproducible in a real `npm run render` pass,
+confirmed twice on `hyperframes-notes-into-a-podcast` (`titlecard-lockup` rendered its stock
+"HYPERFRAMES / INTRODUCING / WRITE HTML. RENDER VIDEO." content, not "THE AI UPGRADE / EPISODE",
+across TWO separate fresh full renders) via real `ffmpeg` frame extraction directly from the
+rendered MP4, not the snapshot tool.
+
+**Root cause (confirmed by inspection, not fully instrumented)**: several components declare a
+JSON `"default"` value per variable inside their own `data-composition-variables` schema
+attribute, SEPARATELY from the JS fallback the component's own script computes at runtime
+(`var wordmarkText = readText(vars.wordmark, "THE AI UPGRADE")` etc.). The real render pipeline
+appears to sometimes resolve `window.__hyperframes.getVariables()` to already contain the
+SCHEMA's declared defaults for any unset variable (a real, non-null string), not `undefined` —
+which means the JS fallback's own null-check (`vars.wordmark == null ? fallback : ...`) never
+even triggers, since `vars.wordmark` is already a valid non-null string ("HYPERFRAMES") straight
+from the schema. `hyperframes snapshot` does not exhibit this (confirmed both did/didn't diverge
+on the same file in the same session), so a snapshot-only verification pass can pass clean while
+the real render ships the wrong content. **This is NOT universal to every component** — several
+components in this same episode (`typed-prompt`'s `accent`/`exit`/`cadence`, `spring-pop`'s
+`overshoot`/`fromScale`) never diverged because their schema default already happened to match
+the JS fallback by coincidence, which is exactly why this went unnoticed until a field with a
+genuinely DIFFERENT schema-vs-JS value was checked.
+
+**Standing rule, supersedes the "just edit the JS fallback" instruction on every prior
+`data_variable_values_unreliable_at_nested_mount` entry in this file**: whenever baking a
+default into an installed component to work around the 2-level-nesting variable-passthrough
+bug, edit BOTH the JS fallback constant AND the matching `"default"` field inside that same
+variable's declaration in `data-composition-variables` — they must always read the same value.
+Editing only the JS fallback is an incomplete fix that can pass every mechanical check and a
+`hyperframes snapshot` visual pass while still shipping wrong content in the real render.
+**Confirmed retroactively on `hyperframes-cavecrew-subagents` (already PUBLISHED — Instagram
+and YouTube both confirmed via a real `GET /v1/posts/{id}` call, 2026-08-30/31): `typed-prompt`,
+`typed-prompt-2`, `cta-lockup`, and `text-shimmer` all had this exact schema-vs-JS mismatch
+(their schema defaults were never updated, only the JS fallback was) — meaning the live,
+already-distributed video's Frame 5 (both typed-prompt instances), Frame 6, and Frame 7 likely
+show their STOCK demo content, not the real cavecrew script content, despite every check and
+verification pass during that build reading clean.** Per this project's own standing rule, a
+published video does not get re-edited — this is recorded here as a real, confirmed miss to
+learn from, not an action item to fix retroactively. `radial-surround` and `state-chip-rail` on
+that same episode were NOT affected (their schema defaults happened to already match). Any
+future episode should treat "does the schema default match the JS fallback, field by field" as
+part of the same checklist as the passthrough fix itself, not a separate optional step.
+
+## Durable pitfall: mounting the SAME registry component file twice in one episode (two different frames, not nested) can silently break one of the two instances — both share one hardcoded `window.__timelines` key (2026-08-30)
+
+Found on `hyperframes-notes-into-a-podcast`: `notification-pileup` was deliberately reused in
+both Frame 1 (the hook) and Frame 4 (the loop-back close) as the SAME literal visual, an
+intentional callback, not a habit-default reuse. Frame 1's instance rendered correctly (confirmed
+via real snapshot). Frame 4's instance — same file, same `data-composition-src` path, mounted in
+a completely different frame later in the video — rendered FULLY BLANK across its entire mount
+window, confirmed via a real dense snapshot sweep (nothing but the ambient glow, no cards ever
+appeared).
+
+**Root cause**: several registry components read their own literal composition id into a fixed
+JS variable and register their GSAP timeline under that EXACT string — e.g.
+`var compositionId = "notification-pileup";` — rather than reading it off the mounted host's own
+`data-composition-id` attribute. The component's own header comment even states why: "after
+mount flattening strips data-composition-id" from the mounted root, so the script can't reliably
+read it back off the DOM and falls back to a hardcoded literal instead. When the SAME component
+file is mounted twice anywhere in one episode (regardless of which frame, nested or sibling),
+both instances' scripts execute in the same shared render context and both try to write
+`window.__timelines["notification-pileup"]` — the second write clobbers the first, and whichever
+instance ends up reading a timeline object that isn't its own goes blank or breaks.
+
+**This is DIFFERENT from, and in addition to, the already-logged
+`data_variable_values_unreliable_at_nested_mount` list** — that list is about content/variables
+not reaching a 2-levels-deep mount; this is about TWO SEPARATE mounts of the identical file
+anywhere in the episode colliding on a shared global key, regardless of nesting depth. A
+component can be on neither, either, or both lists.
+
+**Standing rule: any time the SAME registry component file is genuinely needed twice in one
+episode (a deliberate callback/loop-echo, not a copy-paste accident), FORK the file** — copy it
+to a `-2.html` (or `-3.html`, etc.) filename and rename every literal occurrence of its
+composition id inside that copy: the `data-composition-id` attribute(s), any internal element id
+that embeds the component name (e.g. `id="notification-pileup-clip"`), and critically the
+hardcoded `var compositionId = "..."` (or equivalent) the script itself registers its timeline
+under. Verify each renamed id string doesn't appear anywhere else in the file before treating the
+rename as complete. This project already applied this fix correctly for `typed-prompt` /
+`typed-prompt-2` (cavecrew) and `spring-pop` / `spring-pop-2` (this same episode) — the miss here
+was inconsistency, reusing that exact lesson for one component in an episode while forgetting to
+apply it to a DIFFERENT component reused the same way in the same episode. **Whenever a registry
+component is mounted more than once anywhere in an episode, fork it — no exceptions, don't reason
+case by case about whether a particular component "should" be safe.**
 
 **New durable pitfall (2026-08-24): a paste-in component windowed to a NON-ZERO offset within a
 longer frame renders completely invisible if the time-offset lives only on the inner clip, not
@@ -1280,6 +1397,49 @@ selector both checked correct). Minor in practice: the surrounding caption alrea
 real percentage in text, so the number is redundant, not the only place the fact appears — left
 as a known cosmetic gap rather than chasing a second unconfirmed theory in the same session.
 
+## Durable pitfall: a live nested mount going invisible can take the WHOLE parent top-level scene down with it, including the parent's own always-visible plain elements — not just the nested content (2026-08-31)
+
+Confirmed on `hyperframes-notes-into-a-podcast`, Frame 5 (`05-generalize.html`, mounted as a
+top-level scene in `index.html`, not nested inside anything else). This frame live-mounted
+`radial-surround-2` (a `data-composition-src` component) for its first ~2.4s. Direct user
+report ("28 to 31 sec are blank frames") led to a dense frame-by-frame extraction directly from
+the real rendered MP4 (both the raw `video.mp4` and the 1.1x-sped `video_rushed.mp4` — same
+window, proportionally, in both, ruling out the speedup re-encode as the cause). Found: from
+roughly local frame-time 3.0s to 5.8s (well AFTER the nested `radial-surround-2` mount's own
+0.4-2.8s window had already ended), the ENTIRE frame went blank — not just the expected
+hand-built label that should have appeared at 2.9s, but the frame's own `#f5-bg`/`#f5-glow`
+divs too, plain `class="clip"` elements with no nested mount involvement at all, present and
+correctly authored in the frame's own HTML from `data-start="0"` for the frame's whole
+duration. The outer page's own ambient background showed through instead — meaning the
+frame's `#root` itself was not being composited for that ~2.8s stretch, not just one child
+element within it.
+
+**This is a broader failure surface than every previously-logged nested-mount pitfall in this
+file**, which were all about content invisible WITHIN an otherwise-fine parent (`browser-device-
+stage`'s chrome vanishing, `comparison-split`/`spring-pop` going invisible past ~3.5s while the
+frame around them stayed fine). Here the parent frame's own unrelated, non-mount content
+vanished too, well after the risky nested mount had already finished its own window. Root cause
+not confirmed (this is a capture/compositing-pipeline issue, not something visible in the
+frame's own HTML/CSS/JS) — but the practical, now-proven fix: **don't rely on a live
+`data-composition-src` mount at all for a beat that needs multi-second reliability. Hand-build
+the equivalent visual directly on the frame's own timeline** (plain divs + GSAP, no nested
+mount) exactly as already established for `browser-device-stage` avoidance elsewhere in this
+file. Frames 3 and 5 were rewritten this way — a center card + staggered chip pills, styled to
+match `radial-surround`'s visual language, built with zero `data-composition-src` — and a
+`registry(shimmer-sweep)` utility pass (a paste-in component, not a mount, so it carries none of
+this risk) kept genuine registry credit on both frames without touching the broken mount class.
+`radial-surround` and `radial-surround-2` were removed from the project entirely rather than
+kept capped-and-hoped; this failure was not fixed by capping duration the way the earlier
+~3.5s-family bugs were (the gap here started well after the cap already applied).
+
+**Standing rule going forward**: treat ANY live nested `data-composition-src` mount as carrying
+this risk, regardless of how short it's capped — the previously-assumed "cap it short enough
+and it's safe" mitigation is not fully reliable. Prefer hand-building over a nested mount for
+any beat where reliability matters more than the marginal registry-ratio credit, and always
+verify with a real dense frame extraction from the actual rendered MP4 (not `hyperframes
+snapshot`) across the WHOLE runtime, not just spot-checks near known mount boundaries — this bug
+sat well outside every mount window this session had been treating as the risk zone.
+
 ## Custom devices built for this channel (added 2026-08-14)
 
 A running log of visual devices hand-built for an @thataipm episode specifically BECAUSE no
@@ -1332,6 +1492,119 @@ numbers otherwise. Only `registry(...)` and plain `hand-built(...)` compete for 
 target — `screenshot(...)` and `hand-built-bug-workaround(...)` are exempt from it.
 
 **Entries (post-tightening, full per-frame format):**
+
+- [2026-08-31] hyperframes-notes-into-a-podcast: THIRD PASS (supersedes Frames 3, 5, and 7 of
+  the second-redo entry below; Frames 1, 2, 4, 6 unchanged from it) -- direct feedback: a real
+  blank window at ~28-31s in the delivered render, confirmed via dense frame extraction to be
+  `radial-surround`/`radial-surround-2` taking the whole parent scene down with it (see this
+  file's matching durable-pitfall entry and the registry blocklist's new `radial-surround`
+  entry) -- both components removed from the project entirely. Frame 3 and Frame 5 rewritten as
+  hand-built clusters (center card + staggered chip pills, plain divs + GSAP on the frame's own
+  timeline, no `data-composition-src` at all) + registry(`shimmer-sweep`) utility pass on the
+  center card for genuine registry credit without the mount risk -- same real content as before
+  (Frame 3: "One project" + 40-page report/Article 1/2/3; Frame 5: "Anything you read" + class
+  readings/contracts/meeting notes). Also, direct instruction: CTA changed from the prior pass's
+  real-actionable-steps close ("Free at notebook.google") back to this channel's DEFAULT comment-
+  keyword gate ("Comment notebook, I'll send the setup guide") -- an explicit, scoped override of
+  this series' own real-actionable-steps CTA convention for this one episode; VO Line 7 rewritten
+  and the whole episode's VO regenerated as a fresh single take (changes every frame's exact
+  duration slightly). Frame 7's `spring-pop` rebaked again (schema+JS) to "Comment: notebook".
+  Registry ratio unaffected: still 6/6 non-exempt slots registry-tagged (100%), since
+  `shimmer-sweep` replaces `radial-surround`/`radial-surround-2` as Frames 3 and 5's registry
+  device. Verified via dense real-frame extraction across the WHOLE runtime this time (not just
+  spot-checks near known mount boundaries) on the actual rendered MP4, per this entry's own
+  standing-rule addition to the durable-pitfalls doc.
+
+- [2026-08-31] hyperframes-notes-into-a-podcast: SECOND REDO (RETIRED for Frames 3/5/7, see the
+  THIRD PASS entry above -- Frames 1/2/4/6 below are still current; supersedes the earlier
+  same-day first-redo entry, whose distinct content -- `titlecard-lockup`, `stagger-cascade`,
+  `state-chip-rail`, `spring-pop-2` -- is retired along with those files; full text in git
+  history on this file) -- direct feedback: "CTA is missing, choice of visuals are very poor,
+  check library and add more motion graphics, use actual google notebook logo or add appropriate
+  screenshot". Also caught and fixed a real, unrelated fact error before locking: the product has
+  been rebranded NotebookLM -> "Gemini Notebook" (verified live via headless capture of
+  notebook.google and its /app page, not memory -- confirmed with the user via AskUserQuestion
+  before touching VO). Script, VO, and every frame updated to the new name; real how-to URL
+  corrected to the actual bare domain `notebook.google` (no `.com`, no `lm`), confirmed by
+  direct navigation. Real assets captured via the documented headless-Chrome-CLI fallback
+  (`docs/hyperframes_production_notes.md`'s own durable-pitfall entry for when the interactive
+  Browser pane can't composite) into `assets/screenshots/`: `logo_lockup.png` (real wordmark+icon,
+  cropped from the marketing header), `phone_hero.png` and `phone_tight.png` (real in-app UI --
+  the notebook list with Audio Overview play buttons -- cropped from the official app-download
+  page's device mockup). All three placed on the black v3 ground inside a light `#F7F8FA` rounded
+  card (real screenshot content stays unedited; only the surrounding chrome is hand-built), per
+  the standing "screenshots over generic mock UI" rule -- no image editing/background removal
+  attempted. Full catalog re-read for stronger motion-graphic variety; installed `radial-surround`,
+  `shimmer-sweep`, plus two now-abandoned installs (`weight-wave`, `logo-outro`) removed before
+  wiring -- `weight-wave` because its internal duration-passthrough behavior when mounted as a
+  fixed-size block inside a short (~2.4s) window was untested and risky given this episode's own
+  nested-mount history; `logo-outro` because its SVG paths are literally Figma's own logo geometry
+  (hardcoded piece shapes), not a generic reusable mark, so repurposing it for a different brand
+  would have meant redrawing a competitor's mark under a real one's name -- correctly not reused.
+  `constellation-hub` was NOT used per its own hard-block entry below. `locked-nucleus-orbit`
+  was installed, then dropped before wiring: its satellite chip text is hardcoded
+  (`signal/motion/frames/output/sync/lock`) with no variable to override per-chip content, so it
+  could not carry this episode's real "class readings / contracts / meeting notes" content --
+  logged here so a future episode doesn't reach for it expecting labeled satellites.
+  `browser-device-stage` was deliberately NOT used despite fitting the "show a real screenshot in
+  device chrome" need -- its own durable-pitfall history in this file includes an UNRESOLVED,
+  shipped-anyway bug (chrome vanishes ~9s into any long hold) on top of the hardcoded-duration and
+  nested-mount-invisibility issues already logged for it; a plain hand-positioned `<img>` with a
+  continuous push-zoom (no nested mount at all) sidesteps every one of those failure classes and
+  is what actually shipped.
+
+  Frame 1 registry(`notification-pileup`, capped 3.5s) + registry(`shimmer-sweep`, utility accent
+  on the headline payoff, paste-in, no mount risk). Frame 2 screenshot(real Gemini Notebook logo)
+  + registry(`shimmer-sweep`) sweeping it -- replaces the prior build's hand-built/registry
+  wordmark entirely. Frame 3 (SUPERSEDED, see the THIRD PASS entry above -- was a now-removed
+  registry item, now registry(`shimmer-sweep`) over a hand-built cluster). Frame 4
+  registry(`comparison-split`, capped 3.5s, unchanged from the prior
+  build) + screenshot(real Gemini Notebook app, the Audio Overview play-button list -- literally
+  "two AI hosts") replacing the prior build's abstract "AI 1 / AI 2" avatar card, continuous
+  push-zoom through the whole hold, plus a mid-hold pill badge as the required second new element.
+  Frame 5 (SUPERSEDED, see the THIRD PASS entry above -- was a second, forked instance of that
+  same now-removed registry item, now registry(`shimmer-sweep`) over a hand-built cluster). Frame 6
+  registry(`typed-prompt`, capped 3.5s, retyped to the corrected `notebook.google` domain) +
+  screenshot(real Gemini Notebook app, the Create-new-notebook flow) replacing the prior build's
+  abstract "Generate ->" badge entirely, continuous push-zoom. Frame 7 (SUPERSEDED, see the THIRD
+  PASS entry above -- CTA text changed from "Free at notebook.google" to the comment-keyword
+  gate "Comment: notebook"). Every nested mount capped per this file's own thresholds; every
+  baked default edited in BOTH the schema `default` and the JS fallback (see the 2026-08-30
+  entry on why both are required); verify against real rendered frames pulled from the actual
+  MP4, not `hyperframes snapshot`, before calling this build done -- same discipline as the
+  first redo (this exact discipline is what caught the THIRD PASS's radial-surround bug).
+
+- [2026-08-30] hyperframes-notes-into-a-podcast (RETIRED, superseded by the 2026-08-31 entry
+  above -- kept for history, not current): portrait short (~27s, 4 lines, first episode
+  of "The AI Upgrade" series, first episode built with the meme/sticker + motion-graphics
+  density direction). Full catalog read against all 4 script beats. Frame 1
+  registry(`notification-pileup`) -- literal "forty tabs piling up" overload visual -- plus
+  registry(`spring-pop`) as the meme-sticker moment (an emoji badge popping in as a reaction,
+  the closest real registry match to "meme sticker" without reproducing a copyrighted meme
+  template/character). Frame 2 registry(`number-pop-in`) for the big "02" episode number plus
+  registry(`titlecard-lockup`) for "THE AI UPGRADE" series wordmark, plus registry
+  (`svg-mask-reveal`) for the "A FREE TOOL" tease beat -- re-read the component's own doc
+  comment before assuming it needed a real image asset: `text` IS the wordmark being revealed
+  through a traveling sweep, not an external media slot, so no screenshot was needed. Frame 3
+  registry(`comparison-split`), capped to a 3.5s mount, for the literal
+  old-way/new-way contrast (labelA "Skim for an hour" vs labelB "Two AI hosts, one chat"), plus
+  hand-built-bug-workaround(two-AI-hosts avatar+waveform card) for the beat's back half -- real
+  snapshot confirmed `comparison-split` goes fully invisible 3.8-4.2s into its own mount, well
+  before its own scripted OUT fade, the SAME nested-mount render-engine failure class as the
+  already-logged "held past ~5s reliably renders solid black" pitfall (`browser-device-stage`,
+  2026-08-23) but with a tighter observed threshold this time -- revised that entry's rule of
+  thumb to ~3.5s. Fixed by capping the mount short and hand-building the remainder, plus registry
+  (`typed-prompt`) for the real how-to (types "notebook.google.com"). `chat-thread` was
+  installed and considered for a "two AI hosts talking" visual but dropped for timing (it's
+  a multi-message beat-paced thread, doesn't fit inside this frame's compressed budget) and
+  removed rather than left unwired. Frame 4
+  registry(`spring-pop`, forked as `spring-pop-2.html` for distinct text) for the resolution
+  badge, plus registry(`notification-pileup`) reused deliberately as the loop-back echo of
+  Frame 1's same visual (the SAME literal concept recurring on purpose, per the variety bias's
+  own reuse exception, not a habit default). 7 distinct registry items across 4 frames.
+  `notification-pileup` and `spring-pop` each cover 2 of the 4 frames -- both are the
+  variety-checker's advisory reuse case (deliberate loop-echo / same-item-different-instance),
+  not a fail.
 
 - [2026-08-27] hyperframes-cavecrew-subagents: portrait short (60s, 7 lines). Full catalog read
   (372 items) against all 7 script beats before picking, biased toward variety per the standing

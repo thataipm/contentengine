@@ -16,6 +16,11 @@
       "component": "constellation-hub",
       "mount": "data-composition-src",
       "reason": "Confirmed on hyperframes-your-agent-cant-do-anything (2026-08-24): mounted two composition-src levels deep in Frame 4, only the first node (of 4) and its connector ever painted in the real render -- hub badge and the other 3 nodes never appeared, static across the whole mount window (not a timing issue). An isolated standalone harness with the identical host box size and variable values proved the component's own code is correct (all 4 nodes position and render fine outside a nested mount) -- this is the render engine failing to fully composite a nested sub-mount, same failure class as data-chart/mk-progress-stat above, not a code bug in the component. Was already on this file's data_variable_values_unreliable_at_nested_mount list (below) for a different, narrower reason (variables not reaching it); this entry is broader -- do not mount this way at all, even with defaults already matching the desired content. Replaced with a hand-built equivalent (plain divs + SVG connectors on the frame's own timeline, no nested mount) using the same real logo assets as Frame 1."
+    },
+    {
+      "component": "radial-surround",
+      "mount": "data-composition-src",
+      "reason": "Confirmed on hyperframes-notes-into-a-podcast (2026-08-31), Frames 3 and 5, both a fresh install and a forked second instance (radial-surround-2): direct user report of a real blank window in the delivered render led to dense frame extraction from the actual MP4 (both raw and 1.1x-sped, same window in both, ruling out the speedup step). The PARENT top-level scene went fully invisible for ~2.8s starting well AFTER the mount's own capped window had already ended -- not just the nested content, but the frame's own always-visible bg/glow divs too. Broader failure surface than the other blocked items above (parent-scene compositing, not just nested-content compositing). No known working fix, and capping the mount duration shorter did not help (the gap appeared after the cap point, not during it) -- do not mount this way. Replaced with a hand-built cluster (center card + staggered chip pills, plain divs + GSAP on the frame's own timeline, no nested mount) plus a registry(shimmer-sweep) paste-in utility pass for genuine registry credit without the mount risk. See docs/hyperframes_production_notes.md's matching durable-pitfall entry for the full writeup."
     }
   ],
 
@@ -40,11 +45,15 @@
     {
       "component": "chat-thread",
       "reason": "Same hardcoded-duration failure mode as browser-device-stage, found 2026-08-24. Patch its internal duration constant to the real mount window before use."
+    },
+    {
+      "component": "comparison-split",
+      "reason": "Confirmed 2026-08-30 (hyperframes-notes-into-a-podcast, Frame 3): mounted for 8.0s, went fully invisible 3.8-4.2s after data-start, well before its own scripted OUT fade -- same 'held past ~5s reliably renders solid black' failure class as browser-device-stage, but with a tighter observed threshold (~3.5s safe, not 4-5s). No internal duration constant to patch (unlike browser-device-stage/chat-thread) -- the fix is to cap the MOUNT duration itself to <=3.5s and hand-build any remaining runway as plain CSS, not a second nested mount."
     }
   ],
 
   "data_variable_values_unreliable_at_nested_mount": {
-    "reason": "data-variable-values does not reliably reach a component mounted two levels deep (a data-composition-src component mounted inside another data-composition-src component) -- confirmed on 9 components across 2 separate episodes, all of which rendered their default demo content instead of the supplied values. Treat this as a permanent characteristic of the current render engine, not a one-off. Mandatory first step for anything on this list: edit the installed component's own JSON default + JS fallback constant directly, don't rely on data-variable-values passthrough when mounted this way.",
+    "reason": "data-variable-values does not reliably reach a component mounted two levels deep (a data-composition-src component mounted inside another data-composition-src component) -- confirmed on components across 4 separate episodes, all of which rendered their default demo content instead of the supplied values. Treat this as a permanent characteristic of the current render engine, not a one-off. MANDATORY: edit BOTH the installed component's JSON 'default' field inside data-composition-variables AND its JS fallback constant -- editing only the JS fallback is an INCOMPLETE fix confirmed to ship wrong content in a real render (hyperframes-cavecrew-subagents shipped exactly this bug to a published video; hyperframes-notes-into-a-podcast caught it before publish via real rendered-frame extraction, not the snapshot tool). See docs/hyperframes_production_notes.md's 2026-08-30 'baking a JS fallback default alone is NOT enough' entry for the full writeup.",
     "components": [
       "cta-close",
       "grid-card-assemble",
@@ -58,7 +67,12 @@
       "state-chip-rail",
       "typed-prompt",
       "cta-lockup",
-      "text-shimmer"
+      "text-shimmer",
+      "number-pop-in",
+      "titlecard-lockup",
+      "comparison-split",
+      "spring-pop",
+      "svg-mask-reveal"
     ]
   }
 }
