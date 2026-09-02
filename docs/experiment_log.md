@@ -22,7 +22,11 @@ killed early.
 ```
 batch_id:          BATCH-{NNN}, sequential, never reused
 date_started:       YYYY-MM-DD
-pillar:              one of: AI PM / AI Workflows & Tools / Build in Public / Opinions & Trends
+pillar:              one of: AI Tools & Agent Spotlights / Navigating the AI Era / How AI
+                        Systems Actually Work (updated 2026-08-30 -- see the Pillar Experiment
+                        section below; all three now gate against the single north star in
+                        `docs/thataipm_content_system_operating_spec_v2.md` §0, not weighted
+                        against each other)
 series:              named series this batch belongs to, or "none" if standalone
 hypothesis:          the specific, falsifiable claim this batch tests
 target_audience:      who this batch is aimed at (primary/secondary per the spec, or narrower)
@@ -43,6 +47,16 @@ starts. A structured Markdown section is sufficient, no separate tracking file.
 
 ```
 concept:               short name for the idea
+series:                 named series this concept belongs to, or "none" (added 2026-08-30 —
+                        per-concept, distinct from the batch-level `series:` field above,
+                        since one batch can mix series and standalone concepts)
+episode:                sequential number within its series, or blank if series is "none"
+                        (added 2026-08-30 — numbered across the WHOLE series regardless of
+                        category, never a separate counter per category, direct instruction:
+                        don't force a rigid category split, let real candidates decide it)
+category:               personal / professional / both (added 2026-08-30, for the widened
+                        AI Tools & Agent Spotlights scope — tag after the concept earns its
+                        slot on merit, not to fill a quota)
 pillar:                 which of the 3 pillars (spec §3): tools / navigate / how-it-works
                         (added 2026-08-14 — tag every concept explicitly, don't infer it)
 pillar_fit:             pass/fail, one line why
@@ -108,12 +122,21 @@ still can't get once real data exists. Note in `results:` which numbers came fro
 
 ---
 
-## Pillar Experiment: 3×10 test (opened 2026-08-14)
+## Pillar Experiment: 3×10 test (opened 2026-08-14, RETIRED 2026-08-30)
 
-**This is a pillar-LEVEL experiment, one level above the concept-level batches below.** See
-`docs/thataipm_content_system_operating_spec_v2.md` §3/§8 for the full rationale and structure.
-Three content territories, tested head to head at equal weight, 10 videos each (30 total),
-before committing weight to any one of them:
+**Retired 2026-08-30, direct instruction, before reaching enough published volume to read real
+signal** (table below still reads 0 published across all three pillars at retirement). Replaced
+by one unifying north star — see `docs/thataipm_content_system_operating_spec_v2.md` §0's
+2026-08-30 revision: "I show people how to turn AI from a toy they poke at into a real
+capability upgrade across their actual life and work." The three pillars below did not
+disappear — they fold in as three angles/formats under that one statement (see spec §3's
+reframe), not three bets competing for weight. Every new concept, in any pillar, gates against
+that north star first. This section stays as the historical record of the retired equal-weight
+test; new batches log against the reframed structure instead.
+
+**Original framing, kept for context:** this was a pillar-LEVEL experiment, one level above the
+concept-level batches below. Three content territories, tested head to head at equal weight, 10
+videos each (30 total), before committing weight to any one of them:
 
 1. **AI Tools & Agent Spotlights** — unchanged pillar, the known-working baseline.
 2. **Navigating the AI Era** — new pillar. First-person, in-progress documentation of what AI
@@ -662,3 +685,171 @@ acquisition work earlier in the same day. The `caveman` skill was also installed
 project itself via Claude Code's own plugin manager (`claude plugin marketplace add
 JuliusBrussee/caveman && claude plugin install caveman@caveman`), per direct request -- separate
 from, but the reason for, this episode.
+
+---
+
+## Batch 6
+
+```
+batch_id: BATCH-006
+date_started: 2026-08-30
+pillar: AI Tools & Agent Spotlights
+series: "The AI Upgrade" (new numbered educational series, launched this batch, direct
+  instruction -- episodes span the pillar's 2026-08-30 widened scope: custom Claude Skills,
+  personal-knowledge systems, domain-persona copilots, life automation, computer-use for
+  personal tasks, AI-as-thinking-partner technique, custom-instructions literacy, AI tutoring.
+  Numbered sequentially across the whole series regardless of category -- personal/professional
+  is a per-episode tag, not two separate counters, per direct instruction against a rigid 10/10
+  split decided before real candidates existed)
+hypothesis: An educational, numbered-series format (vs. this channel's prior standalone
+  episodes) built strictly against the new §0 north star ("turn AI into a real capability
+  upgrade across life and work") outperforms undifferentiated tool-spotlight content on
+  follows/1,000 views and saves, because it gives viewers a reason to follow FOR THE SERIES,
+  not just react to one video.
+target_audience: People already using AI day to day who want to get meaningfully more
+  capability out of it, in both their personal life and their professional work -- broader than
+  the prior developer-leaning tool-spotlight audience, since custom instructions / personas /
+  NotebookLM-style episodes don't require a technical background.
+concepts:
+  - concept: "Ep. 1 -- Custom instructions, done right"
+    series: "The AI Upgrade"
+    episode: 1
+    category: both
+    pillar: tools
+    pillar_fit: PASS -- zero-install configuration literacy most people never touch, directly
+      inside the widened pillar scope
+    audience_fit: PASS -- applies to literally every ChatGPT/Claude user regardless of
+      technical background, strong opener for a series that needs a low floor to hook a wide
+      audience before later episodes get more specific
+    100k_test: PASS -- a real, immediately-usable unlock, not a novelty
+    pm_question: USE
+    originality: most "custom instructions" content is a generic template dump -- this leads
+      with the actual mechanism (what the model does differently with real custom instructions
+      vs. none) and a real before/after on the same prompt
+    payoff: viewer writes their own working custom instructions during the video, not just
+      watches someone else's
+    brand_value: strong series-opener candidate -- foundational, not narrow, sets up the whole
+      series' "configure it, don't just use it" throughline
+    worth_producing: PASS
+    gate_result: PASS
+    episode_status: KILL -- removed from batch 2026-09-01, direct instruction, no reason
+      recorded. Numbering NOT reshuffled (Ep. 2 already produced/scheduled under its own
+      number) -- this slot just stays unused.
+  - concept: "Ep. 2 -- NotebookLM: your own notes, turned into a podcast and a real answer engine"
+    series: "The AI Upgrade"
+    episode: 2
+    category: personal
+    pillar: tools
+    pillar_fit: PASS -- real, verifiable tool (Google NotebookLM), personal-knowledge-system
+      category
+    audience_fit: PASS -- broadens past developers, appeals to anyone with a pile of notes/PDFs
+    100k_test: PASS
+    pm_question: USE
+    originality: most coverage leads with the podcast-generation gimmick alone -- this leads
+      with the SOURCE-GROUNDED answer engine (AI reasoning over YOUR documents, not the open
+      internet), podcast as the second beat, not the whole pitch
+    payoff: viewer walks away knowing exactly what to feed it and what question to ask that a
+      generic ChatGPT session can't answer as well
+    brand_value: real, demoable, screenshot-heavy -- strong HyperFrames shot list
+    worth_producing: PASS
+    gate_result: PASS
+    episode_status: SCHEDULED (episodes/i-turned-my-messy-research-notes-into-a-podcast/,
+      renamed "Gemini Notebook" mid-build per real product rebrand, real screenshots +
+      hand-built chip clusters after radial-surround bug found; IG + YouTube, 2026-09-01
+      3:00pm IST)
+  - concept: "Ep. 3 -- Turn Claude into your personal board of advisors"
+    series: "The AI Upgrade"
+    episode: 3
+    category: personal
+    pillar: tools
+    pillar_fit: PASS -- domain-persona copilot technique, Claude Projects
+    audience_fit: PASS -- career/negotiation/fitness framing lands with a broad personal-life
+      audience
+    100k_test: PASS
+    pm_question: USE
+    originality: most "AI as life coach" content is one generic persona -- this shows THREE
+      distinct persona projects (career mentor, negotiation prep, fitness coach) built the same
+      way, teaching the reusable mechanism, not just one use case
+    payoff: viewer leaves with a real, working Project they built during the video, tailored to
+      a decision they actually have
+    brand_value: pure technique, no tool install required -- lowest-friction episode in the
+      batch
+    worth_producing: PASS
+    gate_result: PASS
+    episode_status: NOT_PRODUCED
+  - concept: "Ep. 4 -- I let AI triage my real inbox for a week"
+    series: "The AI Upgrade"
+    episode: 4
+    category: professional
+    pillar: tools
+    pillar_fit: PASS -- life/work automation via MCP, real wiring not a hypothetical
+    audience_fit: PASS -- inbox overload is a near-universal professional pain point
+    100k_test: PASS
+    pm_question: USE
+    originality: leads with real before/after inbox numbers over a real week, not a generic
+      "connect your email to AI" pitch
+    payoff: viewer gets the exact real setup (which MCP server or agent, real config), not just
+      the concept
+    brand_value: this channel's own real production workflow already does real inbox/context
+      automation -- genuine callback, not forced
+    worth_producing: PASS -- needs a real working setup BEFORE scripting (direct requirement,
+      not hypothetical), flagged for research stage
+    gate_result: PASS
+    episode_status: NOT_PRODUCED
+  - concept: "Ep. 5 -- I gave Claude control of my browser to book things for me"
+    series: "The AI Upgrade"
+    episode: 5
+    category: personal
+    pillar: tools
+    pillar_fit: PASS -- Claude's first-party Computer Use / Claude in Chrome, personal-task
+      angle
+    audience_fit: PASS -- booking/forms/price-comparison is a universal life-admin pain point
+    100k_test: PASS
+    pm_question: USE
+    originality: distinct from the already-shipped hyperframes-ai-took-over-my-browser episode
+      (that one is Playwright MCP, a third-party dev-tool angle) -- this is Anthropic's own
+      first-party capability, personal-task framing, different audience and different tool
+    payoff: a real personal task (a real booking or form) completed on camera, not a staged
+      demo
+    brand_value: directly relevant to this channel's own Claude-centric audience
+    worth_producing: PASS -- confirm no register overlap with the shipped browser episode
+      before scripting (same "AI controls a browser" surface, different tool/angle -- worth a
+      second look at final script for tonal distinction)
+    gate_result: PASS
+    episode_status: NOT_PRODUCED
+  - concept: "Ep. 6 -- Cursor's agent mode, the real Claude Code alternative"
+    series: "The AI Upgrade"
+    episode: 6
+    category: professional
+    pillar: tools
+    pillar_fit: PASS -- real, currently-relevant dev tool, direct comparison angle
+    audience_fit: PASS -- this channel's existing developer audience actively compares these
+      tools
+    100k_test: PASS -- strong curiosity/comparison pull
+    pm_question: USE
+    originality: a real side-by-side workflow on the same task, not a feature-list recap
+    payoff: viewer gets a real, honest comparison to decide which tool fits their own workflow
+    brand_value: closes the batch on the channel's known-working developer-tool register,
+      balancing the more personal-life-leaning episodes earlier in the batch
+    worth_producing: PASS
+    gate_result: PASS
+    episode_status: NOT_PRODUCED
+success_metrics: follows per 1,000 views (primary), saves and comments (secondary), per spec §9
+  -- tracked per episode AND rolled up for the series once 3+ episodes have real data
+status: PLANNED
+results:
+learning:
+decision:
+next_action: User to pick which episode scripts first; standing production order
+  (/thataipm-script-review -> /thataipm-visual-plan -> /thataipm-vo -> /thataipm-registry-check
+  -> frame authoring -> /thataipm-assemble -> /thataipm-distribute) applies per episode as
+  usual. Series identity (name, intro treatment, numbering) to be locked into a cover/intro
+  visual convention once Episode 1 is produced, not designed speculatively ahead of a real
+  build.
+```
+
+Notes: series name "The AI Upgrade" and the personal/professional category tag are both direct
+instructions from this session, not founder-conviction guesses. Category distribution (4
+personal/both, 2 professional) was NOT set as a target -- it's what six genuinely strong
+candidates happened to sort into, per the explicit decision against a rigid 10/10 split. Future
+batches should let the same thing happen rather than back-filling weak ideas to balance a count.

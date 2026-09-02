@@ -1493,6 +1493,32 @@ target — `screenshot(...)` and `hand-built-bug-workaround(...)` are exempt fro
 
 **Entries (post-tightening, full per-frame format):**
 
+- [2026-09-01] hyperframes-claude-board-of-advisors: Frame 1 registry(`kinetic-type-swap`),
+  rebaked prefix/options into both schema default and JS fallback (prefix "Claude becomes
+  your", options "career mentor,negotiation coach,fitness coach"); Frame 2
+  screenshot(real Claude Projects UI, sourced from Anthropic's official launch post since the
+  live authenticated claude.ai is not reachable without logging in) + registry(`shimmer-sweep`);
+  Frame 3 hand-built(center card + 3 staggered chip pills: "Promotion case"/"Negotiation"/
+  "Fitness plan") -- registry checked first: `stagger-cascade` has no real text-label slots
+  (numbered placeholder tiles only), `grid-card-assemble` is elevated-risk (confirmed blank 3x
+  per registry_blocklist.json), neither is a safe content-carrying fit -- + registry(`shimmer-
+  sweep`) utility pass, same proven-safe pattern as hyperframes-notes-into-a-podcast Frames 3/5;
+  Frame 4 registry(`comparison-split`) capped 3.5s (known nested-mount hold limit) + screenshot
+  (real Claude Projects "Set custom instructions" UI); Frame 5 registry(`screen-flow-carousel`),
+  rebaked captions into both schema default and JS fallback ("Career mentor,Negotiation prep,
+  Fitness coach"), exit=none holds the full duration by design + registry(`text-shimmer`)
+  supplementary headline, rebaked text ("Any specialist you'd normally pay for"); Frame 6
+  registry(`typed-prompt`) capped 3.5s, rebaked text ("You are my career mentor. Ask about my
+  resume first.") + registry(`text-shimmer`) (forked as `text-shimmer-2.html` -- this project
+  uses text-shimmer twice with different baked content, forking avoids the duplicate-mount-file
+  id collision), rebaked text ("Its own context, every time") + screenshot
+  (real Claude Projects "Add to project knowledge" UI); Frame 7 screenshot(real Claude wordmark,
+  pulled as inline SVG directly from claude.ai's own sign-in page markup, not a raster
+  screenshot) + registry(`spring-pop`) capped 1.0s, rebaked text ("Comment: ADVISORS"). All 3
+  screenshot UI sources are Anthropic's official "Collaborate with Claude on Projects" launch
+  post (anthropic.com/news/projects) -- the live in-app UI needs a login this project never
+  performs on the user's behalf.
+
 - [2026-08-31] hyperframes-notes-into-a-podcast: THIRD PASS (supersedes Frames 3, 5, and 7 of
   the second-redo entry below; Frames 1, 2, 4, 6 unchanged from it) -- direct feedback: a real
   blank window at ~28-31s in the delivered render, confirmed via dense frame extraction to be
